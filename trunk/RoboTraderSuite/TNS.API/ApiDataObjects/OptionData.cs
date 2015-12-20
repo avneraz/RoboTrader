@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Infra;
+﻿using TNS.API.Infra.Bus;
 
-namespace APIDataObjects
+namespace TNS.API.ApiDataObjects
 {
     public class OptionData : IMessage
     {

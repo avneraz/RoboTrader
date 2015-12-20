@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using TNS.Global;
 
-namespace Infra
+namespace TNS.API.Infra.Bus
 {
     public class Bus
     {

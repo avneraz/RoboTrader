@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Infra")]
+[assembly: AssemblyTitle("BL")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Infra")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCompany("HEAVEN KILLERS RELEASE GROUP")]
+[assembly: AssemblyProduct("BL")]
+[assembly: AssemblyCopyright("Copyright © HEAVEN KILLERS RELEASE GROUP 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("2f18af73-cc8a-4cdf-b9e6-f3468b5a66e3")]
+[assembly: Guid("399b0096-559a-4541-b9e7-81f19a164826")]
 
 // Version information for an assembly consists of the following four values:
 //

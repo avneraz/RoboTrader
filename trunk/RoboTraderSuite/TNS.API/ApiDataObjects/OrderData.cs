@@ -1,6 +1,7 @@
-﻿using Infra;
+﻿
+using TNS.API.Infra.Bus;
 
-namespace APIDataObjects
+namespace TNS.API.ApiDataObjects
 {
     public enum OrderAction
     {

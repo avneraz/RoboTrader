@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using APIDataObjects;
 using IBApi;
+using TNS.API.ApiDataObjects;
 
-namespace IBApiWrapper
+namespace TNS.API.IBApiWrapper
 {
     public static class IBExtensions
     {

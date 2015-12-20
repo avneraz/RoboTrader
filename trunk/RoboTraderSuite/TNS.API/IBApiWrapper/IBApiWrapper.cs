@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using APIDataObjects;
 using IBApi;
-using Infra;
-using Infra.ArrayExtensions;
+using TNS.API.ApiDataObjects;
+using TNS.API.Infra.Bus;
+using TNS.Global.ArrayExtensions;
 
-namespace IBApiWrapper
+namespace TNS.API.IBApiWrapper
 {
     public class IBApiWrapper : ITradingApi
     {

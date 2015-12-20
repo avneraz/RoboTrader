@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Infra.ArrayExtensions;
+using TNS.Global.ArrayExtensions;
 
-namespace Infra
+namespace TNS.Global
 {
     public static class ObjectExtensions
     {

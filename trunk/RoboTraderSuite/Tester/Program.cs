@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using APIDataObjects;
-using IBApiWrapper;
-using Infra;
+using TNS.API.ApiDataObjects;
+using TNS.API.IBApiWrapper;
+using TNS.API.Infra.Bus;
 using static System.Console;
 
 namespace Tester
@@ -27,7 +27,7 @@ namespace Tester
         static void Main(string[] args)
         {
             Consumer c = new Consumer();
-            IBApiWrapper.IBApiWrapper wrapper = new IBApiWrapper.IBApiWrapper("127.0.0.1", 7496, 4, c, "U1450837");
+            IBApiWrapper wrapper = new IBApiWrapper("127.0.0.1", 7496, 4, c, "U1450837");
             wrapper.Connect();
             wrapper.RequestAccountData();
             //wrapper.RequestContinousOptionChainData(new List<OptionContract>()

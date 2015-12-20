@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("IBApiWrapper")]
+[assembly: AssemblyTitle("TNS.Global")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("IBApiWrapper")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCompany("HEAVEN KILLERS RELEASE GROUP")]
+[assembly: AssemblyProduct("TNS.Global")]
+[assembly: AssemblyCopyright("Copyright © HEAVEN KILLERS RELEASE GROUP 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("701a51c8-3a95-467c-bd8f-d05290f6b241")]
+[assembly: Guid("bcb4c6f8-73e1-48d8-a410-0bcc0295ee61")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -3,11 +3,11 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using TNS.Global;
 
-namespace Infra
+
+namespace TNS.API.Infra.Bus
 {
     public class MessageHandler : System.Attribute
     {
@@ -92,10 +92,10 @@ namespace Infra
 
     public abstract class SmartBaseLogic : SimpleBaseLogic
     {
-        private readonly Bus _bus;
+        private readonly global::TNS.API.Infra.Bus.Bus _bus;
         private readonly Dictionary<Type, MethodInfo> _handledTypes;
 
-        protected SmartBaseLogic(Bus bus)
+        protected SmartBaseLogic(global::TNS.API.Infra.Bus.Bus bus)
         {
             _bus = bus;
             _handledTypes = GetLogicHandledTypes();

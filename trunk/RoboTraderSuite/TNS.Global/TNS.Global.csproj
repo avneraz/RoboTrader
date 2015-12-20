@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{701A51C8-3A95-467C-BD8F-D05290F6B241}</ProjectGuid>
+    <ProjectGuid>{BCB4C6F8-73E1-48D8-A410-0BCC0295EE61}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IBApiWrapper</RootNamespace>
-    <AssemblyName>IBApiWrapper</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>TNS.Global</RootNamespace>
+    <AssemblyName>TNS.Global</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -40,24 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IBApiWrapper.cs" />
-    <Compile Include="IBExtensions.cs" />
-    <Compile Include="IBMessageHandler.cs" />
+    <Compile Include="GeneralTimer.cs" />
+    <Compile Include="ObjectExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\APIDataObjects\ApiDataObjects.csproj">
-      <Project>{3a9276ab-82fa-4adc-b152-1698136a3629}</Project>
-      <Name>ApiDataObjects</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\IBApi\IBApi.csproj">
-      <Project>{b121a8ec-d7cb-49ee-bb46-8e932ec79999}</Project>
-      <Name>IBApi</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Infra\Infra.csproj">
-      <Project>{2f18af73-cc8a-4cdf-b9e6-f3468b5a66e3}</Project>
-      <Name>Infra</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
