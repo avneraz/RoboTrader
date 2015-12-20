@@ -50,21 +50,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IBApiWrapper\IBApiWrapper.csproj">
-      <Project>{701a51c8-3a95-467c-bd8f-d05290f6b241}</Project>
-      <Name>IBApiWrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Infra\Infra.csproj">
-      <Project>{2f18af73-cc8a-4cdf-b9e6-f3468b5a66e3}</Project>
-      <Name>Infra</Name>
-    </ProjectReference>
     <ProjectReference Include="..\APIDataObjects\ApiDataObjects.csproj">
       <Project>{3a9276ab-82fa-4adc-b152-1698136a3629}</Project>
       <Name>ApiDataObjects</Name>
     </ProjectReference>
+    <ProjectReference Include="..\IBApiWrapper\IBApiWrapper.csproj">
+      <Project>{701a51c8-3a95-467c-bd8f-d05290f6b241}</Project>
+      <Name>IBApiWrapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\IBApi\IBApi.csproj">
       <Project>{b121a8ec-d7cb-49ee-bb46-8e932ec79999}</Project>
       <Name>IBApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infra\Infra.csproj">
+      <Project>{2f18af73-cc8a-4cdf-b9e6-f3468b5a66e3}</Project>
+      <Name>Infra</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
