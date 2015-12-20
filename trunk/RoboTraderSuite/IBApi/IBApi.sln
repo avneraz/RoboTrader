@@ -3,17 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoboTrader", "RoboTrader\RoboTrader.csproj", "{C4FC78B6-534D-4DB5-83B1-3C7721967BCB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBApi", "IBApi.csproj", "{B121A8EC-D7CB-49EE-BB46-8E932EC79999}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiDataObjects", "..\..\..\Dev\IBAPI\APIDataObjects\ApiDataObjects.csproj", "{3A9276AB-82FA-4ADC-B152-1698136A3629}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBApiWrapper", "..\IBApiWrapper\IBApiWrapper.csproj", "{701A51C8-3A95-467C-BD8F-D05290F6B241}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBApi", "..\..\..\Dev\IBAPI\IBApi\IBApi.csproj", "{B121A8EC-D7CB-49EE-BB46-8E932EC79999}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra", "..\Infra\Infra.csproj", "{2F18AF73-CC8A-4CDF-B9E6-F3468B5A66E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBApiWrapper", "..\..\..\Dev\IBAPI\IBApiWrapper\IBApiWrapper.csproj", "{701A51C8-3A95-467C-BD8F-D05290F6B241}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiDataObjects", "..\APIDataObjects\ApiDataObjects.csproj", "{3A9276AB-82FA-4ADC-B152-1698136A3629}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra", "..\..\..\Dev\IBAPI\Infra\Infra.csproj", "{2F18AF73-CC8A-4CDF-B9E6-F3468B5A66E3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tester", "..\..\..\Dev\IBAPI\Tester\Tester.csproj", "{9141B5EF-0D54-4DE3-9D68-33C95C913AA8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tester", "..\Tester\Tester.csproj", "{9141B5EF-0D54-4DE3-9D68-33C95C913AA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,14 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C4FC78B6-534D-4DB5-83B1-3C7721967BCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4FC78B6-534D-4DB5-83B1-3C7721967BCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4FC78B6-534D-4DB5-83B1-3C7721967BCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4FC78B6-534D-4DB5-83B1-3C7721967BCB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3A9276AB-82FA-4ADC-B152-1698136A3629}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3A9276AB-82FA-4ADC-B152-1698136A3629}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3A9276AB-82FA-4ADC-B152-1698136A3629}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3A9276AB-82FA-4ADC-B152-1698136A3629}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B121A8EC-D7CB-49EE-BB46-8E932EC79999}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B121A8EC-D7CB-49EE-BB46-8E932EC79999}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B121A8EC-D7CB-49EE-BB46-8E932EC79999}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -41,6 +31,10 @@ Global
 		{2F18AF73-CC8A-4CDF-B9E6-F3468B5A66E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F18AF73-CC8A-4CDF-B9E6-F3468B5A66E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F18AF73-CC8A-4CDF-B9E6-F3468B5A66E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A9276AB-82FA-4ADC-B152-1698136A3629}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A9276AB-82FA-4ADC-B152-1698136A3629}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A9276AB-82FA-4ADC-B152-1698136A3629}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A9276AB-82FA-4ADC-B152-1698136A3629}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9141B5EF-0D54-4DE3-9D68-33C95C913AA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9141B5EF-0D54-4DE3-9D68-33C95C913AA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9141B5EF-0D54-4DE3-9D68-33C95C913AA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
