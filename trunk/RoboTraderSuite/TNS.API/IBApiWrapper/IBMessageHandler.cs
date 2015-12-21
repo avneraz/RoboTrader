@@ -212,8 +212,9 @@ namespace TNS.API.IBApiWrapper
         {
 
             AccountMemberData accountMemberData = new AccountMemberData(account, tag, value, currency);
-            _consumer.Enqueue(accountMemberData);
-            Logger.Debug(accountMemberData);
+            accountMemberData.UpdateAccountSummary();
+            _consumer.Enqueue(AccountSummaryData.AccountSummaryDataObject);
+            Logger.Debug(AccountSummaryData.AccountSummaryDataObject);
         }
 
         public void accountSummaryEnd(int reqId)

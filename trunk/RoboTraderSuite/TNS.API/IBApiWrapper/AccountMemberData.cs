@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using TNS.API.Infra.Bus;
+﻿using TNS.API.Infra.Bus;
 
-namespace TNS.API.ApiDataObjects
+namespace TNS.API.IBApiWrapper
 {
     public class AccountMemberData : IMessage
     {

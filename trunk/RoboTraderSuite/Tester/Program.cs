@@ -9,7 +9,6 @@ using log4net;
 using TNS.API.ApiDataObjects;
 using TNS.API.IBApiWrapper;
 using TNS.API.Infra.Bus;
-using TNS.BrokerDAL.DataObjects;
 using static System.Console;
 
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
@@ -22,13 +21,11 @@ namespace Tester
     {
         protected override void HandleMessage(IMessage meesage)
         {
-            Console.WriteLine(meesage);//meesage + 
-            if (meesage is AccountMemberData)
-            {
-               var accountMemberData = ((AccountMemberData) meesage);
-                AccountSummaryData.UpdateAccountSummaryData(accountMemberData);
-                Console.WriteLine(AccountSummaryData.AccountSummaryDataObject);
-            }
+            Console.WriteLine(meesage);
+            if (!(meesage is AccountSummaryData)) return;
+
+            var accountSummaryData = ((AccountSummaryData) meesage);
+            Console.WriteLine(accountSummaryData);
         }
     }
     class Program

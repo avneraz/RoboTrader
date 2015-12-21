@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using IBApi;
 using TNS.API.ApiDataObjects;
 
@@ -48,5 +51,27 @@ namespace TNS.API.IBApiWrapper
             return ibOrder;
             
         }
+        #region Update Account Summary
+
+        public static void UpdateAccountSummary(this AccountMemberData accountMemberData)
+        {
+            var propInfo = AccountSummaryDataPropertiesInfoList.FirstOrDefault(pi => pi.Name == accountMemberData.Tag);
+            propInfo?.SetValue(AccountSummaryData.AccountSummaryDataObject, Convert.ToDouble(accountMemberData.Values));
+        }
+
+
+        private static List<PropertyInfo> _propertiesInfoList;
+        public static IEnumerable<PropertyInfo> AccountSummaryDataPropertiesInfoList
+        {
+            get
+            {
+                if (_propertiesInfoList != null) return _propertiesInfoList;
+
+                var type = typeof(AccountSummaryData);
+                _propertiesInfoList = type.GetProperties(BindingFlags.Instance | BindingFlags.Public).ToList();
+                return _propertiesInfoList;
+            }
+        } 
+        #endregion
     }
 }

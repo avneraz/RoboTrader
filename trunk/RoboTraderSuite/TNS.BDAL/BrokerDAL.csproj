@@ -45,7 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountManager.cs" />
-    <Compile Include="DataObjects\AccountSummaryData.cs" />
     <Compile Include="Distributer.cs" />
     <Compile Include="OptionsManager.cs" />
     <Compile Include="PositionsDataBuilder.cs" />
@@ -61,6 +60,9 @@
       <Project>{c50ba368-93c1-45ad-8779-683189b0ba34}</Project>
       <Name>TNS.API</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataObjects\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

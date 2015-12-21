@@ -44,7 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiDataObjects\AccountMemberData.cs" />
+    <Compile Include="IBApiWrapper\AccountMemberData.cs" />
+    <Compile Include="ApiDataObjects\AccountSummaryData.cs" />
     <Compile Include="ApiDataObjects\ContractBase.cs" />
     <Compile Include="ApiDataObjects\ITradingApi.cs" />
     <Compile Include="ApiDataObjects\OptionContract.cs" />

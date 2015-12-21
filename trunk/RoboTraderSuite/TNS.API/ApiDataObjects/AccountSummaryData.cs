@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using log4net.Util.TypeConverters;
-using TNS.API.ApiDataObjects;
+using TNS.API.Infra.Bus;
 
-namespace TNS.BrokerDAL.DataObjects
+namespace TNS.API.ApiDataObjects
 {
-    public class AccountSummaryData
+    public class AccountSummaryData: IMessage
     {
 
         //tags = NetLiquidation,EquityWithLoanValue,BuyingPower,ExcessLiquidity,FullMaintMarginReq,FullInitMarginReq"
@@ -20,30 +19,12 @@ namespace TNS.BrokerDAL.DataObjects
 
         #region Static Stuff
 
-        private static List<PropertyInfo> _propertiesInfoList;
-
-        public static void UpdateAccountSummaryData(AccountMemberData accountMemberData)
-        {
-            var propInfo = PropertiesInfoList.FirstOrDefault(pi => pi.Name == accountMemberData.Tag);
-            propInfo?.SetValue(AccountSummaryDataObject, Convert.ToDouble(accountMemberData.Values));
-        }
-
+       
         private static AccountSummaryData _accountSummaryDataObject;
 
         public static AccountSummaryData AccountSummaryDataObject =>
             _accountSummaryDataObject ?? (_accountSummaryDataObject = new AccountSummaryData());
 
-        private static IEnumerable<PropertyInfo> PropertiesInfoList
-        {
-            get
-            {
-                if (_propertiesInfoList != null) return _propertiesInfoList;
-
-                var type = typeof(AccountSummaryData);
-                _propertiesInfoList = type.GetProperties(BindingFlags.Instance | BindingFlags.Public).ToList();
-                return _propertiesInfoList;
-            }
-        } 
         #endregion
 
         public override string ToString()
