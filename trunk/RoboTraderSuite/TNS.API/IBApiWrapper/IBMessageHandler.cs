@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using IBApi;
+using log4net;
 using TNS.API.ApiDataObjects;
 using TNS.API.Infra.Bus;
 using TNS.Global;
@@ -10,6 +11,7 @@ namespace TNS.API.IBApiWrapper
 
     class IBMessageHandler : EWrapper
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(IBMessageHandler));
         private readonly Dictionary<int, OptionData> _optionsDic;
         private readonly IBaseLogic _consumer;
         private const double EPSILON = 0.000000001;
@@ -209,6 +211,9 @@ namespace TNS.API.IBApiWrapper
         public void accountSummary(int reqId, string account, string tag, string value, string currency)
         {
 
+            AccountMemberData accountMemberData = new AccountMemberData(account, tag, value, currency);
+            _consumer.Enqueue(accountMemberData);
+            Logger.Debug(accountMemberData);
         }
 
         public void accountSummaryEnd(int reqId)
@@ -223,7 +228,7 @@ namespace TNS.API.IBApiWrapper
 
         public void updateAccountValue(string key, string value, string currency, string accountName)
         {
-
+           
         }
 
         public void updatePortfolio(Contract contract, int position, double marketPrice, double marketValue,

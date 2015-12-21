@@ -1,4 +1,4 @@
-﻿namespace RoboTrader
+﻿namespace TNS.RoboTrader
 {
     partial class MainForm
     {

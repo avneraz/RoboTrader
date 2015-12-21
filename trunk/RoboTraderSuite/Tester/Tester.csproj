@@ -19,10 +19,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\BinDebug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\BinDebug\Tester.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IBApi\IBApi.csproj">
@@ -58,6 +64,10 @@
     <ProjectReference Include="..\TNS.API\TNS.API.csproj">
       <Project>{c50ba368-93c1-45ad-8779-683189b0ba34}</Project>
       <Name>TNS.API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.BDAL\BrokerDAL.csproj">
+      <Project>{4fffca7c-2c0a-4918-bccb-794f692bf5c1}</Project>
+      <Name>BrokerDAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\TNS.Global\TNS.Global.csproj">
       <Project>{bcb4c6f8-73e1-48d8-a410-0bcc0295ee61}</Project>
