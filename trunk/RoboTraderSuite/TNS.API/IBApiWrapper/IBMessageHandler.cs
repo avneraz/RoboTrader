@@ -29,8 +29,11 @@ namespace TNS.API.IBApiWrapper
 
         #region NotUsedMethods
 
-        public void error(Exception e)
+        public void error(Exception ex)
         {
+            ExceptionData exceptionData = new ExceptionData(ex);
+            _consumer.Enqueue(exceptionData);
+            Logger.Error(exceptionData);
         }
 
         public void error(string str)
@@ -39,7 +42,14 @@ namespace TNS.API.IBApiWrapper
 
         public void error(int id, int errorCode, string errorMsg)
         {
-            Console.WriteLine(errorMsg);
+            APIMessageData apiMessageData = new APIMessageData()
+            {
+                Message = errorMsg,
+                ErrorCode = errorCode,
+                AdditionalInfo = id
+            };
+            _consumer.Enqueue(apiMessageData);
+            Logger.Info(apiMessageData.ToString());
         }
 
         public void currentTime(long time)

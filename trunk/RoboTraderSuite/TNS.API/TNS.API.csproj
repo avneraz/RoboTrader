@@ -44,6 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiDataObjects\APIDataTypes.cs" />
+    <Compile Include="ApiDataObjects\APIMessageData.cs" />
+    <Compile Include="ApiDataObjects\ExceptionData.cs" />
     <Compile Include="IBApiWrapper\AccountMemberData.cs" />
     <Compile Include="ApiDataObjects\AccountSummaryData.cs" />
     <Compile Include="ApiDataObjects\ContractBase.cs" />
@@ -52,9 +55,11 @@
     <Compile Include="ApiDataObjects\OptionData.cs" />
     <Compile Include="ApiDataObjects\OrderData.cs" />
     <Compile Include="ApiDataObjects\PositionData.cs" />
+    <Compile Include="IBApiWrapper\EerrorCode.cs" />
     <Compile Include="IBApiWrapper\IBApiWrapper.cs" />
     <Compile Include="IBApiWrapper\IBExtensions.cs" />
     <Compile Include="IBApiWrapper\IBMessageHandler.cs" />
+    <Compile Include="IBApiWrapper\TWSMessage.cs" />
     <Compile Include="Infra\Bus\BaseLogic.cs" />
     <Compile Include="Infra\Bus\Bus.cs" />
     <Compile Include="Infra\Bus\IBaseLogic.cs" />

@@ -1146,11 +1146,11 @@ namespace TWSLib
             InvokeIfRequired(method, new object[0]);
         }
 
-        void EWrapper.error(Exception e)
+        void EWrapper.error(Exception ex)
         {
             var t_errMsg = this.errMsg;
             if (t_errMsg != null)
-                InvokeIfRequired(t_errMsg, -1, -1, e.Message);
+                InvokeIfRequired(t_errMsg, -1, -1, ex.Message);
         }
 
         void EWrapper.error(string str)

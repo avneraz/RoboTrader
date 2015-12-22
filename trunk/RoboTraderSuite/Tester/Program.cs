@@ -9,6 +9,7 @@ using log4net;
 using TNS.API.ApiDataObjects;
 using TNS.API.IBApiWrapper;
 using TNS.API.Infra.Bus;
+using TNS.BL;
 using static System.Console;
 
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
@@ -34,10 +35,13 @@ namespace Tester
         static void Main(string[] args)
         {
             Logger.Info("Start Program - Tester");
-            Consumer c = new Consumer();
-            IBApiWrapper wrapper = new IBApiWrapper("127.0.0.1", 7496, 8, c, "U1450837");
-            wrapper.Connect();
-            wrapper.RequestAccountData();
+            AppManager appManager = new AppManager();
+            appManager.InitializeAppManager(null);
+            appManager.ConnectToBroker();
+            //Consumer c = new Consumer();
+            //IBApiWrapper wrapper = new IBApiWrapper("127.0.0.1", 7496, 8, c, "U1450837");
+            //wrapper.ConnectToBroker();
+            //wrapper.RequestAccountData();
             //wrapper.RequestContinousOptionChainData(new List<OptionContract>()
             //{ new OptionContract("AAPL", 120, new DateTime(2015, 12, 24), OptionType.Call)});
             //wrapper.RequestContinousPositionsData();

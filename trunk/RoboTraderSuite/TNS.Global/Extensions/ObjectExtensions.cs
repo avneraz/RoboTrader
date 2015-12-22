@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Reflection;
-using TNS.Global.ArrayExtensions;
+using System.Windows.Forms;
+using TNS.Global.Extensions.ArrayExtensions;
 
-namespace TNS.Global
+namespace TNS.Global.Extensions
 {
     public static class ObjectExtensions
     {
@@ -92,6 +94,33 @@ namespace TNS.Global
                 ArrayTraverse walker = new ArrayTraverse(array);
                 do action(array, walker.Position);
                 while (walker.Step());
+            }
+        }
+
+        public static class DisplayExtension
+        {
+            public static Screen FindCurrentMonitor(this Form theForm)
+            {
+                var hostingScreen = Screen.FromRectangle(new Rectangle(theForm.Location, theForm.Size));
+                //var primaryDisplay = Screen.AllScreens.ElementAtOrDefault(0);
+                //var extendedDisplay = Screen.AllScreens.FirstOrDefault(s => !Equals(s, primaryDisplay)) ?? primaryDisplay;
+                return hostingScreen;
+            }
+
+            /// <summary>
+            /// Sets the form on the same screen as the Host Form. 
+            /// </summary>
+            /// <param name="theForm">The form.</param>
+            /// <param name="hostForm">The host form.</param>
+            public static void SetFormOnSameScreen(this Form theForm, Form hostForm)
+            {
+                if (hostForm == null)
+                    return;
+                var hostingScreen = Screen.FromRectangle(new Rectangle(hostForm.Location, hostForm.Size));
+                theForm.Left = hostingScreen.WorkingArea.Left + (hostingScreen.Bounds.Size.Width / 2) -
+                               (theForm.Size.Width / 2);
+                theForm.Top = hostingScreen.WorkingArea.Top + (hostingScreen.Bounds.Size.Height / 2) -
+                              (theForm.Size.Height / 2);
             }
         }
 

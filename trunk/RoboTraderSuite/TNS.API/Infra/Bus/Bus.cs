@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using TNS.Global;
+using TNS.Global.Extensions;
 
 namespace TNS.API.Infra.Bus
 {

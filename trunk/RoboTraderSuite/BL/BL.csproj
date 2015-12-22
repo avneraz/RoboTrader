@@ -36,6 +36,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,9 +58,17 @@
       <Project>{41e5cbc1-9d15-4e9a-9b0e-46fc9b823732}</Project>
       <Name>DbDAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.API\TNS.API.csproj">
+      <Project>{c50ba368-93c1-45ad-8779-683189b0ba34}</Project>
+      <Name>TNS.API</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.BDAL\BrokerDAL.csproj">
       <Project>{4fffca7c-2c0a-4918-bccb-794f692bf5c1}</Project>
       <Name>BrokerDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.Global\TNS.Global.csproj">
+      <Project>{bcb4c6f8-73e1-48d8-a410-0bcc0295ee61}</Project>
+      <Name>TNS.Global</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

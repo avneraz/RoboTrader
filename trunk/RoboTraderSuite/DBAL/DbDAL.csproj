@@ -44,6 +44,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,12 +54,61 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration.cs">
+      <DependentUpon>TNSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigurationBuilder.cs" />
     <Compile Include="DbDalManager.cs" />
+    <Compile Include="Entities\ConfigurationExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TNSModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TNSModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TNSModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TNSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TNSModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TNSModel.edmx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <EntityDeploy Include="TNSModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TNSModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="TNSModel.edmx.diagram">
+      <DependentUpon>TNSModel.edmx</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TNSModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TNSModel.edmx</DependentUpon>
+      <LastGenOutput>TNSModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="TNSModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TNSModel.edmx</DependentUpon>
+      <LastGenOutput>TNSModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\TNS.Global\TNS.Global.csproj">
+      <Project>{bcb4c6f8-73e1-48d8-a410-0bcc0295ee61}</Project>
+      <Name>TNS.Global</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

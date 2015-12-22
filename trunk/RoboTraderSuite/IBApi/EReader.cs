@@ -29,6 +29,7 @@ namespace IBApi
         {
             stopEvent = new ManualResetEvent(false);
             this.runner = new Thread(ReadAndProcessMessages);
+            runner.IsBackground = true;
             this.runner.Start();
         }
 

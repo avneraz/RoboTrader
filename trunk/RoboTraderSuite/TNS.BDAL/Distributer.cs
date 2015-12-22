@@ -1,48 +1,62 @@
 ﻿using System;
+using System.Drawing;
+using System.Net.Sockets;
 using System.Threading;
 using log4net;
 using TNS.API.ApiDataObjects;
 using TNS.API.IBApiWrapper;
 using TNS.API.Infra.Bus;
+using TNS.Global.PopUpMessages;
 
 namespace TNS.BrokerDAL
 {
     public class Distributer : SimpleBaseLogic
     {
+        public event Action<ExceptionData> ExceptionThrown;
+        public event Action<APIMessageData> APIMessageArrive;
+        public Distributer()
+        {
+        }
+
         private static readonly ILog Logger = LogManager.GetLogger(typeof(Distributer));
         protected override void HandleMessage(IMessage meesage)
         {
-            Console.WriteLine(meesage);
-            var optionData = meesage as OptionData;
-            if (optionData != null)
+            
+            
+            switch (meesage.GetType().Name)
             {
-                var msg = (optionData.Contract);
+                case "APIMessageData":
+                    APIMessageData apiMessageData = meesage as APIMessageData;
+                    if (apiMessageData == null)
+                        break;
+                    APIMessageArrive?.Invoke(apiMessageData);
+                    Logger.Debug(apiMessageData.ToString());
+                    break;
+                case "AccountSummaryData":
+                    
+                    
+                    break;
+                case "ExceptionData":
+                    HandleException(meesage);
+                    break;
+                case "OptionData":
+                    break;
+                case "OrderData":
+                    break;
+                case "PositionData":
+                    break;
             }
+
+
         }
 
-        internal void InitializeAPIBroker()
+        private  void HandleException(IMessage meesage)
         {
-            Logger.Info("Start Program - Tester");
-            var c = this;
-            IBApiWrapper wrapper = new IBApiWrapper("127.0.0.1", 7496, 4, c, "U1450837");
-            wrapper.Connect();
-            wrapper.RequestAccountData();
-            //wrapper.RequestContinousOptionChainData(new List<OptionContract>()
-            //{ new OptionContract("AAPL", 120, new DateTime(2015, 12, 24), OptionType.Call)});
-            //wrapper.RequestContinousPositionsData();
-            Thread.Sleep(2000);
-            string orderIdStr = wrapper.CreateOrder(new OptionContract("AAPL", 110, new DateTime(2015, 12, 24), OptionType.Call), new OrderData(OrderType.MKT, OrderAction.Sell, 1.8, 1));
-            Console.WriteLine("Placed Order ID = " + orderIdStr);
-            Thread.Sleep(10000);
-            orderIdStr = wrapper.CreateOrder(new OptionContract("AAPL", 120, new DateTime(2015, 12, 24), OptionType.Call), new OrderData(OrderType.MKT, OrderAction.Sell, 1.8, 1));
-            Console.WriteLine("Placed Order ID = " + orderIdStr);
-            Thread.Sleep(10000);
-            orderIdStr = wrapper.CreateOrder(new OptionContract("AAPL", 125, new DateTime(2015, 12, 24), OptionType.Call), new OrderData(OrderType.MKT, OrderAction.Sell, 1.8, 1));
-            Console.WriteLine("Placed Order ID = " + orderIdStr);
-            //string tags = "NetLiquidation,EquityWithLoanValue,BuyingPower,ExcessLiquidity,FullMaintMarginReq,FullInitMarginReq";
-            //wrapper.RequestAccountSummary();
-            Thread.Sleep(100000);
+            ExceptionData exceptionData = meesage as ExceptionData;
+            if (exceptionData == null) return;
+            ExceptionThrown?.Invoke(exceptionData);
+            
+            Logger.Error(exceptionData.ThrownException);
         }
-
     }
 }

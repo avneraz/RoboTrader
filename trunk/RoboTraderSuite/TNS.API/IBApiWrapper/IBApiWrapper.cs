@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using IBApi;
 using TNS.API.ApiDataObjects;
 using TNS.API.Infra.Bus;
-using TNS.Global.ArrayExtensions;
+using TNS.Global.Extensions.ArrayExtensions;
 
 namespace TNS.API.IBApiWrapper
 {
@@ -38,9 +38,6 @@ namespace TNS.API.IBApiWrapper
             }
         }
 
-       
-
-
         public IBApiWrapper(string host, int port, int clientId, IBaseLogic consumer, string mainAccount)
         {
             _host = host;
@@ -52,7 +49,7 @@ namespace TNS.API.IBApiWrapper
             _curReqId = 0;
 
         }
-        public void Connect()
+        public void ConnectToBroker()
         {
             //TODO: error handling
             _clientSocket.eConnect(_host, _port, _clientId);
@@ -65,7 +62,6 @@ namespace TNS.API.IBApiWrapper
             _clientSocket.reqAccountUpdates(true, _mainAccount);
         }
 
-        
         public void RequestContinousOptionChainData(List<OptionContract> contracts)
         {
             _handler.GetCurrentOptionsRequestIds().ForEach(requestId =>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using TNS.Global;
+using TNS.Global.Extensions;
 
 
 namespace TNS.API.Infra.Bus
@@ -32,7 +33,7 @@ namespace TNS.API.Infra.Bus
         protected SimpleBaseLogic()
         {
             _queue = new ConcurrentQueue<IMessage>();
-            Thread t = new Thread(Work);
+            var t = new Thread(Work) {IsBackground = true};
             t.Start();
         }
     

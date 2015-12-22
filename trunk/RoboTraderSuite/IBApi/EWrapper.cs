@@ -20,7 +20,7 @@ namespace IBApi
          * If an exception is thrown within the API code it will be notified here. Posible cases include errors while reading the information from the socket or even misshandlings at EWrapper's implementing class.
          * @param e the thrown exception.
          */
-        void error(Exception e);
+        void error(Exception ex);
         
         /**
          * @param str The error message received.
