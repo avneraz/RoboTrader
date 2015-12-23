@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using TNS.API.Infra.Bus;
+using TNS.Global.Bus;
+using TNS.Global.Enum;
 
 namespace TNS.API.ApiDataObjects
 {
@@ -17,9 +18,11 @@ namespace TNS.API.ApiDataObjects
         public double FullMaintMarginReq { get; set; }
         public double NetLiquidation { get; set; }
 
+        public EapiDataTypes APIDataType => EapiDataTypes.AccountSummaryData;
+
         #region Static Stuff
 
-       
+
         private static AccountSummaryData _accountSummaryDataObject;
 
         public static AccountSummaryData AccountSummaryDataObject =>

@@ -47,7 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllConfigurations.cs" />
+    <Compile Include="Bus\BaseLogic.cs" />
+    <Compile Include="Bus\Bus.cs" />
+    <Compile Include="Bus\IBaseLogic.cs" />
+    <Compile Include="Bus\IMessage.cs" />
     <Compile Include="Enum\EAlgorithmType.cs" />
+    <Compile Include="Enum\EapiDataTypes.cs" />
     <Compile Include="Enum\EConfigurationCategory.cs" />
     <Compile Include="Enum\ETradingStartMode.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />

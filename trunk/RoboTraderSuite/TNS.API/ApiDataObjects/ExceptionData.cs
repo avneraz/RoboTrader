@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TNS.API.Infra.Bus;
+using TNS.Global.Bus;
+using TNS.Global.Enum;
 
 namespace TNS.API.ApiDataObjects
 {
@@ -15,6 +16,8 @@ namespace TNS.API.ApiDataObjects
         }
 
         public Exception ThrownException { get; set; }
+
+        public EapiDataTypes APIDataType => EapiDataTypes.ExceptionData;
 
         public override string ToString()
         {

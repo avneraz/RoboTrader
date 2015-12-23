@@ -5,7 +5,8 @@ using System.Threading;
 using log4net;
 using TNS.API.ApiDataObjects;
 using TNS.API.IBApiWrapper;
-using TNS.API.Infra.Bus;
+using TNS.Global.Bus;
+using TNS.Global.Enum;
 using TNS.Global.PopUpMessages;
 
 namespace TNS.BrokerDAL
@@ -21,32 +22,35 @@ namespace TNS.BrokerDAL
         private static readonly ILog Logger = LogManager.GetLogger(typeof(Distributer));
         protected override void HandleMessage(IMessage meesage)
         {
-            
-            
-            switch (meesage.GetType().Name)
+
+            switch (meesage.APIDataType)
             {
-                case "APIMessageData":
-                    APIMessageData apiMessageData = meesage as APIMessageData;
+                case EapiDataTypes.Unknown:
+                    break;
+                case EapiDataTypes.ExceptionData:
+                    HandleException(meesage);
+                    break;
+                case EapiDataTypes.AccountSummaryData:
+                    break;
+                case EapiDataTypes.OptionData:
+                    break;
+                case EapiDataTypes.PositionData:
+                    break;
+                case EapiDataTypes.OrderData:
+                    break;
+                case EapiDataTypes.APIMessageData:
+                    var apiMessageData = meesage as APIMessageData;
                     if (apiMessageData == null)
                         break;
                     APIMessageArrive?.Invoke(apiMessageData);
                     Logger.Debug(apiMessageData.ToString());
                     break;
-                case "AccountSummaryData":
-                    
-                    
+                case EapiDataTypes.AccountMemberData:
                     break;
-                case "ExceptionData":
-                    HandleException(meesage);
-                    break;
-                case "OptionData":
-                    break;
-                case "OrderData":
-                    break;
-                case "PositionData":
-                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-
+           
 
         }
 

@@ -1,4 +1,5 @@
-﻿using TNS.API.Infra.Bus;
+﻿using TNS.Global.Bus;
+using TNS.Global.Enum;
 
 namespace TNS.API.ApiDataObjects
 {
@@ -10,7 +11,7 @@ namespace TNS.API.ApiDataObjects
             Position = position;
             AverageCost = averageCost;
         }
-
+        public EapiDataTypes APIDataType => EapiDataTypes.PositionData;
         public OptionContract OptionContract { get; set; }
         public int Position { get; set; }
         public double AverageCost { get; set; }

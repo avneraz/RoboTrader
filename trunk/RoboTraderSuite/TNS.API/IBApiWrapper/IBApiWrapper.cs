@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using IBApi;
 using TNS.API.ApiDataObjects;
-using TNS.API.Infra.Bus;
+using TNS.Global.Bus;
 using TNS.Global.Extensions.ArrayExtensions;
 
 namespace TNS.API.IBApiWrapper

@@ -1,5 +1,5 @@
 ﻿
-namespace TNS.API.Infra.Bus
+namespace TNS.Global.Bus
 {
     public interface IBaseLogic
     {

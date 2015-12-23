@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using TNS.Global;
+using TNS.Global.Enum;
 using TNS.Global.Extensions;
 
-
-namespace TNS.API.Infra.Bus
+namespace TNS.Global.Bus
 {
     public class MessageHandler : System.Attribute
     {
@@ -23,6 +22,7 @@ namespace TNS.API.Infra.Bus
         }
 
         public Action CurTask { get; set; }
+        public EapiDataTypes APIDataType { get; set; }
     }
 
     public abstract class SimpleBaseLogic : IBaseLogic
@@ -93,10 +93,10 @@ namespace TNS.API.Infra.Bus
 
     public abstract class SmartBaseLogic : SimpleBaseLogic
     {
-        private readonly global::TNS.API.Infra.Bus.Bus _bus;
+        private readonly global::TNS.Global.Bus.Bus _bus;
         private readonly Dictionary<Type, MethodInfo> _handledTypes;
 
-        protected SmartBaseLogic(global::TNS.API.Infra.Bus.Bus bus)
+        protected SmartBaseLogic(global::TNS.Global.Bus.Bus bus)
         {
             _bus = bus;
             _handledTypes = GetLogicHandledTypes();

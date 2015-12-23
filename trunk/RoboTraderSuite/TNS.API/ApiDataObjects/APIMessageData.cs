@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 
 using System.Text;
-using TNS.API.Infra.Bus;
+using TNS.Global.Bus;
+using TNS.Global.Enum;
 
 namespace TNS.API.ApiDataObjects
 {
@@ -14,6 +15,7 @@ namespace TNS.API.ApiDataObjects
         public object AdditionalInfo { get; set; }
 
         public DateTime UpdateTime { get; set; }
+        public EapiDataTypes APIDataType => EapiDataTypes.APIMessageData;
         public override string ToString()
         {
             return $"{UpdateTime} : {Message}. Code={ErrorCode}. AdditionalInfo={AdditionalInfo}.";

@@ -1,5 +1,6 @@
 ﻿
-using TNS.API.Infra.Bus;
+using TNS.Global.Bus;
+using TNS.Global.Enum;
 
 namespace TNS.API.ApiDataObjects
 {
@@ -23,7 +24,7 @@ namespace TNS.API.ApiDataObjects
             LimitPrice = limitPrice;
             Quantity = quantity;
         }
-
+        public EapiDataTypes APIDataType => EapiDataTypes.OrderData;
         public string OrderId { get; set; }
         public OrderType OrderType { get; set; }
         public OrderAction OrderAction { get; set; }

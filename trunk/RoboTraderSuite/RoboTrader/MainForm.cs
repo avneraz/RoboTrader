@@ -7,6 +7,9 @@ using TNS.BL;
 
 namespace TNS.RoboTrader
 {
+    /// <summary>
+    /// The main GUI Form
+    /// </summary>
     public partial class MainForm : Form
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(MainForm));
@@ -32,7 +35,7 @@ namespace TNS.RoboTrader
             Action action = () =>
             {
                 //txtMessages.Text += apiMessageData.ToString();
-                apiMesagesView1.AddMessage(apiMessageData);
+                apiMesagesView.AddMessage(apiMessageData);
             };
             if (InvokeRequired)
             {

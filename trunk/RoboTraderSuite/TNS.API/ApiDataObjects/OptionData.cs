@@ -1,9 +1,13 @@
-﻿using TNS.API.Infra.Bus;
+﻿using TNS.Global.Bus;
+using TNS.Global.Enum;
+
 
 namespace TNS.API.ApiDataObjects
 {
     public class OptionData : IMessage
     {
+
+        public EapiDataTypes APIDataType => EapiDataTypes.OptionData;
         public OptionContract Contract { get; set; }
         public double LastPrice { get; set; }
         public double AskPrice { get; set; }

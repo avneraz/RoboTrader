@@ -8,8 +8,8 @@ using IBApi;
 using log4net;
 using TNS.API.ApiDataObjects;
 using TNS.API.IBApiWrapper;
-using TNS.API.Infra.Bus;
 using TNS.BL;
+using TNS.Global.Bus;
 using static System.Console;
 
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]

@@ -1,4 +1,5 @@
-﻿using TNS.API.Infra.Bus;
+﻿using TNS.Global.Bus;
+using TNS.Global.Enum;
 
 namespace TNS.API.IBApiWrapper
 {
@@ -11,7 +12,7 @@ namespace TNS.API.IBApiWrapper
             Tag = tag;
             Currency = currency;
         }
-
+        public EapiDataTypes APIDataType => EapiDataTypes.AccountMemberData;
         public string Account { get; set; }
         public string Values { get; set; }
         public string Currency { get; set; }
