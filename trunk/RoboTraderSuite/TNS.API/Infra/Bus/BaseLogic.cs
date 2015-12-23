@@ -33,7 +33,7 @@ namespace TNS.API.Infra.Bus
         protected SimpleBaseLogic()
         {
             _queue = new ConcurrentQueue<IMessage>();
-            var t = new Thread(Work) {IsBackground = true};
+            var t = new Thread(Work) {IsBackground = true, Name = "SimpleBaseLogic_Work" };
             t.Start();
         }
     

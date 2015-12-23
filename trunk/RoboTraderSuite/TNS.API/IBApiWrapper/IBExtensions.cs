@@ -52,12 +52,6 @@ namespace TNS.API.IBApiWrapper
             
         }
 
-        public static APIMessageData ToAPIMessageData(this TWSMessage twsMessage)
-        {
-            APIMessageData apiMessageData = new APIMessageData {ErrorCode = twsMessage.ErrorCode, Message = twsMessage.Message, AdditionalInfo = twsMessage.RequestId};
-            return apiMessageData;
-
-        }
         #region Update Account Summary
 
         public static void UpdateAccountSummary(this AccountMemberData accountMemberData)

@@ -46,7 +46,8 @@ namespace TNS.API.IBApiWrapper
             {
                 Message = errorMsg,
                 ErrorCode = errorCode,
-                AdditionalInfo = id
+                AdditionalInfo = id,
+                UpdateTime = DateTime.Now
             };
             _consumer.Enqueue(apiMessageData);
             Logger.Info(apiMessageData.ToString());

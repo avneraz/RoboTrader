@@ -10,6 +10,9 @@ namespace TNS.RoboTrader
     public partial class MainForm : Form
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(MainForm));
+        /// <summary>
+        /// The Main GUI Form
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
@@ -28,7 +31,8 @@ namespace TNS.RoboTrader
         {
             Action action = () =>
             {
-                txtMessages.Text += apiMessageData.ToString();
+                //txtMessages.Text += apiMessageData.ToString();
+                apiMesagesView1.AddMessage(apiMessageData);
             };
             if (InvokeRequired)
             {
