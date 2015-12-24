@@ -1,4 +1,4 @@
-﻿namespace TNS.BrokerDAL
+﻿namespace TNS.BL
 {
     /// <summary>
     /// Deals with all the issues involved with getting position data from the Broker,

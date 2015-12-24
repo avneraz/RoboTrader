@@ -49,5 +49,22 @@ namespace TNS.DbDAL
                 throw;
             }
         }
+        public static List<MainSecurity> GetActiveUNLList()
+        {
+            try
+            {
+                using (var ctx = new VegaEntities())
+                {
+                    var contractList =
+                        ctx.MainSecurities.Where(contract => contract.IsActive.Value && contract.OptionsChain.Value);
+                    return contractList.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("DbDalManager.GetActiveContractList():: " + ex.Message, ex);
+                throw;
+            }
+        }
     }
 }

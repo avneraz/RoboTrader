@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TNS.API.ApiDataObjects;
 using TNS.API.IBApiWrapper;
-using TNS.BrokerDAL;
 using TNS.DbDAL;
 using TNS.Global;
 using TNS.Global.PopUpMessages;
@@ -27,6 +26,18 @@ namespace TNS.BL
             Configurations = AllConfigurations.AllConfigurationsObject;
         }
 
+        private Dictionary<string, UNLManager> UNLManagerDic { get; set; }
+        private void BuildUNLManagers()
+        {
+            UNLManagerDic = new Dictionary<string, UNLManager>();
+            List<MainSecurity> activeUNLList = DbDalManager.GetActiveUNLList();
+            foreach (MainSecurity mainSecurity in activeUNLList)
+            {
+                var unlManager = new UNLManager(mainSecurity);
+                UNLManagerDic.Add(mainSecurity.Symbol, unlManager);
+            }
+
+        }
         Form ParentForm { get; set; }
 
         public ITradingApi APIWrapper { get; private set; }
@@ -38,7 +49,8 @@ namespace TNS.BL
         /// </summary>
         public void ConnectToBroker()
         {
-            Distributer = new Distributer();
+            BuildUNLManagers();
+            Distributer = new Distributer(UNLManagerDic);
 
             //Change the wrapper object according to the actual broker, 
             //for now it's Interactive Broker.
@@ -70,13 +82,9 @@ namespace TNS.BL
     
         public Distributer Distributer { get; set; }
 
-        public PositionsDataBuilder PositionsDataBuilder { get; private set; }
+       
 
         public AccountManager AccountManager { get; private set; }
-
-        //public ContractManager ContractManager { get; private set; }
-
-        public OptionsManager OptionsManager { get; private set; }
 
         public AllConfigurations Configurations { get; private set; }
         #endregion

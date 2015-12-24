@@ -1,24 +1,23 @@
 ﻿using System;
-using System.Drawing;
-using System.Net.Sockets;
-using System.Threading;
+using System.Collections.Generic;
 using log4net;
 using TNS.API.ApiDataObjects;
-using TNS.API.IBApiWrapper;
 using TNS.Global.Bus;
 using TNS.Global.Enum;
-using TNS.Global.PopUpMessages;
 
-namespace TNS.BrokerDAL
+namespace TNS.BL
 {
     public class Distributer : SimpleBaseLogic
     {
-        public event Action<ExceptionData> ExceptionThrown;
-        public event Action<APIMessageData> APIMessageArrive;
-        public Distributer()
+        public Distributer(Dictionary<string, UNLManager> unlManagerDic)
         {
+            UNLManagerDic = unlManagerDic;
         }
 
+        public event Action<ExceptionData> ExceptionThrown;
+        public event Action<APIMessageData> APIMessageArrive;
+        
+        private Dictionary<string, UNLManager> UNLManagerDic { get; set; }
         private static readonly ILog Logger = LogManager.GetLogger(typeof(Distributer));
         protected override void HandleMessage(IMessage meesage)
         {
@@ -32,12 +31,7 @@ namespace TNS.BrokerDAL
                     break;
                 case EapiDataTypes.AccountSummaryData:
                     break;
-                case EapiDataTypes.OptionData:
-                    break;
-                case EapiDataTypes.PositionData:
-                    break;
-                case EapiDataTypes.OrderData:
-                    break;
+                
                 case EapiDataTypes.APIMessageData:
                     var apiMessageData = meesage as APIMessageData;
                     if (apiMessageData == null)
@@ -46,6 +40,11 @@ namespace TNS.BrokerDAL
                     Logger.Debug(apiMessageData.ToString());
                     break;
                 case EapiDataTypes.AccountMemberData:
+                    break;
+                case EapiDataTypes.OptionData:
+                case EapiDataTypes.PositionData:
+                case EapiDataTypes.OrderData:
+
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

@@ -1,10 +1,4 @@
-﻿using System.Linq;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using TNS.API.ApiDataObjects;
-using TNS.DbDAL;
-
-namespace TNS.BrokerDAL
+﻿namespace TNS.BL
 {
     public class OptionsManager
     {
