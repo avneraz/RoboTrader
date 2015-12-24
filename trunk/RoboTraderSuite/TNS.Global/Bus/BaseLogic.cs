@@ -33,13 +33,15 @@ namespace TNS.Global.Bus
         protected SimpleBaseLogic()
         {
             _queue = new ConcurrentQueue<IMessage>();
-            var t = new Thread(Work) {IsBackground = true, Name = "SimpleBaseLogic_Work" };
+            var t = new Thread(Work) {IsBackground = true };
             t.Start();
         }
-    
+
+        protected virtual string ThreadName => "SimpleBaseLogic_Work";
 
         private void Work()
         {
+            Thread.CurrentThread.Name = ThreadName;
             while (true)
             {
                 IMessage message;
