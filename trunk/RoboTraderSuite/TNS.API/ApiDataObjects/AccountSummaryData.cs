@@ -18,7 +18,7 @@ namespace TNS.API.ApiDataObjects
         public double FullMaintMarginReq { get; set; }
         public double NetLiquidation { get; set; }
 
-        public EapiDataTypes APIDataType => EapiDataTypes.AccountSummaryData;
+        public EapiDataTypes APIDataType { get; set; } 
 
         #region Static Stuff
 

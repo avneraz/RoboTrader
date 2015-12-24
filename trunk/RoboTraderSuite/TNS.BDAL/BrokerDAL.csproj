@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="AccountManager.cs" />
     <Compile Include="Distributer.cs" />
+    <Compile Include="MainSecuritiesManager.cs" />
     <Compile Include="OptionsManager.cs" />
     <Compile Include="PositionsDataBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,6 +59,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DBAL\DbDAL.csproj">
+      <Project>{41e5cbc1-9d15-4e9a-9b0e-46fc9b823732}</Project>
+      <Name>DbDAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.API\TNS.API.csproj">
       <Project>{c50ba368-93c1-45ad-8779-683189b0ba34}</Project>
       <Name>TNS.API</Name>

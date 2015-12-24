@@ -28,7 +28,8 @@ namespace TNS.BL
         }
 
         Form ParentForm { get; set; }
-        private ITradingApi _apiWrapper;
+
+        public ITradingApi APIWrapper { get; private set; }
 
 
         /// <summary>
@@ -41,13 +42,13 @@ namespace TNS.BL
 
             //Change the wrapper object according to the actual broker, 
             //for now it's Interactive Broker.
-                _apiWrapper = new IBApiWrapper(
+                APIWrapper = new IBApiWrapper(
                 Configurations.Application.DefaultHost, 
                 Configurations.Application.AppPort, 
                 Configurations.Application.AppClientId, 
                 Distributer, 
                 Configurations.Application.MainAccount);
-            _apiWrapper.ConnectToBroker();
+            APIWrapper.ConnectToBroker();
             Distributer.ExceptionThrown += DistributerOnExceptionThrown;
         }
         //RequestAccountData

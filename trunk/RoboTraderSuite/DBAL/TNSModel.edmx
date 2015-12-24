@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="VegaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="VegaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Configuration">
           <Key>
             <PropertyRef Name="ParameterId" />
@@ -16,11 +16,40 @@
           <Property Name="Value" Type="nvarchar" MaxLength="100" />
           <Property Name="Category" Type="int" />
         </EntityType>
+        <EntityType Name="MainSecurities">
+          <Key>
+            <PropertyRef Name="Symbol" />
+          </Key>
+          <Property Name="Symbol" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="SecType" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Exchange" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Currency" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="OptionsChain" Type="bit" />
+          <Property Name="Multiplier" Type="nvarchar" MaxLength="20" />
+          <Property Name="MaxMargin" Type="float" />
+          <Property Name="ExpiryDaysMax" Type="int" />
+          <Property Name="ExpiryDaysMin" Type="int" />
+          <Property Name="LowLoadingStrike" Type="int" />
+          <Property Name="HighLoadingStrike" Type="int" />
+        </EntityType>
+        <EntityType Name="SessionsExpiration">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExpiryDate" Type="datetime" Nullable="false" />
+          <Property Name="Symbol" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="SessionKey" Type="nvarchar" MaxLength="20" />
+        </EntityType>
         <EntityContainer Name="VegaModelStoreContainer">
           <EntitySet Name="Configuration" EntityType="Self.Configuration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MainSecurities" EntityType="Self.MainSecurities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SessionsExpiration" EntityType="Self.SessionsExpiration" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="VegaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -37,7 +66,37 @@
         </EntityType>
         <EntityContainer Name="VegaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AppConfigurations" EntityType="VegaModel.Configuration" />
+          <EntitySet Name="SessionsExpirations" EntityType="VegaModel.SessionsExpiration" />
+          <EntitySet Name="MainSecurities" EntityType="VegaModel.MainSecurity" />
         </EntityContainer>
+        <EntityType Name="SessionsExpiration">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExpiryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Symbol" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="SessionKey" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MainSecurity">
+          <Key>
+            <PropertyRef Name="Symbol" />
+          </Key>
+          <Property Name="Symbol" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SecType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Exchange" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Currency" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="OptionsChain" Type="Boolean" />
+          <Property Name="Multiplier" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MaxMargin" Type="Double" />
+          <Property Name="ExpiryDaysMax" Type="Int32" />
+          <Property Name="ExpiryDaysMin" Type="Int32" />
+          <Property Name="LowLoadingStrike" Type="Int32" />
+          <Property Name="HighLoadingStrike" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -53,6 +112,36 @@
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="Category" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SessionsExpirations">
+            <EntityTypeMapping TypeName="VegaModel.SessionsExpiration">
+              <MappingFragment StoreEntitySet="SessionsExpiration">
+                <ScalarProperty Name="SessionKey" ColumnName="SessionKey" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Symbol" ColumnName="Symbol" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MainSecurities">
+            <EntityTypeMapping TypeName="VegaModel.MainSecurity">
+              <MappingFragment StoreEntitySet="MainSecurities">
+                <ScalarProperty Name="HighLoadingStrike" ColumnName="HighLoadingStrike" />
+                <ScalarProperty Name="LowLoadingStrike" ColumnName="LowLoadingStrike" />
+                <ScalarProperty Name="ExpiryDaysMin" ColumnName="ExpiryDaysMin" />
+                <ScalarProperty Name="ExpiryDaysMax" ColumnName="ExpiryDaysMax" />
+                <ScalarProperty Name="MaxMargin" ColumnName="MaxMargin" />
+                <ScalarProperty Name="Multiplier" ColumnName="Multiplier" />
+                <ScalarProperty Name="OptionsChain" ColumnName="OptionsChain" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="Exchange" ColumnName="Exchange" />
+                <ScalarProperty Name="SecType" ColumnName="SecType" />
+                <ScalarProperty Name="Symbol" ColumnName="Symbol" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

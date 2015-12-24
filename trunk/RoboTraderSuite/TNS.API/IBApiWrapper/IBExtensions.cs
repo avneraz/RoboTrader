@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using IBApi;
@@ -11,10 +12,13 @@ namespace TNS.API.IBApiWrapper
     {
         public static OptionContract ToOptionContract(this Contract contract)
         {
-            //TODO - fix expiry!
+            //TODO-Done - fix expiry! ==> Avner fix it already!!
             var optionType = contract.Right == "C" ? OptionType.Call : OptionType.Put;
-            return new OptionContract(contract.Symbol, contract.Strike, DateTime.MaxValue, optionType, Convert.ToInt32(contract.Multiplier),
-                contract.Currency);
+            return new OptionContract(contract.Symbol, contract.Strike, GetExpiryDate(contract.Expiry), optionType,  contract.Exchange, Convert.ToInt32(contract.Multiplier),contract.Currency);
+
+
+            //(string symbol, double strike, DateTime expiry,
+            //OptionType type, string exchange= "SMART", int multiplier = 100, string currency = "USD")
         }
 
         public static Contract ToIbContract(this OptionContract c)
@@ -27,11 +31,45 @@ namespace TNS.API.IBApiWrapper
                 Strike = c.Strike,
                 Currency = c.Currency,
                 Multiplier = c.Multiplier.ToString(),
-                SecType = "OPT",
-                Exchange = "SMART"
+                SecType = GetSecType(c.SecurityType),
+                Exchange = c.Exchange
             };
         }
 
+        private static DateTime GetExpiryDate(string expDateStr)
+        {
+            if (string.IsNullOrEmpty(expDateStr))
+                return DateTime.MinValue;
+            DateTime expiryDate = DateTime.ParseExact(expDateStr, "yyyyMMdd", 
+                        CultureInfo.CurrentCulture, DateTimeStyles.None);
+            return expiryDate;
+        }
+        private static string GetSecType(SecurityType type)
+        {
+            switch (type)
+            {
+                case SecurityType.Stock:
+                    return "STK";
+                   
+                case SecurityType.Option:
+                    return "OPT";
+                case SecurityType.Index:
+                    return "IND";
+                default:
+                    return string.Empty;
+            }
+        }
+
+        public static Contract ToIbMainSecurityContract(this ContractBase msContract)
+        {
+            return new Contract
+            {
+                Symbol = msContract.Symbol,
+                Currency = msContract.Currency,
+                SecType = GetSecType(msContract.SecurityType),
+                Exchange = msContract.Exchange
+            };
+        }
         public static Order ToIbOrder(this OrderData order, string mainAccount, string orderId)
         {
             var ibOrder = new Order

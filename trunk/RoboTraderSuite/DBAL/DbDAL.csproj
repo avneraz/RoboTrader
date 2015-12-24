@@ -60,7 +60,13 @@
     <Compile Include="ConfigurationBuilder.cs" />
     <Compile Include="DbDalManager.cs" />
     <Compile Include="Entities\ConfigurationExt.cs" />
+    <Compile Include="MainSecurity.cs">
+      <DependentUpon>TNSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SessionsExpiration.cs">
+      <DependentUpon>TNSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="TNSModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

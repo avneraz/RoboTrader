@@ -26,5 +26,7 @@ namespace TNS.DbDAL
         }
     
         public virtual DbSet<Configuration> AppConfigurations { get; set; }
+        public virtual DbSet<SessionsExpiration> SessionsExpirations { get; set; }
+        public virtual DbSet<MainSecurity> MainSecurities { get; set; }
     }
 }

@@ -50,8 +50,6 @@ namespace TNS.BrokerDAL
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-           
-
         }
 
         private  void HandleException(IMessage meesage)

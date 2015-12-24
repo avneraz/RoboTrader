@@ -5,7 +5,7 @@ namespace TNS.Global.Bus
     public interface IMessage
     {
 
-        EapiDataTypes APIDataType { get; }
+        EapiDataTypes APIDataType { get;  }
 
     }
 }

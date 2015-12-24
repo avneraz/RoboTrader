@@ -82,6 +82,26 @@ namespace TNS.API.IBApiWrapper
 
             
         }
+        //public void RequestContinousMainSecuritiesData(List<ContractBase> contracts)
+        //{
+        //    _handler.GetCurrentOptionsRequestIds().ForEach(requestId =>
+        //    {
+        //        _clientSocket.cancelMktData(requestId);
+        //    });
+
+
+        //    contracts.ForEach(c =>
+        //    {
+        //        Contract ibContract = c.ToIbContract();
+        //        //TODO: merge requestId for same contract? if it's requested few times? clear the old ones?
+        //        int requestId = RequestId;
+        //        _clientSocket.reqContractDetails(requestId, ibContract);
+        //        _handler.RegisterOption(requestId, c);
+        //        _clientSocket.reqMktData(requestId, ibContract, "100,225,233", false, new List<TagValue>());
+        //    });
+
+
+        //}
 
         public void RequestContinousPositionsData()
         {

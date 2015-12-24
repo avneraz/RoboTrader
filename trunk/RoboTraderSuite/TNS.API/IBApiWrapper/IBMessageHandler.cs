@@ -13,6 +13,7 @@ namespace TNS.API.IBApiWrapper
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(IBMessageHandler));
         private readonly Dictionary<int, OptionData> _optionsDic;
+        //private readonly Dictionary<int, MainSecuritiesData> _mainSecuritiesDic;
         private readonly IBaseLogic _consumer;
         private const double EPSILON = 0.000000001;
          
@@ -142,8 +143,8 @@ namespace TNS.API.IBApiWrapper
 
 
 
-        public void tickOptionComputation(int tickerId, int field, double impliedVolatility, double delta,
-            double optPrice,
+        public void tickOptionComputation(int tickerId, int field, 
+            double impliedVolatility, double delta, double optPrice,
             double pvDividend, double gamma, double vega, double theta, double undPrice)
         {
             lock (_optionsDic)
@@ -424,6 +425,11 @@ namespace TNS.API.IBApiWrapper
         }
 
         public IEnumerable<int> GetCurrentOptionsRequestIds()
+        {
+            return _optionsDic.Keys;
+        }
+
+        public IEnumerable<int> GetCurrentMainSecuritiesRequestIds()
         {
             return _optionsDic.Keys;
         }

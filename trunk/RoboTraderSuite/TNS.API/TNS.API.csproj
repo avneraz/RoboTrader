@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="ApiDataObjects\APIMessageData.cs" />
     <Compile Include="ApiDataObjects\ExceptionData.cs" />
+    <Compile Include="ApiDataObjects\SecurityData.cs" />
     <Compile Include="IBApiWrapper\AccountMemberData.cs" />
     <Compile Include="ApiDataObjects\AccountSummaryData.cs" />
     <Compile Include="ApiDataObjects\ContractBase.cs" />

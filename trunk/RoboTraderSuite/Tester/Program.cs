@@ -43,7 +43,7 @@ namespace Tester
             //wrapper.ConnectToBroker();
             //wrapper.RequestAccountData();
             //wrapper.RequestContinousOptionChainData(new List<OptionContract>()
-            //{ new OptionContract("AAPL", 120, new DateTime(2015, 12, 24), OptionType.Call)});
+            //    { new OptionContract("AAPL", 120, new DateTime(2015, 12, 24), OptionType.Call)});
             //wrapper.RequestContinousPositionsData();
             //Thread.Sleep(2000);
             //string orderIdStr = wrapper.CreateOrder(new OptionContract("AAPL", 120, new DateTime(2015, 12, 24), OptionType.Call), new OrderData(OrderType.MKT, OrderAction.Sell, 1.8, 1));

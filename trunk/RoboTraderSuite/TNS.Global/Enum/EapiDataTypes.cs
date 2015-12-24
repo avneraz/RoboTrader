@@ -16,5 +16,6 @@ namespace TNS.Global.Enum
         OrderData = 5,
         APIMessageData = 6,
         AccountMemberData = 7,
+        SecurityData,
     }
 }

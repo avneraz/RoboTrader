@@ -6,6 +6,8 @@
     <edmx:Diagrams>
       <Diagram DiagramId="24c8574d48844d11ac270fb72ceed310" Name="Diagram1">
         <EntityTypeShape EntityType="VegaModel.Configuration" Width="2.125" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VegaModel.SessionsExpiration" Width="1.875" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="VegaModel.MainSecurity" Width="2" PointX="0.75" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
