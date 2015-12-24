@@ -10,12 +10,9 @@ namespace TNS.API.ApiDataObjects
 {
     public class SecurityData : IMessage
     {
-        public SecurityData()
-        {
-            APIDataType = EapiDataTypes.SecurityData;
-        }
 
-        public EapiDataTypes APIDataType { get; set; }
+        public virtual EapiDataTypes APIDataType => EapiDataTypes.SecurityData;
+
         public ContractBase Contract { get; set; }
         public double LastPrice { get; set; }
         public double AskPrice { get; set; }
