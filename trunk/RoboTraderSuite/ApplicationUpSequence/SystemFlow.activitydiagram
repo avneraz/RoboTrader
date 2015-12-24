@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<activityRootModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm11="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm12="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" dslVersion="1.0.0.0" Id="47d82808-d35b-4c87-9249-7c4cd544d3f4" name="SystemFlow" linkedPackageId="f0c6a1a0-e5c4-48c6-bd9b-2f5819ac55a7" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner">
+  <description>dd</description>
+  <ownedCommentsInternal>
+    <comment Id="a3090c6c-542c-4cc3-936b-739747ecb6c6">
+      <elementDefinition Id="f523fa59-384c-445e-b218-035a16d0ed4d" />
+      <body>Each for every UNL</body>
+    </comment>
+    <comment Id="52f40324-7232-4806-87ad-87dbce218484">
+      <elementDefinition Id="22c13b52-9317-4c44-a36f-01bcf3919e18" />
+      <body>Recevies data about securities such as VIX, nasdaq, etc... outputs this data to the distributer
+</body>
+    </comment>
+    <comment Id="df406fbd-26fc-4653-8e7c-941f015cf7f6">
+      <elementDefinition Id="e6653c6a-5bf0-450d-a215-7f0a3831041a" />
+      <body>Recevies general data about the account, such as the margin, etc... Output data about the acount</body>
+    </comment>
+    <comment Id="fc37b89d-4b79-456e-9361-55057c8fc64b">
+      <elementDefinition Id="bf202ff7-8941-4ad5-9f34-621052c96cf0" />
+      <body>Initalize the system, and the different components</body>
+    </comment>
+    <comment Id="56708e6a-47d9-4260-9c8e-972cc0776646">
+      <elementDefinition Id="0fa0f9c9-ec96-4d0b-b09c-21dd741f8220" />
+      <body>Managing the rest of the components and distibuting the messages</body>
+    </comment>
+  </ownedCommentsInternal>
+  <packagedElements>
+    <activityRootModelHasActivity>
+      <activity Id="40e6cb27-0165-4c43-8390-abba9076f476" name="SystemFlow" isAbstract="false" isLeaf="false" isActiveClass="false" isReentrant="false" isReadOnly="false" isSingleExecution="false">
+        <elementDefinition Id="8d19d771-0518-4128-a826-5a83730fbae9" />
+        <nodes>
+          <objectNode Id="369f9684-9cf9-49e3-957f-294e0951b6b6" name="ITradingApi" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="05600f66-ed16-469d-85d7-e3c14b15b523" />
+            <objectFlowTargets>
+              <objectFlow Id="713b02d6-b09c-4dcc-8bd7-e8769a0f4b66" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <objectNodeMoniker Id="0a2ba70a-9ee5-4a3d-9ed0-8d0beae705d3" LastKnownName="Distributer" />
+                <elementDefinition Id="1f418ad1-b6b0-4da3-b302-c160873a77df" />
+              </objectFlow>
+            </objectFlowTargets>
+            <upperBound>
+              <literalInteger Id="c6842239-002c-4495-abc1-75f74f83c4fc" name="2147483647" value="2147483647">
+                <elementDefinition Id="72365fbf-fbc7-4024-aa5d-5df07e88ef97" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+          <objectNode Id="0a2ba70a-9ee5-4a3d-9ed0-8d0beae705d3" name="Distributer" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="2eaa441f-8b6c-4703-8e7e-5bde8a07d10b" />
+            <objectFlowTargets>
+              <objectFlow Id="e20b4c59-e403-4599-827d-7cfbaf4d45f0" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <objectNodeMoniker Id="fac99575-6776-454d-bc09-010c05f93be2" LastKnownName="AccountManager" />
+                <elementDefinition Id="949a0457-73cb-4458-a3b7-69ddc99796db" />
+              </objectFlow>
+              <objectFlow Id="ce9a45ef-e9ab-4afc-b9b0-4b42e367ab1b" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <objectNodeMoniker Id="52c777b8-8926-4bdb-a166-587737b359df" LastKnownName="UNLManager" />
+                <elementDefinition Id="34902ac0-55b6-4498-9ff4-61cca1053c56" />
+              </objectFlow>
+              <objectFlow Id="bbd3982c-e2e4-4ba4-b3ec-2e10d0931ac5" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <objectNodeMoniker Id="e71d27fd-0f1d-44d9-ab75-a4c9c14db59b" LastKnownName="MainSecurityManager" />
+                <elementDefinition Id="48eaa703-5612-4996-b820-e572113a029b" />
+              </objectFlow>
+            </objectFlowTargets>
+            <upperBound>
+              <literalInteger Id="68f1052d-7a1e-4ab7-bb26-49c3ffac1625" name="2147483647" value="2147483647">
+                <elementDefinition Id="35152654-5a95-4de4-8cc0-16e5156777a9" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+          <objectNode Id="52c777b8-8926-4bdb-a166-587737b359df" name="UNLManager" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="9fd923f2-3219-4d96-a95e-9668a1f6e2f4" />
+            <upperBound>
+              <literalInteger Id="55884d3e-b9dc-43ba-ada2-e47a4865e97f" name="2147483647" value="2147483647">
+                <elementDefinition Id="85d8a6ca-1358-46b9-96db-1e50d93592dc" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+          <objectNode Id="dba985cd-c1fa-4eb6-b035-c35b3f8a3ce1" name="OptionsManager" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="5ee3768f-b6aa-40fa-ab9a-fad57e9bfd27" />
+            <upperBound>
+              <literalInteger Id="58d3a76b-4e59-4894-a1c9-e18165908727" name="2147483647" value="2147483647">
+                <elementDefinition Id="1821c199-a510-46c2-ad52-f1309f8fe7e6" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+          <objectNode Id="6ed7227f-396c-43d7-b396-825ba3049d38" name="PositionDataBuilder" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="0f28afcc-df85-43b8-b60f-5507e29798ed" />
+            <upperBound>
+              <literalInteger Id="8bca9fb3-fda6-40dd-9641-6089781788bd" name="2147483647" value="2147483647">
+                <elementDefinition Id="de1adcb2-2fba-4771-a3ce-45c55bccd3b2" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+          <objectNode Id="86950655-7482-4a34-9d7a-8c119f7aa9d7" name="TradingManager" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="a8558ebb-4fdc-4ba0-aa70-8e0734784a4d" />
+            <upperBound>
+              <literalInteger Id="fefd4490-db8b-4ed8-bd5c-792070d43140" name="2147483647" value="2147483647">
+                <elementDefinition Id="7cc5a4e9-3706-4fd6-8a69-6066094a8f8b" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+          <objectNode Id="be0b4647-4a33-4f94-8bb5-166e9c8f1a27" name="OrdersManager" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="8a52c213-b4ed-4ce0-b322-ba78010a60dc" />
+            <upperBound>
+              <literalInteger Id="04229509-4d89-4cdd-af6a-adbc5432b93b" name="2147483647" value="2147483647">
+                <elementDefinition Id="79a49add-13ba-4c97-9af2-cbdfcc07eeb5" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+          <objectNode Id="d3ca5ec4-17bc-4fd5-859a-5500941fa2f7" name="TradingTimeManager" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="6b8d3399-2c43-403f-a54a-6afa0414dd3d" />
+            <upperBound>
+              <literalInteger Id="b37a2699-f9dc-469b-a585-179e925412e1" name="2147483647" value="2147483647">
+                <elementDefinition Id="384ffbcf-8591-490a-a7f4-b1bc9f47ed42" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+          <objectNode Id="e71d27fd-0f1d-44d9-ab75-a4c9c14db59b" name="MainSecurityManager" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="cab97c92-eabf-49b7-b6fc-42dcf43b3206" />
+            <objectFlowTargets>
+              <objectFlow Id="3ce2d167-8834-4be6-8de9-258e264df0f3" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <objectNodeMoniker Id="0a2ba70a-9ee5-4a3d-9ed0-8d0beae705d3" LastKnownName="Distributer" />
+                <elementDefinition Id="c60d91a0-1ace-4091-a8b2-4a278f8c7f6c" />
+              </objectFlow>
+            </objectFlowTargets>
+            <upperBound>
+              <literalInteger Id="04cda63f-edbb-4258-8a82-62140abb68fc" name="2147483647" value="2147483647">
+                <elementDefinition Id="595e826d-b558-4ac2-bfc1-3f7f8782a6d7" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+          <objectNode Id="fac99575-6776-454d-bc09-010c05f93be2" name="AccountManager" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="4edbe05f-95f1-4b22-a73d-4a4430999595" />
+            <objectFlowTargets>
+              <objectFlow Id="2fd90cd5-8254-41cd-8583-a63ae158ad04" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <objectNodeMoniker Id="0a2ba70a-9ee5-4a3d-9ed0-8d0beae705d3" LastKnownName="Distributer" />
+                <elementDefinition Id="0f1a7f71-5867-41fe-ab65-e220d17df8b1" />
+              </objectFlow>
+            </objectFlowTargets>
+            <upperBound>
+              <literalInteger Id="6cd6a20e-e400-4d4a-824c-d72dce906b9e" name="2147483647" value="2147483647">
+                <elementDefinition Id="7e7ff5e6-175d-4291-80cd-eb816f696e8f" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+          <objectNode Id="e103bb95-135c-4a08-a88b-0cdf8e29537b" name="AppManager" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="756f93a0-4beb-404f-8903-d2c2895ba1a0" />
+            <upperBound>
+              <literalInteger Id="d7023f00-3f5d-4e2f-be92-94c9297a90f4" name="2147483647" value="2147483647">
+                <elementDefinition Id="9bb410ae-0af2-4f97-8fc0-ef26a843f895" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+        </nodes>
+      </activity>
+    </activityRootModelHasActivity>
+  </packagedElements>
+  <package Id="f0c6a1a0-e5c4-48c6-bd9b-2f5819ac55a7" name="ApplicationUpSequence">
+    <elementDefinition Id="e2dbf8e2-8ddf-4ab0-8b5d-19467ca9b138" />
+    <profileInstances>
+      <packageHasProfileInstances Id="5364e945-848b-4e7d-8ff0-65451a66e909">
+        <profileInstance Id="0ec0c6b7-86e4-46ad-b3f0-6aabcb84bd76" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="f4f96788-8d96-4e02-be40-82d98112453a">
+        <profileInstance Id="f63cdc56-4098-43aa-8d3f-a7b8ea179aee" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
+  </package>
+</activityRootModel>

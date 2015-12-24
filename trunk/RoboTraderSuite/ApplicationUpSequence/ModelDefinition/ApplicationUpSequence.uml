@@ -1,8 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner"
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm12="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner"
   dslVersion="1.0.0.0"
   Id="e2dbf8e2-8ddf-4ab0-8b5d-19467ca9b138"
   name="ApplicationUpSequence" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <ownedCommentsInternal>
+    <comment
+      Id="f523fa59-384c-445e-b218-035a16d0ed4d">
+      <body>Each for every UNL</body>
+    </comment>
+    <comment
+      Id="22c13b52-9317-4c44-a36f-01bcf3919e18">
+      <body>Recevies data about securities such as VIX, nasdaq, etc... outputs this data to the distributer
+</body>
+    </comment>
+    <comment
+      Id="e6653c6a-5bf0-450d-a215-7f0a3831041a">
+      <body>Recevies general data about the account, such as the margin, etc... Output data about the acount</body>
+    </comment>
+    <comment
+      Id="bf202ff7-8941-4ad5-9f34-621052c96cf0">
+      <body>Initalize the system, and the different components</body>
+    </comment>
+    <comment
+      Id="0fa0f9c9-ec96-4d0b-b09c-21dd741f8220">
+      <body>Managing the rest of the components and distibuting the messages</body>
+    </comment>
+  </ownedCommentsInternal>
   <profileInstances>
     <packageHasProfileInstances
       Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b">
@@ -189,22 +212,22 @@
             </covered>
           </messageOccurrenceSpecification>
           <messageOccurrenceSpecification
-            Id="6c9b746e-bb72-495e-b62d-0064096cf4e4"
-            name="MessageOccurrenceSpecification8">
-            <covered>
-              <lifelineMoniker
-                Id="5947b40c-b012-42c1-a5bf-4afad6a090d8"
-                LastKnownName="AppManager"
-                LastKnownLocation="ApplicationUpSequence.uml" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification
             Id="add88ff3-1b2c-4ca9-b773-18d881267004"
             name="MessageOccurrenceSpecification7">
             <covered>
               <lifelineMoniker
                 Id="5debf9c2-a959-424a-9db9-e109f336ae72"
                 LastKnownName="Configuration Manager"
+                LastKnownLocation="ApplicationUpSequence.uml" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification
+            Id="6c9b746e-bb72-495e-b62d-0064096cf4e4"
+            name="MessageOccurrenceSpecification8">
+            <covered>
+              <lifelineMoniker
+                Id="5947b40c-b012-42c1-a5bf-4afad6a090d8"
+                LastKnownName="AppManager"
                 LastKnownLocation="ApplicationUpSequence.uml" />
             </covered>
           </messageOccurrenceSpecification>
@@ -323,22 +346,22 @@
             </covered>
           </executionOccurrenceSpecification>
           <messageOccurrenceSpecification
-            Id="c832ec0a-8932-4d84-8e1d-82cc0d903f14"
-            name="MessageOccurrenceSpecification10">
-            <covered>
-              <lifelineMoniker
-                Id="5947b40c-b012-42c1-a5bf-4afad6a090d8"
-                LastKnownName="AppManager"
-                LastKnownLocation="ApplicationUpSequence.uml" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification
             Id="b42a51a2-5912-4d7d-84cd-db0b065eb61e"
             name="MessageOccurrenceSpecification9">
             <covered>
               <lifelineMoniker
                 Id="163d542e-b033-453a-aced-0435101a3e3a"
                 LastKnownName="MainForm"
+                LastKnownLocation="ApplicationUpSequence.uml" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification
+            Id="c832ec0a-8932-4d84-8e1d-82cc0d903f14"
+            name="MessageOccurrenceSpecification10">
+            <covered>
+              <lifelineMoniker
+                Id="5947b40c-b012-42c1-a5bf-4afad6a090d8"
+                LastKnownName="AppManager"
                 LastKnownLocation="ApplicationUpSequence.uml" />
             </covered>
           </messageOccurrenceSpecification>
@@ -529,22 +552,22 @@
             </covered>
           </executionOccurrenceSpecification>
           <messageOccurrenceSpecification
-            Id="cbd71dd5-2d8c-4a52-bc34-8901f5fa879e"
-            name="MessageOccurrenceSpecification12">
-            <covered>
-              <lifelineMoniker
-                Id="163d542e-b033-453a-aced-0435101a3e3a"
-                LastKnownName="MainForm"
-                LastKnownLocation="ApplicationUpSequence.uml" />
-            </covered>
-          </messageOccurrenceSpecification>
-          <messageOccurrenceSpecification
             Id="d5b9deb6-2ece-4f0d-a7a5-5b0bd971e272"
             name="MessageOccurrenceSpecification11">
             <covered>
               <lifelineMoniker
                 Id="5947b40c-b012-42c1-a5bf-4afad6a090d8"
                 LastKnownName="AppManager"
+                LastKnownLocation="ApplicationUpSequence.uml" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification
+            Id="cbd71dd5-2d8c-4a52-bc34-8901f5fa879e"
+            name="MessageOccurrenceSpecification12">
+            <covered>
+              <lifelineMoniker
+                Id="163d542e-b033-453a-aced-0435101a3e3a"
+                LastKnownName="MainForm"
                 LastKnownLocation="ApplicationUpSequence.uml" />
             </covered>
           </messageOccurrenceSpecification>
@@ -1079,6 +1102,284 @@
       <executionEvent
         Id="6d944d63-4646-4868-ad84-1ed24c604e84"
         name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <activity
+        Id="8d19d771-0518-4128-a826-5a83730fbae9"
+        name="SystemFlow"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false"
+        isReentrant="false"
+        isReadOnly="false"
+        isSingleExecution="false">
+        <nodes>
+          <objectNode
+            Id="05600f66-ed16-469d-85d7-e3c14b15b523"
+            name="ITradingApi"
+            isLeaf="false"
+            ordering="Unordered"
+            isControlType="false">
+            <objectFlowTargets>
+              <objectFlow
+                Id="1f418ad1-b6b0-4da3-b302-c160873a77df"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <objectNodeMoniker
+                  Id="2eaa441f-8b6c-4703-8e7e-5bde8a07d10b"
+                  LastKnownName="Distributer"
+                  LastKnownLocation="ApplicationUpSequence.uml" />
+              </objectFlow>
+            </objectFlowTargets>
+            <upperBound>
+              <literalInteger
+                Id="72365fbf-fbc7-4024-aa5d-5df07e88ef97"
+                name="2147483647"
+                value="2147483647" />
+            </upperBound>
+          </objectNode>
+          <objectNode
+            Id="2eaa441f-8b6c-4703-8e7e-5bde8a07d10b"
+            name="Distributer"
+            isLeaf="false"
+            ordering="Unordered"
+            isControlType="false">
+            <objectFlowTargets>
+              <objectFlow
+                Id="949a0457-73cb-4458-a3b7-69ddc99796db"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <objectNodeMoniker
+                  Id="4edbe05f-95f1-4b22-a73d-4a4430999595"
+                  LastKnownName="AccountManager"
+                  LastKnownLocation="ApplicationUpSequence.uml" />
+              </objectFlow>
+              <objectFlow
+                Id="34902ac0-55b6-4498-9ff4-61cca1053c56"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <objectNodeMoniker
+                  Id="9fd923f2-3219-4d96-a95e-9668a1f6e2f4"
+                  LastKnownName="UNLManager"
+                  LastKnownLocation="ApplicationUpSequence.uml" />
+              </objectFlow>
+              <objectFlow
+                Id="48eaa703-5612-4996-b820-e572113a029b"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <objectNodeMoniker
+                  Id="cab97c92-eabf-49b7-b6fc-42dcf43b3206"
+                  LastKnownName="MainSecurityManager"
+                  LastKnownLocation="ApplicationUpSequence.uml" />
+              </objectFlow>
+            </objectFlowTargets>
+            <upperBound>
+              <literalInteger
+                Id="35152654-5a95-4de4-8cc0-16e5156777a9"
+                name="2147483647"
+                value="2147483647" />
+            </upperBound>
+          </objectNode>
+          <objectNode
+            Id="9fd923f2-3219-4d96-a95e-9668a1f6e2f4"
+            name="UNLManager"
+            isLeaf="false"
+            ordering="Unordered"
+            isControlType="false">
+            <upperBound>
+              <literalInteger
+                Id="85d8a6ca-1358-46b9-96db-1e50d93592dc"
+                name="2147483647"
+                value="2147483647" />
+            </upperBound>
+          </objectNode>
+          <objectNode
+            Id="5ee3768f-b6aa-40fa-ab9a-fad57e9bfd27"
+            name="OptionsManager"
+            isLeaf="false"
+            ordering="Unordered"
+            isControlType="false">
+            <upperBound>
+              <literalInteger
+                Id="1821c199-a510-46c2-ad52-f1309f8fe7e6"
+                name="2147483647"
+                value="2147483647" />
+            </upperBound>
+          </objectNode>
+          <objectNode
+            Id="0f28afcc-df85-43b8-b60f-5507e29798ed"
+            name="PositionDataBuilder"
+            isLeaf="false"
+            ordering="Unordered"
+            isControlType="false">
+            <upperBound>
+              <literalInteger
+                Id="de1adcb2-2fba-4771-a3ce-45c55bccd3b2"
+                name="2147483647"
+                value="2147483647" />
+            </upperBound>
+          </objectNode>
+          <objectNode
+            Id="a8558ebb-4fdc-4ba0-aa70-8e0734784a4d"
+            name="TradingManager"
+            isLeaf="false"
+            ordering="Unordered"
+            isControlType="false">
+            <upperBound>
+              <literalInteger
+                Id="7cc5a4e9-3706-4fd6-8a69-6066094a8f8b"
+                name="2147483647"
+                value="2147483647" />
+            </upperBound>
+          </objectNode>
+          <objectNode
+            Id="8a52c213-b4ed-4ce0-b322-ba78010a60dc"
+            name="OrdersManager"
+            isLeaf="false"
+            ordering="Unordered"
+            isControlType="false">
+            <upperBound>
+              <literalInteger
+                Id="79a49add-13ba-4c97-9af2-cbdfcc07eeb5"
+                name="2147483647"
+                value="2147483647" />
+            </upperBound>
+          </objectNode>
+          <objectNode
+            Id="6b8d3399-2c43-403f-a54a-6afa0414dd3d"
+            name="TradingTimeManager"
+            isLeaf="false"
+            ordering="Unordered"
+            isControlType="false">
+            <upperBound>
+              <literalInteger
+                Id="384ffbcf-8591-490a-a7f4-b1bc9f47ed42"
+                name="2147483647"
+                value="2147483647" />
+            </upperBound>
+          </objectNode>
+          <objectNode
+            Id="cab97c92-eabf-49b7-b6fc-42dcf43b3206"
+            name="MainSecurityManager"
+            isLeaf="false"
+            ordering="Unordered"
+            isControlType="false">
+            <objectFlowTargets>
+              <objectFlow
+                Id="c60d91a0-1ace-4091-a8b2-4a278f8c7f6c"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <objectNodeMoniker
+                  Id="2eaa441f-8b6c-4703-8e7e-5bde8a07d10b"
+                  LastKnownName="Distributer"
+                  LastKnownLocation="ApplicationUpSequence.uml" />
+              </objectFlow>
+            </objectFlowTargets>
+            <upperBound>
+              <literalInteger
+                Id="595e826d-b558-4ac2-bfc1-3f7f8782a6d7"
+                name="2147483647"
+                value="2147483647" />
+            </upperBound>
+          </objectNode>
+          <objectNode
+            Id="4edbe05f-95f1-4b22-a73d-4a4430999595"
+            name="AccountManager"
+            isLeaf="false"
+            ordering="Unordered"
+            isControlType="false">
+            <objectFlowTargets>
+              <objectFlow
+                Id="0f1a7f71-5867-41fe-ab65-e220d17df8b1"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <objectNodeMoniker
+                  Id="2eaa441f-8b6c-4703-8e7e-5bde8a07d10b"
+                  LastKnownName="Distributer"
+                  LastKnownLocation="ApplicationUpSequence.uml" />
+              </objectFlow>
+            </objectFlowTargets>
+            <upperBound>
+              <literalInteger
+                Id="7e7ff5e6-175d-4291-80cd-eb816f696e8f"
+                name="2147483647"
+                value="2147483647" />
+            </upperBound>
+          </objectNode>
+          <objectNode
+            Id="756f93a0-4beb-404f-8903-d2c2895ba1a0"
+            name="AppManager"
+            isLeaf="false"
+            ordering="Unordered"
+            isControlType="false">
+            <upperBound>
+              <literalInteger
+                Id="9bb410ae-0af2-4f97-8fc0-ef26a843f895"
+                name="2147483647"
+                value="2147483647" />
+            </upperBound>
+          </objectNode>
+        </nodes>
+      </activity>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="ee4e09f2-246b-4898-8c71-d37573ce6ecd"
+        name="UNL"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <suppliersInternal>
+          <dependency
+            Id="c613035d-806b-4715-bee0-bca1f7bbc683">
+            <componentMoniker
+              Id="d30b2087-78f9-4770-bfc9-800bec074fe6"
+              LastKnownName="Component1"
+              LastKnownLocation="ApplicationUpSequence.uml" />
+          </dependency>
+        </suppliersInternal>
+        <ownedAttributesInternal>
+          <part
+            Id="6b57e8df-d6d5-4761-a78b-a8dd56d06ff3"
+            name="Part1"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="Composite"
+            isComposite="true">
+            <type_NamedElement>
+              <componentMoniker
+                Id="1768d9fc-4400-4a19-95a0-95d506be8b59"
+                LastKnownName="Component2"
+                LastKnownLocation="ApplicationUpSequence.uml" />
+            </type_NamedElement>
+          </part>
+        </ownedAttributesInternal>
+      </component>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="1768d9fc-4400-4a19-95a0-95d506be8b59"
+        name="Component2"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <component
+        Id="d30b2087-78f9-4770-bfc9-800bec074fe6"
+        name="Component1"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
     </packageHasNamedElement>
   </packagedElements>
   <primitiveType

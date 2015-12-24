@@ -25,6 +25,13 @@
     <Content Include="CodeMapSolution.dgml">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="SystemFlow.activitydiagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SystemFlow.activitydiagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>SystemFlow.activitydiagram</DependentUpon>
+    </Content>
     <Content Include="UMLSequenceDiagram1.sequencediagram">
       <SubType>Content</SubType>
     </Content>
