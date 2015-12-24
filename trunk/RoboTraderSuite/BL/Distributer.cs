@@ -42,6 +42,10 @@ namespace TNS.BL
                 case EapiDataTypes.AccountMemberData:
                     break;
                 case EapiDataTypes.OptionData:
+                    //var optionData = meesage as OptionData;
+
+
+                    break;
                 case EapiDataTypes.PositionData:
                 case EapiDataTypes.OrderData:
 
