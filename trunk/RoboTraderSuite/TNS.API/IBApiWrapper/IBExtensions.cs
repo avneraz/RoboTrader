@@ -10,32 +10,23 @@ namespace TNS.API.IBApiWrapper
 {
     public static class IBExtensions
     {
-        public static OptionContract ToOptionContract(this Contract contract)
+        public static ContractBase ToContract(this Contract contract)
         {
-            //TODO-Done - fix expiry! ==> Avner fix it already!!
-            var optionType = contract.Right == "C" ? OptionType.Call : OptionType.Put;
-            return new OptionContract(contract.Symbol, contract.Strike, GetExpiryDate(contract.Expiry), optionType,  contract.Exchange, Convert.ToInt32(contract.Multiplier),contract.Currency);
-
-
-            //(string symbol, double strike, DateTime expiry,
-            //OptionType type, string exchange= "SMART", int multiplier = 100, string currency = "USD")
-        }
-
-        public static Contract ToIbContract(this OptionContract c)
-        {
-            return new Contract
+            switch (contract.SecType)
             {
-                Symbol = c.Symbol,
-                Right = c.OptionType == OptionType.Call ? "C" : "P",
-                Expiry = c.Expiry.ToString("yyyyMMdd"),
-                Strike = c.Strike,
-                Currency = c.Currency,
-                Multiplier = c.Multiplier.ToString(),
-                SecType = GetSecType(c.SecurityType),
-                Exchange = c.Exchange
-            };
-        }
+                case "OPT":
+                    var optionType = contract.Right == "C" ? OptionType.Call : OptionType.Put;
+                    return new OptionContract(contract.Symbol, contract.Strike, GetExpiryDate(contract.Expiry), optionType,
+                        contract.Exchange, Convert.ToInt32(contract.Multiplier), contract.Currency);
+                case "STK":
+                    return new StockContract(contract.Symbol);
+                default:
+                    throw new Exception("Invalid contract type received " +  contract.SecType);
+                    break;
+            }
+     }
 
+      
         private static DateTime GetExpiryDate(string expDateStr)
         {
             if (string.IsNullOrEmpty(expDateStr))
@@ -44,13 +35,12 @@ namespace TNS.API.IBApiWrapper
                         CultureInfo.CurrentCulture, DateTimeStyles.None);
             return expiryDate;
         }
-        private static string GetSecType(SecurityType type)
+        public static string GetSecType(SecurityType type)
         {
             switch (type)
             {
                 case SecurityType.Stock:
                     return "STK";
-                   
                 case SecurityType.Option:
                     return "OPT";
                 case SecurityType.Index:
@@ -76,7 +66,7 @@ namespace TNS.API.IBApiWrapper
             {
                 //TODO: orderId 0?
                 OrderId = Convert.ToInt32(orderId),
-                Action = order.OrderAction == OrderAction.Buy ? "BUY" : "SELL",
+                Action = order.OrderAction == OrderAction.BUY ? "BUY" : "SELL",
                 OrderType = order.OrderType.ToString().ToUpper(), //"LMT", MKT "MKT PRT" - not suported
                 LmtPrice = order.LimitPrice,
                 TotalQuantity = order.Quantity,
@@ -90,27 +80,12 @@ namespace TNS.API.IBApiWrapper
             
         }
 
-        #region Update Account Summary
-
-        public static void UpdateAccountSummary(this AccountMemberData accountMemberData)
+        public static OrderData ToOrderData(this Order order)
         {
-            var propInfo = AccountSummaryDataPropertiesInfoList.FirstOrDefault(pi => pi.Name == accountMemberData.Tag);
-            propInfo?.SetValue(AccountSummaryData.AccountSummaryDataObject, Convert.ToDouble(accountMemberData.Values));
+            return new OrderData((OrderType)Enum.Parse(typeof (OrderType), order.OrderType),
+                (OrderAction)Enum.Parse(typeof (OrderAction), order.Action),
+                order.LmtPrice, order.TotalQuantity, null);
         }
-
-
-        private static List<PropertyInfo> _propertiesInfoList;
-        public static IEnumerable<PropertyInfo> AccountSummaryDataPropertiesInfoList
-        {
-            get
-            {
-                if (_propertiesInfoList != null) return _propertiesInfoList;
-
-                var type = typeof(AccountSummaryData);
-                _propertiesInfoList = type.GetProperties(BindingFlags.Instance | BindingFlags.Public).ToList();
-                return _propertiesInfoList;
-            }
-        } 
-        #endregion
+       
     }
 }

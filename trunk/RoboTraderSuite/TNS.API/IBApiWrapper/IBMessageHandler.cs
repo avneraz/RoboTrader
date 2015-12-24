@@ -12,7 +12,9 @@ namespace TNS.API.IBApiWrapper
     class IBMessageHandler : EWrapper
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(IBMessageHandler));
-        private readonly Dictionary<int, OptionData> _optionsDic;
+        private readonly Dictionary<int, SecurityData> _securityDatas;
+        private readonly Dictionary<int, OrderStatusData> _orderStatus;
+        private readonly AccountSummaryData _accountSummary;
         //private readonly Dictionary<int, MainSecuritiesData> _mainSecuritiesDic;
         private readonly IBaseLogic _consumer;
         private const double EPSILON = 0.000000001;
@@ -20,7 +22,9 @@ namespace TNS.API.IBApiWrapper
 
         public IBMessageHandler(IBaseLogic consumer)
         {
-            _optionsDic = new Dictionary<int, OptionData>();
+            _securityDatas = new Dictionary<int, SecurityData>();
+            _orderStatus = new Dictionary<int, OrderStatusData>();
+            _accountSummary = new AccountSummaryData();
             _consumer = consumer;
             GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(1), PublishOptions, true);
 
@@ -30,16 +34,22 @@ namespace TNS.API.IBApiWrapper
 
         #region NotUsedMethods
 
-        public void error(Exception ex)
-        {
-            ExceptionData exceptionData = new ExceptionData(ex);
-            _consumer.Enqueue(exceptionData);
-            Logger.Error(exceptionData);
-        }
+        
 
         public void error(string str)
         {
         }
+
+       
+        public void currentTime(long time)
+        {
+        }
+
+        public void deltaNeutralValidation(int reqId, UnderComp underComp)
+        {
+        }
+
+        #endregion
 
         public void error(int id, int errorCode, string errorMsg)
         {
@@ -54,71 +64,65 @@ namespace TNS.API.IBApiWrapper
             Logger.Info(apiMessageData.ToString());
         }
 
-        public void currentTime(long time)
+
+        public void error(Exception ex)
         {
+            ExceptionData exceptionData = new ExceptionData(ex);
+            _consumer.Enqueue(exceptionData);
+            Logger.Error(exceptionData);
         }
-
-        public void deltaNeutralValidation(int reqId, UnderComp underComp)
-        {
-        }
-
-        #endregion
-
-
         public void tickPrice(int tickerId, int field, double price, int canAutoExecute)
         {
-            lock (_optionsDic)
+            lock (_securityDatas)
             {
-                var optionData = _optionsDic[tickerId];
+                Console.WriteLine(tickerId);
+                var securityData = _securityDatas[tickerId];
                 switch (field)
                 {
                     case TickType.BID: //1
-                        optionData.BidPrice = price > int.MaxValue ? -1 : price;
+                        securityData.BidPrice = price > int.MaxValue ? -1 : price;
                         break;
                     case TickType.ASK:
-                        optionData.AskPrice = price;
+                        securityData.AskPrice = price;
                         break;
                     case TickType.LAST:
-                        optionData.LastPrice = price > int.MaxValue ? -1 : price;
+                        securityData.LastPrice = price > int.MaxValue ? -1 : price;
                         break;
                     case TickType.HIGH:
-                        optionData.HighestPrice = price > int.MaxValue ? -1 : price;
+                        securityData.HighestPrice = price > int.MaxValue ? -1 : price;
                         break;
                     case TickType.LOW:
-                        optionData.LowestPrice = price > int.MaxValue ? -1 : price;
+                        securityData.LowestPrice = price > int.MaxValue ? -1 : price;
                         break;
                     case TickType.CLOSE:
-                        optionData.BasePrice = price > int.MaxValue ? -1 : price;
-                        if ((optionData.LastPrice <= 0) && (optionData.BasePrice > 0))
-                            optionData.LastPrice = optionData.BasePrice;
+                        securityData.BasePrice = price > int.MaxValue ? -1 : price;
+                        if ((securityData.LastPrice <= 0) && (securityData.BasePrice > 0))
+                            securityData.LastPrice = securityData.BasePrice;
                         break;
                     case TickType.OPEN:
-                        optionData.OpeningPrice = price > int.MaxValue ? -1 : price;
+                        securityData.OpeningPrice = price > int.MaxValue ? -1 : price;
                         break;
                 }
-
-
             }
-
         }
 
         public void tickSize(int tickerId, int field, int size)
         {
-            lock (_optionsDic)
+            lock (_securityDatas)
             {
-                var optionData = _optionsDic[tickerId];
+                var securityData = _securityDatas[tickerId];
                 switch (field)
                 {
                     case TickType.ASK_SIZE:
-                        optionData.AskSize = size;
+                        securityData.AskSize = size;
                         break;
                     case TickType.BID_SIZE:
-                        optionData.BidSize = size;
+                        securityData.BidSize = size;
                         break;
                     case TickType.LAST_SIZE:
                         break;
                     case TickType.VOLUME:
-                        optionData.Volume = size;
+                        securityData.Volume = size;
                         break;
                 }
             }
@@ -147,9 +151,9 @@ namespace TNS.API.IBApiWrapper
             double impliedVolatility, double delta, double optPrice,
             double pvDividend, double gamma, double vega, double theta, double undPrice)
         {
-            lock (_optionsDic)
+            lock (_securityDatas)
             {
-                var optionData = _optionsDic[tickerId];
+                var optionData = _securityDatas[tickerId] as OptionData;
                 optionData.ImpliedVolatility = impliedVolatility;
                 double price;
                 //TODO - reason for this switch case?
@@ -222,16 +226,33 @@ namespace TNS.API.IBApiWrapper
 
         public void accountSummary(int reqId, string account, string tag, string value, string currency)
         {
-
-            AccountMemberData accountMemberData = new AccountMemberData(account, tag, value, currency);
-            accountMemberData.UpdateAccountSummary();
-            _consumer.Enqueue(AccountSummaryData.AccountSummaryDataObject);
-            Logger.Debug(AccountSummaryData.AccountSummaryDataObject);
+            switch (tag)
+            {
+                case "BuyingPower":
+                    _accountSummary.BuyingPower = Convert.ToDouble(value);
+                    break;
+                case "EquityWithLoanValue ":
+                    _accountSummary.EquityWithLoanValue = Convert.ToDouble(value);
+                    break;
+                case "BuyingPExcessLiquidity":
+                    _accountSummary.ExcessLiquidity = Convert.ToDouble(value);
+                    break;
+                case "FullInitMarginReq":
+                    _accountSummary.FullInitMarginReq = Convert.ToDouble(value);
+                    break;
+                case "FullMaintMarginReq":
+                    _accountSummary.FullMaintMarginReq = Convert.ToDouble(value);
+                    break;
+                case "BuyingPNetLiquidation":
+                    _accountSummary.NetLiquidation = Convert.ToDouble(value);
+                    break;
+            }
+            
         }
 
         public void accountSummaryEnd(int reqId)
         {
-
+            _consumer.Enqueue(_accountSummary);
         }
 
         public void bondContractDetails(int reqId, ContractDetails contract)
@@ -265,11 +286,32 @@ namespace TNS.API.IBApiWrapper
             int parentId,
             double lastFillPrice, int clientId, string whyHeld)
         {
-
+            if (_orderStatus.ContainsKey(orderId))
+            {
+                OrderStatusData orderStatus = _orderStatus[orderId];
+                orderStatus.OrderStatus = (OrderStatus) Enum.Parse(typeof (OrderStatus), status);
+                _consumer.Enqueue(orderStatus);
+            }
+            else
+            {
+                Logger.Error($"Received order status on request not in _orderStatus dic, orderId is {orderId}");
+            }
+            
         }
 
         public void openOrder(int orderId, Contract contract, Order order, OrderState orderState)
         {
+            OrderStatusData status;
+            if (!_orderStatus.TryGetValue(orderId, out status))
+            {
+               
+                var orderData = order.ToOrderData();
+                orderData.Contract = contract.ToContract();
+                status = new OrderStatusData(orderId.ToString(), orderData);
+                _orderStatus[orderId] = status;
+
+            }
+            status.MaintMargin = Convert.ToDouble(orderState.MaintMargin);
 
         }
 
@@ -343,7 +385,7 @@ namespace TNS.API.IBApiWrapper
 
         public void position(string account, Contract contract, int pos, double avgCost)
         {
-            var posData = new PositionData(contract.ToOptionContract(), pos, avgCost);
+            var posData = new PositionData(contract.ToContract(), pos, avgCost);
             _consumer.Enqueue(posData);
         }
 
@@ -406,32 +448,42 @@ namespace TNS.API.IBApiWrapper
 
         private void PublishOptions()
         {
-            lock (_optionsDic)
+            lock (_securityDatas)
             {
-                foreach (var optionData in _optionsDic.Values)
+                foreach (var securityData in _securityDatas.Values)
                 {
-                    _consumer.Enqueue(optionData);
+                    _consumer.Enqueue(securityData);
                 }
             }
         }
 
-        public void RegisterOption(int requestId, OptionContract contract)
+        public void RegisterContract(int requestId, ContractBase contract)
         {
-            lock (_optionsDic)
+            lock (_securityDatas)
             {
-                _optionsDic.Add(requestId, new OptionData() { Contract = contract });
-                
+                SecurityData data;
+                var optionContract = contract as OptionContract;
+                if (optionContract != null)
+                {
+                    data = new OptionData();
+                }
+                else
+                {
+                    data = new SecurityData();
+                }
+                data.Contract = contract;
+                _securityDatas.Add(requestId, data);
             }
         }
 
         public IEnumerable<int> GetCurrentOptionsRequestIds()
         {
-            return _optionsDic.Keys;
+            return _securityDatas.Keys;
         }
 
         public IEnumerable<int> GetCurrentMainSecuritiesRequestIds()
         {
-            return _optionsDic.Keys;
+            return _securityDatas.Keys;
         }
     }
 }

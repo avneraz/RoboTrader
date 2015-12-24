@@ -50,11 +50,12 @@
   <ItemGroup>
     <Compile Include="ApiDataObjects\APIMessageData.cs" />
     <Compile Include="ApiDataObjects\ExceptionData.cs" />
+    <Compile Include="ApiDataObjects\OrderStatusData.cs" />
     <Compile Include="ApiDataObjects\SecurityData.cs" />
-    <Compile Include="IBApiWrapper\AccountMemberData.cs" />
+    <Compile Include="ApiDataObjects\StockContract.cs" />
     <Compile Include="ApiDataObjects\AccountSummaryData.cs" />
     <Compile Include="ApiDataObjects\ContractBase.cs" />
-    <Compile Include="ApiDataObjects\ITradingApi.cs" />
+    <Compile Include="ITradingApi.cs" />
     <Compile Include="ApiDataObjects\OptionContract.cs" />
     <Compile Include="ApiDataObjects\OptionData.cs" />
     <Compile Include="ApiDataObjects\OrderData.cs" />

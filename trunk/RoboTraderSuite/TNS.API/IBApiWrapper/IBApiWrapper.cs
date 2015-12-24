@@ -14,6 +14,7 @@ namespace TNS.API.IBApiWrapper
         private readonly int _port;
         private readonly EClientSocket _clientSocket;
         private readonly IBMessageHandler _handler;
+        private readonly Dictionary<ContractBase, int> _contractToRequestIds;
         private int? _currentOrderId;
         
         private int _curReqId;
@@ -47,12 +48,15 @@ namespace TNS.API.IBApiWrapper
             _handler = new IBMessageHandler(consumer);
             _clientSocket = new EClientSocket(_handler);
             _curReqId = 0;
+            _contractToRequestIds = new Dictionary<ContractBase, int>();
 
         }
         public void ConnectToBroker()
         {
             //TODO: error handling
             _clientSocket.eConnect(_host, _port, _clientId);
+            //this tells tws to send market data even when there is no active trading
+            _clientSocket.reqMarketDataType(2);
         }
 
         public void RequestAccountData()
@@ -62,67 +66,46 @@ namespace TNS.API.IBApiWrapper
             _clientSocket.reqAccountUpdates(true, _mainAccount);
         }
 
-        public void RequestContinousOptionChainData(List<OptionContract> contracts)
+        public void RequestContinousContractData(List<ContractBase> contracts)
         {
-            _handler.GetCurrentOptionsRequestIds().ForEach(requestId =>
-            {
-                _clientSocket.cancelMktData(requestId);
-            });
-
-
+        
             contracts.ForEach(c =>
             {
-                Contract ibContract = c.ToIbContract();
-                //TODO: merge requestId for same contract? if it's requested few times? clear the old ones?
-                int requestId = RequestId;
-                _clientSocket.reqContractDetails(requestId, ibContract);
-                _handler.RegisterOption(requestId, c);
-                _clientSocket.reqMktData(requestId, ibContract, "100,225,233", false, new List<TagValue>());
+                if (!_contractToRequestIds.ContainsKey(c))
+                {
+                    int requestId = RequestId;
+                    Contract ibContract = c.ToIbContract();
+                    _contractToRequestIds[c] = requestId;
+                    _clientSocket.reqContractDetails(requestId, ibContract);
+                    _handler.RegisterContract(requestId, c);
+                    _clientSocket.reqMktData(requestId, ibContract, "100,225,233", false, new List<TagValue>());
+                }
+                
             });
 
             
         }
-        //public void RequestContinousMainSecuritiesData(List<ContractBase> contracts)
-        //{
-        //    _handler.GetCurrentOptionsRequestIds().ForEach(requestId =>
-        //    {
-        //        _clientSocket.cancelMktData(requestId);
-        //    });
-
-
-        //    contracts.ForEach(c =>
-        //    {
-        //        Contract ibContract = c.ToIbContract();
-        //        //TODO: merge requestId for same contract? if it's requested few times? clear the old ones?
-        //        int requestId = RequestId;
-        //        _clientSocket.reqContractDetails(requestId, ibContract);
-        //        _handler.RegisterOption(requestId, c);
-        //        _clientSocket.reqMktData(requestId, ibContract, "100,225,233", false, new List<TagValue>());
-        //    });
-
-
-        //}
 
         public void RequestContinousPositionsData()
         {
             _clientSocket.reqPositions();
         }
 
-        public string CreateOrder(OptionContract contract, OrderData order)
+        public string CreateOrder(OrderData order)
         {
             int orderId = CurrentOrderId;
             string orderIdStr = orderId.ToString();
 
             var ibOrder = order.ToIbOrder(_mainAccount, orderIdStr);
 
-            _clientSocket.placeOrder(orderId, contract.ToIbContract(), ibOrder);
+            _clientSocket.placeOrder(orderId, order.Contract.ToIbContract(), ibOrder);
             return orderIdStr;
         }
 
-        public void UpdateOrder(string orderId, OptionContract contract, OrderData order)
+        public void UpdateOrder(string orderId,  OrderData order)
         {
             var ibOrder = order.ToIbOrder(_mainAccount, orderId);
-            _clientSocket.placeOrder(Convert.ToInt32(orderId), contract.ToIbContract(), ibOrder);
+            _clientSocket.placeOrder(Convert.ToInt32(orderId), order.Contract.ToIbContract(), ibOrder);
         }
 
         public void CancelOrder(string orderId)

@@ -1,4 +1,5 @@
 ﻿
+using IBApi;
 using Infra.Bus;
 using Infra.Enum;
 
@@ -6,8 +7,8 @@ namespace TNS.API.ApiDataObjects
 {
     public enum OrderAction
     {
-        Buy,
-        Sell
+        BUY,
+        SELL
     }
 
     public enum OrderType
@@ -17,13 +18,17 @@ namespace TNS.API.ApiDataObjects
     }
     public class OrderData : IMessage
     {
-        public OrderData(OrderType orderType, OrderAction orderAction, double limitPrice, int quantity)
+        public OrderData(OrderType orderType, OrderAction orderAction, double limitPrice, int quantity, 
+            ContractBase contract)
         {
             OrderType = orderType;
             OrderAction = orderAction;
             LimitPrice = limitPrice;
             Quantity = quantity;
+            Contract = contract;
         }
+
+        public ContractBase Contract { get; set; }
         public EapiDataTypes APIDataType => EapiDataTypes.OrderData;
         public string OrderId { get; set; }
         public OrderType OrderType { get; set; }

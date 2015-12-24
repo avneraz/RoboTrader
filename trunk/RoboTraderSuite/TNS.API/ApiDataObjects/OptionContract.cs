@@ -1,4 +1,5 @@
 ﻿using System;
+using IBApi;
 
 namespace TNS.API.ApiDataObjects
 {
@@ -18,19 +19,47 @@ namespace TNS.API.ApiDataObjects
             Expiry = expiry;
             OptionType = type;
             Multiplier = multiplier;
-            Currency = currency;
-            Exchange = exchange;
         }
 
 
-        public DateTime Expiry { get; set; }
-        public double Strike { get; set; }
-        public OptionType OptionType { get; set; }
+        public DateTime Expiry { get;  }
+        public double Strike { get;  }
+        public OptionType OptionType { get;  }
         public int Multiplier { get; set; }
+
+        public override Contract ToIbContract()
+        {
+            var contract =  base.ToIbContract();
+            contract.Right = OptionType == OptionType.Call ? "C" : "P";
+            contract.Expiry = Expiry.ToString("yyyyMMdd");
+            contract.Strike = Strike;
+            contract.Multiplier = Multiplier.ToString();
+            return contract;
+            
+        }
 
         public override string ToString()
         {
-            return $"Expiry: {Expiry}, Strike: {Strike}, OptionType: {OptionType}, Multiplier: {Multiplier}, Currency: {Currency}, Exchange:{Exchange}";
+            return $"{base.ToString()}, Expiry: {Expiry}, Strike: {Strike}, OptionType: {OptionType}, Multiplier: {Multiplier}";
+        }
+
+        public override bool Equals(object obj)
+        {
+
+            if (!base.Equals(obj))
+                return false;
+
+            var otherContract = obj as OptionContract;
+            if (otherContract == null)
+                return false;
+            return otherContract.Expiry == Expiry && otherContract.OptionType == OptionType
+                   && otherContract.Strike == Strike;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode() + Expiry.GetHashCode() + OptionType.GetHashCode()
+                   + Strike.GetHashCode();
         }
     }
 }
