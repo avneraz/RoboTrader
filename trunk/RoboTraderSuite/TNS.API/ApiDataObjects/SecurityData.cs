@@ -33,6 +33,8 @@ namespace TNS.API.ApiDataObjects
         public double BidSize { get; set; }
         public double Volume { get; set; }
 
+        public string Symbol => Contract.Symbol;
+
         public override string ToString()
         {
             return 

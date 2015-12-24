@@ -15,5 +15,7 @@ namespace TNS.API.ApiDataObjects
         public OptionContract OptionContract { get; set; }
         public int Position { get; set; }
         public double AverageCost { get; set; }
+
+        public string Symbol => OptionContract.Symbol;
     }
 }
