@@ -11,11 +11,16 @@ namespace TNS.API.ApiDataObjects
 {
     public enum OrderStatus
     {
+        //https://www.interactivebrokers.com/en/software/api/apiguide/csharp/orderstatus.htm
         Filled,
         Cancelled,
         WhatIf,
         Submitted,
-        Inactive
+        Inactive,
+        PreSubmitted,
+        PendingCancel,
+        PendingSubmit
+
 
     }
     public class OrderStatusData : IMessage
@@ -24,6 +29,7 @@ namespace TNS.API.ApiDataObjects
         {
             OrderId = orderId;
             Order = order;
+            LastUpdateTime = DateTime.Now;
         }
 
         public OrderData Order { get;  }
@@ -31,6 +37,13 @@ namespace TNS.API.ApiDataObjects
         public OrderStatus OrderStatus { get; set; }
         public string OrderId { get;  }
         public double MaintMargin { get; set; }
+        public DateTime LastUpdateTime { get; set; }
 
+
+        public override string ToString()
+        {
+            return $"OrderStatusData: [Order: {Order}, OrderId: {OrderId}, MaintMargin: {MaintMargin}, " +
+                   $"LastUpdateTime: {LastUpdateTime}]";
+        }
     }
 }

@@ -24,9 +24,9 @@ namespace TNS.API.ApiDataObjects
 
         public override string ToString()
         {
-            return $"{base.ToString()}, Contract: {Contract}, Delta: {Delta}, Gamma:" +
+            return $"OptionData : [{base.ToString()},  Delta: {Delta}, Gamma:" +
                    $" {Gamma}, Vega: {Vega}, Theta: {Theta}, ImpliedVolatility: {ImpliedVolatility}," +
-                   $" ModelPrice: {ModelPrice}";
+                   $" ModelPrice: {ModelPrice}]";
         }
     }
 }

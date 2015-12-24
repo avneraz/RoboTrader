@@ -15,7 +15,12 @@ namespace TNS.API.ApiDataObjects
         public ContractBase OptionContract { get; set; }
         public int Position { get; set; }
         public double AverageCost { get; set; }
-
         public string Symbol => OptionContract.Symbol;
+
+        public override string ToString()
+        {
+            return $"PositionData: [OptionContract: {OptionContract}, Position: {Position}, " +
+                   $"AverageCost: {AverageCost}, Symbol: {Symbol}]";
+        }
     }
 }

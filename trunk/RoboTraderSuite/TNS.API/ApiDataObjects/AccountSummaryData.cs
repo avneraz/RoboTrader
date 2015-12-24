@@ -22,7 +22,10 @@ namespace TNS.API.ApiDataObjects
 
         public override string ToString()
         {
-            string toString = $"BuyingPower={BuyingPower}, EquityWithLoanValue={EquityWithLoanValue}, ExcessLiquidity={ExcessLiquidity}, FullInitMarginReq={FullInitMarginReq}, FullMaintMarginReq={FullMaintMarginReq}, NetLiquidation={NetLiquidation}";
+            string toString = $"AccountSummaryData: [BuyingPower={BuyingPower}," +
+                              $" EquityWithLoanValue={EquityWithLoanValue}," +
+                              $" ExcessLiquidity={ExcessLiquidity}, FullInitMarginReq={FullInitMarginReq}," +
+                              $" FullMaintMarginReq={FullMaintMarginReq}, NetLiquidation={NetLiquidation}]";
             return toString;
         }
     }

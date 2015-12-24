@@ -37,5 +37,11 @@ namespace TNS.API.ApiDataObjects
         public int Quantity { get; set; }
         public bool WhatIf { get; set; } = false;
 
+        public override string ToString()
+        {
+            return $"OrderData: [Contract: {Contract},  OrderId: {OrderId}," +
+                   $" OrderType: {OrderType}, OrderAction: {OrderAction}," +
+                   $" LimitPrice: {LimitPrice}, Quantity: {Quantity}, WhatIf: {WhatIf}]";
+        }
     }
 }

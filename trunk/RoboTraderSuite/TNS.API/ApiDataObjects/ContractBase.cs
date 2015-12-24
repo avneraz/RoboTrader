@@ -40,7 +40,7 @@ namespace TNS.API.ApiDataObjects
 
         public override string ToString()
         {
-            return $"Symbol: {Symbol}, SecurityType: {SecurityType}, Currency: {Currency}, Exchange: {Exchange}";
+            return $"ContractBase: [Symbol: {Symbol}, SecurityType: {SecurityType}, Currency: {Currency}, Exchange: {Exchange}]";
         }
 
 

@@ -72,11 +72,11 @@ namespace TNS.API.ApiDataObjects
         public override string ToString()
         {
             return 
-            $"Contract: {Contract}, LastPrice: {LastPrice}," +
+            $"SecurityData: [Contract: {Contract}, LastPrice: {LastPrice}," +
             $" AskPrice: {AskPrice}, BidPrice: {BidPrice}," +
             $" HighestPrice: {HighestPrice}, LowestPrice: {LowestPrice}," +
             $" BasePrice: {BasePrice}, OpeningPrice: {OpeningPrice}, " +
-            $" AskSize: {AskSize}, BidSize: {BidSize}, Volume: {Volume}";
+            $" AskSize: {AskSize}, BidSize: {BidSize}, Volume: {Volume}]";
 
         }
     }

@@ -22,7 +22,6 @@ namespace TNS.API.IBApiWrapper
                     return new StockContract(contract.Symbol);
                 default:
                     throw new Exception("Invalid contract type received " +  contract.SecType);
-                    break;
             }
      }
 

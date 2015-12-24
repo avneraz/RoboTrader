@@ -40,7 +40,7 @@ namespace TNS.API.ApiDataObjects
 
         public override string ToString()
         {
-            return $"{base.ToString()}, Expiry: {Expiry}, Strike: {Strike}, OptionType: {OptionType}, Multiplier: {Multiplier}";
+            return $"OptionContract: [{base.ToString()}, Expiry: {Expiry}, Strike: {Strike}, OptionType: {OptionType}, Multiplier: {Multiplier}]";
         }
 
         public override bool Equals(object obj)

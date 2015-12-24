@@ -4,11 +4,14 @@ using IBApi;
 using TNS.API.ApiDataObjects;
 using Infra.Bus;
 using Infra.Extensions.ArrayExtensions;
+using log4net;
+using log4net.Repository.Hierarchy;
 
 namespace TNS.API.IBApiWrapper
 {
     public class IBApiWrapper : ITradingApi
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(IBMessageHandler));
         private readonly int _clientId;
         private readonly string _host;
         private readonly int _port;
@@ -61,6 +64,7 @@ namespace TNS.API.IBApiWrapper
 
         public void RequestAccountData()
         {
+            Logger.DebugFormat(nameof(RequestAccountData) , " called");
             string tags = "NetLiquidation,EquityWithLoanValue,BuyingPower,ExcessLiquidity,FullMaintMarginReq,FullInitMarginReq";
             _clientSocket.reqAccountSummary(0, "All", tags);
             _clientSocket.reqAccountUpdates(true, _mainAccount);
@@ -68,7 +72,7 @@ namespace TNS.API.IBApiWrapper
 
         public void RequestContinousContractData(List<ContractBase> contracts)
         {
-        
+            Logger.Info($"{nameof(RequestContinousContractData)} called, requesting {contracts.Count} contracts");
             contracts.ForEach(c =>
             {
                 if (!_contractToRequestIds.ContainsKey(c))
@@ -82,17 +86,18 @@ namespace TNS.API.IBApiWrapper
                 }
                 
             });
-
             
         }
 
         public void RequestContinousPositionsData()
         {
+            Logger.Debug($"{nameof(RequestContinousPositionsData)} called");
             _clientSocket.reqPositions();
         }
 
         public string CreateOrder(OrderData order)
         {
+            Logger.Info($"Create order was called with {order}");
             int orderId = CurrentOrderId;
             string orderIdStr = orderId.ToString();
 
@@ -104,12 +109,14 @@ namespace TNS.API.IBApiWrapper
 
         public void UpdateOrder(string orderId,  OrderData order)
         {
+            Logger.Info($"UpdateOrder was called, orderId: {orderId}, Order: {order}");
             var ibOrder = order.ToIbOrder(_mainAccount, orderId);
             _clientSocket.placeOrder(Convert.ToInt32(orderId), order.Contract.ToIbContract(), ibOrder);
         }
 
         public void CancelOrder(string orderId)
         {
+            Logger.Info($"CancelOrder was called, orderId: {orderId}");
             _clientSocket.cancelOrder(Convert.ToInt32(orderId));
         }
     }

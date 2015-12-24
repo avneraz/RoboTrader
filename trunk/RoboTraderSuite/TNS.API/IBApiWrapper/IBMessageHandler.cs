@@ -5,6 +5,8 @@ using log4net;
 using TNS.API.ApiDataObjects;
 using Infra;
 using Infra.Bus;
+using Infra.Extensions;
+using Infra.Extensions.ArrayExtensions;
 
 namespace TNS.API.IBApiWrapper
 {
@@ -18,6 +20,9 @@ namespace TNS.API.IBApiWrapper
         //private readonly Dictionary<int, MainSecuritiesData> _mainSecuritiesDic;
         private readonly IBaseLogic _consumer;
         private const double EPSILON = 0.000000001;
+        private const double LARGE_NUBMER = 100000000;
+        //max time to close orders that are filled/failed in _orderStatus dic
+        private readonly TimeSpan ORDER_MAX_TIME_SPAN = TimeSpan.FromMinutes(5);
          
 
         public IBMessageHandler(IBaseLogic consumer)
@@ -34,7 +39,182 @@ namespace TNS.API.IBApiWrapper
 
         #region NotUsedMethods
 
-        
+
+        public void scannerData(int reqId, int rank, ContractDetails contractDetails, string distance, string benchmark,
+            string projection, string legsStr)
+        {
+
+        }
+
+
+        public void historicalData(int reqId, string date, double open, double high, double low, double close,
+       int volume, int count,
+       double WAP, bool hasGaps)
+        {
+
+        }
+
+        public void tickString(int tickerId, int field, string value)
+        {
+
+        }
+
+        public void tickGeneric(int tickerId, int field, double value)
+        {
+
+        }
+
+        public void tickEFP(int tickerId, int tickType, double basisPoints, string formattedBasisPoints,
+               double impliedFuture,
+               int holdDays, string futureExpiry, double dividendImpact, double dividendsToExpiry)
+        {
+
+        }
+
+        public void tickSnapshotEnd(int tickerId)
+        {
+
+        }
+
+        public void managedAccounts(string accountsList)
+        {
+
+        }
+
+        public void connectionClosed()
+        {
+
+        }
+
+        public void bondContractDetails(int reqId, ContractDetails contract)
+        {
+
+        }
+
+        public void updateAccountValue(string key, string value, string currency, string accountName)
+        {
+
+        }
+
+        public void updateAccountTime(string timestamp)
+        {
+
+        }
+
+        public void accountDownloadEnd(string account)
+        {
+
+        }
+
+
+        public void openOrderEnd()
+        {
+
+        }
+
+        public void contractDetails(int reqId, ContractDetails contractDetails)
+        {
+
+        }
+
+        public void contractDetailsEnd(int reqId)
+        {
+
+        }
+
+        public void execDetails(int reqId, Contract contract, Execution execution)
+        {
+
+        }
+
+        public void execDetailsEnd(int reqId)
+        {
+
+        }
+
+        public void commissionReport(CommissionReport commissionReport)
+        {
+
+        }
+
+        public void fundamentalData(int reqId, string data)
+        {
+
+        }
+
+        public void historicalDataEnd(int reqId, string start, string end)
+        {
+
+        }
+
+        public void marketDataType(int reqId, int marketDataType)
+        {
+
+        }
+
+        public void updateMktDepth(int tickerId, int position, int operation, int side, double price, int size)
+        {
+
+        }
+
+        public void updateMktDepthL2(int tickerId, int position, string marketMaker, int operation, int side,
+            double price, int size)
+        {
+
+        }
+
+        public void updateNewsBulletin(int msgId, int msgType, string message, string origExchange)
+        {
+
+        }
+
+
+        public void positionEnd()
+        {
+
+        }
+
+        public void realtimeBar(int reqId, long time, double open, double high, double low, double close, long volume,
+            double WAP,
+            int count)
+        {
+
+        }
+
+        public void scannerParameters(string xml)
+        {
+
+        }
+
+        public void scannerDataEnd(int reqId)
+        {
+
+        }
+
+        public void receiveFA(int faDataType, string faXmlData)
+        {
+
+        }
+
+        public void verifyMessageAPI(string apiData)
+        {
+
+        }
+
+        public void verifyCompleted(bool isSuccessful, string errorText)
+        {
+
+        }
+
+        public void displayGroupList(int reqId, string groups)
+        {
+
+        }
+
+        public void displayGroupUpdated(int reqId, string contractInfo)
+        {
+
+        }
 
         public void error(string str)
         {
@@ -127,26 +307,7 @@ namespace TNS.API.IBApiWrapper
                 }
             }
         }
-
-        public void tickString(int tickerId, int field, string value)
-        {
-
-        }
-
-        public void tickGeneric(int tickerId, int field, double value)
-        {
-
-        }
-
-        public void tickEFP(int tickerId, int tickType, double basisPoints, string formattedBasisPoints,
-            double impliedFuture,
-            int holdDays, string futureExpiry, double dividendImpact, double dividendsToExpiry)
-        {
-
-        }
-
-
-
+     
         public void tickOptionComputation(int tickerId, int field, 
             double impliedVolatility, double delta, double optPrice,
             double pvDividend, double gamma, double vega, double theta, double undPrice)
@@ -204,25 +365,14 @@ namespace TNS.API.IBApiWrapper
             }
         }
 
-        public void tickSnapshotEnd(int tickerId)
-        {
-
-        }
+      
 
         public void nextValidId(int orderId)
         {
             NextOrderId = orderId;
         }
 
-        public void managedAccounts(string accountsList)
-        {
-
-        }
-
-        public void connectionClosed()
-        {
-
-        }
+    
 
         public void accountSummary(int reqId, string account, string tag, string value, string currency)
         {
@@ -255,15 +405,7 @@ namespace TNS.API.IBApiWrapper
             _consumer.Enqueue(_accountSummary);
         }
 
-        public void bondContractDetails(int reqId, ContractDetails contract)
-        {
-
-        }
-
-        public void updateAccountValue(string key, string value, string currency, string accountName)
-        {
-           
-        }
+      
 
         public void updatePortfolio(Contract contract, int position, double marketPrice, double marketValue,
             double averageCost,
@@ -272,15 +414,7 @@ namespace TNS.API.IBApiWrapper
 
         }
 
-        public void updateAccountTime(string timestamp)
-        {
-
-        }
-
-        public void accountDownloadEnd(string account)
-        {
-
-        }
+     
 
         public void orderStatus(int orderId, string status, int filled, int remaining, double avgFillPrice, int permId,
             int parentId,
@@ -290,6 +424,7 @@ namespace TNS.API.IBApiWrapper
             {
                 OrderStatusData orderStatus = _orderStatus[orderId];
                 orderStatus.OrderStatus = (OrderStatus) Enum.Parse(typeof (OrderStatus), status);
+                orderStatus.LastUpdateTime = DateTime.Now; ;
                 _consumer.Enqueue(orderStatus);
             }
             else
@@ -301,146 +436,35 @@ namespace TNS.API.IBApiWrapper
 
         public void openOrder(int orderId, Contract contract, Order order, OrderState orderState)
         {
+            CloseIrrelevantOrders();
             OrderStatusData status;
             if (!_orderStatus.TryGetValue(orderId, out status))
             {
-               
                 var orderData = order.ToOrderData();
                 orderData.Contract = contract.ToContract();
                 status = new OrderStatusData(orderId.ToString(), orderData);
                 _orderStatus[orderId] = status;
-
             }
-            status.MaintMargin = Convert.ToDouble(orderState.MaintMargin);
+            status.LastUpdateTime = DateTime.Now;
+            double maintMargin = Convert.ToDouble(orderState.MaintMargin);
+            if (maintMargin < LARGE_NUBMER)
+                status.MaintMargin = maintMargin;
 
         }
 
-        public void openOrderEnd()
-        {
+    
 
-        }
 
-        public void contractDetails(int reqId, ContractDetails contractDetails)
-        {
-
-        }
-
-        public void contractDetailsEnd(int reqId)
-        {
-
-        }
-
-        public void execDetails(int reqId, Contract contract, Execution execution)
-        {
-
-        }
-
-        public void execDetailsEnd(int reqId)
-        {
-
-        }
-
-        public void commissionReport(CommissionReport commissionReport)
-        {
-
-        }
-
-        public void fundamentalData(int reqId, string data)
-        {
-
-        }
-
-        public void historicalData(int reqId, string date, double open, double high, double low, double close,
-            int volume, int count,
-            double WAP, bool hasGaps)
-        {
-
-        }
-
-        public void historicalDataEnd(int reqId, string start, string end)
-        {
-
-        }
-
-        public void marketDataType(int reqId, int marketDataType)
-        {
-
-        }
-
-        public void updateMktDepth(int tickerId, int position, int operation, int side, double price, int size)
-        {
-
-        }
-
-        public void updateMktDepthL2(int tickerId, int position, string marketMaker, int operation, int side,
-            double price, int size)
-        {
-
-        }
-
-        public void updateNewsBulletin(int msgId, int msgType, string message, string origExchange)
-        {
-
-        }
-
+   
+       
         public void position(string account, Contract contract, int pos, double avgCost)
         {
             var posData = new PositionData(contract.ToContract(), pos, avgCost);
             _consumer.Enqueue(posData);
         }
 
-        public void positionEnd()
-        {
+   
 
-        }
-
-        public void realtimeBar(int reqId, long time, double open, double high, double low, double close, long volume,
-            double WAP,
-            int count)
-        {
-
-        }
-
-        public void scannerParameters(string xml)
-        {
-
-        }
-
-        public void scannerData(int reqId, int rank, ContractDetails contractDetails, string distance, string benchmark,
-            string projection, string legsStr)
-        {
-
-        }
-
-        public void scannerDataEnd(int reqId)
-        {
-
-        }
-
-        public void receiveFA(int faDataType, string faXmlData)
-        {
-
-        }
-
-        public void verifyMessageAPI(string apiData)
-        {
-
-        }
-
-        public void verifyCompleted(bool isSuccessful, string errorText)
-        {
-
-        }
-
-        public void displayGroupList(int reqId, string groups)
-        {
-
-        }
-
-        public void displayGroupUpdated(int reqId, string contractInfo)
-        {
-
-        }
 
         #endregion
 
@@ -475,7 +499,11 @@ namespace TNS.API.IBApiWrapper
                 _securityDatas.Add(requestId, data);
             }
         }
-
+        private void CloseIrrelevantOrders()
+        {
+            _orderStatus.RemoveAll(item => DateTime.Now - item.LastUpdateTime > ORDER_MAX_TIME_SPAN &&
+            item.OrderStatus.In(OrderStatus.Cancelled, OrderStatus.Filled));
+        }
         public IEnumerable<int> GetCurrentOptionsRequestIds()
         {
             return _securityDatas.Keys;
