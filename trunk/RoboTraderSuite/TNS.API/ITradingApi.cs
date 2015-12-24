@@ -6,10 +6,10 @@ namespace TNS.API.ApiDataObjects
     {
         void ConnectToBroker();
         void RequestAccountData();
-        void RequestContinousOptionChainData(List<OptionContract> contracts);
+        void RequestContinousContractData(List<ContractBase> contracts);
         void RequestContinousPositionsData();
-        string CreateOrder(OptionContract contract, OrderData order);
-        void UpdateOrder(string orderId, OptionContract contract, OrderData order);
+        string CreateOrder(OrderData order);
+        void UpdateOrder(string orderId, OrderData order);
         void CancelOrder(string orderId);
     }
 }
