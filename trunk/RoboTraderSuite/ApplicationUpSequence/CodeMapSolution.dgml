@@ -2915,7 +2915,7 @@
     <Node Id="@3797" Category="CodeSchema_Field" CodeSchemaProperty_IsPrivate="True" DelayedCrossGroupLinksState="Fetched" Label="stockRefPrice" UseManualLocation="True" />
     <Node Id="@3798" Category="CodeSchema_Property" CodeSchemaProperty_IsFinal="True" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsVirtual="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="stockRefPrice" UseManualLocation="True" />
     <Node Id="@3799" Category="CodeSchema_Property" CodeSchemaProperty_IsPublic="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="StockRefPrice" UseManualLocation="True" />
-    <Node Id="@38" Category="CodeSchema_Assembly" Bounds="617.264057776567,264.873891767193,133.953333333333,25" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" FilePath="$(bcb4c6f8-73e1-48d8-a410-0bcc0295ee61.OutputPath)" Group="Collapsed" Label="TNS.Global.dll" UseManualLocation="True">
+    <Node Id="@38" Category="CodeSchema_Assembly" Bounds="617.264057776567,264.873891767193,133.953333333333,25" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" FilePath="$(bcb4c6f8-73e1-48d8-a410-0bcc0295ee61.OutputPath)" Group="Collapsed" Label="Infra.dll" UseManualLocation="True">
       <Category Ref="FileSystem.Category.FileOfType.dll" />
     </Node>
     <Node Id="@3800" Category="CodeSchema_Property" CodeSchemaProperty_IsAbstract="True" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsVirtual="True" DelayedChildNodesState="Incomplete" DelayedCrossGroupLinksState="Fetched" Group="Collapsed" Label="stockTypeFilter" UseManualLocation="True" />
@@ -17128,17 +17128,17 @@
     <Alias n="130" Id="(@41 @129)" />
     <Alias n="131" Id="Namespace=TNS.Controls" />
     <Alias n="132" Id="(@61 @131)" />
-    <Alias n="133" Id="Namespace=TNS.Global" />
+    <Alias n="133" Id="Namespace=Infra" />
     <Alias n="134" Id="(@37 @133)" />
-    <Alias n="135" Id="Namespace=TNS.Global.Enum" />
+    <Alias n="135" Id="Namespace=Infra.Enum" />
     <Alias n="136" Id="(@37 @135)" />
-    <Alias n="137" Id="Namespace=TNS.Global.Extensions" />
+    <Alias n="137" Id="Namespace=Infra.Extensions" />
     <Alias n="138" Id="(@37 @137)" />
-    <Alias n="139" Id="Namespace=TNS.Global.Extensions.ArrayExtensions" />
+    <Alias n="139" Id="Namespace=Infra.Extensions.ArrayExtensions" />
     <Alias n="140" Id="(@37 @139)" />
-    <Alias n="141" Id="Namespace=TNS.Global.PopUpMessages" />
+    <Alias n="141" Id="Namespace=Infra.PopUpMessages" />
     <Alias n="142" Id="(@37 @141)" />
-    <Alias n="143" Id="Namespace=TNS.Global.Properties" />
+    <Alias n="143" Id="Namespace=Infra.Properties" />
     <Alias n="144" Id="(@37 @143)" />
     <Alias n="145" Id="Namespace=TNS.RoboTrader" />
     <Alias n="146" Id="(@1 @145)" />
@@ -21608,8 +21608,8 @@
     <Path Id="60c9bf13-7546-40a8-9fc4-814e565782c5.OutputPathUri" Value="file:///C:/DevR3/Trunk/TNS.Controls/bin/Debug/TNS.Controls.dll" />
     <Path Id="b121a8ec-d7cb-49ee-bb46-8e932ec79999.OutputPath" Value="C:\DevR3\Trunk\IBApi\bin\Debug\IBApi.dll" />
     <Path Id="b121a8ec-d7cb-49ee-bb46-8e932ec79999.OutputPathUri" Value="file:///C:/DevR3/Trunk/IBApi/bin/Debug/IBApi.dll" />
-    <Path Id="bcb4c6f8-73e1-48d8-a410-0bcc0295ee61.OutputPath" Value="C:\DevR3\Trunk\TNS.Global\bin\Debug\TNS.Global.dll" />
-    <Path Id="bcb4c6f8-73e1-48d8-a410-0bcc0295ee61.OutputPathUri" Value="file:///C:/DevR3/Trunk/TNS.Global/bin/Debug/TNS.Global.dll" />
+    <Path Id="bcb4c6f8-73e1-48d8-a410-0bcc0295ee61.OutputPath" Value="C:\DevR3\Trunk\Infra\bin\Debug\Infra.dll" />
+    <Path Id="bcb4c6f8-73e1-48d8-a410-0bcc0295ee61.OutputPathUri" Value="file:///C:/DevR3/Trunk/Infra/bin/Debug/Infra.dll" />
     <Path Id="c4fc78b6-534d-4db5-83b1-3c7721967bcb.OutputPath" Value="C:\DevR3\Trunk\BinDebug\TNS.RoboTrader.exe" />
     <Path Id="c4fc78b6-534d-4db5-83b1-3c7721967bcb.OutputPathUri" Value="file:///C:/DevR3/Trunk/BinDebug/TNS.RoboTrader.exe" />
     <Path Id="c50ba368-93c1-45ad-8779-683189b0ba34.OutputPath" Value="C:\DevR3\Trunk\TNS.API\bin\Debug\TNS.API.dll" />

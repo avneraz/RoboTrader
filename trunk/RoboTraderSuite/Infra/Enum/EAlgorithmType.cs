@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TNS.Global.Enum
+namespace Infra.Enum
 {
     /// <summary>
     /// Represents the choosen algorithm for trading<para></para>

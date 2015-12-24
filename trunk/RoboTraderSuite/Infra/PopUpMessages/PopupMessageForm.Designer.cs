@@ -1,4 +1,4 @@
-﻿namespace TNS.Global.PopUpMessages
+﻿namespace Infra.PopUpMessages
 {
     partial class PopupMessageForm
     {
@@ -52,7 +52,7 @@
             this.lblMessage.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.lblMessage.ForeColor = System.Drawing.Color.White;
-            this.lblMessage.Image = global::TNS.Global.Properties.Resources.Exclamation;
+            this.lblMessage.Image = global::Infra.Properties.Resources.Exclamation;
             this.lblMessage.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblMessage.Location = new System.Drawing.Point(0, 0);
             this.lblMessage.Name = "lblMessage";

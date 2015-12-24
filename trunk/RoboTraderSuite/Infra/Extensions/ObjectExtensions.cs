@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
-using TNS.Global.Extensions.ArrayExtensions;
+using Infra.Extensions.ArrayExtensions;
 
-namespace TNS.Global.Extensions
+namespace Infra.Extensions
 {
     public static class ObjectExtensions
     {

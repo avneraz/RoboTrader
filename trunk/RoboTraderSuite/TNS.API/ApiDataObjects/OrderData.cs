@@ -1,6 +1,6 @@
 ﻿
-using TNS.Global.Bus;
-using TNS.Global.Enum;
+using Infra.Bus;
+using Infra.Enum;
 
 namespace TNS.API.ApiDataObjects
 {

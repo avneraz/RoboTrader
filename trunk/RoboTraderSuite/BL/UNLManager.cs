@@ -5,8 +5,8 @@ using System.Text;
 using log4net.Repository.Hierarchy;
 using TNS.API.ApiDataObjects;
 using TNS.DbDAL;
-using TNS.Global.Bus;
-using TNS.Global.Enum;
+using Infra.Bus;
+using Infra.Enum;
 
 namespace TNS.BL
 {

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using IBApi;
 using log4net;
 using TNS.API.ApiDataObjects;
-using TNS.Global;
-using TNS.Global.Bus;
+using Infra;
+using Infra.Bus;
 
 namespace TNS.API.IBApiWrapper
 {

@@ -1,6 +1,6 @@
-﻿using TNS.Global.Enum;
+﻿using Infra.Enum;
 
-namespace TNS.Global.Bus
+namespace Infra.Bus
 {
     public interface IMessage
     {

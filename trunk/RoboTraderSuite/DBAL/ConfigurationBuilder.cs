@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using log4net;
-using TNS.Global;
-using TNS.Global.Enum;
+using Infra;
+using Infra.Enum;
 
 namespace TNS.DbDAL
 {

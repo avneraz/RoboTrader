@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TNS.Global.Enum;
+using Infra.Enum;
 
-namespace TNS.Global
+namespace Infra
 {
     public class AllConfigurations
     {

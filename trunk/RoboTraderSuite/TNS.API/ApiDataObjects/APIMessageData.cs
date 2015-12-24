@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 
 using System.Text;
-using TNS.Global.Bus;
-using TNS.Global.Enum;
+using Infra.Bus;
+using Infra.Enum;
 
 namespace TNS.API.ApiDataObjects
 {

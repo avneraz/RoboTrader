@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using TNS.Global.Enum;
-using TNS.Global.Extensions;
+using Infra.Enum;
+using Infra.Extensions;
 
-namespace TNS.Global.Bus
+namespace Infra.Bus
 {
     public class MessageHandler : System.Attribute
     {
@@ -79,7 +79,7 @@ namespace TNS.Global.Bus
             
         }
 
-        protected abstract void HandleMessage(IMessage meesage);
+        protected abstract void HandleMessage(IMessage message);
 
 
         protected void AddScheduledTask(TimeSpan span, Action task, bool reOccuring = false)
@@ -95,10 +95,10 @@ namespace TNS.Global.Bus
 
     public abstract class SmartBaseLogic : SimpleBaseLogic
     {
-        private readonly global::TNS.Global.Bus.Bus _bus;
+        private readonly global::Infra.Bus.Bus _bus;
         private readonly Dictionary<Type, MethodInfo> _handledTypes;
 
-        protected SmartBaseLogic(global::TNS.Global.Bus.Bus bus)
+        protected SmartBaseLogic(global::Infra.Bus.Bus bus)
         {
             _bus = bus;
             _handledTypes = GetLogicHandledTypes();

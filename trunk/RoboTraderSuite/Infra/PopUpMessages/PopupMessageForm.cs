@@ -5,10 +5,10 @@ using System.Media;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TNS.Global.Extensions.ArrayExtensions;
-using TNS.Global.Properties;
+using Infra.Extensions.ArrayExtensions;
+using Infra.Properties;
 
-namespace TNS.Global.PopUpMessages
+namespace Infra.PopUpMessages
 {
     public partial class PopupMessageForm : Form
     {

@@ -9,8 +9,8 @@ using System.Windows.Forms;
 using TNS.API.ApiDataObjects;
 using TNS.API.IBApiWrapper;
 using TNS.DbDAL;
-using TNS.Global;
-using TNS.Global.PopUpMessages;
+using Infra;
+using Infra.PopUpMessages;
 
 namespace TNS.BL
 {

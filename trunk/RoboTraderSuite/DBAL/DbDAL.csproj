@@ -113,11 +113,10 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\TNS.Global\TNS.Global.csproj">
+    <ProjectReference Include="..\Infra\Infra.csproj">
       <Project>{bcb4c6f8-73e1-48d8-a410-0bcc0295ee61}</Project>
-      <Name>TNS.Global</Name>
+      <Name>Infra</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

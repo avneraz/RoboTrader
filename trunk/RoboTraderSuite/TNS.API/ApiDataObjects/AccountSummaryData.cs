@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using TNS.Global.Bus;
-using TNS.Global.Enum;
+using Infra.Bus;
+using Infra.Enum;
 
 namespace TNS.API.ApiDataObjects
 {
-    public class AccountSummaryData: IMessage
+    public class AccountSummaryData : IMessage
     {
 
         //tags = NetLiquidation,EquityWithLoanValue,BuyingPower,ExcessLiquidity,FullMaintMarginReq,FullInitMarginReq"

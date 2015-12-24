@@ -114,10 +114,6 @@
       <Project>{60C9BF13-7546-40A8-9FC4-814E565782C5}</Project>
       <Name>TNS.Controls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TNS.Global\TNS.Global.csproj">
-      <Project>{bcb4c6f8-73e1-48d8-a410-0bcc0295ee61}</Project>
-      <Name>TNS.Global</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

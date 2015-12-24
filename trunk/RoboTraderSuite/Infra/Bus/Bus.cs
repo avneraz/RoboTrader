@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using TNS.Global.Extensions;
+using Infra.Extensions;
 
-namespace TNS.Global.Bus
+namespace Infra.Bus
 {
     public class Bus
     {

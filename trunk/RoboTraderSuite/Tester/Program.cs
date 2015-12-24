@@ -9,7 +9,7 @@ using log4net;
 using TNS.API.ApiDataObjects;
 using TNS.API.IBApiWrapper;
 using TNS.BL;
-using TNS.Global.Bus;
+using Infra.Bus;
 using static System.Console;
 
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
@@ -20,12 +20,12 @@ namespace Tester
 {
     class Consumer : SimpleBaseLogic
     {
-        protected override void HandleMessage(IMessage meesage)
+        protected override void HandleMessage(IMessage message)
         {
-            Console.WriteLine(meesage);
-            if (!(meesage is AccountSummaryData)) return;
+            Console.WriteLine(message);
+            if (!(message is AccountSummaryData)) return;
 
-            var accountSummaryData = ((AccountSummaryData) meesage);
+            var accountSummaryData = ((AccountSummaryData) message);
             Console.WriteLine(accountSummaryData);
         }
     }

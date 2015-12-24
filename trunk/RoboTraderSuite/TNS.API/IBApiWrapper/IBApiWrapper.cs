@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using IBApi;
 using TNS.API.ApiDataObjects;
-using TNS.Global.Bus;
-using TNS.Global.Extensions.ArrayExtensions;
+using Infra.Bus;
+using Infra.Extensions.ArrayExtensions;
 
 namespace TNS.API.IBApiWrapper
 {

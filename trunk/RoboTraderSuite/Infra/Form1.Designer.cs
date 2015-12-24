@@ -1,4 +1,4 @@
-﻿namespace TNS.Global
+﻿namespace Infra
 {
     partial class Form1
     {
