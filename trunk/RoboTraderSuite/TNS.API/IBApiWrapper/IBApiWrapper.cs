@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using IBApi;
+using Infra;
 using TNS.API.ApiDataObjects;
 using Infra.Bus;
 using Infra.Extensions.ArrayExtensions;
@@ -19,6 +20,7 @@ namespace TNS.API.IBApiWrapper
         private readonly IBMessageHandler _handler;
         private readonly Dictionary<ContractBase, int> _contractToRequestIds;
         private int? _currentOrderId;
+        private readonly TimeSpan RECONNECTION_TIMEOUT = TimeSpan.FromSeconds(30);
         
         private int _curReqId;
         private readonly string _mainAccount;
@@ -57,9 +59,23 @@ namespace TNS.API.IBApiWrapper
         public void ConnectToBroker()
         {
             //TODO: error handling
+            if (_clientSocket.IsConnected())
+            {
+                Logger.Warn("ConnectToBroker called althoguh we already connected");
+                return;
+            }
             _clientSocket.eConnect(_host, _port, _clientId);
-            //this tells tws to send market data even when there is no active trading
-            _clientSocket.reqMarketDataType(2);
+            if (!_clientSocket.IsConnected())
+            {
+                GeneralTimer.GeneralTimerInstance.AddTask(RECONNECTION_TIMEOUT, ConnectToBroker, false);
+                Logger.Error($"Failed to connect to TWS, going to retry in {RECONNECTION_TIMEOUT}");
+            }
+            else
+            {
+                //this tells tws to send market data even when there is no active trading
+                _clientSocket.reqMarketDataType(2);
+            }
+            
         }
 
         public void RequestAccountData()

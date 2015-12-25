@@ -371,9 +371,6 @@ namespace TNS.API.IBApiWrapper
                             optionData.AskPrice = price;
 
                         optionData.AskPrice = optPrice > int.MaxValue ? -1 : optPrice;
-                        //TODO - why is implied voltality is here?
-                        //if (message.ImpliedVolatility <= 1)
-                        //    optionData.ImpliedVolatility = message.ImpliedVolatility;
                         break;
                     case TickType.LAST_OPTION:
                         optionData.LastPrice = optPrice > int.MaxValue ? -1 : optPrice;
