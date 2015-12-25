@@ -9,56 +9,63 @@ namespace TNS.BL
 {
     public class Distributer : SimpleBaseLogic
     {
-        public Distributer(Dictionary<string, UNLManager> unlManagerDic)
+        public Distributer(Dictionary<string, SimpleBaseLogic> unlManagerDic, AccountManager accountManager, 
+            MainSecuritiesManager mainSecuritiesManager)
         {
-            UNLManagerDic = unlManagerDic;
+            _unlManagersDic = unlManagerDic;
+            _accountManager = accountManager;
+            _mainSecuritiesManager = mainSecuritiesManager;
         }
 
         public event Action<ExceptionData> ExceptionThrown;
         public event Action<APIMessageData> APIMessageArrive;
-        
-        private Dictionary<string, UNLManager> UNLManagerDic { get; set; }
+
+        private Dictionary<string, SimpleBaseLogic> _unlManagersDic;
         private static readonly ILog Logger = LogManager.GetLogger(typeof(Distributer));
-        protected override void HandleMessage(IMessage meesage)
+        private readonly MainSecuritiesManager _mainSecuritiesManager;
+        private readonly AccountManager _accountManager;
+
+        protected override void HandleMessage(IMessage message)
         {
 
-            switch (meesage.APIDataType)
+            switch (message.APIDataType)
             {
-                case EapiDataTypes.Unknown:
-                    break;
                 case EapiDataTypes.ExceptionData:
-                    HandleException(meesage);
+                    HandleException(message);
                     break;
-                case EapiDataTypes.AccountSummaryData:
-                    break;
-                
                 case EapiDataTypes.APIMessageData:
-                    var apiMessageData = meesage as APIMessageData;
+                    var apiMessageData = message as APIMessageData;
                     if (apiMessageData == null)
                         break;
                     APIMessageArrive?.Invoke(apiMessageData);
                     Logger.Debug(apiMessageData.ToString());
                     break;
-                case EapiDataTypes.AccountMemberData:
+                case EapiDataTypes.AccountSummaryData:
+                    _accountManager.Enqueue(message, false);
                     break;
                 case EapiDataTypes.OptionData:
-                    //var optionData = meesage as OptionData;
-
-
-                    break;
                 case EapiDataTypes.PositionData:
-                case EapiDataTypes.OrderData:
-
+                case EapiDataTypes.OrderStatus:
+                    ISymbolMessage symbolMessage = message as ISymbolMessage;
+                    _unlManagersDic[symbolMessage.GetSymbolName()].Enqueue(symbolMessage, false);
                     break;
+                case EapiDataTypes.SecurityData:
+                    _mainSecuritiesManager.Enqueue(message, false);
+                    break;
+                case EapiDataTypes.BrokerConnectionStatus:
+                    //int a = 6;
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
         private  void HandleException(IMessage meesage)
-        {
+        {   
             ExceptionData exceptionData = meesage as ExceptionData;
-            if (exceptionData == null) return;
+            if (exceptionData == null)
+                return;
             ExceptionThrown?.Invoke(exceptionData);
             
             Logger.Error(exceptionData.ThrownException);

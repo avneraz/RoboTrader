@@ -8,10 +8,15 @@ using Infra.Bus;
 
 namespace TNS.API.ApiDataObjects
 {
-    public class SecurityData : IMessage
+    public class SecurityData : ISymbolMessage
     {
 
         public virtual EapiDataTypes APIDataType => EapiDataTypes.SecurityData;
+        public string GetSymbolName()
+        {
+            return Symbol;
+        }
+
         /// <summary>
         /// Index or underline data (symbol, currency, etc.)
         /// </summary>

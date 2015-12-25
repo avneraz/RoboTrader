@@ -63,7 +63,6 @@ namespace TNS.API.IBApiWrapper
         {
             var ibOrder = new Order
             {
-                //TODO: orderId 0?
                 OrderId = Convert.ToInt32(orderId),
                 Action = order.OrderAction == OrderAction.BUY ? "BUY" : "SELL",
                 OrderType = order.OrderType.ToString().ToUpper(), //"LMT", MKT "MKT PRT" - not suported

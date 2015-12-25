@@ -23,7 +23,7 @@ namespace TNS.API.ApiDataObjects
 
 
     }
-    public class OrderStatusData : IMessage
+    public class OrderStatusData : ISymbolMessage
     {
         public OrderStatusData(string orderId, OrderData order)
         {
@@ -34,6 +34,11 @@ namespace TNS.API.ApiDataObjects
 
         public OrderData Order { get;  }
         public EapiDataTypes APIDataType => EapiDataTypes.OrderStatus;
+        public string GetSymbolName()
+        {
+            return Order.Contract.Symbol;
+        }
+
         public OrderStatus OrderStatus { get; set; }
         public string OrderId { get;  }
         public double MaintMargin { get; set; }

@@ -23,7 +23,12 @@ namespace TNS.API.IBApiWrapper
         private const double LARGE_NUBMER = 100000000;
         //max time to close orders that are filled/failed in _orderStatus dic
         private readonly TimeSpan ORDER_MAX_TIME_SPAN = TimeSpan.FromMinutes(5);
-         
+        private ConnectionStatus _connectionStatus = ConnectionStatus.Connected;
+        private const int TWS_CONNECTION_LOST_ERROR_CODE = 1100;
+        private const int TWS_CONNECTION_LOST_ERROR_CODE2 = 2110;
+        private const int TWS_CONNECTION_RESTORED_DATA_MAINTAINED_ERROR_CODE = 1102;
+        private const int TWS_CONNECTION_RESTORED_DATA_LOST_ERROR_CODE = 1101;
+
 
         public IBMessageHandler(IBaseLogic consumer)
         {
@@ -233,6 +238,7 @@ namespace TNS.API.IBApiWrapper
 
         public void error(int id, int errorCode, string errorMsg)
         {
+            
             APIMessageData apiMessageData = new APIMessageData()
             {
                 Message = errorMsg,
@@ -240,10 +246,40 @@ namespace TNS.API.IBApiWrapper
                 AdditionalInfo = id,
                 UpdateTime = DateTime.Now
             };
-            _consumer.Enqueue(apiMessageData);
             Logger.Info(apiMessageData.ToString());
+            if (!HandleSpecialApiMessages(apiMessageData))
+                _consumer.Enqueue(apiMessageData);
+            
         }
 
+        private bool HandleSpecialApiMessages(APIMessageData data)
+        {
+            switch (data.ErrorCode)
+            {
+                case TWS_CONNECTION_LOST_ERROR_CODE2:
+                case TWS_CONNECTION_LOST_ERROR_CODE:
+                    if (_connectionStatus == ConnectionStatus.Connected)
+                    {
+                        _connectionStatus = ConnectionStatus.Disconnected;
+                        _consumer.Enqueue(new BrokerConnectionStatusMessage(ConnectionStatus.Disconnected, data));
+                        Logger.Info($"Connection status changed to disconnected,  {data}");
+                    }
+                        
+                    break;
+                case TWS_CONNECTION_RESTORED_DATA_LOST_ERROR_CODE:
+                case TWS_CONNECTION_RESTORED_DATA_MAINTAINED_ERROR_CODE:
+                    if (_connectionStatus == ConnectionStatus.Disconnected)
+                    {
+                        _consumer.Enqueue(new BrokerConnectionStatusMessage(ConnectionStatus.Connected, data));
+                        Logger.Info($"Connection status changed to connected,  {data}");
+                    }
+                    
+                    break;
+                default:
+                    return false;
+            }
+            return true;
+        }
 
         public void error(Exception ex)
         {
@@ -255,7 +291,6 @@ namespace TNS.API.IBApiWrapper
         {
             lock (_securityDatas)
             {
-                Console.WriteLine(tickerId);
                 var securityData = _securityDatas[tickerId];
                 switch (field)
                 {

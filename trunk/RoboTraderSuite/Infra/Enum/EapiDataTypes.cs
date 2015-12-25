@@ -15,8 +15,8 @@ namespace Infra.Enum
         PositionData = 4,
         OrderData = 5,
         APIMessageData = 6,
-        AccountMemberData = 7,
-        SecurityData = 8,
-        OrderStatus = 9
+        SecurityData = 7,
+        OrderStatus = 8,
+        BrokerConnectionStatus,
     }
 }

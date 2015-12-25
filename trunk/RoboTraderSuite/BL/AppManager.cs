@@ -10,6 +10,7 @@ using TNS.API.ApiDataObjects;
 using TNS.API.IBApiWrapper;
 using TNS.DbDAL;
 using Infra;
+using Infra.Bus;
 using Infra.PopUpMessages;
 
 namespace TNS.BL
@@ -26,10 +27,10 @@ namespace TNS.BL
             Configurations = AllConfigurations.AllConfigurationsObject;
         }
 
-        private Dictionary<string, UNLManager> UNLManagerDic { get; set; }
+        private Dictionary<string, SimpleBaseLogic> UNLManagerDic { get; set; }
         private void BuildUNLManagers()
         {
-            UNLManagerDic = new Dictionary<string, UNLManager>();
+            UNLManagerDic = new Dictionary<string, SimpleBaseLogic>();
             List<MainSecurity> activeUNLList = DbDalManager.GetActiveUNLList();
             foreach (MainSecurity mainSecurity in activeUNLList)
             {
@@ -50,7 +51,9 @@ namespace TNS.BL
         public void ConnectToBroker()
         {
             BuildUNLManagers();
-            Distributer = new Distributer(UNLManagerDic);
+            AccountManager accManager = new AccountManager();
+            MainSecuritiesManager mainSecuritiesMgr = new MainSecuritiesManager();
+            Distributer = new Distributer(UNLManagerDic, accManager, mainSecuritiesMgr);
 
             //Change the wrapper object according to the actual broker, 
             //for now it's Interactive Broker.

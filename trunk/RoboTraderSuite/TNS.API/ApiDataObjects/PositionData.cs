@@ -3,24 +3,28 @@ using Infra.Enum;
 
 namespace TNS.API.ApiDataObjects
 {
-    public class PositionData : IMessage
+    public class PositionData : ISymbolMessage
     {
         public PositionData(ContractBase contract, int position, double averageCost)
         {
-            OptionContract = contract;
+            Contract = contract;
             Position = position;
             AverageCost = averageCost;
         }
         public EapiDataTypes APIDataType => EapiDataTypes.PositionData;
-        public ContractBase OptionContract { get; set; }
+        public string GetSymbolName()
+        {
+            return Contract.Symbol;
+        }
+
+        public ContractBase Contract { get; set; }
         public int Position { get; set; }
         public double AverageCost { get; set; }
-        public string Symbol => OptionContract.Symbol;
 
         public override string ToString()
         {
-            return $"PositionData: [OptionContract: {OptionContract}, Position: {Position}, " +
-                   $"AverageCost: {AverageCost}, Symbol: {Symbol}]";
+            return $"PositionData: [Contract: {Contract}, Position: {Position}, " +
+                   $"AverageCost: {AverageCost}, Symbol: {GetSymbolName()}]";
         }
     }
 }
