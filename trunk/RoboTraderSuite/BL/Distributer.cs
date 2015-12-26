@@ -20,7 +20,7 @@ namespace TNS.BL
         public event Action<ExceptionData> ExceptionThrown;
         public event Action<APIMessageData> APIMessageArrive;
 
-        private Dictionary<string, SimpleBaseLogic> _unlManagersDic;
+        private readonly Dictionary<string, SimpleBaseLogic> _unlManagersDic;
         private static readonly ILog Logger = LogManager.GetLogger(typeof(Distributer));
         private readonly MainSecuritiesManager _mainSecuritiesManager;
         private readonly AccountManager _accountManager;

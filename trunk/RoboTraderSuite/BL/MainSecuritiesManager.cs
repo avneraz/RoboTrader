@@ -10,6 +10,11 @@ namespace TNS.BL
     /// </summary>
     public class MainSecuritiesManager : SimpleBaseLogic
     {
+        public MainSecuritiesManager()
+        {
+            Securities = new Dictionary<string, SecurityData>();
+        }
+
         protected override void HandleMessage(IMessage message)
         {
             switch (message.APIDataType)
@@ -17,13 +22,12 @@ namespace TNS.BL
                 case EapiDataTypes.SecurityData:
                     var securityData = message as SecurityData;
 
-                    securities_[securityData.Contract] = securityData;
+                    if (securityData != null) Securities[securityData.Contract.Symbol] = securityData;
                     break;
             }
         }
 
-        private Dictionary<ContractBase, SecurityData> securities_;
-
+        public Dictionary<string, SecurityData> Securities { get; }
     }
 
 }

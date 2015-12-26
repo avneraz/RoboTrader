@@ -51,9 +51,9 @@ namespace TNS.BL
         public void ConnectToBroker()
         {
             BuildUNLManagers();
-            AccountManager accManager = new AccountManager();
-            MainSecuritiesManager mainSecuritiesMgr = new MainSecuritiesManager();
-            Distributer = new Distributer(UNLManagerDic, accManager, mainSecuritiesMgr);
+            AccountManager = new AccountManager();
+            MainSecuritiesManager = new MainSecuritiesManager();
+            Distributer = new Distributer(UNLManagerDic, AccountManager, MainSecuritiesManager);
 
             //Change the wrapper object according to the actual broker, 
             //for now it's Interactive Broker.
@@ -84,12 +84,9 @@ namespace TNS.BL
         #region Managers Properties
     
         public Distributer Distributer { get; set; }
-
-       
-
         public AccountManager AccountManager { get; private set; }
-
         public AllConfigurations Configurations { get; private set; }
+        public MainSecuritiesManager MainSecuritiesManager { get; private set; }
         #endregion
 
 
