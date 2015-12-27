@@ -15,6 +15,7 @@ namespace TNS.BL
     /// </summary>
     public class MainSecuritiesManager : SimpleBaseLogic
     {
+        public event Action<SecurityData> SecuritiesUpdated;
         private static readonly ILog Logger = LogManager.GetLogger(typeof(MainSecuritiesManager));
         private readonly ITradingApi _apiWrapper;
         public MainSecuritiesManager(ITradingApi apiWrapper)
@@ -49,7 +50,12 @@ namespace TNS.BL
                 case EapiDataTypes.SecurityData:
                     var securityData = message as SecurityData;
 
-                    if (securityData != null) Securities[securityData.Contract.Symbol] = securityData;
+                    if (securityData != null)
+                    {
+                        Securities[securityData.Contract.Symbol] = securityData;
+                        SecuritiesUpdated?.Invoke(securityData);
+                    }
+
                     break;
             }
         }

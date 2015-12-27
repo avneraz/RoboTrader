@@ -17,6 +17,7 @@ namespace TNS.BL
 {
     public class AppManager
     {
+        public event Action AppManagerUp;
         /// <summary>
         /// Must be called once application is up by the main GUI object
         /// </summary>
@@ -89,15 +90,18 @@ namespace TNS.BL
         }
 
         private bool _doWorkAfterConnectionDone;
+
         private void DoWorkAfterConnectionToBroker()
         {
             //Load MainSecurities:
             MainSecuritiesManager.DoWorkAfterConnection();
 
-        _doWorkAfterConnectionDone = true;
+            _doWorkAfterConnectionDone = true;
+            UIDataManager = new UIDataManager(this);
+            AppManagerUp?.Invoke();
+        }
 
-    }
-    private void DistributerOnExceptionThrown(ExceptionData exceptionData)
+        private void DistributerOnExceptionThrown(ExceptionData exceptionData)
         {
             if (!(exceptionData.ThrownException is SocketException)) return;
 
@@ -112,7 +116,9 @@ namespace TNS.BL
         }
 
         #region Managers Properties
-    
+
+        public UIDataManager UIDataManager { get; set; }
+
         public Distributer Distributer { get; set; }
         public AccountManager AccountManager { get; private set; }
         public AllConfigurations Configurations { get; private set; }

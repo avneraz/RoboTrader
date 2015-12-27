@@ -55,6 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TradingManager.cs" />
     <Compile Include="TradingTimeManager.cs" />
+    <Compile Include="UIDataManager.cs" />
     <Compile Include="UNLManager.cs" />
   </ItemGroup>
   <ItemGroup>
