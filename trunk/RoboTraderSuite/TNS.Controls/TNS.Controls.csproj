@@ -11,7 +11,6 @@
     <AssemblyName>TNS.Controls</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-  
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -60,15 +59,33 @@
     <Compile Include="APIMesagesView.Designer.cs">
       <DependentUpon>APIMesagesView.cs</DependentUpon>
     </Compile>
+    <Compile Include="IUIData.cs" />
+    <Compile Include="MainSecuritiesView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainSecuritiesView.Designer.cs">
+      <DependentUpon>MainSecuritiesView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="APIMesagesView.resx">
       <DependentUpon>APIMesagesView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MainSecuritiesView.resx">
+      <DependentUpon>MainSecuritiesView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BL\BL.csproj">
+      <Project>{399b0096-559a-4541-b9e7-81f19a164826}</Project>
+      <Name>BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infra\Infra.csproj">
+      <Project>{bcb4c6f8-73e1-48d8-a410-0bcc0295ee61}</Project>
+      <Name>Infra</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TNS.API\TNS.API.csproj">
       <Project>{c50ba368-93c1-45ad-8779-683189b0ba34}</Project>
       <Name>TNS.API</Name>
@@ -77,6 +94,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\TNS.API.ApiDataObjects.APIMessageData.datasource" />
+    <None Include="Properties\DataSources\TNS.API.ApiDataObjects.SecurityData.datasource" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

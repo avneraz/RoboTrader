@@ -35,10 +35,13 @@
             this.xPageAccontSummary = new DevExpress.XtraTab.XtraTabPage();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.xtraPageMainSecurities = new DevExpress.XtraTab.XtraTabPage();
+            this.mainSecuritiesView1 = new TNS.Controls.MainSecuritiesView();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.xPageAPIMessages.SuspendLayout();
             this.xPageAccontSummary.SuspendLayout();
+            this.xtraPageMainSecurities.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtMessages
@@ -60,7 +63,8 @@
             this.xtraTabControl1.TabIndex = 1;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xPageAPIMessages,
-            this.xPageAccontSummary});
+            this.xPageAccontSummary,
+            this.xtraPageMainSecurities});
             // 
             // xPageAPIMessages
             // 
@@ -103,6 +107,23 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "label1";
             // 
+            // xtraPageMainSecurities
+            // 
+            this.xtraPageMainSecurities.Controls.Add(this.mainSecuritiesView1);
+            this.xtraPageMainSecurities.Name = "xtraPageMainSecurities";
+            this.xtraPageMainSecurities.Size = new System.Drawing.Size(742, 515);
+            this.xtraPageMainSecurities.Text = "Main Securities";
+            // 
+            // mainSecuritiesView1
+            // 
+            this.mainSecuritiesView1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.mainSecuritiesView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainSecuritiesView1.Location = new System.Drawing.Point(0, 0);
+            this.mainSecuritiesView1.Name = "mainSecuritiesView1";
+            this.mainSecuritiesView1.Size = new System.Drawing.Size(742, 515);
+            this.mainSecuritiesView1.TabIndex = 0;
+            this.mainSecuritiesView1.UIDataManager = null;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -118,6 +139,7 @@
             this.xPageAPIMessages.ResumeLayout(false);
             this.xPageAccontSummary.ResumeLayout(false);
             this.xPageAccontSummary.PerformLayout();
+            this.xtraPageMainSecurities.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -131,6 +153,8 @@
         private DevExpress.XtraTab.XtraTabPage xPageAccontSummary;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
+        private DevExpress.XtraTab.XtraTabPage xtraPageMainSecurities;
+        private Controls.MainSecuritiesView mainSecuritiesView1;
     }
 }
 

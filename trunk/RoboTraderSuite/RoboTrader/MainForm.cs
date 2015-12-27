@@ -26,9 +26,16 @@ namespace TNS.RoboTrader
         {
             Logger.Info("Start Program - Tester");
             _appManager = new AppManager();
+            _appManager.AppManagerUp += AppManagerOnAppManagerUp;
             _appManager.InitializeAppManager(this);
             _appManager.ConnectToBroker();
             _appManager.Distributer.APIMessageArrive += DistributerOnAPIMessageArrive;
+
+        }
+
+        private void AppManagerOnAppManagerUp()
+        {
+            mainSecuritiesView1.SetUIDataManager(_appManager.UIDataManager);
         }
 
         private void DistributerOnAPIMessageArrive(APIMessageData apiMessageData)
