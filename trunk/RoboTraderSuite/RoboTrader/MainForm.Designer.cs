@@ -33,8 +33,8 @@
             this.xPageAPIMessages = new DevExpress.XtraTab.XtraTabPage();
             this.apiMesagesView = new TNS.Controls.APIMesagesView();
             this.xPageAccontSummary = new DevExpress.XtraTab.XtraTabPage();
-            this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.xPageAPIMessages.SuspendLayout();
@@ -66,7 +66,7 @@
             // 
             this.xPageAPIMessages.Controls.Add(this.apiMesagesView);
             this.xPageAPIMessages.Name = "xPageAPIMessages";
-            this.xPageAPIMessages.Size = new System.Drawing.Size(716, 515);
+            this.xPageAPIMessages.Size = new System.Drawing.Size(742, 515);
             this.xPageAPIMessages.Text = "API Messages";
             // 
             // apiMesagesView
@@ -75,7 +75,7 @@
             this.apiMesagesView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.apiMesagesView.Location = new System.Drawing.Point(0, 0);
             this.apiMesagesView.Name = "apiMesagesView";
-            this.apiMesagesView.Size = new System.Drawing.Size(716, 515);
+            this.apiMesagesView.Size = new System.Drawing.Size(742, 515);
             this.apiMesagesView.TabIndex = 0;
             // 
             // xPageAccontSummary
@@ -87,6 +87,13 @@
             this.xPageAccontSummary.Size = new System.Drawing.Size(742, 515);
             this.xPageAccontSummary.Text = "Accont Summary";
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(99, 33);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(121, 21);
+            this.textBox1.TabIndex = 2;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -96,13 +103,6 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "label1";
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(99, 33);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(121, 21);
-            this.textBox1.TabIndex = 2;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -111,6 +111,7 @@
             this.Controls.Add(this.xtraTabControl1);
             this.Name = "MainForm";
             this.Text = "MainForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).EndInit();
             this.xtraTabControl1.ResumeLayout(false);

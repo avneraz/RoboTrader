@@ -8,8 +8,8 @@ namespace TNS.API.ApiDataObjects
 {
     public class StockContract : ContractBase
     {
-        public StockContract(string symbol, 
-            string exchange = "SMART", string currency = "USD") : base(symbol, SecurityType.Stock, exchange, currency)
+        public StockContract(string symbol, SecurityType securityType,
+            string exchange = "SMART", string currency = "USD") : base(symbol, securityType, exchange, currency)
         {
         }
     }

@@ -28,8 +28,13 @@ namespace TNS.BL
         }
 
         private Dictionary<string, SimpleBaseLogic> UNLManagerDic { get; set; }
-        private void BuildUNLManagers()
+        private void BuildManagers()
         {
+
+            AccountManager = new AccountManager(APIWrapper);
+            MainSecuritiesManager = new MainSecuritiesManager(APIWrapper);
+
+
             UNLManagerDic = new Dictionary<string, SimpleBaseLogic>();
             List<MainSecurity> activeUNLList = DbDalManager.GetActiveUNLList();
             foreach (MainSecurity mainSecurity in activeUNLList)
@@ -37,9 +42,12 @@ namespace TNS.BL
                 var unlManager = new UNLManager(mainSecurity);
                 UNLManagerDic.Add(mainSecurity.Symbol, unlManager);
             }
+            Distributer.SetManagers(UNLManagerDic,AccountManager,MainSecuritiesManager);
 
         }
         Form ParentForm { get; set; }
+
+        public bool IsConnected { get; set; }
 
         public ITradingApi APIWrapper { get; private set; }
 
@@ -50,24 +58,46 @@ namespace TNS.BL
         /// </summary>
         public void ConnectToBroker()
         {
-            BuildUNLManagers();
-            AccountManager = new AccountManager();
-            MainSecuritiesManager = new MainSecuritiesManager();
-            Distributer = new Distributer(UNLManagerDic, AccountManager, MainSecuritiesManager);
-
+            Distributer = new Distributer();
             //Change the wrapper object according to the actual broker, 
             //for now it's Interactive Broker.
-                APIWrapper = new IBApiWrapper(
-                Configurations.Application.DefaultHost, 
-                Configurations.Application.AppPort, 
-                Configurations.Application.AppClientId, 
-                Distributer, 
+            APIWrapper = new IBApiWrapper(
+                Configurations.Application.DefaultHost, Configurations.Application.AppPort,
+                Configurations.Application.AppClientId, Distributer,
                 Configurations.Application.MainAccount);
-            APIWrapper.ConnectToBroker();
+            
             Distributer.ExceptionThrown += DistributerOnExceptionThrown;
+            Distributer.ConnectionChanged += DistributerOnConnectionChanged;
+            APIWrapper.ConnectToBroker();
+            BuildManagers();
+
+            if (APIWrapper.IsConnected)
+                DoWorkAfterConnectionToBroker();
+         
         }
-        //RequestAccountData
-        private void DistributerOnExceptionThrown(ExceptionData exceptionData)
+        public void ShutDownApplication()
+        {
+            GeneralTimer.GeneralTimerInstance.StopGeneralTimer();
+            APIWrapper.DisconnectFromBroker();
+           //TOADO add another shutdown actions:
+        }
+        private void DistributerOnConnectionChanged(BrokerConnectionStatusMessage brokerConnectionStatusMessage)
+        {
+            IsConnected = (brokerConnectionStatusMessage.Status == ConnectionStatus.Connected);
+            if (_doWorkAfterConnectionDone == false)
+                DoWorkAfterConnectionToBroker();
+        }
+
+        private bool _doWorkAfterConnectionDone;
+        private void DoWorkAfterConnectionToBroker()
+        {
+            //Load MainSecurities:
+            MainSecuritiesManager.DoWorkAfterConnection();
+
+        _doWorkAfterConnectionDone = true;
+
+    }
+    private void DistributerOnExceptionThrown(ExceptionData exceptionData)
         {
             if (!(exceptionData.ThrownException is SocketException)) return;
 

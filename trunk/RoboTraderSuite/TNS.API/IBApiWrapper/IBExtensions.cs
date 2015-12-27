@@ -19,7 +19,9 @@ namespace TNS.API.IBApiWrapper
                     return new OptionContract(contract.Symbol, contract.Strike, GetExpiryDate(contract.Expiry), optionType,
                         contract.Exchange, Convert.ToInt32(contract.Multiplier), contract.Currency);
                 case "STK":
-                    return new StockContract(contract.Symbol);
+                    return new StockContract(contract.Symbol, SecurityType.Stock);
+                case "IND":
+                    return new StockContract(contract.Symbol, SecurityType.Index);
                 default:
                     throw new Exception("Invalid contract type received " +  contract.SecType);
             }

@@ -7,6 +7,13 @@ namespace TNS.BL
 {
     public class AccountManager : SimpleBaseLogic
     {
+        private ITradingApi _apiWrapper;
+
+        public AccountManager(ITradingApi apiWrapper)
+        {
+            _apiWrapper = apiWrapper;
+        }
+
         protected override string ThreadName => "AccountManager_Work";
 
         protected override void HandleMessage(IMessage message)
@@ -38,5 +45,10 @@ namespace TNS.BL
         /// Invested money plus PnL
         /// </summary>
         public double NetLiquidation { get; set; }
+
+        public override void DoWorkAfterConnection()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

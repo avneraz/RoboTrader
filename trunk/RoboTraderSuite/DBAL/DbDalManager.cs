@@ -32,7 +32,24 @@ namespace TNS.DbDAL
                 throw;
             }
         }
-        public static List<MainSecurity> GetActiveContractList()
+        public static List<string> GetMainSecuritySymbolsList()
+        {
+            try
+            {
+                using (var ctx = new VegaEntities())
+                {
+                    var contractList =
+                        ctx.MainSecurities.Where(contract => contract.IsActive.Value).Select(c=>c.Symbol);
+                    return contractList.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("DbDalManager.GetActiveContractList():: " + ex.Message, ex);
+                throw;
+            }
+        }
+        public static List<MainSecurity> GetMainSecurityList()
         {
             try
             {

@@ -36,10 +36,14 @@ namespace TNS.BL
             }
         }
 
-        public OptionsManager OptionsManager { get; private set; }
-        public PositionsDataBuilder PositionsDataBuilder { get; private set; }
-        public TradingTimeManager TradingTimeManager { get; private set; }
-        public TradingManager TradingManager { get; private set; }
+        public override void DoWorkAfterConnection()
+        {
+            throw new NotImplementedException();
+        }
+        //public OptionsManager OptionsManager { get; private set; }
+        //public PositionsDataBuilder PositionsDataBuilder { get; private set; }
+        //public TradingTimeManager TradingTimeManager { get; private set; }
+        //public TradingManager TradingManager { get; private set; }
 
 
     }

@@ -12,6 +12,7 @@ using TNS.BL;
 using Infra.Bus;
 using static System.Console;
 
+
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
 
 
@@ -25,6 +26,10 @@ namespace Tester
         {
             Logger.Info(message);
 
+        }
+        public override void DoWorkAfterConnection()
+        {
+            throw new NotImplementedException();
         }
     }
     class Program

@@ -21,30 +21,30 @@ namespace TNS.RoboTrader
             InitializeComponent();
         }
 
+        private AppManager _appManager;
         private void MainForm_Load(object sender, System.EventArgs e)
         {
             Logger.Info("Start Program - Tester");
-            AppManager appManager = new AppManager();
-            appManager.InitializeAppManager(this);
-            appManager.ConnectToBroker();
-            appManager.Distributer.APIMessageArrive += DistributerOnAPIMessageArrive;
+            _appManager = new AppManager();
+            _appManager.InitializeAppManager(this);
+            _appManager.ConnectToBroker();
+            _appManager.Distributer.APIMessageArrive += DistributerOnAPIMessageArrive;
         }
 
         private void DistributerOnAPIMessageArrive(APIMessageData apiMessageData)
         {
-            Action action = () =>
-            {
-                //txtMessages.Text += apiMessageData.ToString();
-                apiMesagesView.AddMessage(apiMessageData);
-            };
+            Action action = () => apiMesagesView.AddMessage(apiMessageData);
+           
             if (InvokeRequired)
-            {
                 Invoke(action);
-            }
             else
-            {
                 action.Invoke();
-            }
+            
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _appManager.ShutDownApplication();
         }
     }
 }

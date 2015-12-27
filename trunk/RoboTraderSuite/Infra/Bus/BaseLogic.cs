@@ -68,19 +68,12 @@ namespace Infra.Bus
 
         public void Enqueue(IMessage message, bool duplicate=true)
         {
-            if (duplicate)
-            {
-                _queue.Enqueue(message.Copy());
-            }
-            else
-            {
-                _queue.Enqueue(message);
-            }
-            
+            _queue.Enqueue(duplicate ? message.Copy() : message);
         }
 
         protected abstract void HandleMessage(IMessage message);
 
+        public abstract void DoWorkAfterConnection();
 
         protected void AddScheduledTask(TimeSpan span, Action task, bool reOccuring = false)
         {

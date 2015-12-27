@@ -9,8 +9,13 @@ namespace TNS.BL
 {
     public class Distributer : SimpleBaseLogic
     {
-        public Distributer(Dictionary<string, SimpleBaseLogic> unlManagerDic, AccountManager accountManager, 
-            MainSecuritiesManager mainSecuritiesManager)
+        //private ITradingApi _apiWrapper;
+
+        public Distributer()
+        {
+            
+        }
+        public void SetManagers(Dictionary<string, SimpleBaseLogic> unlManagerDic, AccountManager accountManager, MainSecuritiesManager mainSecuritiesManager)
         {
             _unlManagersDic = unlManagerDic;
             _accountManager = accountManager;
@@ -19,11 +24,12 @@ namespace TNS.BL
 
         public event Action<ExceptionData> ExceptionThrown;
         public event Action<APIMessageData> APIMessageArrive;
+        public event Action<BrokerConnectionStatusMessage> ConnectionChanged;
 
-        private readonly Dictionary<string, SimpleBaseLogic> _unlManagersDic;
+        private  Dictionary<string, SimpleBaseLogic> _unlManagersDic;
         private static readonly ILog Logger = LogManager.GetLogger(typeof(Distributer));
-        private readonly MainSecuritiesManager _mainSecuritiesManager;
-        private readonly AccountManager _accountManager;
+        private  MainSecuritiesManager _mainSecuritiesManager;
+        private  AccountManager _accountManager;
 
         protected override void HandleMessage(IMessage message)
         {
@@ -53,7 +59,9 @@ namespace TNS.BL
                     _mainSecuritiesManager.Enqueue(message, false);
                     break;
                 case EapiDataTypes.BrokerConnectionStatus:
-                    //int a = 6;
+                    BrokerConnectionStatusMessage connectionStatusMessage =
+                        message as BrokerConnectionStatusMessage;
+                    ConnectionChanged?.Invoke(connectionStatusMessage);
                     break;
 
                 default:
@@ -69,6 +77,10 @@ namespace TNS.BL
             ExceptionThrown?.Invoke(exceptionData);
             
             Logger.Error(exceptionData.ThrownException);
+        }
+        public override void DoWorkAfterConnection()
+        {
+            throw new NotImplementedException();
         }
     }
 }

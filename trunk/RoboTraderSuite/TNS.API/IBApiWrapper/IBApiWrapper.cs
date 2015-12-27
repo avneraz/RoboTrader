@@ -56,12 +56,23 @@ namespace TNS.API.IBApiWrapper
             _contractToRequestIds = new Dictionary<ContractBase, int>();
 
         }
+
+        public bool IsConnected
+        {
+            get
+            {
+                if (_clientSocket == null)
+                    return false;
+                return _clientSocket.IsConnected();
+            }
+        }
+
         public void ConnectToBroker()
         {
             //TODO: error handling
             if (_clientSocket.IsConnected())
             {
-                Logger.Warn("ConnectToBroker called althoguh we already connected");
+                Logger.Warn("ConnectToBroker called although we already connected");
                 return;
             }
             _clientSocket.eConnect(_host, _port, _clientId);
@@ -78,6 +89,17 @@ namespace TNS.API.IBApiWrapper
             
         }
 
+        public void DisconnectFromBroker()
+        {
+            if (IsConnected == false)
+            {
+                Logger.Warn("DisonnectFromBroker called although we already disconnected");
+                return;
+            }
+            _clientSocket.eDisconnect();
+            Logger.Warn("DisonnectFromBroker called. We are disconnected from TWS!");
+            
+        }
         public void RequestAccountData()
         {
             Logger.DebugFormat(nameof(RequestAccountData) , " called");
