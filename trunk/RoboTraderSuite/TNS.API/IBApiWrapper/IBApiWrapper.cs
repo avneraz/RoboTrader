@@ -110,19 +110,23 @@ namespace TNS.API.IBApiWrapper
 
         public void RequestContinousContractData(List<ContractBase> contracts)
         {
+
             Logger.Info($"{nameof(RequestContinousContractData)} called, requesting {contracts.Count} contracts");
-            contracts.ForEach(c =>
+            contracts.ForEach(contract =>
             {
-                if (!_contractToRequestIds.ContainsKey(c))
+                if (_contractToRequestIds.ContainsKey(contract)) return;
+
+                int requestId = RequestId;
+                var ibContract = contract.ToIbContract();
+
+                if (ibContract.Symbol == "MSFT")//For test only
                 {
-                    int requestId = RequestId;
-                    Contract ibContract = c.ToIbContract();
-                    _contractToRequestIds[c] = requestId;
-                    _clientSocket.reqContractDetails(requestId, ibContract);
-                    _handler.RegisterContract(requestId, c);
-                    _clientSocket.reqMktData(requestId, ibContract, "100,225,233", false, new List<TagValue>());
+                    ibContract.PrimaryExch = "NASDAQ";
                 }
-                
+                _contractToRequestIds[contract] = requestId;
+                _clientSocket.reqContractDetails(requestId, ibContract);
+                _handler.RegisterContract(requestId, contract);
+                _clientSocket.reqMktData(requestId, ibContract, "100,225,233", false, new List<TagValue>());
             });
             
         }

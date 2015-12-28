@@ -14,7 +14,7 @@ namespace TNS.API.IBApiWrapper
     class IBMessageHandler : EWrapper
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(IBMessageHandler));
-        private readonly Dictionary<int, SecurityData> _securityDatas;
+        private readonly Dictionary<int, SecurityData> _securityDataDic;
         private readonly Dictionary<int, OrderStatusData> _orderStatus;
         private readonly AccountSummaryData _accountSummary;
         //private readonly Dictionary<int, MainSecuritiesData> _mainSecuritiesDic;
@@ -32,7 +32,7 @@ namespace TNS.API.IBApiWrapper
 
         public IBMessageHandler(IBaseLogic consumer)
         {
-            _securityDatas = new Dictionary<int, SecurityData>();
+            _securityDataDic = new Dictionary<int, SecurityData>();
             _orderStatus = new Dictionary<int, OrderStatusData>();
             _accountSummary = new AccountSummaryData();
             _consumer = consumer;
@@ -117,15 +117,7 @@ namespace TNS.API.IBApiWrapper
 
         }
 
-        public void contractDetails(int reqId, ContractDetails contractDetails)
-        {
-
-        }
-
-        public void contractDetailsEnd(int reqId)
-        {
-
-        }
+       
 
         public void execDetails(int reqId, Contract contract, Execution execution)
         {
@@ -236,6 +228,16 @@ namespace TNS.API.IBApiWrapper
 
         #endregion
 
+        public void contractDetails(int reqId, ContractDetails contractDetails)
+        {
+
+        }
+
+        public void contractDetailsEnd(int reqId)
+        {
+
+        }
+
         public void error(int id, int errorCode, string errorMsg)
         {
             
@@ -289,9 +291,11 @@ namespace TNS.API.IBApiWrapper
         }
         public void tickPrice(int tickerId, int field, double price, int canAutoExecute)
         {
-            lock (_securityDatas)
+            lock (_securityDataDic)
             {
-                var securityData = _securityDatas[tickerId];
+                var securityData = _securityDataDic[tickerId];
+                if(securityData.Symbol == "MSFT")
+                { }
                 switch (field)
                 {
                     case TickType.BID: //1
@@ -323,9 +327,9 @@ namespace TNS.API.IBApiWrapper
 
         public void tickSize(int tickerId, int field, int size)
         {
-            lock (_securityDatas)
+            lock (_securityDataDic)
             {
-                var securityData = _securityDatas[tickerId];
+                var securityData = _securityDataDic[tickerId];
                 switch (field)
                 {
                     case TickType.ASK_SIZE:
@@ -347,9 +351,9 @@ namespace TNS.API.IBApiWrapper
             double impliedVolatility, double delta, double optPrice,
             double pvDividend, double gamma, double vega, double theta, double undPrice)
         {
-            lock (_securityDatas)
+            lock (_securityDataDic)
             {
-                var optionData = _securityDatas[tickerId] as OptionData;
+                var optionData = _securityDataDic[tickerId] as OptionData;
                 optionData.ImpliedVolatility = impliedVolatility;
                 double price;
                 //TODO - reason for this switch case?
@@ -504,9 +508,9 @@ namespace TNS.API.IBApiWrapper
 
         private void PublishOptions()
         {
-            lock (_securityDatas)
+            lock (_securityDataDic)
             {
-                foreach (var securityData in _securityDatas.Values)
+                foreach (var securityData in _securityDataDic.Values)
                 {
                     _consumer.Enqueue(securityData);
                 }
@@ -515,20 +519,12 @@ namespace TNS.API.IBApiWrapper
 
         public void RegisterContract(int requestId, ContractBase contract)
         {
-            lock (_securityDatas)
+            lock (_securityDataDic)
             {
-                SecurityData data;
                 var optionContract = contract as OptionContract;
-                if (optionContract != null)
-                {
-                    data = new OptionData();
-                }
-                else
-                {
-                    data = new SecurityData();
-                }
-                data.Contract = contract;
-                _securityDatas.Add(requestId, data);
+                var securityData = optionContract != null ? new OptionData() : new SecurityData();
+                securityData.Contract = contract;
+                _securityDataDic.Add(requestId, securityData);
             }
         }
         private void CloseIrrelevantOrders()
@@ -538,12 +534,12 @@ namespace TNS.API.IBApiWrapper
         }
         public IEnumerable<int> GetCurrentOptionsRequestIds()
         {
-            return _securityDatas.Keys;
+            return _securityDataDic.Keys;
         }
 
         public IEnumerable<int> GetCurrentMainSecuritiesRequestIds()
         {
-            return _securityDatas.Keys;
+            return _securityDataDic.Keys;
         }
     }
 }
