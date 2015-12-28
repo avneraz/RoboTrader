@@ -54,8 +54,10 @@ namespace TNS.API.IBApiWrapper
             _clientSocket = new EClientSocket(_handler);
             _curReqId = 0;
             _contractToRequestIds = new Dictionary<ContractBase, int>();
-
+            _handler.ContractDetailsMessageSent += HandlerOnContractDetailsMessageSent;
         }
+
+       
 
         public bool IsConnected
         {
@@ -124,13 +126,17 @@ namespace TNS.API.IBApiWrapper
                     ibContract.PrimaryExch = "NASDAQ";
                 }
                 _contractToRequestIds[contract] = requestId;
-                _clientSocket.reqContractDetails(requestId, ibContract);
+                _clientSocket.reqContractDetails(requestId, ibContract);//TOADO ==> change the flow
                 _handler.RegisterContract(requestId, contract);
-                _clientSocket.reqMktData(requestId, ibContract, "100,225,233", false, new List<TagValue>());
+                //_clientSocket.reqMktData(requestId, ibContract, "100,225,233", false, new List<TagValue>());
             });
             
         }
-
+        private void HandlerOnContractDetailsMessageSent(int requestId, ContractDetails contractDetails)
+        {
+            _clientSocket.reqMktData(requestId, contractDetails.Summary,
+                                     "100,225,233", false, new List<TagValue>());
+        }
         public void RequestContinousPositionsData()
         {
             Logger.Debug($"{nameof(RequestContinousPositionsData)} called");

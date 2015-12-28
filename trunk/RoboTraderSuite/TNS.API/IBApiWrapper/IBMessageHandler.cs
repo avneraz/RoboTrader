@@ -29,7 +29,7 @@ namespace TNS.API.IBApiWrapper
         private const int TWS_CONNECTION_RESTORED_DATA_MAINTAINED_ERROR_CODE = 1102;
         private const int TWS_CONNECTION_RESTORED_DATA_LOST_ERROR_CODE = 1101;
 
-
+        public event Action<int, ContractDetails> ContractDetailsMessageSent;
         public IBMessageHandler(IBaseLogic consumer)
         {
             _securityDataDic = new Dictionary<int, SecurityData>();
@@ -230,7 +230,7 @@ namespace TNS.API.IBApiWrapper
 
         public void contractDetails(int reqId, ContractDetails contractDetails)
         {
-
+            ContractDetailsMessageSent?.Invoke(reqId, contractDetails);
         }
 
         public void contractDetailsEnd(int reqId)

@@ -52,8 +52,12 @@ namespace TNS.BL
 
                     if (securityData != null)
                     {
+                        if (securityData.Symbol == "SPX")
+                        {
+                        }
                         Securities[securityData.Contract.Symbol] = securityData;
                         SecuritiesUpdated?.Invoke(securityData);
+
                     }
 
                     break;
