@@ -54,7 +54,7 @@ namespace TNS.API.IBApiWrapper
             _clientSocket = new EClientSocket(_handler);
             _curReqId = 0;
             _contractToRequestIds = new Dictionary<ContractBase, int>();
-            _handler.ContractDetailsMessageSent += HandlerOnContractDetailsMessageSent;
+            _handler.ContractDetailsMessageReceived += HandlerOnContractDetailsMessage;
         }
 
        
@@ -116,7 +116,8 @@ namespace TNS.API.IBApiWrapper
             Logger.Info($"{nameof(RequestContinousContractData)} called, requesting {contracts.Count} contracts");
             contracts.ForEach(contract =>
             {
-                if (_contractToRequestIds.ContainsKey(contract)) return;
+                if (_contractToRequestIds.ContainsKey(contract))
+                    return;
 
                 int requestId = RequestId;
                 var ibContract = contract.ToIbContract();
@@ -132,7 +133,7 @@ namespace TNS.API.IBApiWrapper
             });
             
         }
-        private void HandlerOnContractDetailsMessageSent(int requestId, ContractDetails contractDetails)
+        private void HandlerOnContractDetailsMessage(int requestId, ContractDetails contractDetails)
         {
             _clientSocket.reqMktData(requestId, contractDetails.Summary,
                                      "100,225,233", false, new List<TagValue>());

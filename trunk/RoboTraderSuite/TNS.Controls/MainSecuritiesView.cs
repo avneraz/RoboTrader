@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Infra.Extensions;
 using TNS.API.ApiDataObjects;
 using TNS.BL;
 
@@ -27,28 +28,19 @@ namespace TNS.Controls
         public void SetUIDataManager(UIDataManager uiDataManager)
         {
             UIDataManager = uiDataManager;
-            Action action = () => {
-                                      securityDataBindingSource.DataSource = UIDataManager.GetSecurityDataList();
+            this.InvokeIfRequired(() => {
+                securityDataBindingSource.DataSource = UIDataManager.GetSecurityDataList();
                 securityDataBindingSource.ResetBindings(false);
-            };
-            if (InvokeRequired)
-                Invoke(action);
-            else
-                action.Invoke();
-
+            });
             UIDataManager.SecuritiesUpdated+= UIDataManagerOnSecuritiesUpdated;
         }
 
         private void UIDataManagerOnSecuritiesUpdated(SecurityData securityData)
         {
-            Action action = () => {
+            this.InvokeIfRequired(() => {
                 securityDataBindingSource.DataSource = UIDataManager.GetSecurityDataList();
                 securityDataBindingSource.ResetBindings(false);
-            };
-            if (InvokeRequired)
-                Invoke(action);
-            else
-                action.Invoke();
+            });
         }
 
         public UIDataManager UIDataManager { get; set; }
