@@ -33,6 +33,13 @@
     <Content Include="CodeMapSolution.dgml">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="RequestDataFromIB.sequencediagram">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="RequestDataFromIB.sequencediagram.layout">
+      <SubType>Content</SubType>
+      <DependentUpon>RequestDataFromIB.sequencediagram</DependentUpon>
+    </Content>
     <Content Include="SystemFlow.activitydiagram">
       <SubType>Content</SubType>
     </Content>
