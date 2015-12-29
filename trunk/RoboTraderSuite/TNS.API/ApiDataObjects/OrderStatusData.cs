@@ -44,11 +44,13 @@ namespace TNS.API.ApiDataObjects
         public double MaintMargin { get; set; }
         public DateTime LastUpdateTime { get; set; }
 
+        public double Commission { get; set; }
+
 
         public override string ToString()
         {
             return $"OrderStatusData: [Order: {Order}, OrderId: {OrderId}, MaintMargin: {MaintMargin}, " +
-                   $"LastUpdateTime: {LastUpdateTime}]";
+                   $"Commission - {Commission}, LastUpdateTime: {LastUpdateTime}]";
         }
     }
 }

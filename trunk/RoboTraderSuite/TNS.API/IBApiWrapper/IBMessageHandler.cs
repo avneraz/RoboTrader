@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using IBApi;
 using log4net;
 using TNS.API.ApiDataObjects;
@@ -11,11 +12,12 @@ using Infra.Extensions.ArrayExtensions;
 namespace TNS.API.IBApiWrapper
 {
 
+    
     class IBMessageHandler : EWrapper
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(IBMessageHandler));
         private readonly Dictionary<int, SecurityData> _securityDataDic;
-        private readonly Dictionary<int, OrderStatusData> _orderStatus;
+        private readonly Dictionary<int, IBOrderStatusWrapper> _orderStatus;
         private readonly AccountSummaryData _accountSummary;
         //private readonly Dictionary<int, MainSecuritiesData> _mainSecuritiesDic;
         private readonly IBaseLogic _consumer;
@@ -29,7 +31,7 @@ namespace TNS.API.IBApiWrapper
         public IBMessageHandler(IBaseLogic consumer)
         {
             _securityDataDic = new Dictionary<int, SecurityData>();
-            _orderStatus = new Dictionary<int, OrderStatusData>();
+            _orderStatus = new Dictionary<int, IBOrderStatusWrapper>();
             _accountSummary = new AccountSummaryData();
             _consumer = consumer;
             GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(1), PublishOptions, true);
@@ -115,21 +117,13 @@ namespace TNS.API.IBApiWrapper
 
        
 
-        public void execDetails(int reqId, Contract contract, Execution execution)
-        {
-
-        }
-
+       
         public void execDetailsEnd(int reqId)
         {
 
         }
 
-        public void commissionReport(CommissionReport commissionReport)
-        {
-
-        }
-
+     
         public void fundamentalData(int reqId, string data)
         {
 
@@ -234,6 +228,29 @@ namespace TNS.API.IBApiWrapper
 
         }
 
+        public void commissionReport(CommissionReport commissionReport)
+        {
+            //find order by execId
+            var orderStatus = _orderStatus.FirstOrDefault(o => o.Value.ExecId == commissionReport.ExecId);
+            if (orderStatus.Equals(new KeyValuePair<int, IBOrderStatusWrapper>()))
+            {
+                Logger.Error($"Received comission report with execId not found in orders list, execId is {commissionReport.ExecId}");
+                return;
+            }
+
+            orderStatus.Value.Data.Commission = commissionReport.Commission;
+            _consumer.Enqueue(orderStatus.Value.Data);
+        }
+
+        public void execDetails(int reqId, Contract contract, Execution execution)
+        {
+            IBOrderStatusWrapper data;
+            if (_orderStatus.TryGetValue(execution.OrderId, out data))
+            {
+                data.ExecId = execution.ExecId;
+            }
+        }
+
         public void error(int id, int errorCode, string errorMsg)
         {
             
@@ -256,11 +273,6 @@ namespace TNS.API.IBApiWrapper
         private bool HandleSpecialApiMessages(APIMessageData data)
         {
             var  errorCode = (EtwsErrorCode) data.ErrorCode;
-            if (data.ErrorCode == 504)//For Testing 
-            {
-                
-            }
-
             switch (errorCode)
             {
                 case EtwsErrorCode.NoSecurityFound:
@@ -506,7 +518,7 @@ namespace TNS.API.IBApiWrapper
         {
             if (_orderStatus.ContainsKey(orderId))
             {
-                OrderStatusData orderStatus = _orderStatus[orderId];
+                OrderStatusData orderStatus = _orderStatus[orderId].Data;
                 orderStatus.OrderStatus = (OrderStatus) Enum.Parse(typeof (OrderStatus), status);
                 orderStatus.LastUpdateTime = DateTime.Now; ;
                 _consumer.Enqueue(orderStatus);
@@ -521,28 +533,25 @@ namespace TNS.API.IBApiWrapper
         public void openOrder(int orderId, Contract contract, Order order, OrderState orderState)
         {
             CloseIrrelevantOrders();
-            OrderStatusData status;
+            IBOrderStatusWrapper status;
             if (!_orderStatus.TryGetValue(orderId, out status))
             {
                 var orderData = order.ToOrderData();
                 orderData.Contract = contract.ToContract();
-                status = new OrderStatusData(orderId.ToString(), orderData);
+                status = new IBOrderStatusWrapper(new OrderStatusData(orderId.ToString(), orderData));
                 _orderStatus[orderId] = status;
             }
-            status.LastUpdateTime = DateTime.Now;
+            status.Data.LastUpdateTime = DateTime.Now;
             double maintMargin = Convert.ToDouble(orderState.MaintMargin);
             if (maintMargin < LARGE_NUBMER)
-                status.MaintMargin = maintMargin;
+                status.Data.MaintMargin = maintMargin;
 
         }
-
-    
-
-
-   
+        
        
         public void position(string account, Contract contract, int pos, double avgCost)
         {
+           
             var posData = new PositionData(contract.ToContract(), pos, avgCost);
             _consumer.Enqueue(posData);
         }
@@ -587,8 +596,8 @@ namespace TNS.API.IBApiWrapper
 
         private void CloseIrrelevantOrders()
         {
-            _orderStatus.RemoveAll(item => DateTime.Now - item.LastUpdateTime > ORDER_MAX_TIME_SPAN &&
-            item.OrderStatus.In(OrderStatus.Cancelled, OrderStatus.Filled));
+            _orderStatus.RemoveAll(item => DateTime.Now - item.Data.LastUpdateTime > ORDER_MAX_TIME_SPAN &&
+            item.Data.OrderStatus.In(OrderStatus.Cancelled, OrderStatus.Filled));
         }
         public IEnumerable<int> GetCurrentOptionsRequestIds()
         {
