@@ -48,7 +48,6 @@ namespace TNS.BL
 
         public override void DoWorkAfterConnection()
         {
-            throw new NotImplementedException();
         }
     }
 }

@@ -15,12 +15,17 @@ namespace Infra.Extensions
             return values.Contains(val);
         }
 
+        /// <summary>
+        /// Invoke sent action, with the sent arguments, by using the object invoke method, only if necessary.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="action"></param>
+        /// <param name="args"></param>
         public static void InvokeIfRequired(this ISynchronizeInvoke obj,
-                                         MethodInvoker action)
+                                         MethodInvoker action, object[] args = null)
         {
             if (obj.InvokeRequired)
             {
-                var args = new object[0];
                 obj.Invoke(action, args);
             }
             else

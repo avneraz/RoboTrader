@@ -3,6 +3,9 @@ using IBApi;
 
 namespace TNS.API.ApiDataObjects
 {
+    /// <summary>
+    /// Call or Put
+    /// </summary>
     public enum OptionType
     {
         Call,
@@ -26,6 +29,8 @@ namespace TNS.API.ApiDataObjects
         public double Strike { get;  }
         public OptionType OptionType { get;  }
         public int Multiplier { get; set; }
+
+        public string OptionKey => $"{Expiry}.{OptionType}.{Strike}";
 
         public override Contract ToIbContract()
         {

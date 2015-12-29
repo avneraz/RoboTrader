@@ -26,21 +26,26 @@ namespace TNS.BL
             ParentForm = mainForm;
             ConfigurationBuilder.BuildAndInitializeConfiguration();
             Configurations = AllConfigurations.AllConfigurationsObject;
+            Distributer = new Distributer();
         }
 
         private Dictionary<string, SimpleBaseLogic> UNLManagerDic { get; set; }
+
+        private List<SimpleBaseLogic> _simpleBaseLogicList;
         private void BuildManagers()
         {
-
+            _simpleBaseLogicList = new List<SimpleBaseLogic>();
             AccountManager = new AccountManager(APIWrapper);
+            _simpleBaseLogicList.Add(AccountManager);
             MainSecuritiesManager = new MainSecuritiesManager(APIWrapper);
-
+            _simpleBaseLogicList.Add(MainSecuritiesManager);
+         
 
             UNLManagerDic = new Dictionary<string, SimpleBaseLogic>();
             List<MainSecurity> activeUNLList = DbDalManager.GetActiveUNLList();
             foreach (MainSecurity mainSecurity in activeUNLList)
             {
-                var unlManager = new UNLManager(mainSecurity);
+                var unlManager = new UNLManager(mainSecurity, this);
                 UNLManagerDic.Add(mainSecurity.Symbol, unlManager);
             }
             Distributer.SetManagers(UNLManagerDic,AccountManager,MainSecuritiesManager);
@@ -59,7 +64,7 @@ namespace TNS.BL
         /// </summary>
         public void ConnectToBroker()
         {
-            Distributer = new Distributer();
+            
             //Change the wrapper object according to the actual broker, 
             //for now it's Interactive Broker.
             APIWrapper = new IBApiWrapper(
@@ -93,9 +98,14 @@ namespace TNS.BL
 
         private void DoWorkAfterConnectionToBroker()
         {
-            //Load MainSecurities:
-            MainSecuritiesManager.DoWorkAfterConnection();
-
+            foreach (var manager in _simpleBaseLogicList)
+            {
+                manager.DoWorkAfterConnection();
+            }
+            foreach (var unlManager in UNLManagerDic.Values)
+            {
+                unlManager.DoWorkAfterConnection();
+            }
             _doWorkAfterConnectionDone = true;
             UIDataManager = new UIDataManager(this);
             AppManagerUp?.Invoke();
@@ -118,13 +128,19 @@ namespace TNS.BL
         #region Managers Properties
 
         public UIDataManager UIDataManager { get; set; }
-
         public Distributer Distributer { get; set; }
         public AccountManager AccountManager { get; private set; }
         public AllConfigurations Configurations { get; private set; }
         public MainSecuritiesManager MainSecuritiesManager { get; private set; }
+
         #endregion
 
+        #region Data Consuming
 
+        public SecurityData GetMainSecurityData(string symbol)
+        {
+            return MainSecuritiesManager.Securities[symbol];
+        }
+        #endregion
     }
 }

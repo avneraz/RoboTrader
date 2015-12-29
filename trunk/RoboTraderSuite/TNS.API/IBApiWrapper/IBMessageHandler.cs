@@ -24,10 +24,6 @@ namespace TNS.API.IBApiWrapper
         //max time to close orders that are filled/failed in _orderStatus dic
         private readonly TimeSpan ORDER_MAX_TIME_SPAN = TimeSpan.FromMinutes(5);
         private ConnectionStatus _connectionStatus = ConnectionStatus.Connected;
-        private const int TWS_CONNECTION_LOST_ERROR_CODE = 1100;
-        private const int TWS_CONNECTION_LOST_ERROR_CODE2 = 2110;
-        private const int TWS_CONNECTION_RESTORED_DATA_MAINTAINED_ERROR_CODE = 1102;
-        private const int TWS_CONNECTION_RESTORED_DATA_LOST_ERROR_CODE = 1101;
 
         public event Action<int, ContractDetails> ContractDetailsMessageReceived;
         public IBMessageHandler(IBaseLogic consumer)
@@ -248,41 +244,90 @@ namespace TNS.API.IBApiWrapper
                 AdditionalInfo = id,
                 UpdateTime = DateTime.Now
             };
-            Logger.Info(apiMessageData.ToString());
+
             if (!HandleSpecialApiMessages(apiMessageData))
+            {
                 _consumer.Enqueue(apiMessageData);
-            
+                Logger.Info(apiMessageData.ToString());
+            }
+
         }
 
         private bool HandleSpecialApiMessages(APIMessageData data)
         {
-            switch (data.ErrorCode)
+            var  errorCode = (EtwsErrorCode) data.ErrorCode;
+            if (data.ErrorCode == 504)//For Testing 
             {
-                case TWS_CONNECTION_LOST_ERROR_CODE2:
-                case TWS_CONNECTION_LOST_ERROR_CODE:
+                
+            }
+
+            switch (errorCode)
+            {
+                case EtwsErrorCode.NoSecurityFound:
+                    var requestId = (int) data.AdditionalInfo;
+                    lock (_securityDataDic)
+                    {
+                        if (_securityDataDic.ContainsKey(requestId))
+                        {
+                            var secData = _securityDataDic[requestId];
+
+                            Logger.Debug($"Request Id({requestId}) Not found. " + $" {secData.Contract}");
+                        } 
+                    }
+                    return true;
+                case EtwsErrorCode.EntityIdNotFound:
+                    HandleEntityIdNotFound(data);
+                    return true;
+                case EtwsErrorCode.IbTWSConnectivityLost:
+                case EtwsErrorCode.ConnectivityTwsServerBroken:
                     if (_connectionStatus == ConnectionStatus.Connected)
                     {
                         _connectionStatus = ConnectionStatus.Disconnected;
                         _consumer.Enqueue(new BrokerConnectionStatusMessage(ConnectionStatus.Disconnected, data));
                         Logger.Info($"Connection status changed to disconnected,  {data}");
                     }
-                        
-                    break;
-                case TWS_CONNECTION_RESTORED_DATA_LOST_ERROR_CODE:
-                case TWS_CONNECTION_RESTORED_DATA_MAINTAINED_ERROR_CODE:
+                    _consumer.Enqueue(data);
+                    return true;
+                case EtwsErrorCode.IbTWSConnectivityRestoredDataLost:
+                case EtwsErrorCode.IbTWSConnectivityRestoredDataMaintained:
                     if (_connectionStatus == ConnectionStatus.Disconnected)
                     {
                         _consumer.Enqueue(new BrokerConnectionStatusMessage(ConnectionStatus.Connected, data));
                         Logger.Info($"Connection status changed to connected,  {data}");
+                        _consumer.Enqueue(data);
                     }
-                    
-                    break;
+                    return true;
+                //case EtwsErrorCode.Unknown:
+                //    break;
+                //case EtwsErrorCode.UndefinedError:
+                //    break;
+                //case EtwsErrorCode.TWSDisconnection:
+                //    break;
+                //case EtwsErrorCode.MarketDataFarmDisconnected:
+                //    break;
+                //case EtwsErrorCode.MarketDataFarmConnected:
+                //    break;
+                //case EtwsErrorCode.HistoricalDataFarmDisconnected:
+                //    break;
+                //case EtwsErrorCode.HistoricalDataFarmConnected:
+                //    break;
                 default:
                     return false;
             }
-            return true;
+           
         }
+        private void HandleEntityIdNotFound(APIMessageData data)
+        {
 
+            int requestId = (int)data.AdditionalInfo;
+            lock (_securityDataDic)
+            {
+                if (!_securityDataDic.ContainsKey(requestId)) return;
+                Logger.Debug($"Request Id({requestId}) removed from SecurityDataDic, {data} {_securityDataDic[requestId]}");
+                _securityDataDic.Remove(requestId);
+                
+            }
+        }
         public void error(Exception ex)
         {
             ExceptionData exceptionData = new ExceptionData(ex);
@@ -291,10 +336,13 @@ namespace TNS.API.IBApiWrapper
         }
         public void tickPrice(int tickerId, int field, double price, int canAutoExecute)
         {
+            if(tickerId>4)
+            { }
             lock (_securityDataDic)
             {
                 var securityData = _securityDataDic[tickerId];
-                if(securityData.Symbol == "MSFT")
+                var optionData = securityData as OptionData;
+                if (securityData.Symbol == "MSFT")
                 { }
                 switch (field)
                 {
@@ -527,6 +575,16 @@ namespace TNS.API.IBApiWrapper
                 _securityDataDic.Add(requestId, securityData);
             }
         }
+
+        public void UnregisterContract(int requestId)
+        {
+            lock (_securityDataDic)
+            {
+                if (_securityDataDic.ContainsKey(requestId))
+                    _securityDataDic.Remove(requestId); 
+            }
+        }
+
         private void CloseIrrelevantOrders()
         {
             _orderStatus.RemoveAll(item => DateTime.Now - item.LastUpdateTime > ORDER_MAX_TIME_SPAN &&

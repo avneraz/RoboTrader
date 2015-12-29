@@ -70,13 +70,22 @@ namespace TNS.BL
         }
 
         private  void HandleException(IMessage meesage)
-        {   
-            ExceptionData exceptionData = meesage as ExceptionData;
-            if (exceptionData == null)
-                return;
-            ExceptionThrown?.Invoke(exceptionData);
-            
-            Logger.Error(exceptionData.ThrownException);
+        {
+
+            try
+            {
+                ExceptionData exceptionData = meesage as ExceptionData;
+                if (exceptionData == null)
+                    return;
+                ExceptionThrown?.Invoke(exceptionData);
+
+                Logger.Error(exceptionData.ThrownException);
+            }
+            catch (Exception ex)
+            {
+
+                Logger.Error(ex);
+            }
         }
         public override void DoWorkAfterConnection()
         {

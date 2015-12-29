@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using IBApi;
 using Infra;
 using TNS.API.ApiDataObjects;
@@ -113,7 +114,8 @@ namespace TNS.API.IBApiWrapper
         public void RequestContinousContractData(List<ContractBase> contracts)
         {
 
-            Logger.Info($"{nameof(RequestContinousContractData)} called, requesting {contracts.Count} contracts");
+            Logger.Info($"{nameof(RequestContinousContractData)} " + 
+                            "called, requesting {contracts.Count} contracts");
             contracts.ForEach(contract =>
             {
                 if (_contractToRequestIds.ContainsKey(contract))
@@ -122,12 +124,8 @@ namespace TNS.API.IBApiWrapper
                 int requestId = RequestId;
                 var ibContract = contract.ToIbContract();
 
-                if (ibContract.Symbol == "MSFT")//For test only
-                {
-                    ibContract.PrimaryExch = "NASDAQ";
-                }
                 _contractToRequestIds[contract] = requestId;
-                _clientSocket.reqContractDetails(requestId, ibContract);//TOADO ==> change the flow
+                _clientSocket.reqContractDetails(requestId, ibContract);
                 _handler.RegisterContract(requestId, contract);
                 //_clientSocket.reqMktData(requestId, ibContract, "100,225,233", false, new List<TagValue>());
             });
@@ -137,6 +135,19 @@ namespace TNS.API.IBApiWrapper
         {
             _clientSocket.reqMktData(requestId, contractDetails.Summary,
                                      "100,225,233", false, new List<TagValue>());
+            //Remove the entry
+           
+        }
+
+        public void CancelMarketData(SecurityData securityData)
+        {
+            lock (_contractToRequestIds)
+            {
+                if (_contractToRequestIds.ContainsKey(securityData.Contract) == false)
+                    return;
+                _clientSocket.cancelMktData(_contractToRequestIds[securityData.Contract]);
+                _contractToRequestIds.Remove(securityData.Contract);
+            }
         }
         public void RequestContinousPositionsData()
         {
