@@ -28,21 +28,20 @@ namespace TNS.BL
 
         private  Dictionary<string, SimpleBaseLogic> _unlManagersDic;
         private static readonly ILog Logger = LogManager.GetLogger(typeof(Distributer));
+
         private  MainSecuritiesManager _mainSecuritiesManager;
         private  AccountManager _accountManager;
 
         protected override void HandleMessage(IMessage message)
         {
-
+            ISymbolMessage symbolMessage;
             switch (message.APIDataType)
             {
                 case EapiDataTypes.ExceptionData:
                     HandleException(message);
                     break;
                 case EapiDataTypes.APIMessageData:
-                    var apiMessageData = message as APIMessageData;
-                    if (apiMessageData == null)
-                        break;
+                    var apiMessageData = (APIMessageData)message ;
                     APIMessageArrive?.Invoke(apiMessageData);
                     Logger.Debug(apiMessageData.ToString());
                     break;
@@ -52,23 +51,38 @@ namespace TNS.BL
                 case EapiDataTypes.OptionData:
                 case EapiDataTypes.PositionData:
                 case EapiDataTypes.OrderStatus:
-                    ISymbolMessage symbolMessage = message as ISymbolMessage;
+                    symbolMessage = (ISymbolMessage)message;
                     _unlManagersDic[symbolMessage.GetSymbolName()].Enqueue(symbolMessage, false);
                     break;
                 case EapiDataTypes.SecurityData:
                     _mainSecuritiesManager.Enqueue(message, false);
+                     symbolMessage = (ISymbolMessage)message;
+                    var key = symbolMessage.GetSymbolName();
+                    if (_unlManagersDic.ContainsKey(key))
+                    _unlManagersDic[key].Enqueue(symbolMessage, false);
                     break;
                 case EapiDataTypes.BrokerConnectionStatus:
-                    BrokerConnectionStatusMessage connectionStatusMessage =
-                        message as BrokerConnectionStatusMessage;
+                    
+                    var connectionStatusMessage = (BrokerConnectionStatusMessage)message;
+                    SendToAllComponents(connectionStatusMessage);
                     ConnectionChanged?.Invoke(connectionStatusMessage);
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException();
+                     throw new ArgumentOutOfRangeException();
             }
         }
 
+        private void SendToAllComponents(IMessage message)
+        {
+            _accountManager.Enqueue(message, false);
+            _mainSecuritiesManager.Enqueue(message, false);
+            foreach (var unlManager in _unlManagersDic.Values)
+            {
+                unlManager.Enqueue(message);
+            }
+
+        }
         private  void HandleException(IMessage meesage)
         {
 

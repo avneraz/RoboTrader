@@ -118,37 +118,27 @@ namespace TNS.API.IBApiWrapper
                             "called, requesting {contracts.Count} contracts");
             contracts.ForEach(contract =>
             {
-                if (_contractToRequestIds.ContainsKey(contract))
-                    return;
-
                 int requestId = RequestId;
                 var ibContract = contract.ToIbContract();
-
-                _contractToRequestIds[contract] = requestId;
+               
                 _clientSocket.reqContractDetails(requestId, ibContract);
-                _handler.RegisterContract(requestId, contract);
-                //_clientSocket.reqMktData(requestId, ibContract, "100,225,233", false, new List<TagValue>());
+            
             });
             
         }
         private void HandlerOnContractDetailsMessage(int requestId, ContractDetails contractDetails)
         {
-            _clientSocket.reqMktData(requestId, contractDetails.Summary,
+            var contractBase = contractDetails.Summary.ToContract();
+            if (_contractToRequestIds.ContainsKey(contractBase))
+                return;
+            _contractToRequestIds[contractBase] = requestId;
+            int reqId = RequestId;
+            _clientSocket.reqMktData(reqId, contractDetails.Summary,
                                      "100,225,233", false, new List<TagValue>());
-            //Remove the entry
-           
+            _handler.RegisterContract(reqId, contractBase);
         }
 
-        public void CancelMarketData(SecurityData securityData)
-        {
-            lock (_contractToRequestIds)
-            {
-                if (_contractToRequestIds.ContainsKey(securityData.Contract) == false)
-                    return;
-                _clientSocket.cancelMktData(_contractToRequestIds[securityData.Contract]);
-                _contractToRequestIds.Remove(securityData.Contract);
-            }
-        }
+        
         public void RequestContinousPositionsData()
         {
             Logger.Debug($"{nameof(RequestContinousPositionsData)} called");

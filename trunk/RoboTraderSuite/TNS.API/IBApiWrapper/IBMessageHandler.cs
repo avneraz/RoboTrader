@@ -308,6 +308,10 @@ namespace TNS.API.IBApiWrapper
                         Logger.Info($"Connection status changed to connected,  {data}");
                         _consumer.Enqueue(data);
                     }
+                    
+                    return true;
+                case EtwsErrorCode.MarketDataFarmConnected:
+                    _consumer.Enqueue(new BrokerConnectionStatusMessage(ConnectionStatus.Connected, data));
                     return true;
                 //case EtwsErrorCode.Unknown:
                 //    break;
@@ -412,6 +416,7 @@ namespace TNS.API.IBApiWrapper
             double pvDividend, double gamma, double vega, double theta, double undPrice)
         {
             lock (_securityDataDic)
+
             {
                 var optionData = _securityDataDic[tickerId] as OptionData;
                 optionData.ImpliedVolatility = impliedVolatility;
@@ -452,6 +457,8 @@ namespace TNS.API.IBApiWrapper
                     optionData.Vega = vega;
                 if (Math.Abs(theta) < 10)
                     optionData.Theta = theta;
+                optionData.UnderlinePrice = undPrice > int.MaxValue ? -1 : undPrice;
+
                 if (optionData.ImpliedVolatility < EPSILON)
                 {
                     optionData.ImpliedVolatility = impliedVolatility;
@@ -477,10 +484,10 @@ namespace TNS.API.IBApiWrapper
                 case "BuyingPower":
                     _accountSummary.BuyingPower = Convert.ToDouble(value);
                     break;
-                case "EquityWithLoanValue ":
+                case "EquityWithLoanValue":
                     _accountSummary.EquityWithLoanValue = Convert.ToDouble(value);
                     break;
-                case "BuyingPExcessLiquidity":
+                case "ExcessLiquidity":
                     _accountSummary.ExcessLiquidity = Convert.ToDouble(value);
                     break;
                 case "FullInitMarginReq":
@@ -489,11 +496,13 @@ namespace TNS.API.IBApiWrapper
                 case "FullMaintMarginReq":
                     _accountSummary.FullMaintMarginReq = Convert.ToDouble(value);
                     break;
-                case "BuyingPNetLiquidation":
+                case "NetLiquidation":
                     _accountSummary.NetLiquidation = Convert.ToDouble(value);
                     break;
+                default:
+                    return;
             }
-            
+            _consumer.Enqueue(_accountSummary);
         }
 
         public void accountSummaryEnd(int reqId)

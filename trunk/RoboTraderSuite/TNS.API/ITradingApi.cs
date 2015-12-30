@@ -8,7 +8,7 @@ namespace TNS.API.ApiDataObjects
         void DisconnectFromBroker();
         void RequestAccountData();
         void RequestContinousContractData(List<ContractBase> contracts);
-        void CancelMarketData(SecurityData securityData);
+        //void CancelMarketData(SecurityData securityData);
         void RequestContinousPositionsData();
         string CreateOrder(OrderData order);
         void UpdateOrder(string orderId, OrderData order);

@@ -45,7 +45,7 @@ namespace TNS.BL
             List<MainSecurity> activeUNLList = DbDalManager.GetActiveUNLList();
             foreach (MainSecurity mainSecurity in activeUNLList)
             {
-                var unlManager = new UNLManager(mainSecurity, this);
+                var unlManager = new UNLManager(mainSecurity, APIWrapper);
                 UNLManagerDic.Add(mainSecurity.Symbol, unlManager);
             }
             Distributer.SetManagers(UNLManagerDic,AccountManager,MainSecuritiesManager);
@@ -98,6 +98,7 @@ namespace TNS.BL
 
         private void DoWorkAfterConnectionToBroker()
         {
+            _doWorkAfterConnectionDone = true;
             foreach (var manager in _simpleBaseLogicList)
             {
                 manager.DoWorkAfterConnection();
@@ -106,7 +107,7 @@ namespace TNS.BL
             {
                 unlManager.DoWorkAfterConnection();
             }
-            _doWorkAfterConnectionDone = true;
+            
             UIDataManager = new UIDataManager(this);
             AppManagerUp?.Invoke();
         }
@@ -135,12 +136,6 @@ namespace TNS.BL
 
         #endregion
 
-        #region Data Consuming
-
-        public SecurityData GetMainSecurityData(string symbol)
-        {
-            return MainSecuritiesManager.Securities[symbol];
-        }
-        #endregion
+       
     }
 }

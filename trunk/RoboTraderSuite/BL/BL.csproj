@@ -51,12 +51,14 @@
     <Compile Include="Distributer.cs" />
     <Compile Include="MainSecuritiesManager.cs" />
     <Compile Include="OptionsManager.cs" />
+    <Compile Include="OrdersManager.cs" />
     <Compile Include="PositionsDataBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TradingManager.cs" />
     <Compile Include="TradingTimeManager.cs" />
     <Compile Include="UIDataManager.cs" />
     <Compile Include="UNLManager.cs" />
+    <Compile Include="UnlMemberBaseManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BLClassDiagram.cd" />

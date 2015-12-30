@@ -13,7 +13,11 @@ namespace TNS.BL
         {
             _apiWrapper = apiWrapper;
         }
-
+        public void SubscribeAccountUpdates()
+        {
+            //bool subscribe, string acctCode
+            //_ibClient.ClientSocket.reqAccountUpdates(subscribe, acctCode);
+        }
         protected override string ThreadName => "AccountManager_Work";
 
         protected override void HandleMessage(IMessage message)
@@ -48,6 +52,7 @@ namespace TNS.BL
 
         public override void DoWorkAfterConnection()
         {
+            _apiWrapper.RequestAccountData();
         }
     }
 }

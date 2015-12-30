@@ -22,6 +22,8 @@ namespace TNS.API.ApiDataObjects
       
         public double ModelPrice { get; set; }
 
+        public double UnderlinePrice { get; set; }
+
         public string OptionKey => $"{OptionContract.Expiry}.{OptionContract.OptionType}.{OptionContract.Strike}";
 
         public override string ToString()
