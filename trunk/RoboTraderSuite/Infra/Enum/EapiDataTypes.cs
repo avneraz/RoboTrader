@@ -18,5 +18,6 @@ namespace Infra.Enum
         SecurityData = 7,
         OrderStatus = 8,
         BrokerConnectionStatus,
+        RequestDataReceived,
     }
 }

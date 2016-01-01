@@ -17,76 +17,81 @@ namespace TNS.BL
 {
     public class AppManager
     {
+        public AppManager(Form mainForm)
+        {
+            InitializeAppManager(mainForm);
+        }
+
         public event Action AppManagerUp;
         /// <summary>
         /// Must be called once application is up by the main GUI object
         /// </summary>
-        public void InitializeAppManager(Form mainForm)
+        private void InitializeAppManager(Form mainForm)
         {
             ParentForm = mainForm;
+
             ConfigurationBuilder.BuildAndInitializeConfiguration();
             Configurations = AllConfigurations.AllConfigurationsObject;
+
             Distributer = new Distributer();
-        }
+            Distributer.ExceptionThrown += DistributerOnExceptionThrown;
+            Distributer.ConnectionChanged += DistributerOnConnectionChanged;
 
-        private Dictionary<string, SimpleBaseLogic> UNLManagerDic { get; set; }
-
-        private List<SimpleBaseLogic> _simpleBaseLogicList;
-        private void BuildManagers()
-        {
-            _simpleBaseLogicList = new List<SimpleBaseLogic>();
-            AccountManager = new AccountManager(APIWrapper);
-            _simpleBaseLogicList.Add(AccountManager);
-            MainSecuritiesManager = new MainSecuritiesManager(APIWrapper);
-            _simpleBaseLogicList.Add(MainSecuritiesManager);
-         
-
-            UNLManagerDic = new Dictionary<string, SimpleBaseLogic>();
-            List<MainSecurity> activeUNLList = DbDalManager.GetActiveUNLList();
-            foreach (MainSecurity mainSecurity in activeUNLList)
-            {
-                var unlManager = new UNLManager(mainSecurity, APIWrapper);
-                UNLManagerDic.Add(mainSecurity.Symbol, unlManager);
-            }
-            Distributer.SetManagers(UNLManagerDic,AccountManager,MainSecuritiesManager);
-
-        }
-        Form ParentForm { get; set; }
-
-        public bool IsConnected { get; set; }
-
-        public ITradingApi APIWrapper { get; private set; }
-
-
-        /// <summary>
-        /// Called when the application ready for connect to the broker.<para></para>
-        /// The broker server must be up (TWS or other.)
-        /// </summary>
-        public void ConnectToBroker()
-        {
-            
             //Change the wrapper object according to the actual broker, 
             //for now it's Interactive Broker.
             APIWrapper = new IBApiWrapper(
                 Configurations.Application.DefaultHost, Configurations.Application.AppPort,
                 Configurations.Application.AppClientId, Distributer,
                 Configurations.Application.MainAccount);
-            
-            Distributer.ExceptionThrown += DistributerOnExceptionThrown;
-            Distributer.ConnectionChanged += DistributerOnConnectionChanged;
-            APIWrapper.ConnectToBroker();
+        }
+        /// <summary>
+        /// Called when the application ready for connect to the broker.<para></para>
+        /// The broker server must be up (TWS or other.)
+        /// </summary>
+        public void ConnectToBroker()
+        {
+
             BuildManagers();
 
+            APIWrapper.ConnectToBroker();
             if (APIWrapper.IsConnected)
                 DoWorkAfterConnectionToBroker();
-         
+
         }
         public void ShutDownApplication()
         {
             GeneralTimer.GeneralTimerInstance.StopGeneralTimer();
             APIWrapper.DisconnectFromBroker();
-           //TOADO add another shutdown actions:
+            //TOADO add another shutdown actions:
         }
+        private void BuildManagers()
+        {
+
+            AccountManager = new AccountManager(APIWrapper);
+            MainSecuritiesManager = new MainSecuritiesManager(APIWrapper);
+
+            UNLManagerDic = new Dictionary<string, SimpleBaseLogic>();
+
+            List<MainSecurity> activeUNLList = DbDalManager.GetActiveUNLList();
+            foreach (MainSecurity mainSecurity in activeUNLList)
+            {
+                var unlManager = new UNLManager(mainSecurity, APIWrapper);
+                UNLManagerDic.Add(mainSecurity.Symbol, unlManager);
+            }
+
+            Distributer.SetManagers(UNLManagerDic,AccountManager,MainSecuritiesManager);
+        }
+        private bool _doWorkAfterConnectionDone;
+        private Dictionary<string, SimpleBaseLogic> UNLManagerDic { get; set; }
+
+        private Form ParentForm { get; set; }
+
+        public bool IsConnected { get; set; }
+
+        public ITradingApi APIWrapper { get; private set; }
+
+
+
         private void DistributerOnConnectionChanged(BrokerConnectionStatusMessage brokerConnectionStatusMessage)
         {
             IsConnected = (brokerConnectionStatusMessage.Status == ConnectionStatus.Connected);
@@ -94,19 +99,16 @@ namespace TNS.BL
                 DoWorkAfterConnectionToBroker();
         }
 
-        private bool _doWorkAfterConnectionDone;
+       
 
         private void DoWorkAfterConnectionToBroker()
         {
             _doWorkAfterConnectionDone = true;
-            foreach (var manager in _simpleBaseLogicList)
-            {
-                manager.DoWorkAfterConnection();
-            }
-            foreach (var unlManager in UNLManagerDic.Values)
-            {
-                unlManager.DoWorkAfterConnection();
-            }
+
+            var connectionStatus = new BrokerConnectionStatusMessage(
+                ConnectionStatus.Connected, null) {AfterConnectionToApiWrapper = true};
+
+            Distributer.Enqueue(connectionStatus);
             
             UIDataManager = new UIDataManager(this);
             AppManagerUp?.Invoke();

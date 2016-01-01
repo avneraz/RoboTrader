@@ -73,16 +73,21 @@ namespace Infra.Bus
 
         protected abstract void HandleMessage(IMessage message);
 
-        public abstract void DoWorkAfterConnection();
+        protected abstract void DoWorkAfterConnection();
 
-        protected void AddScheduledTask(TimeSpan span, Action task, bool reOccuring = false)
+        protected string AddScheduledTask(TimeSpan span, Action task, bool reOccuring = false)
         {
-            GeneralTimer.GeneralTimerInstance.AddTask(span, () =>
+            string uniqueIdentifier = GeneralTimer.GeneralTimerInstance.AddTask(span, () =>
             {
                 _queue.Enqueue(new TimedTask(task));
             }, reOccuring);
+            return uniqueIdentifier;
         }
 
+        protected void RemoveScheduledTask(string uniqueIdentifier)
+        {
+            GeneralTimer.GeneralTimerInstance.RemoveTask(uniqueIdentifier);
+        }
     }
 
 

@@ -24,13 +24,14 @@ namespace TNS.API.ApiDataObjects
             Multiplier = multiplier;
         }
 
-        public OptionContract(string symbol, DateTime expiry,
+        public OptionContract(string symbol, DateTime expiry, OptionType type,
              string exchange = "SMART", int multiplier = 100, string currency = "USD")
             : base(symbol, SecurityType.Option)
 
         {
             Expiry = expiry;
             Multiplier = multiplier;
+            OptionType = type;
         }
         public DateTime Expiry { get;  }
         public double Strike { get;  }

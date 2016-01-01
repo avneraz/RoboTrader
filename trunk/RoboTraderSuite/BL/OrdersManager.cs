@@ -8,10 +8,14 @@ using TNS.DbDAL;
 
 namespace TNS.BL
 {
-    public class OrdersManager: UnlMemberBaseManager
+    public class OrdersManager : UnlMemberBaseManager
     {
-        public OrdersManager(ITradingApi apiWrapper, MainSecurity mainSecurity) : base(apiWrapper, mainSecurity)
+        public OrdersManager(ITradingApi apiWrapper, MainSecurity mainSecurity, UNLManager unlManager) : base(apiWrapper, mainSecurity, unlManager)
         {
         }
+        protected override void DoWorkAfterConnection()
+        {
+        }
+
     }
 }

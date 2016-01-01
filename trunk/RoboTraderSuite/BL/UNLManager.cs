@@ -18,10 +18,18 @@ namespace TNS.BL
         {
             MainSecurity = mainSecurity;
             APIWrapper = apiWrapper;
-            
             Logger.InfoFormat("UNLManager({0}) was created!", mainSecurity.Symbol);
         }
 
+        internal string AddScheduledTaskOnUnl(TimeSpan span, Action task, bool reOccuring = false)
+        {
+            return AddScheduledTask(span, task, reOccuring);
+        }
+
+        internal void RemoveScheduledTaskOnUnl(string uniqueIdentifier)
+        {
+            RemoveScheduledTask(uniqueIdentifier);
+        }
         private List<UnlMemberBaseManager> _memberManagersList;
         private ITradingApi APIWrapper { get; }
         private MainSecurity MainSecurity { get; }
@@ -37,6 +45,7 @@ namespace TNS.BL
                     OptionsManager.HandleMessage(message);
                     break;
                 case EapiDataTypes.PositionData:
+                case EapiDataTypes.RequestDataReceived:
                     PositionsDataBuilder.HandleMessage(message);
                     break;
                 case EapiDataTypes.OrderData:
@@ -45,6 +54,8 @@ namespace TNS.BL
                 case EapiDataTypes.BrokerConnectionStatus:
                     var connectionStatusMessage = (BrokerConnectionStatusMessage)message;
                     ConnectionStatus = connectionStatusMessage.Status;
+                    if (connectionStatusMessage.AfterConnectionToApiWrapper)
+                        DoWorkAfterConnection();
                     SendToAllComponents( message);
                     break;
             }
@@ -52,6 +63,8 @@ namespace TNS.BL
 
         private void SendToAllComponents(IMessage message)
         {
+            if(_memberManagersList == null)
+                return;
             foreach (var manager in _memberManagersList)
             {
                 manager.HandleMessage(message);
@@ -60,35 +73,29 @@ namespace TNS.BL
 
         private bool IsConnected => ConnectionStatus == ConnectionStatus.Connected;
         private ConnectionStatus ConnectionStatus { get; set; }
-        public override void DoWorkAfterConnection()
+        protected override void DoWorkAfterConnection()
+        {
+            CreateManagers();
+        }
+
+        private void CreateManagers()
         {
             _memberManagersList = new List<UnlMemberBaseManager>();
-            TradingTimeManager = new TradingTimeManager(APIWrapper, MainSecurity);
-            //Pass the connectionStatus that received before the object created:
-            TradingTimeManager.HandleMessage(new BrokerConnectionStatusMessage(
-                ConnectionStatus.Connected, null));
+
+            TradingTimeManager = new TradingTimeManager(APIWrapper, MainSecurity, this);
             _memberManagersList.Add(TradingTimeManager);
 
-            OptionsManager = new OptionsManager(APIWrapper, MainSecurity);
-            OptionsManager.HandleMessage(new BrokerConnectionStatusMessage(
-                ConnectionStatus.Connected, null));
+            OptionsManager = new OptionsManager(APIWrapper, MainSecurity, this);
             _memberManagersList.Add(OptionsManager);
 
-            PositionsDataBuilder = new PositionsDataBuilder(APIWrapper, MainSecurity);
-            PositionsDataBuilder.HandleMessage(new BrokerConnectionStatusMessage
-                (ConnectionStatus.Connected, null));
+            PositionsDataBuilder = new PositionsDataBuilder(APIWrapper, MainSecurity,this, OptionsManager);
             _memberManagersList.Add(PositionsDataBuilder);
 
-            TradingManager = new TradingManager(APIWrapper, MainSecurity);
-            TradingManager.HandleMessage(new BrokerConnectionStatusMessage(
-                ConnectionStatus.Connected, null));
-            _memberManagersList.Add(TradingManager);
+            TradingManager = new TradingManager(APIWrapper, MainSecurity, this);
+           _memberManagersList.Add(TradingManager);
 
-            OrdersManager = new OrdersManager(APIWrapper, MainSecurity);
-            OrdersManager.HandleMessage(new BrokerConnectionStatusMessage(
-                ConnectionStatus.Connected, null));
+            OrdersManager = new OrdersManager(APIWrapper, MainSecurity, this);
             _memberManagersList.Add(OrdersManager);
-
         }
 
         private OptionsManager OptionsManager { get; set; }

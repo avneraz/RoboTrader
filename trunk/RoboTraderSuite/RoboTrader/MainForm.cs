@@ -25,11 +25,10 @@ namespace TNS.RoboTrader
         private void MainForm_Load(object sender, System.EventArgs e)
         {
             Logger.Info("Start Program - Tester");
-            _appManager = new AppManager();
+            _appManager = new AppManager(this);
             _appManager.AppManagerUp += AppManagerOnAppManagerUp;
-            
-            _appManager.InitializeAppManager(this);
             _appManager.Distributer.APIMessageArrive += DistributerOnAPIMessageArrive;
+
             _appManager.ConnectToBroker();
             
 

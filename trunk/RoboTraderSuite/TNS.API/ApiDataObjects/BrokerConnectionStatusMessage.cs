@@ -20,6 +20,7 @@ namespace TNS.API.ApiDataObjects
         {
             Status = status;
             MessageData = messageData;
+            AfterConnectionToApiWrapper = false;
         }
 
         public ConnectionStatus Status { get; }
@@ -27,6 +28,10 @@ namespace TNS.API.ApiDataObjects
 
         public EapiDataTypes APIDataType => EapiDataTypes.BrokerConnectionStatus;
 
-
+        /// <summary>
+        /// Used to send message to all data consumer, after first connection to ApiWrapper.
+        /// </summary>
+        public bool AfterConnectionToApiWrapper { get; set; }
+    
     }
 }

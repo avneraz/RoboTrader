@@ -9,7 +9,6 @@ namespace TNS.BL
 {
     public class Distributer : SimpleBaseLogic
     {
-        //private ITradingApi _apiWrapper;
 
         public Distributer()
         {
@@ -67,7 +66,9 @@ namespace TNS.BL
                     SendToAllComponents(connectionStatusMessage);
                     ConnectionChanged?.Invoke(connectionStatusMessage);
                     break;
-
+                case EapiDataTypes.RequestDataReceived:
+                    SendToAllUnlManagers(message);
+                    break;
                 default:
                      throw new ArgumentOutOfRangeException();
             }
@@ -77,12 +78,17 @@ namespace TNS.BL
         {
             _accountManager.Enqueue(message, false);
             _mainSecuritiesManager.Enqueue(message, false);
+            SendToAllUnlManagers(message);
+        }
+
+        private void SendToAllUnlManagers(IMessage message)
+        {
             foreach (var unlManager in _unlManagersDic.Values)
             {
                 unlManager.Enqueue(message);
             }
-
         }
+
         private  void HandleException(IMessage meesage)
         {
 
@@ -101,7 +107,7 @@ namespace TNS.BL
                 Logger.Error(ex);
             }
         }
-        public override void DoWorkAfterConnection()
+        protected override void DoWorkAfterConnection()
         {
             throw new NotImplementedException();
         }

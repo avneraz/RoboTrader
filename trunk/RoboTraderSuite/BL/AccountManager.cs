@@ -7,7 +7,7 @@ namespace TNS.BL
 {
     public class AccountManager : SimpleBaseLogic
     {
-        private ITradingApi _apiWrapper;
+        private readonly ITradingApi _apiWrapper;
 
         public AccountManager(ITradingApi apiWrapper)
         {
@@ -25,11 +25,16 @@ namespace TNS.BL
             switch (message.APIDataType)
             {
                 case EapiDataTypes.AccountSummaryData:
-                    var accountData = message as AccountSummaryData;
+                    var accountData = (AccountSummaryData)message;
 
                     EquityWithLoanValue = accountData.EquityWithLoanValue;
                     FullMaintMarginReq = accountData.FullMaintMarginReq;
                     NetLiquidation = accountData.NetLiquidation;
+                    break;
+                case EapiDataTypes.BrokerConnectionStatus:
+                    var connectionStatusMessage = (BrokerConnectionStatusMessage)message;
+                    if (connectionStatusMessage.AfterConnectionToApiWrapper)
+                        DoWorkAfterConnection();
                     break;
             }
         }
@@ -50,7 +55,7 @@ namespace TNS.BL
         /// </summary>
         public double NetLiquidation { get; set; }
 
-        public override void DoWorkAfterConnection()
+        protected override void DoWorkAfterConnection()
         {
             _apiWrapper.RequestAccountData();
         }

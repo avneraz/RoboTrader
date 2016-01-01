@@ -11,9 +11,8 @@ namespace TNS.BL
 {
     public class TradingManager : UnlMemberBaseManager
     {
-        public TradingManager(ITradingApi apiWrapper, MainSecurity mainSecurity) : base(apiWrapper, mainSecurity)
+        public TradingManager(ITradingApi apiWrapper, MainSecurity mainSecurity, UNLManager unlManager) : base(apiWrapper, mainSecurity, unlManager)
         {
-
         }
 
         private AccountSummaryData AccountSummaryData { get; set; }
@@ -28,5 +27,10 @@ namespace TNS.BL
             }
 
         }
+        protected override void DoWorkAfterConnection()
+        {
+        }
+
+      
     }
 }

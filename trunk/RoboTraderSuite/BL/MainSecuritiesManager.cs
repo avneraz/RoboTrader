@@ -20,9 +20,15 @@ namespace TNS.BL
         private readonly ITradingApi _apiWrapper;
         public MainSecuritiesManager(ITradingApi apiWrapper)
         {
+            InitializeMainSecurities();
+            _apiWrapper = apiWrapper;
+        }
+
+        private void InitializeMainSecurities()
+        {
             List<MainSecurity> mainSecurityList = DbDalManager.GetMainSecurityList();
             Securities = new Dictionary<string, SecurityData>();
-           
+
             foreach (var security in mainSecurityList)
             {
                 SecurityType securityType;
@@ -36,11 +42,11 @@ namespace TNS.BL
                     continue;
                 }
 
-                StockContract stockContract = new StockContract(security.Symbol,securityType, security.Exchange, security.Currency);
-                
-                Securities.Add(stockContract.Symbol, new SecurityData() {Contract = stockContract });
+                var stockContract = new StockContract(security.Symbol, 
+                    securityType, security.Exchange, security.Currency);
+
+                Securities.Add(stockContract.Symbol, new SecurityData() {Contract = stockContract});
             }
-            _apiWrapper = apiWrapper;
         }
 
         protected override void HandleMessage(IMessage message)
@@ -54,15 +60,18 @@ namespace TNS.BL
                     {
                         Securities[securityData.Contract.Symbol] = securityData;
                         SecuritiesUpdated?.Invoke(securityData);
-
                     }
-
+                    break;
+                case EapiDataTypes.BrokerConnectionStatus:
+                    var connectionStatusMessage = (BrokerConnectionStatusMessage)message;
+                    if (connectionStatusMessage.AfterConnectionToApiWrapper)
+                        DoWorkAfterConnection();
                     break;
             }
         }
 
-        public Dictionary<string, SecurityData> Securities { get; }
-        public override void DoWorkAfterConnection()
+        public Dictionary<string, SecurityData> Securities { get; private set; }
+        protected override void DoWorkAfterConnection()
         {
             var contractList = Securities.Values.Select(securityData => securityData.Contract).ToList();
 

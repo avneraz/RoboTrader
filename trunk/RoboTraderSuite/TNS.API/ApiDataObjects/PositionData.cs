@@ -20,6 +20,10 @@ namespace TNS.API.ApiDataObjects
         public ContractBase Contract { get; set; }
         public int Position { get; set; }
         public double AverageCost { get; set; }
+        /// <summary>
+        /// Contains the associate OptionData object reside on OptionManager
+        /// </summary>
+        public OptionData OptionData { get; set; }
 
         public override string ToString()
         {

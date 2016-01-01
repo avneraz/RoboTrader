@@ -49,6 +49,7 @@
     <Compile Include="ApiDataObjects\ExceptionData.cs" />
     <Compile Include="ApiDataObjects\ISymbolMessage.cs" />
     <Compile Include="ApiDataObjects\OrderStatusData.cs" />
+    <Compile Include="ApiDataObjects\RequestDataReceived.cs" />
     <Compile Include="ApiDataObjects\SecurityData.cs" />
     <Compile Include="ApiDataObjects\StockContract.cs" />
     <Compile Include="ApiDataObjects\AccountSummaryData.cs" />

@@ -6,6 +6,7 @@ using log4net;
 using TNS.API.ApiDataObjects;
 using Infra;
 using Infra.Bus;
+using Infra.Enum;
 using Infra.Extensions;
 using Infra.Extensions.ArrayExtensions;
 
@@ -155,10 +156,13 @@ namespace TNS.API.IBApiWrapper
 
         }
 
-
+        /// <summary>
+        /// All position data have been received already;
+        /// </summary>
         public void positionEnd()
         {
-
+            var requestDataReceived = new RequestDataReceived(EapiDataTypes.PositionData);
+            _consumer.Enqueue(requestDataReceived);
         }
 
         public void realtimeBar(int reqId, long time, double open, double high, double low, double close, long volume,

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Infra.Bus;
 using Infra.Enum;
 using log4net;
@@ -11,20 +10,52 @@ namespace TNS.BL
 {
     public class OptionsManager: UnlMemberBaseManager
     {
-        private  readonly ILog _logger = LogManager.GetLogger(typeof(OptionsManager));
-      
-        public OptionsManager(ITradingApi apiWrapper, MainSecurity mainSecurity) : base(apiWrapper, mainSecurity)
+
+        public OptionsManager(ITradingApi apiWrapper, MainSecurity mainSecurity, UNLManager unlManager) : base(apiWrapper, mainSecurity, unlManager)
         {
-            InitializeItems();
         }
 
+        private  readonly ILog _logger = LogManager.GetLogger(typeof(OptionsManager));
+
+        public event Action<OptionData> OptionDataReceivd;
+       
         private Dictionary<string, OptionData> OptionDataDic { get; set; }
 
+        public OptionData GetOptionData(string optionKey)
+        {
+            var opDataExist = OptionDataDic.ContainsKey(optionKey);
+            return opDataExist ? OptionDataDic[optionKey] : null;
+        }
+
+        public override void HandleMessage(IMessage message)
+        {
+            base.HandleMessage(message);
+          
+            if (message.APIDataType != EapiDataTypes.OptionData) return;
+            var optionData = (OptionData)message;
+
+            if (OptionDataDic.ContainsKey(optionData.OptionKey) == false)
+            {
+                OptionDataDic.Add(optionData.OptionKey, optionData);
+                _logger.DebugFormat("OptionManager({0}, add OptionData: {1})", Symbol, optionData);
+                OptionDataReceivd?.Invoke(optionData);
+            }
+            else
+                OptionDataDic[optionData.OptionKey] = optionData;
+        }
+        /// <summary>
+        /// Used by the positionDataBhilder when the position has no preset optionData.
+        /// </summary>
+        /// <param name="contractList"></param>
+        internal void RequestContractData(List<ContractBase> contractList )
+        {
+            APIWrapper.RequestContinousContractData(contractList);
+        }
         /// <summary>
         /// Loads the options chain of all active session of the active underlines.
         /// It send Request Contract details to load the option chain of the specified UNL.
         /// </summary>
-        protected void InitializeItems()
+        protected override void DoWorkAfterConnection()
         {
             OptionDataDic = new Dictionary<string, OptionData>();
             string exchange = MainSecurity.Exchange;
@@ -35,33 +66,20 @@ namespace TNS.BL
 
             var expiryList = DbDalManager.GetUNLActiveExpiryList(Symbol);
 
-            var contractList = expiryList.Select
-                (expiryDate => new OptionContract(Symbol, expiryDate, exchange, multiplier, currency)).
-                Cast<ContractBase>().ToList();
+            var contractList = new List<ContractBase>();
+            foreach (var expiryDate in expiryList)
+            {
+                contractList.Add(new OptionContract(Symbol, expiryDate, OptionType.Call, exchange, multiplier, currency));
+                contractList.Add(new OptionContract(Symbol, expiryDate, OptionType.Put, exchange, multiplier, currency));
+            }
 
-            _logger.InfoFormat("OptionManager({0}) send {1} contracts to broker.", Symbol, contractList.Count);
+            _logger.InfoFormat("OptionManager({0}) send {1} contracts to broker.", 
+                Symbol, contractList.Count);
 
             APIWrapper.RequestContinousContractData(contractList);
         }
-       
-        public override void HandleMessage(IMessage message)
-        {
-            base.HandleMessage(message);
 
-            if (message.APIDataType != EapiDataTypes.OptionData) return;
-            var optionData = (OptionData)message;
 
-            if (OptionDataDic.ContainsKey(optionData.OptionKey) == false)
-            {
-                OptionDataDic.Add(optionData.OptionKey, optionData);
-                _logger.DebugFormat("OptionManager({0}, add OptionData: {1})", Symbol, optionData);
-            }
-            else
-                OptionDataDic[optionData.OptionKey] = optionData;
-        }
-        
-
-       
     }
 
 }

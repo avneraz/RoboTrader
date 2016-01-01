@@ -8,7 +8,12 @@ namespace TNS.BL
     /// </summary>
     public class TradingTimeManager: UnlMemberBaseManager
     {
-        public TradingTimeManager(ITradingApi apiWrapper, MainSecurity mainSecurity) : base(apiWrapper, mainSecurity)
+       
+        protected override void DoWorkAfterConnection()
+        {
+        }
+
+        public TradingTimeManager(ITradingApi apiWrapper, MainSecurity mainSecurity, UNLManager unlManager) : base(apiWrapper, mainSecurity, unlManager)
         {
         }
     }

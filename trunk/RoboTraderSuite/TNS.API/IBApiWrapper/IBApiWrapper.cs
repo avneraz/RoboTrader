@@ -138,11 +138,18 @@ namespace TNS.API.IBApiWrapper
             _handler.RegisterContract(reqId, contractBase);
         }
 
-        
+        /// <summary>
+        /// IB Broker return all positions with this request it has to be only one request!
+        /// </summary>
+        private bool _requestContinousPositionsDataDone = false;
         public void RequestContinousPositionsData()
         {
+            if(_requestContinousPositionsDataDone)
+                return;
+
             Logger.Debug($"{nameof(RequestContinousPositionsData)} called");
             _clientSocket.reqPositions();
+            _requestContinousPositionsDataDone = true;
         }
 
         public string CreateOrder(OrderData order)

@@ -12,10 +12,11 @@ namespace TNS.BL
 {
     public class UnlMemberBaseManager
     {
-        public UnlMemberBaseManager(ITradingApi apiWrapper, MainSecurity mainSecurity)
+        public UnlMemberBaseManager(ITradingApi apiWrapper, MainSecurity mainSecurity, UNLManager unlManager)
         {
             MainSecurity = mainSecurity;
             APIWrapper = apiWrapper;
+            UNLManager = unlManager;
             ConnectionStatus = ConnectionStatus.Disconnected;
             Symbol = mainSecurity.Symbol;
             
@@ -24,6 +25,7 @@ namespace TNS.BL
         protected readonly string Symbol;
         protected readonly MainSecurity MainSecurity;
         protected readonly ITradingApi APIWrapper;
+        protected readonly UNLManager UNLManager;
         protected SecurityData MainSecurityData { get; private set; }
         public bool IsConnected => ConnectionStatus == ConnectionStatus.Connected;
         public ConnectionStatus ConnectionStatus { get; private set; }
@@ -39,8 +41,15 @@ namespace TNS.BL
 
                     var connectionStatusMessage = (BrokerConnectionStatusMessage)message;
                     ConnectionStatus = connectionStatusMessage.Status;
+                    if (connectionStatusMessage.AfterConnectionToApiWrapper)
+                        DoWorkAfterConnection();
+
                     break;
             }
+        }
+
+        protected virtual void DoWorkAfterConnection()
+        {
         }
     }
 }

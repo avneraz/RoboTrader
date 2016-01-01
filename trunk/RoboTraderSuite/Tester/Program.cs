@@ -27,7 +27,7 @@ namespace Tester
             Logger.Info(message);
 
         }
-        public override void DoWorkAfterConnection()
+        protected override void DoWorkAfterConnection()
         {
             throw new NotImplementedException();
         }
