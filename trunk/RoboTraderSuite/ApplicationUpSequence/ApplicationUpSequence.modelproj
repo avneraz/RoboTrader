@@ -30,9 +30,6 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\ArchitectureTools\Microsoft.VisualStudio.TeamArchitect.ModelingProject.targets" Condition="'$(VSToolsPath)' != ''" />
   <ItemGroup>
-    <Content Include="CodeMapSolution.dgml">
-      <SubType>Content</SubType>
-    </Content>
     <Content Include="RequestDataFromIB.sequencediagram">
       <SubType>Content</SubType>
     </Content>
