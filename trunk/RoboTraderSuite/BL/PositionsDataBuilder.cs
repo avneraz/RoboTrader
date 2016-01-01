@@ -49,6 +49,12 @@ namespace TNS.BL
             var key = optionContract.OptionKey;
             if (_positionDataDic.ContainsKey(key) == false)
             {
+                var opData = _optionsManager.GetOptionData(key);
+                if (opData == null && _allPositionHaveOptionData)
+                {
+                    //Request optionData in case it's not exist yet!
+                    _optionsManager.RequestContractData(new List<ContractBase>() { optionContract });
+                }
                 _positionDataDic.Add(key, positionData);
                 _logger.DebugFormat("PositionsDataBuilder({0}, add PositionData: {1})",
                     Symbol, positionData);
@@ -66,22 +72,23 @@ namespace TNS.BL
                 TimeSpan.FromSeconds(1), AddOptionDataToPosition, true);
         }
 
+        private bool _allPositionHaveOptionData;
         private void AddOptionDataToPosition()
         {
-            bool allPositionHaveOptionData = true;
+            _allPositionHaveOptionData = true;
             List<ContractBase> contractList = new List<ContractBase>();
             foreach (var optionKey in _positionDataDic.Keys)
             {
                 var opData = _optionsManager.GetOptionData(optionKey);
                 if (opData == null)
                 {
-                    allPositionHaveOptionData = false;
+                    _allPositionHaveOptionData = false;
                     contractList.Add(_positionDataDic[optionKey].Contract);
                 }
                 else
                     _positionDataDic[optionKey].OptionData = opData;
             }
-            if (allPositionHaveOptionData)
+            if (_allPositionHaveOptionData)
             {
                 _optionsManager.OptionDataReceivd += OptionsManagerOnOptionDataReceivd;
                 UNLManager.RemoveScheduledTaskOnUnl(_addOptionDataToPositionTaskId);
