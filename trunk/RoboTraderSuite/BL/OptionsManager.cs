@@ -19,7 +19,7 @@ namespace TNS.BL
 
         private  readonly ILog _logger = LogManager.GetLogger(typeof(OptionsManager));
 
-        public event Action<OptionData> OptionDataReceivd;
+        //public event Action<OptionData> OptionDataReceivd;
        
         internal Dictionary<string, OptionData> OptionDataDic { get; }
 
@@ -40,7 +40,7 @@ namespace TNS.BL
             {
                 OptionDataDic.Add(optionData.OptionKey, optionData);
                 _logger.DebugFormat("OptionManager({0}, add OptionData: {1})", Symbol, optionData);
-                OptionDataReceivd?.Invoke(optionData);
+                //OptionDataReceivd?.Invoke(optionData);
             }
             else
                 OptionDataDic[optionData.OptionKey] = optionData;
