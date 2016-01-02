@@ -48,7 +48,6 @@ namespace TNS.API.ApiDataObjects
             contract.Strike = Strike;
             contract.Multiplier = Multiplier.ToString();
             return contract;
-            
         }
 
         public override string ToString()

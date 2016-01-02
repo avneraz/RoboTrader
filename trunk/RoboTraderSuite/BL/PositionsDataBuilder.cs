@@ -1,42 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TNS.API.ApiDataObjects;
 using TNS.DbDAL;
 using Infra.Bus;
 using Infra.Enum;
 using log4net;
+using TNS.API;
 
 
 namespace TNS.BL
 {
-
+    
     /// <summary>
     /// Deals with all the issues involved with getting position data from the Broker,
     ///  and build all the position data of the UNLs contract.
     /// </summary>
     public class PositionsDataBuilder:UnlMemberBaseManager
     {
-
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(PositionsDataBuilder));
         public PositionsDataBuilder(ITradingApi apiWrapper, MainSecurity mainSecurity, 
-            UNLManager unlManager, OptionsManager optionsManager) 
+            UNLManager unlManager, Dictionary<string, OptionData> optionDataDic) 
             : base(apiWrapper, mainSecurity, unlManager)
         {
-            _optionsManager = optionsManager;
+            OptionDataDic = optionDataDic;
+            PositionDataDic = new Dictionary<string, PositionData>();
         }
+        private Dictionary<string, OptionData> OptionDataDic { get; }
 
-        private readonly ILog _logger = LogManager.GetLogger(typeof(OptionsManager));
-       
+        private Dictionary< string, PositionData> PositionDataDic { get; }
 
-        private readonly OptionsManager _optionsManager;
         public override void HandleMessage(IMessage message)
         {
             base.HandleMessage(message);
-            if (message.APIDataType == EapiDataTypes.RequestDataReceived)
-            {
-                HandlePositionEnd();
-                return;
-            }
-
+          
             if (message.APIDataType != EapiDataTypes.PositionData)
                 return;
 
@@ -47,76 +44,48 @@ namespace TNS.BL
 
             var optionContract = (OptionContract) contract;
             var key = optionContract.OptionKey;
-            if (_positionDataDic.ContainsKey(key) == false)
-            {
-                var opData = _optionsManager.GetOptionData(key);
-                if (opData == null && _allPositionHaveOptionData)
-                {
-                    //Request optionData in case it's not exist yet!
-                    _optionsManager.RequestContractData(new List<ContractBase>() { optionContract });
-                }
-                _positionDataDic.Add(key, positionData);
-                _logger.DebugFormat("PositionsDataBuilder({0}, add PositionData: {1})",
-                    Symbol, positionData);
-            }
+
+            PositionDataDic[key] = positionData;
+           
+            if (OptionDataDic.ContainsKey(key) == false)
+                APIWrapper.RequestContinousContractData(new List<ContractBase>() {optionContract});
             else
-                _positionDataDic[key] = positionData;
-
+            {
+                positionData.OptionData = OptionDataDic[key];
+            }
         }
 
-        private string _addOptionDataToPositionTaskId;
-        private void HandlePositionEnd()
-        {
-
-            _addOptionDataToPositionTaskId = UNLManager.AddScheduledTaskOnUnl(
-                TimeSpan.FromSeconds(1), AddOptionDataToPosition, true);
-        }
-
-        private bool _allPositionHaveOptionData;
+    
         private void AddOptionDataToPosition()
         {
-            _allPositionHaveOptionData = true;
+
+            if (PositionDataDic.Values.Any(pd => pd.OptionData == null) == false)
+                return;
+           
             List<ContractBase> contractList = new List<ContractBase>();
-            foreach (var optionKey in _positionDataDic.Keys)
+            var list = PositionDataDic.Values.Where(pd => pd.OptionData == null).ToList();
+            foreach (var positionData in list)
             {
-                var opData = _optionsManager.GetOptionData(optionKey);
-                if (opData == null)
-                {
-                    _allPositionHaveOptionData = false;
-                    contractList.Add(_positionDataDic[optionKey].Contract);
-                }
+                var key = ((OptionContract)(positionData.Contract)).OptionKey;
+
+                if (OptionDataDic.ContainsKey(key))
+                    positionData.OptionData = OptionDataDic[key];
                 else
-                    _positionDataDic[optionKey].OptionData = opData;
+                    contractList.Add(PositionDataDic[key].Contract);
+                
             }
-            if (_allPositionHaveOptionData)
-            {
-                _optionsManager.OptionDataReceivd += OptionsManagerOnOptionDataReceivd;
-                UNLManager.RemoveScheduledTaskOnUnl(_addOptionDataToPositionTaskId);
-            }
-            _optionsManager.RequestContractData(contractList);
+            if(contractList.Count > 0)
+                //Request option data
+                APIWrapper.RequestContinousContractData(contractList);
+            
         }
-        private Dictionary<string, PositionData> _positionDataDic;
-      
+    
         protected override void DoWorkAfterConnection()
         {
-            _positionDataDic = new Dictionary<string, PositionData>();
-
-            _logger.InfoFormat("PositionsDataBuilder({0}) Start load positions from broker.", Symbol);
+            Logger.InfoFormat("PositionsDataBuilder({0}) Start load positions from broker.", Symbol);
            
             APIWrapper.RequestContinousPositionsData();
-           
-        }
-
-        private void OptionsManagerOnOptionDataReceivd(OptionData optionData)
-        {
-            if(optionData.Symbol != Symbol)
-                return;
-            var optionKey = optionData.OptionKey;
-            if (_positionDataDic.ContainsKey(optionKey))
-            {
-                var posData = _positionDataDic[optionKey];
-                posData.OptionData = optionData;
-            }
+            UNLManager.AddScheduledTaskOnUnl(TimeSpan.FromSeconds(1), AddOptionDataToPosition, true);
         }
 
        

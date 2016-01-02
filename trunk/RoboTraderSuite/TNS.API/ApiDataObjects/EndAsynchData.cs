@@ -10,14 +10,14 @@ namespace TNS.API.ApiDataObjects
 {
 
 
-    public class RequestDataReceived : IMessage
+    public class EndAsynchData : IMessage
     {
-        public RequestDataReceived(EapiDataTypes receivedApiDataType)
+        public EndAsynchData(EapiDataTypes receivedApiDataType)
         {
             ReceivedApiDataType = receivedApiDataType;
         }
 
-        public EapiDataTypes APIDataType => EapiDataTypes.RequestDataReceived;
+        public EapiDataTypes APIDataType => EapiDataTypes.EndAsynchData;
         public EapiDataTypes ReceivedApiDataType { get; set; }
        
     }

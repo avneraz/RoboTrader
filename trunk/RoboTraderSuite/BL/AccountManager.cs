@@ -1,6 +1,7 @@
 ﻿using System;
 using Infra.Bus;
 using Infra.Enum;
+using TNS.API;
 using TNS.API.ApiDataObjects;
 
 namespace TNS.BL

@@ -5,12 +5,18 @@ using TNS.API.IBApiWrapper;
 
 namespace TNS.API.ApiDataObjects
 {
+    /// <summary>
+    /// = Stock, Option, Index
+    /// </summary>
     public enum SecurityType
     {
         Stock,
         Option,
         Index
     }
+    /// <summary>
+    /// Contains data about: ## Symbol, SecurityType, Currency and Exchange. ##
+    /// </summary>
     public abstract class ContractBase
     {
         protected ContractBase(string symbol, SecurityType type, 
@@ -40,7 +46,7 @@ namespace TNS.API.ApiDataObjects
 
         public override string ToString()
         {
-            return $"ContractBase: [Symbol: {Symbol}, SecurityType: {SecurityType}, Currency: {Currency}, Exchange: {Exchange}]";
+            return $"ContractBase: [Symbol: {Symbol}, SecurityType: {SecurityType}, Currency: " + $"{Currency}, Exchange: {Exchange}]";
         }
 
 

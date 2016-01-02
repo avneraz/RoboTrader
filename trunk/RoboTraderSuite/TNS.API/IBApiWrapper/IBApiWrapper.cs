@@ -58,7 +58,7 @@ namespace TNS.API.IBApiWrapper
             _handler.ContractDetailsMessageReceived += HandlerOnContractDetailsMessage;
         }
 
-       
+        
 
         public bool IsConnected
         {
@@ -110,15 +110,27 @@ namespace TNS.API.IBApiWrapper
             _clientSocket.reqAccountSummary(0, "All", tags);
             _clientSocket.reqAccountUpdates(true, _mainAccount);
         }
+        /// <summary>
+        /// Request detail data for all securities taking place in trading.
+        /// </summary>
+        public void RequestContractDetailsData(SecurityData securityData)
+        {
+            Contract ibContract = securityData.Contract.ToIbContract();
+            _handler.AddSecurityTrader(ibContract);
+            Logger.Info($"{nameof(RequestContractDetailsData)} " +
+                            $"called, requesting {ibContract}");
+
+           _clientSocket.reqContractDetails(RequestId, ibContract);
+        }
 
         public void RequestContinousContractData(List<ContractBase> contracts)
         {
 
             Logger.Info($"{nameof(RequestContinousContractData)} " + 
-                            "called, requesting {contracts.Count} contracts");
+                            $"called, requesting {contracts.Count} contracts");
             contracts.ForEach(contract =>
             {
-                int requestId = RequestId;
+                var requestId = RequestId;
                 var ibContract = contract.ToIbContract();
                
                 _clientSocket.reqContractDetails(requestId, ibContract);

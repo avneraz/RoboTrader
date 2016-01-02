@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using IBApi;
+using log4net;
+using log4net.Repository.Hierarchy;
 using TNS.API.ApiDataObjects;
 
 namespace TNS.API.IBApiWrapper
 {
     public static class IBExtensions
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(IBExtensions));
         public static ContractBase ToContract(this Contract contract)
         {
             switch (contract.SecType)
@@ -27,6 +32,20 @@ namespace TNS.API.IBApiWrapper
             }
      }
 
+        public static SecurityType ToSecurityType(string secType)
+        {
+            switch (secType)
+            {
+                case "OPT":
+                    return SecurityType.Option;
+                case "STK":
+                    return SecurityType.Stock;
+                case "IND":
+                    return SecurityType.Option;
+                default:
+                    throw new Exception("Invalid contract type received " + secType);
+            }
+        }
       
         private static DateTime GetExpiryDate(string expDateStr)
         {
@@ -50,7 +69,7 @@ namespace TNS.API.IBApiWrapper
                     return string.Empty;
             }
         }
-
+       
         public static Contract ToIbMainSecurityContract(this ContractBase msContract)
         {
             return new Contract
@@ -86,6 +105,73 @@ namespace TNS.API.IBApiWrapper
                 (OrderAction)Enum.Parse(typeof (OrderAction), order.Action),
                 order.LmtPrice, order.TotalQuantity, null);
         }
-       
+
+        public static ContractDetailsData ToContractDetailsData(this ContractDetails contractDetails)
+        {
+            var contractBase = contractDetails.Summary.ToContract();
+            var contractDetailsData = new ContractDetailsData(contractBase.Symbol,
+                contractBase.SecurityType, contractBase.Exchange, contractBase.Currency);
+
+            CalculateWorkTime(contractDetails, contractDetailsData);
+
+            return contractDetailsData;
+        }
+        private static void CalculateWorkTime(ContractDetails contractDetails, 
+            ContractDetailsData contractDetailsData)
+        {
+            //LiquidHours="20150427:0930-1600;20150428:0930-1600" 
+            //"20090507:0700-1830,1830-2330;20090508:CLOSED." "20150503:CLOSED;20150504:0930-1600"
+            //TimeZoneId="EST5EDT"
+
+            string liquidHoursStr = contractDetails.LiquidHours;
+            if (string.IsNullOrEmpty(liquidHoursStr))
+            {
+                Debug.Assert(false, "Problem with AAPLContractDetailsData " + 
+                    "liquidHoursStr is null or empty!");
+            }
+            //For testing only:
+            //liquidHoursStr = "20150624:0141-0600;20150600:0930-1600";//For Testing only
+            string[] workingDays = liquidHoursStr.Split(';');
+
+            //Eastern Standard Time
+            TimeZoneInfo ist = TimeZoneInfo.FindSystemTimeZoneById("Israel Standard Time");
+            //Israel Standard Time
+            TimeZoneInfo est = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+
+            string closedStr = workingDays[0].Substring(9, 6);
+
+            contractDetailsData.IsWorkingDay = closedStr.Equals("CLOSED") == false;
+
+            contractDetailsData.NextWorkingDay = DateTime.ParseExact(workingDays[1].Substring(0, 13),
+                "yyyyMMdd:HHmm", CultureInfo.CurrentCulture, DateTimeStyles.None);
+
+            contractDetailsData.NextWorkingDay = TimeZoneInfo.ConvertTime
+                (contractDetailsData.NextWorkingDay, est, ist);
+            if (!contractDetailsData.IsWorkingDay) return;
+
+            contractDetailsData.StartTradingTime = DateTime.ParseExact(workingDays[0].Substring(0, 13),
+                "yyyyMMdd:HHmm",CultureInfo.CurrentCulture, DateTimeStyles.None);
+
+            contractDetailsData.StartTradingTimeLocal = TimeZoneInfo.ConvertTime
+                (contractDetailsData.StartTradingTime, est, ist);
+            //For Test:  StartTradingTimeLocal = DateTime.Now.AddMinutes(1);
+            string endTimeStr = workingDays[0].Substring(0, 8) + " " + workingDays[0].Substring(14, 4);
+            contractDetailsData.EndTradingTime = DateTime.ParseExact(endTimeStr, "yyyyMMdd HHmm",
+                CultureInfo.CurrentCulture, DateTimeStyles.None);
+            contractDetailsData.EndTradingTimeLocal = TimeZoneInfo.ConvertTime
+                (contractDetailsData.EndTradingTime, est, ist);
+            //For Test:  EndTradingTimeLocal = DateTime.Now.AddMinutes(2);
+            string msg;
+            if (contractDetailsData.IsWorkingDay == false)
+            {
+                msg = string.Format("Today is not workingDay. NextWorkingDay={0}", 
+                    contractDetailsData.NextWorkingDay);
+            }
+            else
+                msg = string.Format("Today is workingDay! StartTradingTime={0}, EndTradingTime:{1}. ",
+                    contractDetailsData.StartTradingTimeLocal, contractDetailsData.EndTradingTimeLocal);
+            Logger.Info(msg);
+           
+        }
     }
 }

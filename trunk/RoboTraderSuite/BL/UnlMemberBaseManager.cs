@@ -7,6 +7,7 @@ using TNS.API.ApiDataObjects;
 using TNS.DbDAL;
 using Infra.Bus;
 using Infra.Enum;
+using TNS.API;
 
 namespace TNS.BL
 {

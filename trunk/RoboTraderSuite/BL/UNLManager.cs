@@ -8,6 +8,7 @@ using TNS.DbDAL;
 using Infra.Bus;
 using Infra.Enum;
 using log4net;
+using TNS.API;
 
 namespace TNS.BL
 {
@@ -45,7 +46,6 @@ namespace TNS.BL
                     OptionsManager.HandleMessage(message);
                     break;
                 case EapiDataTypes.PositionData:
-                case EapiDataTypes.RequestDataReceived:
                     PositionsDataBuilder.HandleMessage(message);
                     break;
                 case EapiDataTypes.OrderData:
@@ -57,6 +57,9 @@ namespace TNS.BL
                     if (connectionStatusMessage.AfterConnectionToApiWrapper)
                         DoWorkAfterConnection();
                     SendToAllComponents( message);
+                    break;
+                case EapiDataTypes.ContractDetailsData:
+                    TradingTimeManager.HandleMessage(message);
                     break;
             }
         }
@@ -88,7 +91,7 @@ namespace TNS.BL
             OptionsManager = new OptionsManager(APIWrapper, MainSecurity, this);
             _memberManagersList.Add(OptionsManager);
 
-            PositionsDataBuilder = new PositionsDataBuilder(APIWrapper, MainSecurity,this, OptionsManager);
+            PositionsDataBuilder = new PositionsDataBuilder(APIWrapper, MainSecurity,this, OptionsManager.OptionDataDic);
             _memberManagersList.Add(PositionsDataBuilder);
 
             TradingManager = new TradingManager(APIWrapper, MainSecurity, this);

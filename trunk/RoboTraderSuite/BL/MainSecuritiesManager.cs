@@ -5,6 +5,7 @@ using Infra.Bus;
 using Infra.Enum;
 using Infra.Extensions.ArrayExtensions;
 using log4net;
+using TNS.API;
 using TNS.API.ApiDataObjects;
 using TNS.DbDAL;
 

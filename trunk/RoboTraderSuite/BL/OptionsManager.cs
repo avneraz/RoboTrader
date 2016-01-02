@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Infra.Bus;
 using Infra.Enum;
 using log4net;
+using TNS.API;
 using TNS.API.ApiDataObjects;
 using TNS.DbDAL;
 
@@ -13,13 +14,14 @@ namespace TNS.BL
 
         public OptionsManager(ITradingApi apiWrapper, MainSecurity mainSecurity, UNLManager unlManager) : base(apiWrapper, mainSecurity, unlManager)
         {
+            OptionDataDic = new Dictionary<string, OptionData>();
         }
 
         private  readonly ILog _logger = LogManager.GetLogger(typeof(OptionsManager));
 
         public event Action<OptionData> OptionDataReceivd;
        
-        private Dictionary<string, OptionData> OptionDataDic { get; set; }
+        internal Dictionary<string, OptionData> OptionDataDic { get; }
 
         public OptionData GetOptionData(string optionKey)
         {
@@ -43,21 +45,14 @@ namespace TNS.BL
             else
                 OptionDataDic[optionData.OptionKey] = optionData;
         }
-        /// <summary>
-        /// Used by the positionDataBhilder when the position has no preset optionData.
-        /// </summary>
-        /// <param name="contractList"></param>
-        internal void RequestContractData(List<ContractBase> contractList )
-        {
-            APIWrapper.RequestContinousContractData(contractList);
-        }
+       
         /// <summary>
         /// Loads the options chain of all active session of the active underlines.
         /// It send Request Contract details to load the option chain of the specified UNL.
         /// </summary>
         protected override void DoWorkAfterConnection()
         {
-            OptionDataDic = new Dictionary<string, OptionData>();
+            
             string exchange = MainSecurity.Exchange;
             int multiplier = Convert.ToInt32(MainSecurity.Multiplier);//TOADO add it to the security data
             string currency = MainSecurity.Currency;

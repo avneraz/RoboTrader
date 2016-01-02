@@ -17,28 +17,33 @@ namespace TNS.API.IBApiWrapper
     class IBMessageHandler : EWrapper
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(IBMessageHandler));
-        private readonly Dictionary<int, SecurityData> _securityDataDic;
-        private readonly Dictionary<int, IBOrderStatusWrapper> _orderStatus;
-        private readonly AccountSummaryData _accountSummary;
-        private readonly IBaseLogic _consumer;
+        
         private const double EPSILON = 0.000000001;
         private const double LARGE_NUBMER = 100000000;
 
-        //max time to close orders that are filled/failed in _orderStatus dic
+        //max time to close orders that are filled/failed in OrderStatusDic dic
         private readonly TimeSpan ORDER_MAX_TIME_SPAN = TimeSpan.FromMinutes(5);
         private ConnectionStatus _connectionStatus = ConnectionStatus.Connected;
 
         public event Action<int, ContractDetails> ContractDetailsMessageReceived;
         public IBMessageHandler(IBaseLogic consumer)
         {
-            _securityDataDic = new Dictionary<int, SecurityData>();
-            _orderStatus = new Dictionary<int, IBOrderStatusWrapper>();
-            _accountSummary = new AccountSummaryData();
-            _consumer = consumer;
+            SecurityDataDic = new Dictionary<int, SecurityData>();
+            OrderStatusDic = new Dictionary<int, IBOrderStatusWrapper>();
+            AccountSummary = new AccountSummaryData();
+            Consumer = consumer;
+            SecurityTradersList = new List<Contract>();
             GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(1), PublishOptions, true);
-
         }
 
+        private Dictionary<int, IBOrderStatusWrapper> OrderStatusDic { get; }
+        private Dictionary<int, SecurityData> SecurityDataDic { get; }
+        private IBaseLogic Consumer { get; }
+        private AccountSummaryData AccountSummary { get; }
+        /// <summary>
+        /// Contains all the securities that are taking place in trading.
+        /// </summary>
+        private List<Contract> SecurityTradersList { get; }
         #region EWrapper Overrides
 
         #region NotUsedMethods
@@ -92,31 +97,44 @@ namespace TNS.API.IBApiWrapper
         /// </summary>
         public void positionEnd()
         {
-            var requestDataReceived = new RequestDataReceived(EapiDataTypes.PositionData);
-            _consumer.Enqueue(requestDataReceived);
+            //var endAsynchData = new EndAsynchData(EapiDataTypes.PositionData);
+            //Consumer.Enqueue(endAsynchData);
         }
         public void contractDetails(int reqId, ContractDetails contractDetails)
         {
             ContractDetailsMessageReceived?.Invoke(reqId, contractDetails);
+            if (SecurityTradersList.Any(cb => cb.SecType == contractDetails.Summary.SecType
+                                          && cb.Symbol == contractDetails.Summary.Symbol))
+            {
+                Consumer.Enqueue(contractDetails.ToContractDetailsData());
+            }
+
         }
+
+        internal void AddSecurityTrader(Contract ibContract)
+        {
+            SecurityTradersList.Add(ibContract);
+        }
+       
         public void contractDetailsEnd(int reqId){}
         public void commissionReport(CommissionReport commissionReport)
         {
             //find order by execId
-            var orderStatus = _orderStatus.FirstOrDefault(o => o.Value.ExecId == commissionReport.ExecId);
+            var orderStatus = OrderStatusDic.FirstOrDefault(o => o.Value.ExecId == commissionReport.ExecId);
             if (orderStatus.Equals(new KeyValuePair<int, IBOrderStatusWrapper>()))
             {
-                Logger.Error($"Received comission report with execId not found in orders list, execId is {commissionReport.ExecId}");
+                Logger.Error("Received commission report with execId not found " + 
+                    $"in orders list, execId is {commissionReport.ExecId}");
                 return;
             }
 
             orderStatus.Value.Data.Commission = commissionReport.Commission;
-            _consumer.Enqueue(orderStatus.Value.Data);
+            Consumer.Enqueue(orderStatus.Value.Data);
         }
         public void execDetails(int reqId, Contract contract, Execution execution)
         {
             IBOrderStatusWrapper data;
-            if (_orderStatus.TryGetValue(execution.OrderId, out data))
+            if (OrderStatusDic.TryGetValue(execution.OrderId, out data))
             {
                 data.ExecId = execution.ExecId;
             }
@@ -134,7 +152,7 @@ namespace TNS.API.IBApiWrapper
 
             if (!HandleSpecialApiMessages(apiMessageData))
             {
-                _consumer.Enqueue(apiMessageData);
+                Consumer.Enqueue(apiMessageData);
                 Logger.Info(apiMessageData.ToString());
             }
 
@@ -146,12 +164,12 @@ namespace TNS.API.IBApiWrapper
             {
                 case EtwsErrorCode.NoSecurityFound:
                     var requestId = (int) data.AdditionalInfo;
-                    lock (_securityDataDic)
+                    lock (SecurityDataDic)
                     {
-                        if (_securityDataDic.ContainsKey(requestId))
+                        if (SecurityDataDic.ContainsKey(requestId))
                         {
                             Logger.Debug($"Request Id({requestId}) Not found. " + 
-                                        $" {_securityDataDic[requestId].Contract}");
+                                        $" {SecurityDataDic[requestId].Contract}");
                         } 
                     }
                     return true;
@@ -163,24 +181,24 @@ namespace TNS.API.IBApiWrapper
                     if (_connectionStatus == ConnectionStatus.Connected)
                     {
                         _connectionStatus = ConnectionStatus.Disconnected;
-                        _consumer.Enqueue(new BrokerConnectionStatusMessage(
+                        Consumer.Enqueue(new BrokerConnectionStatusMessage(
                                             ConnectionStatus.Disconnected, data));
                         Logger.Warn($"Connection status changed to disconnected:  {data}");
                     }
-                    _consumer.Enqueue(data);
+                    Consumer.Enqueue(data);
                     return true;
                 case EtwsErrorCode.IbTWSConnectivityRestoredDataLost:
                 case EtwsErrorCode.IbTWSConnectivityRestoredDataMaintained:
                     if (_connectionStatus == ConnectionStatus.Disconnected)
                     {
-                        _consumer.Enqueue(new BrokerConnectionStatusMessage(ConnectionStatus.Connected, data));
+                        Consumer.Enqueue(new BrokerConnectionStatusMessage(ConnectionStatus.Connected, data));
                         Logger.Warn($"Connection status changed to connected: {data}");
-                        _consumer.Enqueue(data);
+                        Consumer.Enqueue(data);
                     }
                     return true;
 
                 case EtwsErrorCode.MarketDataFarmConnected:
-                    _consumer.Enqueue(new BrokerConnectionStatusMessage(ConnectionStatus.Connected, data));
+                    Consumer.Enqueue(new BrokerConnectionStatusMessage(ConnectionStatus.Connected, data));
                     return true;
                 default:
                     return false;
@@ -189,27 +207,27 @@ namespace TNS.API.IBApiWrapper
         private void HandleEntityIdNotFound(APIMessageData data)
         {
             int requestId = (int)data.AdditionalInfo;
-            lock (_securityDataDic)
+            lock (SecurityDataDic)
             {
-                if (!_securityDataDic.ContainsKey(requestId)) return;
-                Logger.Debug($"Request Id({requestId}) removed from SecurityDataDic, {data} {_securityDataDic[requestId]}");
-                _securityDataDic.Remove(requestId);
+                if (!SecurityDataDic.ContainsKey(requestId)) return;
+                Logger.Debug($"Request Id({requestId}) removed from SecurityDataDic, {data} {SecurityDataDic[requestId]}");
+                SecurityDataDic.Remove(requestId);
                 
             }
         }
         public void error(Exception ex)
         {
             ExceptionData exceptionData = new ExceptionData(ex);
-            _consumer.Enqueue(exceptionData);
+            Consumer.Enqueue(exceptionData);
             Logger.Error(exceptionData);
         }
         public void tickPrice(int tickerId, int field, double price, int canAutoExecute)
         {
             if(tickerId>4)
             { }
-            lock (_securityDataDic)
+            lock (SecurityDataDic)
             {
-                var securityData = _securityDataDic[tickerId];
+                var securityData = SecurityDataDic[tickerId];
                 var optionData = securityData as OptionData;
                 if (securityData.Symbol == "MSFT")
                 { }
@@ -243,9 +261,9 @@ namespace TNS.API.IBApiWrapper
         }
         public void tickSize(int tickerId, int field, int size)
         {
-            lock (_securityDataDic)
+            lock (SecurityDataDic)
             {
-                var securityData = _securityDataDic[tickerId];
+                var securityData = SecurityDataDic[tickerId];
                 switch (field)
                 {
                     case TickType.ASK_SIZE:
@@ -266,10 +284,10 @@ namespace TNS.API.IBApiWrapper
             double impliedVolatility, double delta, double optPrice,
             double pvDividend, double gamma, double vega, double theta, double undPrice)
         {
-            lock (_securityDataDic)
+            lock (SecurityDataDic)
 
             {
-                var optionData = _securityDataDic[tickerId] as OptionData;
+                var optionData = SecurityDataDic[tickerId] as OptionData;
                 optionData.ImpliedVolatility = impliedVolatility;
                 double price;
                 //TODO - reason for this switch case?
@@ -325,46 +343,46 @@ namespace TNS.API.IBApiWrapper
             switch (tag)
             {
                 case "BuyingPower":
-                    _accountSummary.BuyingPower = Convert.ToDouble(value);
+                    AccountSummary.BuyingPower = Convert.ToDouble(value);
                     break;
                 case "EquityWithLoanValue":
-                    _accountSummary.EquityWithLoanValue = Convert.ToDouble(value);
+                    AccountSummary.EquityWithLoanValue = Convert.ToDouble(value);
                     break;
                 case "ExcessLiquidity":
-                    _accountSummary.ExcessLiquidity = Convert.ToDouble(value);
+                    AccountSummary.ExcessLiquidity = Convert.ToDouble(value);
                     break;
                 case "FullInitMarginReq":
-                    _accountSummary.FullInitMarginReq = Convert.ToDouble(value);
+                    AccountSummary.FullInitMarginReq = Convert.ToDouble(value);
                     break;
                 case "FullMaintMarginReq":
-                    _accountSummary.FullMaintMarginReq = Convert.ToDouble(value);
+                    AccountSummary.FullMaintMarginReq = Convert.ToDouble(value);
                     break;
                 case "NetLiquidation":
-                    _accountSummary.NetLiquidation = Convert.ToDouble(value);
+                    AccountSummary.NetLiquidation = Convert.ToDouble(value);
                     break;
                 default:
                     return;
             }
-            _consumer.Enqueue(_accountSummary);
+            Consumer.Enqueue(AccountSummary);
         }
         public void accountSummaryEnd(int reqId)
         {
-            _consumer.Enqueue(_accountSummary);
+            Consumer.Enqueue(AccountSummary);
         }
         public void orderStatus(int orderId, string status, int filled, 
             int remaining, double avgFillPrice, int permId,int parentId,
                             double lastFillPrice, int clientId, string whyHeld)
         {
-            if (_orderStatus.ContainsKey(orderId))
+            if (OrderStatusDic.ContainsKey(orderId))
             {
-                OrderStatusData orderStatus = _orderStatus[orderId].Data;
+                OrderStatusData orderStatus = OrderStatusDic[orderId].Data;
                 orderStatus.OrderStatus = (OrderStatus) Enum.Parse(typeof (OrderStatus), status);
                 orderStatus.LastUpdateTime = DateTime.Now; ;
-                _consumer.Enqueue(orderStatus);
+                Consumer.Enqueue(orderStatus);
             }
             else
             {
-                Logger.Error($"Received order status on request not in _orderStatusDic, orderId is {orderId}");
+                Logger.Error($"Received order status on request not in OrderStatusDic, orderId is {orderId}");
             }
             
         }
@@ -372,12 +390,12 @@ namespace TNS.API.IBApiWrapper
         {
             CloseIrrelevantOrders();
             IBOrderStatusWrapper status;
-            if (!_orderStatus.TryGetValue(orderId, out status))
+            if (!OrderStatusDic.TryGetValue(orderId, out status))
             {
                 var orderData = order.ToOrderData();
                 orderData.Contract = contract.ToContract();
                 status = new IBOrderStatusWrapper(new OrderStatusData(orderId.ToString(), orderData));
-                _orderStatus[orderId] = status;
+                OrderStatusDic[orderId] = status;
             }
             status.Data.LastUpdateTime = DateTime.Now;
             double maintMargin = Convert.ToDouble(orderState.MaintMargin);
@@ -387,44 +405,43 @@ namespace TNS.API.IBApiWrapper
         }
         public void position(string account, Contract contract, int pos, double avgCost)
         {
-           
             var posData = new PositionData(contract.ToContract(), pos, avgCost);
-            _consumer.Enqueue(posData);
+            Consumer.Enqueue(posData);
         }
         #endregion
         public int NextOrderId { get; set; }
         private void PublishOptions()
         {
-            lock (_securityDataDic)
+            lock (SecurityDataDic)
             {
-                foreach (var securityData in _securityDataDic.Values)
+                foreach (var securityData in SecurityDataDic.Values)
                 {
-                    _consumer.Enqueue(securityData);
+                    Consumer.Enqueue(securityData);
                 }
             }
         }
         public void RegisterContract(int requestId, ContractBase contract)
         {
-            lock (_securityDataDic)
+            lock (SecurityDataDic)
             {
                 var optionContract = contract as OptionContract;
                 var securityData = optionContract != null ? new OptionData() : new SecurityData();
                 securityData.Contract = contract;
-                _securityDataDic.Add(requestId, securityData);
+                SecurityDataDic.Add(requestId, securityData);
             }
         }
         private void CloseIrrelevantOrders()
         {
-            _orderStatus.RemoveAll(item => DateTime.Now - item.Data.LastUpdateTime > ORDER_MAX_TIME_SPAN &&
+            OrderStatusDic.RemoveAll(item => DateTime.Now - item.Data.LastUpdateTime > ORDER_MAX_TIME_SPAN &&
             item.Data.OrderStatus.In(OrderStatus.Cancelled, OrderStatus.Filled));
         }
         public IEnumerable<int> GetCurrentOptionsRequestIds()
         {
-            return _securityDataDic.Keys;
+            return SecurityDataDic.Keys;
         }
         public IEnumerable<int> GetCurrentMainSecuritiesRequestIds()
         {
-            return _securityDataDic.Keys;
+            return SecurityDataDic.Keys;
         }
     }
 }

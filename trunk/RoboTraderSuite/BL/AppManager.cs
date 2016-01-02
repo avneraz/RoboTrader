@@ -12,6 +12,7 @@ using TNS.DbDAL;
 using Infra;
 using Infra.Bus;
 using Infra.PopUpMessages;
+using TNS.API;
 
 namespace TNS.BL
 {

@@ -66,7 +66,10 @@ namespace TNS.BL
                     SendToAllComponents(connectionStatusMessage);
                     ConnectionChanged?.Invoke(connectionStatusMessage);
                     break;
-                case EapiDataTypes.RequestDataReceived:
+                case EapiDataTypes.EndAsynchData:
+                    //SendToAllUnlManagers(message);
+                    break;
+                case EapiDataTypes.ContractDetailsData:
                     SendToAllUnlManagers(message);
                     break;
                 default:

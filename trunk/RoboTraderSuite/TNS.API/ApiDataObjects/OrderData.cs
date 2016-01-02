@@ -5,12 +5,17 @@ using Infra.Enum;
 
 namespace TNS.API.ApiDataObjects
 {
+    /// <summary>
+    /// = BUY,SELL
+    /// </summary>
     public enum OrderAction
     {
         BUY,
         SELL
     }
-
+    /// <summary>
+    /// =  LMT,MKT
+    /// </summary>
     public enum OrderType
     {
         LMT,
