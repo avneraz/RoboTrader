@@ -9,7 +9,7 @@ using TNS.DbDAL;
 
 namespace TNS.BL
 {
-    public class OptionsManager: UnlMemberBaseManager
+    public class OptionsManager: UnlMemberBaseManager, IOptionsManager
     {
 
         public OptionsManager(ITradingApi apiWrapper, MainSecurity mainSecurity, UNLManager unlManager) : base(apiWrapper, mainSecurity, unlManager)
@@ -20,8 +20,8 @@ namespace TNS.BL
         private  readonly ILog _logger = LogManager.GetLogger(typeof(OptionsManager));
 
         //public event Action<OptionData> OptionDataReceivd;
-       
-        internal Dictionary<string, OptionData> OptionDataDic { get; }
+
+        public Dictionary<string, OptionData> OptionDataDic { get; }
 
         public OptionData GetOptionData(string optionKey)
         {
@@ -29,11 +29,13 @@ namespace TNS.BL
             return opDataExist ? OptionDataDic[optionKey] : null;
         }
 
-        public override void HandleMessage(IMessage message)
+        public override bool HandleMessage(IMessage message)
         {
-            base.HandleMessage(message);
-          
-            if (message.APIDataType != EapiDataTypes.OptionData) return;
+            bool result = base.HandleMessage(message);
+            if (result)
+                return true;
+
+            if (message.APIDataType != EapiDataTypes.OptionData) return false ;
             var optionData = (OptionData)message;
 
             if (OptionDataDic.ContainsKey(optionData.OptionKey) == false)
@@ -44,13 +46,14 @@ namespace TNS.BL
             }
             else
                 OptionDataDic[optionData.OptionKey] = optionData;
+            return true;
         }
        
         /// <summary>
         /// Loads the options chain of all active session of the active underlines.
         /// It send Request Contract details to load the option chain of the specified UNL.
         /// </summary>
-        protected override void DoWorkAfterConnection()
+        public override void DoWorkAfterConnection()
         {
             
             string exchange = MainSecurity.Exchange;
@@ -71,10 +74,13 @@ namespace TNS.BL
             _logger.InfoFormat("OptionManager({0}) send {1} contracts to broker.", 
                 Symbol, contractList.Count);
 
-            APIWrapper.RequestContinousContractData(contractList);
+            RequestContinousContractData(contractList);
         }
 
-
+        public void RequestContinousContractData(List<ContractBase> contractList)
+        {
+            APIWrapper.RequestContinousContractData(contractList);
+        }
     }
 
 }

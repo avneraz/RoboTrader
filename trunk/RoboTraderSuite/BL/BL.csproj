@@ -49,6 +49,12 @@
     <Compile Include="AccountManager.cs" />
     <Compile Include="AppManager.cs" />
     <Compile Include="Distributer.cs" />
+    <Compile Include="IOptionsManager.cs" />
+    <Compile Include="IOrdersManager.cs" />
+    <Compile Include="IPositionsDataBuilder.cs" />
+    <Compile Include="ITradingManager.cs" />
+    <Compile Include="ITradingTimeManager.cs" />
+    <Compile Include="IUnlBaseMemberManager.cs" />
     <Compile Include="MainSecuritiesManager.cs" />
     <Compile Include="OptionsManager.cs" />
     <Compile Include="OrdersManager.cs" />

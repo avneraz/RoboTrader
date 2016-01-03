@@ -31,7 +31,7 @@ namespace TNS.BL
         {
             RemoveScheduledTask(uniqueIdentifier);
         }
-        private List<UnlMemberBaseManager> _memberManagersList;
+        private List<IUnlBaseMemberManager> _memberManagersList;
         private ITradingApi APIWrapper { get; }
         private MainSecurity MainSecurity { get; }
         protected override string ThreadName => MainSecurity.Symbol + "_UNLManager_Work";
@@ -49,6 +49,9 @@ namespace TNS.BL
                     PositionsDataBuilder.HandleMessage(message);
                     break;
                 case EapiDataTypes.OrderData:
+                    OrdersManager.HandleMessage(message);
+                    break;
+                case EapiDataTypes.OrderStatus:
                     OrdersManager.HandleMessage(message);
                     break;
                 case EapiDataTypes.BrokerConnectionStatus:
@@ -83,7 +86,7 @@ namespace TNS.BL
 
         private void CreateManagers()
         {
-            _memberManagersList = new List<UnlMemberBaseManager>();
+            _memberManagersList = new List<IUnlBaseMemberManager>();
 
             TradingTimeManager = new TradingTimeManager(APIWrapper, MainSecurity, this);
             _memberManagersList.Add(TradingTimeManager);
@@ -91,7 +94,7 @@ namespace TNS.BL
             OptionsManager = new OptionsManager(APIWrapper, MainSecurity, this);
             _memberManagersList.Add(OptionsManager);
 
-            PositionsDataBuilder = new PositionsDataBuilder(APIWrapper, MainSecurity,this, OptionsManager.OptionDataDic);
+            PositionsDataBuilder = new PositionsDataBuilder(APIWrapper, MainSecurity,this);
             _memberManagersList.Add(PositionsDataBuilder);
 
             TradingManager = new TradingManager(APIWrapper, MainSecurity, this);
@@ -101,11 +104,11 @@ namespace TNS.BL
             _memberManagersList.Add(OrdersManager);
         }
 
-        private OptionsManager OptionsManager { get; set; }
-        private PositionsDataBuilder PositionsDataBuilder { get; set; }
-        private TradingManager TradingManager { get; set; }
-        private TradingTimeManager TradingTimeManager { get; set; }
-        private OrdersManager OrdersManager { get; set; }
+        public IOptionsManager OptionsManager { get; set; }
+        public IPositionsDataBuilder PositionsDataBuilder { get; set; }
+        public ITradingManager TradingManager { get; set; }
+        public ITradingTimeManager TradingTimeManager { get; set; }
+        public IOrdersManager OrdersManager { get; set; }
 
     }
 }

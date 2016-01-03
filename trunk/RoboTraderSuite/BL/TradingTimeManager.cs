@@ -16,7 +16,7 @@ namespace TNS.BL
     /// <summary>
     /// Determines the trading time, start and end trading time, and also if the current day is working day.
     /// </summary>
-    public class TradingTimeManager : UnlMemberBaseManager
+    public class TradingTimeManager : UnlMemberBaseManager, ITradingTimeManager
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(TradingTimeManager));
         
@@ -28,9 +28,12 @@ namespace TNS.BL
         }
 
         private bool _requestContractDetailsDataDone;
-        public override void HandleMessage(IMessage message)
+        public override bool HandleMessage(IMessage message)
         {
-            base.HandleMessage(message);
+            bool result = base.HandleMessage(message);
+            if (result)
+                return true;
+
             if (_requestContractDetailsDataDone == false && 
                 message.APIDataType == EapiDataTypes.SecurityData)
             {
@@ -39,7 +42,7 @@ namespace TNS.BL
                 _requestContractDetailsDataDone = true;
             }
             
-            if (message.APIDataType != EapiDataTypes.ContractDetailsData) return;
+            if (message.APIDataType != EapiDataTypes.ContractDetailsData) return false;
 
             ContractDetailsData = (ContractDetailsData) message;
             if (_cancellationTokenSource == null)
@@ -52,15 +55,17 @@ namespace TNS.BL
             }
             ScheduleTradingStartWorkingEventAsync();
             ScheduleTradingEndWorkingEventAsync();
+            return true;
         }
-        protected override void DoWorkAfterConnection()
+
+        public override void DoWorkAfterConnection()
         {
            
         }
         // ***Declare a System.Threading.CancellationTokenSource.
         private CancellationTokenSource _cancellationTokenSource;
 
-        private async void ScheduleTradingEndWorkingEventAsync()
+        public async void ScheduleTradingEndWorkingEventAsync()
         {
             try
             {
@@ -92,7 +97,8 @@ namespace TNS.BL
             }
 
         }
-        private async void ScheduleTradingStartWorkingEventAsync()
+
+        public async void ScheduleTradingStartWorkingEventAsync()
         {
             try
             {

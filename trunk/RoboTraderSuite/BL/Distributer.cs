@@ -50,6 +50,7 @@ namespace TNS.BL
                 case EapiDataTypes.OptionData:
                 case EapiDataTypes.PositionData:
                 case EapiDataTypes.OrderStatus:
+                case EapiDataTypes.OrderData:
                     symbolMessage = (ISymbolMessage)message;
                     _unlManagersDic[symbolMessage.GetSymbolName()].Enqueue(symbolMessage, false);
                     break;

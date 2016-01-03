@@ -1,21 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Infra.Bus;
+using Infra.Enum;
+using log4net;
 using TNS.API;
 using TNS.API.ApiDataObjects;
 using TNS.DbDAL;
 
 namespace TNS.BL
 {
-    public class OrdersManager : UnlMemberBaseManager
+    public class OrdersManager : UnlMemberBaseManager, IOrdersManager
     {
         public OrdersManager(ITradingApi apiWrapper, MainSecurity mainSecurity, UNLManager unlManager) : base(apiWrapper, mainSecurity, unlManager)
         {
         }
-        protected override void DoWorkAfterConnection()
+
+        public override bool HandleMessage(IMessage message)
         {
+            bool result = base.HandleMessage(message);
+            if (result)
+                return true;
+
+            switch (message.APIDataType)
+            {
+                case EapiDataTypes.OrderStatus:
+                case EapiDataTypes.OrderData:
+                    result = true;
+                    break;
+            }
+            return result;
+        }
+
+        public override void DoWorkAfterConnection()
+        {
+            ContractBase contractBase = new OptionContract("AAPL", 110, new DateTime(2015, 2, 19),OptionType.Call);
+            OrderData orderData = new OrderData(OrderType.MKT, OrderAction.SELL, 1.18, 1, contractBase);
+            string orderIdStr = APIWrapper.CreateOrder(orderData);
+
         }
 
     }

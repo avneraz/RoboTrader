@@ -10,25 +10,30 @@ using TNS.API;
 
 namespace TNS.BL
 {
-    public class TradingManager : UnlMemberBaseManager
+    public class TradingManager : UnlMemberBaseManager, ITradingManager
     {
         public TradingManager(ITradingApi apiWrapper, MainSecurity mainSecurity, UNLManager unlManager) : base(apiWrapper, mainSecurity, unlManager)
         {
         }
 
-        private AccountSummaryData AccountSummaryData { get; set; }
-        public override void HandleMessage(IMessage message)
+        public AccountSummaryData AccountSummaryData { get; set; }
+        public override bool HandleMessage(IMessage message)
         {
-            base.HandleMessage(message);
+            bool result = base.HandleMessage(message);
+            if (result)
+                return true;
+
             switch (message.APIDataType)
             {
                 case EapiDataTypes.AccountSummaryData:
                     AccountSummaryData = message as AccountSummaryData;
-                    break;
+                    return true;
             }
+            return false;
 
         }
-        protected override void DoWorkAfterConnection()
+
+        public override void DoWorkAfterConnection()
         {
         }
 

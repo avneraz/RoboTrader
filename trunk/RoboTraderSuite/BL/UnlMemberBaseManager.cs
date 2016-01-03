@@ -11,7 +11,9 @@ using TNS.API;
 
 namespace TNS.BL
 {
-    public class UnlMemberBaseManager
+   
+
+    public class UnlMemberBaseManager : IUnlBaseMemberManager
     {
         public UnlMemberBaseManager(ITradingApi apiWrapper, MainSecurity mainSecurity, UNLManager unlManager)
         {
@@ -27,16 +29,18 @@ namespace TNS.BL
         protected readonly MainSecurity MainSecurity;
         protected readonly ITradingApi APIWrapper;
         protected readonly UNLManager UNLManager;
-        protected SecurityData MainSecurityData { get; private set; }
+        public SecurityData MainSecurityData { get; private set; }
         public bool IsConnected => ConnectionStatus == ConnectionStatus.Connected;
         public ConnectionStatus ConnectionStatus { get; private set; }
-        public virtual void HandleMessage(IMessage message)
+        public virtual bool HandleMessage(IMessage message)
         {
+            bool result = false;
             switch (message.APIDataType)
             {
                 case EapiDataTypes.SecurityData:
                     var securityData = message as SecurityData;
                     MainSecurityData = securityData;
+                    result = true;
                     break;
                 case EapiDataTypes.BrokerConnectionStatus:
 
@@ -44,12 +48,13 @@ namespace TNS.BL
                     ConnectionStatus = connectionStatusMessage.Status;
                     if (connectionStatusMessage.AfterConnectionToApiWrapper)
                         DoWorkAfterConnection();
-
+                    result = true;
                     break;
             }
+            return result;
         }
 
-        protected virtual void DoWorkAfterConnection()
+        public virtual void DoWorkAfterConnection()
         {
         }
     }

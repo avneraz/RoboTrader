@@ -47,6 +47,15 @@ namespace TNS.API.IBApiWrapper
         #region EWrapper Overrides
 
         #region NotUsedMethods
+
+        /// <summary>
+        /// All position data have been received already;
+        /// </summary>
+        public void positionEnd()
+        {
+            //var endAsynchData = new EndAsynchData(EapiDataTypes.PositionData);
+            //Consumer.Enqueue(endAsynchData);
+        }
         public void updatePortfolio(Contract contract, int position, double marketPrice, double marketValue,
            double averageCost, double unrealisedPNL, double realisedPNL, string accountName){ }
         public void scannerData(int reqId, int rank, ContractDetails contractDetails, string distance, string benchmark,
@@ -91,15 +100,7 @@ namespace TNS.API.IBApiWrapper
         public void deltaNeutralValidation(int reqId, UnderComp underComp){}
 
         #endregion
-
-        /// <summary>
-        /// All position data have been received already;
-        /// </summary>
-        public void positionEnd()
-        {
-            //var endAsynchData = new EndAsynchData(EapiDataTypes.PositionData);
-            //Consumer.Enqueue(endAsynchData);
-        }
+        
         public void contractDetails(int reqId, ContractDetails contractDetails)
         {
             ContractDetailsMessageReceived?.Invoke(reqId, contractDetails);
@@ -109,11 +110,6 @@ namespace TNS.API.IBApiWrapper
                 Consumer.Enqueue(contractDetails.ToContractDetailsData());
             }
 
-        }
-
-        internal void AddSecurityTrader(Contract ibContract)
-        {
-            SecurityTradersList.Add(ibContract);
         }
        
         public void contractDetailsEnd(int reqId){}
@@ -131,14 +127,7 @@ namespace TNS.API.IBApiWrapper
             orderStatus.Value.Data.Commission = commissionReport.Commission;
             Consumer.Enqueue(orderStatus.Value.Data);
         }
-        public void execDetails(int reqId, Contract contract, Execution execution)
-        {
-            IBOrderStatusWrapper data;
-            if (OrderStatusDic.TryGetValue(execution.OrderId, out data))
-            {
-                data.ExecId = execution.ExecId;
-            }
-        }
+      
         public void error(int id, int errorCode, string errorMsg)
         {
             
@@ -334,10 +323,7 @@ namespace TNS.API.IBApiWrapper
                 }
             }
         }
-        public void nextValidId(int orderId)
-        {
-            NextOrderId = orderId;
-        }
+       
         public void accountSummary(int reqId, string account, string tag, string value, string currency)
         {
             switch (tag)
@@ -369,14 +355,29 @@ namespace TNS.API.IBApiWrapper
         {
             Consumer.Enqueue(AccountSummary);
         }
-        public void orderStatus(int orderId, string status, int filled, 
-            int remaining, double avgFillPrice, int permId,int parentId,
+
+        #region Order handling
+        public void execDetails(int reqId, Contract contract, Execution execution)
+        {
+            IBOrderStatusWrapper data;
+            if (OrderStatusDic.TryGetValue(execution.OrderId, out data))
+            {
+                data.ExecId = execution.ExecId;
+            }
+        }
+        public void nextValidId(int orderId)
+        {
+            NextOrderId = orderId;
+        }
+
+        public void orderStatus(int orderId, string status, int filled,
+            int remaining, double avgFillPrice, int permId, int parentId,
                             double lastFillPrice, int clientId, string whyHeld)
         {
             if (OrderStatusDic.ContainsKey(orderId))
             {
                 OrderStatusData orderStatus = OrderStatusDic[orderId].Data;
-                orderStatus.OrderStatus = (OrderStatus) Enum.Parse(typeof (OrderStatus), status);
+                orderStatus.OrderStatus = (OrderStatus)Enum.Parse(typeof(OrderStatus), status);
                 orderStatus.LastUpdateTime = DateTime.Now; ;
                 Consumer.Enqueue(orderStatus);
             }
@@ -384,7 +385,7 @@ namespace TNS.API.IBApiWrapper
             {
                 Logger.Error($"Received order status on request not in OrderStatusDic, orderId is {orderId}");
             }
-            
+
         }
         public void openOrder(int orderId, Contract contract, Order order, OrderState orderState)
         {
@@ -408,8 +409,18 @@ namespace TNS.API.IBApiWrapper
             var posData = new PositionData(contract.ToContract(), pos, avgCost);
             Consumer.Enqueue(posData);
         }
-        #endregion
+        private void CloseIrrelevantOrders()
+        {
+            OrderStatusDic.RemoveAll(item => DateTime.Now - item.Data.LastUpdateTime > ORDER_MAX_TIME_SPAN &&
+            item.Data.OrderStatus.In(OrderStatus.Cancelled, OrderStatus.Filled));
+        }
         public int NextOrderId { get; set; }
+        #endregion
+        #endregion
+        internal void AddSecurityTrader(Contract ibContract)
+        {
+            SecurityTradersList.Add(ibContract);
+        }
         private void PublishOptions()
         {
             lock (SecurityDataDic)
@@ -429,11 +440,6 @@ namespace TNS.API.IBApiWrapper
                 securityData.Contract = contract;
                 SecurityDataDic.Add(requestId, securityData);
             }
-        }
-        private void CloseIrrelevantOrders()
-        {
-            OrderStatusDic.RemoveAll(item => DateTime.Now - item.Data.LastUpdateTime > ORDER_MAX_TIME_SPAN &&
-            item.Data.OrderStatus.In(OrderStatus.Cancelled, OrderStatus.Filled));
         }
         public IEnumerable<int> GetCurrentOptionsRequestIds()
         {
