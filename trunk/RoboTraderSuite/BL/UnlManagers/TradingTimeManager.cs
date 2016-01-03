@@ -1,17 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Infra.Enum;
-using TNS.API;
-using TNS.API.ApiDataObjects;
-using TNS.DbDAL;
 using Infra.Bus;
+using Infra.Enum;
 using Infra.Extensions;
 using log4net;
+using TNS.API;
+using TNS.API.ApiDataObjects;
+using TNS.BL.Interfaces;
+using TNS.DbDAL;
 
-namespace TNS.BL
+namespace TNS.BL.UnlManagers
 {
     /// <summary>
     /// Determines the trading time, start and end trading time, and also if the current day is working day.

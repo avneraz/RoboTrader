@@ -1,7 +1,7 @@
 ﻿using System;
 using TNS.API.ApiDataObjects;
 
-namespace TNS.BL
+namespace TNS.BL.Interfaces
 {
     public interface ITradingTimeManager : IUnlBaseMemberManager
     {

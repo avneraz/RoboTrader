@@ -49,22 +49,22 @@
     <Compile Include="AccountManager.cs" />
     <Compile Include="AppManager.cs" />
     <Compile Include="Distributer.cs" />
-    <Compile Include="IOptionsManager.cs" />
-    <Compile Include="IOrdersManager.cs" />
-    <Compile Include="IPositionsDataBuilder.cs" />
-    <Compile Include="ITradingManager.cs" />
-    <Compile Include="ITradingTimeManager.cs" />
-    <Compile Include="IUnlBaseMemberManager.cs" />
+    <Compile Include="Interfaces\IOptionsManager.cs" />
+    <Compile Include="Interfaces\IOrdersManager.cs" />
+    <Compile Include="Interfaces\IPositionsDataBuilder.cs" />
+    <Compile Include="Interfaces\ITradingManager.cs" />
+    <Compile Include="Interfaces\ITradingTimeManager.cs" />
+    <Compile Include="Interfaces\IUnlBaseMemberManager.cs" />
     <Compile Include="MainSecuritiesManager.cs" />
-    <Compile Include="OptionsManager.cs" />
-    <Compile Include="OrdersManager.cs" />
-    <Compile Include="PositionsDataBuilder.cs" />
+    <Compile Include="UnlManagers\OptionsManager.cs" />
+    <Compile Include="UnlManagers\OrdersManager.cs" />
+    <Compile Include="UnlManagers\PositionsDataBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TradingManager.cs" />
-    <Compile Include="TradingTimeManager.cs" />
+    <Compile Include="UnlManagers\TradingManager.cs" />
+    <Compile Include="UnlManagers\TradingTimeManager.cs" />
     <Compile Include="UIDataManager.cs" />
-    <Compile Include="UNLManager.cs" />
-    <Compile Include="UnlMemberBaseManager.cs" />
+    <Compile Include="UnlManagers\UNLManager.cs" />
+    <Compile Include="UnlManagers\UnlMemberBaseManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BLClassDiagram.cd" />

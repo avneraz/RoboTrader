@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using Infra.Bus;
 using Infra.Enum;
-using log4net;
 using TNS.API;
 using TNS.API.ApiDataObjects;
+using TNS.BL.Interfaces;
 using TNS.DbDAL;
 
-namespace TNS.BL
+namespace TNS.BL.UnlManagers
 {
     public class OrdersManager : UnlMemberBaseManager, IOrdersManager
     {
