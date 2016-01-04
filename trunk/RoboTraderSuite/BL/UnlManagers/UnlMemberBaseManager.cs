@@ -25,7 +25,7 @@ namespace TNS.BL.UnlManagers
         protected readonly MainSecurity MainSecurity;
         protected readonly ITradingApi APIWrapper;
         protected readonly UNLManager UNLManager;
-        public SecurityData MainSecurityData { get; private set; }
+        public BaseSecurityData MainSecurityData { get; private set; }
         public bool IsConnected => ConnectionStatus == ConnectionStatus.Connected;
         public ConnectionStatus ConnectionStatus { get; private set; }
         public virtual bool HandleMessage(IMessage message)
@@ -34,7 +34,7 @@ namespace TNS.BL.UnlManagers
             switch (message.APIDataType)
             {
                 case EapiDataTypes.SecurityData:
-                    var securityData = message as SecurityData;
+                    var securityData = message as BaseSecurityData;
                     MainSecurityData = securityData;
                     result = true;
                     break;

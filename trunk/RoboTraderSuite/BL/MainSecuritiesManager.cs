@@ -16,7 +16,7 @@ namespace TNS.BL
     /// </summary>
     public class MainSecuritiesManager : SimpleBaseLogic
     {
-        public event Action<SecurityData> SecuritiesUpdated;
+        public event Action<BaseSecurityData> SecuritiesUpdated;
         private static readonly ILog Logger = LogManager.GetLogger(typeof(MainSecuritiesManager));
         private readonly ITradingApi _apiWrapper;
         public MainSecuritiesManager(ITradingApi apiWrapper)
@@ -28,7 +28,7 @@ namespace TNS.BL
         private void InitializeMainSecurities()
         {
             List<MainSecurity> mainSecurityList = DbDalManager.GetMainSecurityList();
-            Securities = new Dictionary<string, SecurityData>();
+            Securities = new Dictionary<string, BaseSecurityData>();
 
             foreach (var security in mainSecurityList)
             {
@@ -43,10 +43,10 @@ namespace TNS.BL
                     continue;
                 }
 
-                var stockContract = new StockContract(security.Symbol, 
+                var stockContract = new SecurityContract(security.Symbol, 
                     securityType, security.Exchange, security.Currency);
 
-                Securities.Add(stockContract.Symbol, new SecurityData() {Contract = stockContract});
+                Securities.Add(stockContract.Symbol, new SecurityData() {SecurityContract = stockContract});
             }
         }
 
@@ -55,11 +55,11 @@ namespace TNS.BL
             switch (message.APIDataType)
             {
                 case EapiDataTypes.SecurityData:
-                    var securityData = message as SecurityData;
+                    var securityData = message as BaseSecurityData;
 
                     if (securityData != null)
                     {
-                        Securities[securityData.Contract.Symbol] = securityData;
+                        Securities[securityData.GetSymbolName()] = securityData;
                         SecuritiesUpdated?.Invoke(securityData);
                     }
                     break;
@@ -71,10 +71,10 @@ namespace TNS.BL
             }
         }
 
-        public Dictionary<string, SecurityData> Securities { get; private set; }
+        public Dictionary<string, BaseSecurityData> Securities { get; private set; }
         protected override void DoWorkAfterConnection()
         {
-            var contractList = Securities.Values.Select(securityData => securityData.Contract).ToList();
+            var contractList = Securities.Values.Select(securityData => securityData.GetContract()).ToList();
 
             _apiWrapper.RequestContinousContractData(contractList);
         }

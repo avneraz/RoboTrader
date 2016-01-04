@@ -19,6 +19,10 @@ namespace TNS.API.ApiDataObjects
     /// </summary>
     public abstract class ContractBase
     {
+        protected ContractBase()
+        {
+            
+        }
         protected ContractBase(string symbol, SecurityType type, 
                     string exchange="SMART", string currency = "USD")
         {
@@ -27,11 +31,24 @@ namespace TNS.API.ApiDataObjects
             Currency = currency;
             Exchange = exchange;
         }
-        public string Symbol { get;  }
-        public SecurityType SecurityType { get;  }
-        public string Currency { get;  }
+        public string Symbol { get; set; }
+        public SecurityType SecurityType { get; set; }
+        public string Currency { get; set; }
 
-        public string Exchange { get;  }
+        public string Exchange { get; set; }
+
+        // public Guid Id { get; set; }
+
+        private string _id;
+
+        public string Id
+        {
+            get { return _id ?? (_id = GetUniqueIdentifier()); }
+            set { _id = value; }
+        }
+
+       
+        public abstract string GetUniqueIdentifier();
 
         public virtual Contract ToIbContract()
         {

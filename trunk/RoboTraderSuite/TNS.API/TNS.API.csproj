@@ -50,11 +50,15 @@
     <Compile Include="ApiDataObjects\ExceptionData.cs" />
     <Compile Include="ApiDataObjects\ISymbolMessage.cs" />
     <Compile Include="ApiDataObjects\OrderStatusData.cs" />
+    <Compile Include="ApiDataObjects\OptionsPositionData.cs" />
+    <Compile Include="ApiDataObjects\PositionDataFactory.cs" />
     <Compile Include="ApiDataObjects\EndAsynchData.cs" />
-    <Compile Include="ApiDataObjects\SecurityData.cs" />
-    <Compile Include="ApiDataObjects\StockContract.cs" />
+    <Compile Include="ApiDataObjects\BaseSecurityData.cs" />
+    <Compile Include="ApiDataObjects\SecurityContract.cs" />
     <Compile Include="ApiDataObjects\AccountSummaryData.cs" />
     <Compile Include="ApiDataObjects\ContractBase.cs" />
+    <Compile Include="ApiDataObjects\SecurityData.cs" />
+    <Compile Include="ApiDataObjects\StocksPositionData.cs" />
     <Compile Include="IBApiWrapper\IBOrderStatusWrapper.cs" />
     <Compile Include="ITradingApi.cs" />
     <Compile Include="ApiDataObjects\OptionContract.cs" />

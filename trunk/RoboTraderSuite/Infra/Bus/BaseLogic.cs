@@ -93,14 +93,14 @@ namespace Infra.Bus
 
     public abstract class SmartBaseLogic : SimpleBaseLogic
     {
-        private readonly global::Infra.Bus.Bus _bus;
+        //private readonly global::Infra.Bus.Bus _bus;
         private readonly Dictionary<Type, MethodInfo> _handledTypes;
 
-        protected SmartBaseLogic(global::Infra.Bus.Bus bus)
+        protected SmartBaseLogic()
         {
-            _bus = bus;
+            //_bus = bus;
             _handledTypes = GetLogicHandledTypes();
-            _bus.RegisterLogic(this, _handledTypes.Keys);
+            //_bus.RegisterLogic(this, _handledTypes.Keys);
 
         }
         private Dictionary<Type, MethodInfo> GetLogicHandledTypes()
@@ -111,14 +111,16 @@ namespace Infra.Bus
                 .ToDictionary(t => t.ParameterType, t => t.method);
         }
 
-        protected void PublishMessage(IMessage message)
-        {
-            _bus.SendMessage(message);
-        }
+       
 
         protected override void HandleMessage(IMessage message)
         {
-            _handledTypes[message.GetType()].Invoke(this, new Object[] { message });
+            MethodInfo method;
+            if (_handledTypes.TryGetValue(message.GetType(), out method))
+            {
+                method.Invoke(this, new Object[] { message });
+            }
+                
         }
     }
 

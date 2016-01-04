@@ -6,8 +6,19 @@ using System.Threading.Tasks;
 
 namespace TNS.API.ApiDataObjects
 {
-    public class SecurityData : BaseSecurityData
+    public class StocksPositionData : PositionData
     {
+        public StocksPositionData()
+        {
+            
+        }
+
+        public StocksPositionData (SecurityContract contract, int position, double avgCost) 
+            : base(position, avgCost)
+        {
+            SecurityContract = contract;
+        }
+        public SecurityContract SecurityContract { get; set; }
         public override ContractBase GetContract()
         {
             return SecurityContract;
@@ -17,7 +28,5 @@ namespace TNS.API.ApiDataObjects
         {
             SecurityContract = (SecurityContract)contract;
         }
-
-        public SecurityContract SecurityContract { get; set; }
     }
 }

@@ -10,5 +10,6 @@ namespace TNS.API.ApiDataObjects
     public interface ISymbolMessage : IMessage
     {
         string GetSymbolName();
+        ContractBase GetContract();
     }
 }

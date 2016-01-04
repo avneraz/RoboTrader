@@ -67,7 +67,7 @@
             // 
             // securityDataBindingSource
             // 
-            this.securityDataBindingSource.DataSource = typeof(TNS.API.ApiDataObjects.SecurityData);
+            this.securityDataBindingSource.DataSource = typeof(TNS.API.ApiDataObjects.BaseSecurityData);
             // 
             // gridView1
             // 

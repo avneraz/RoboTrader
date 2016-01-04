@@ -13,6 +13,10 @@ namespace TNS.API.ApiDataObjects
     }
     public class OptionContract : ContractBase
     {
+		public OptionContract() 
+        {
+            
+        }
         public OptionContract(string symbol, double strike, DateTime expiry, 
             OptionType type, string exchange="SMART", int multiplier = 100, string currency = "USD")
             :base(symbol, SecurityType.Option)
@@ -39,6 +43,10 @@ namespace TNS.API.ApiDataObjects
         public int Multiplier { get; set; }
 
         public string OptionKey => $"{Expiry}.{OptionType}.{Strike}";
+		public override string GetUniqueIdentifier()
+        {
+            return $"{Exchange}.{Symbol}.{Expiry}.{OptionType}.{Strike}"; ;
+        }
 
         public override Contract ToIbContract()
         {

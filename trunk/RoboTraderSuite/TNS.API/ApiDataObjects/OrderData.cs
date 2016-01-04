@@ -1,22 +1,16 @@
 ﻿
-using System;
 using IBApi;
 using Infra.Bus;
 using Infra.Enum;
 
 namespace TNS.API.ApiDataObjects
 {
-    /// <summary>
-    /// = BUY,SELL
-    /// </summary>
     public enum OrderAction
     {
         BUY,
         SELL
     }
-    /// <summary>
-    /// =  LMT,MKT
-    /// </summary>
+
     public enum OrderType
     {
         LMT,
@@ -24,23 +18,6 @@ namespace TNS.API.ApiDataObjects
     }
     public class OrderData : IMessage
     {
-        public OrderData(OrderType orderType, OrderAction orderAction, double limitPrice, int quantity, 
-            ContractBase contract)
-        {
-            OrderType = orderType;
-            OrderAction = orderAction;
-            LimitPrice = limitPrice;
-            Quantity = quantity;
-            Contract = contract;
-            if (Contract is OptionContract)
-            {
-                OptionContract = (OptionContract) Contract;
-            }
-            //var optionContract = Contract as OptionContract;
-            //if (optionContract != null)
-            //    OptionContract = optionContract;
-        }
-        public OptionContract OptionContract { get; }
         public ContractBase Contract { get; set; }
         public EapiDataTypes APIDataType => EapiDataTypes.OrderData;
         public string OrderId { get; set; }
@@ -49,6 +26,7 @@ namespace TNS.API.ApiDataObjects
         public double LimitPrice { get; set; }
         public int Quantity { get; set; }
         public bool WhatIf { get; set; } = false;
+
         public override string ToString()
         {
             return $"OrderData: [Contract: {Contract},  OrderId: {OrderId}," +

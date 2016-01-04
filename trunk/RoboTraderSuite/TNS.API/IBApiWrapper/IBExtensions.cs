@@ -24,9 +24,9 @@ namespace TNS.API.IBApiWrapper
                     return new OptionContract(contract.Symbol, contract.Strike, GetExpiryDate(contract.Expiry), optionType,
                         contract.Exchange, Convert.ToInt32(contract.Multiplier), contract.Currency);
                 case "STK":
-                    return new StockContract(contract.Symbol, SecurityType.Stock);
+                    return new SecurityContract(contract.Symbol, SecurityType.Stock);
                 case "IND":
-                    return new StockContract(contract.Symbol, SecurityType.Index);
+                    return new SecurityContract(contract.Symbol, SecurityType.Index);
                 default:
                     throw new Exception("Invalid contract type received " +  contract.SecType);
             }
@@ -101,9 +101,14 @@ namespace TNS.API.IBApiWrapper
 
         public static OrderData ToOrderData(this Order order)
         {
-            return new OrderData((OrderType)Enum.Parse(typeof (OrderType), order.OrderType),
-                (OrderAction)Enum.Parse(typeof (OrderAction), order.Action),
-                order.LmtPrice, order.TotalQuantity, null);
+            return new OrderData()
+            {
+                OrderType = (OrderType) Enum.Parse(typeof (OrderType), order.OrderType),
+                OrderAction = (OrderAction) Enum.Parse(typeof (OrderAction), order.Action),
+                LimitPrice = order.LmtPrice,
+                Quantity = order.TotalQuantity,
+                OrderId = order.OrderId.ToString()
+            };
         }
 
         public static ContractDetailsData ToContractDetailsData(this ContractDetails contractDetails)

@@ -62,8 +62,14 @@ namespace TNS.BL.UnlManagers
         public Dictionary<string, OrderStatusData> OrderStatusDataDic { get; }
         public OrderData SellOption(OptionData optionData, double limitPrice, int quantity)
         {
-            OrderData orderData = new OrderData(DefaultOrderType, OrderAction.SELL,
-                     limitPrice, quantity, optionData.OptionContract);
+            OrderData orderData = new OrderData()
+            {
+                OrderType = DefaultOrderType,
+                OrderAction = OrderAction.SELL,
+                LimitPrice = limitPrice,
+                Quantity = quantity,
+                Contract = optionData.OptionContract
+            };
 
             orderData.OrderId = APIWrapper.CreateOrder(orderData);
 
@@ -72,10 +78,14 @@ namespace TNS.BL.UnlManagers
 
         public OrderData BuyOption(OptionData optionData, double limitPrice, int quantity)
         {
-
-            OrderData orderData = new OrderData(DefaultOrderType, OrderAction.BUY, 
-                    limitPrice, quantity, optionData.OptionContract);
-
+            OrderData orderData = new OrderData()
+            {
+                OrderType = DefaultOrderType,
+                OrderAction = OrderAction.BUY,
+                LimitPrice = limitPrice,
+                Quantity = quantity,
+                Contract = optionData.OptionContract
+            };
             orderData.OrderId = APIWrapper.CreateOrder(orderData);
 
             return orderData;

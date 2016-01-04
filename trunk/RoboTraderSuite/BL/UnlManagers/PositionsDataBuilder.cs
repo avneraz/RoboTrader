@@ -40,7 +40,7 @@ namespace TNS.BL.UnlManagers
                 return false;
 
             var positionData = (PositionData) message;
-            var contract = positionData.Contract;
+            var contract = positionData.GetContract();
             if ((contract is OptionContract) == false)
                 return false;
 
@@ -69,12 +69,12 @@ namespace TNS.BL.UnlManagers
             var list = PositionDataDic.Values.Where(pd => pd.OptionData == null).ToList();
             foreach (var positionData in list)
             {
-                var key = ((OptionContract)(positionData.Contract)).OptionKey;
+                var key = ((OptionContract)(positionData.GetContract())).OptionKey;
 
                 if (OptionsManager.OptionDataDic.ContainsKey(key))
                     positionData.OptionData = OptionsManager.OptionDataDic[key];
                 else
-                    contractList.Add(PositionDataDic[key].Contract);
+                    contractList.Add(PositionDataDic[key].GetContract());
                 
             }
             if(contractList.Count > 0)

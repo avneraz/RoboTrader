@@ -13,7 +13,7 @@ namespace TNS.API
         /// <summary>
         /// Request detail data for all securities taking place in trading.
         /// </summary>
-        void RequestContractDetailsData(SecurityData securityData);
+        void RequestContractDetailsData(BaseSecurityData securityData);
         void RequestContinousPositionsData();
         string CreateOrder(OrderData orderData);
         void UpdateOrder(string orderId, OrderData order);

@@ -1,23 +1,29 @@
-﻿using Infra.Bus;
+﻿using System;
+using Infra.Bus;
 using Infra.Enum;
 
 namespace TNS.API.ApiDataObjects
 {
-    public class PositionData : ISymbolMessage
+    public abstract class PositionData : ISymbolMessage
     {
-        public PositionData(ContractBase contract, int position, double averageCost)
+        public PositionData()
         {
-            Contract = contract;
+            
+        }
+        public PositionData(int position, double averageCost)
+        {
             Position = position;
             AverageCost = averageCost;
         }
         public EapiDataTypes APIDataType => EapiDataTypes.PositionData;
         public string GetSymbolName()
         {
-            return Contract.Symbol;
+            return GetContract().Symbol;
         }
 
-        public ContractBase Contract { get; set; }
+        public virtual Guid Id { get; private set; }
+        public abstract ContractBase GetContract();
+        public abstract void SetContract(ContractBase contract);
         public int Position { get; set; }
         public double AverageCost { get; set; }
         /// <summary>
@@ -27,7 +33,7 @@ namespace TNS.API.ApiDataObjects
 
         public override string ToString()
         {
-            return $"PositionData: [Contract: {Contract}, Position: {Position}, " +
+            return $"PositionData: [Contract: {GetContract()}, Position: {Position}, " +
                    $"AverageCost: {AverageCost}, Symbol: {GetSymbolName()}]";
         }
     }

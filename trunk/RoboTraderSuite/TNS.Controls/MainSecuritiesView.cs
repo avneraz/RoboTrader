@@ -35,7 +35,7 @@ namespace TNS.Controls
             UIDataManager.SecuritiesUpdated+= UIDataManagerOnSecuritiesUpdated;
         }
 
-        private void UIDataManagerOnSecuritiesUpdated(SecurityData securityData)
+        private void UIDataManagerOnSecuritiesUpdated(BaseSecurityData securityData)
         {
             this.InvokeIfRequired(() => {
                 securityDataBindingSource.DataSource = UIDataManager.GetSecurityDataList();

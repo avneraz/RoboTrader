@@ -18,7 +18,7 @@ namespace TNS.BL
             GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(5), InitializeItems, false);
         }
 
-        public Dictionary<string, SecurityData> Securities { get; set; }
+        public Dictionary<string, BaseSecurityData> Securities { get; set; }
 
         public Dictionary<string, OrderStatusData> OrderStatusDataDic { get; set; }
 
@@ -26,11 +26,11 @@ namespace TNS.BL
         {
             return OrderStatusDataDic.Values.ToList();
         }
-        public List<SecurityData> GetSecurityDataList()
+        public List<BaseSecurityData> GetSecurityDataList()
         {
             return Securities.Values.ToList();
         }
-        public event Action<SecurityData> SecuritiesUpdated;
+        public event Action<BaseSecurityData> SecuritiesUpdated;
 
         public event Action<OrderStatusData> OrderStatusDataUpdated;
 
@@ -53,7 +53,7 @@ namespace TNS.BL
             OrderStatusDataUpdated?.Invoke(orderStatusData);
         }
 
-        private void MainSecuritiesManagerOnSecuritiesUpdated(SecurityData securityData)
+        private void MainSecuritiesManagerOnSecuritiesUpdated(BaseSecurityData securityData)
         {
             SecuritiesUpdated?.Invoke(securityData);
         }

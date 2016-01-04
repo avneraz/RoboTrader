@@ -39,14 +39,14 @@ namespace TNS.BL.UnlManagers
             if (message.APIDataType != EapiDataTypes.OptionData) return false ;
             var optionData = (OptionData)message;
 
-            if (OptionDataDic.ContainsKey(optionData.OptionKey) == false)
+            if (OptionDataDic.ContainsKey(optionData.GetOptionKey()) == false)
             {
-                OptionDataDic.Add(optionData.OptionKey, optionData);
+                OptionDataDic.Add(optionData.GetOptionKey(), optionData);
                 _logger.DebugFormat("OptionManager({0}, add OptionData: {1})", Symbol, optionData);
                 //OptionDataReceivd?.Invoke(optionData);
             }
             else
-                OptionDataDic[optionData.OptionKey] = optionData;
+                OptionDataDic[optionData.GetOptionKey()] = optionData;
             return true;
         }
        

@@ -40,5 +40,9 @@ namespace TNS.API.ApiDataObjects
         public DateTime EndTradingTimeLocal { get; set; }
         public EapiDataTypes APIDataType { get; }
 
+        public override string GetUniqueIdentifier()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

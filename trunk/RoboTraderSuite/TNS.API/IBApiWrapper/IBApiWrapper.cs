@@ -113,9 +113,9 @@ namespace TNS.API.IBApiWrapper
         /// <summary>
         /// Request detail data for all securities taking place in trading.
         /// </summary>
-        public void RequestContractDetailsData(SecurityData securityData)
+        public void RequestContractDetailsData(BaseSecurityData securityData)
         {
-            Contract ibContract = securityData.Contract.ToIbContract();
+            Contract ibContract = securityData.GetContract().ToIbContract();
             _handler.AddSecurityTrader(ibContract);
             Logger.Info($"{nameof(RequestContractDetailsData)} " +
                             $"called, requesting {ibContract}");

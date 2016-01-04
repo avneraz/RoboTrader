@@ -28,6 +28,10 @@ namespace TNS.API.ApiDataObjects
     /// </summary>
     public class OrderStatusData : ISymbolMessage
     {
+        public OrderStatusData()
+        {
+            
+        }
         public OrderStatusData(string orderId, OrderData order)
         {
             OrderId = orderId;
@@ -35,13 +39,19 @@ namespace TNS.API.ApiDataObjects
             LastUpdateTime = DateTime.Now;
         }
 
-        public OrderData Order { get;  }
+        public OrderData Order { get; set; }
         public EapiDataTypes APIDataType => EapiDataTypes.OrderStatus;
         public string GetSymbolName()
         {
             return Order.Contract.Symbol;
         }
 
+        public ContractBase GetContract()
+        {
+            return Order.Contract;
+        }
+
+        public Guid Id { get; set; }
         public OrderStatus OrderStatus { get; set; }
         public string OrderId { get;  }
         public double MaintMargin { get; set; }

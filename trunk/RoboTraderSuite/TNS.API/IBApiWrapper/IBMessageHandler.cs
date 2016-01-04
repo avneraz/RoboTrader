@@ -28,7 +28,7 @@ namespace TNS.API.IBApiWrapper
         public event Action<int, ContractDetails> ContractDetailsMessageReceived;
         public IBMessageHandler(IBaseLogic consumer)
         {
-            SecurityDataDic = new Dictionary<int, SecurityData>();
+            SecurityDataDic = new Dictionary<int, BaseSecurityData>();
             OrderStatusDic = new Dictionary<int, IBOrderStatusWrapper>();
             AccountSummary = new AccountSummaryData();
             Consumer = consumer;
@@ -37,7 +37,7 @@ namespace TNS.API.IBApiWrapper
         }
 
         private Dictionary<int, IBOrderStatusWrapper> OrderStatusDic { get; }
-        private Dictionary<int, SecurityData> SecurityDataDic { get; }
+        private Dictionary<int, BaseSecurityData> SecurityDataDic { get; }
         private IBaseLogic Consumer { get; }
         private AccountSummaryData AccountSummary { get; }
         /// <summary>
@@ -158,7 +158,7 @@ namespace TNS.API.IBApiWrapper
                         if (SecurityDataDic.ContainsKey(requestId))
                         {
                             Logger.Alert($"Request Id({requestId}) Not found. " + 
-                                        $" {SecurityDataDic[requestId].Contract}");
+                                        $" {SecurityDataDic[requestId].GetContract()}");
                             
                         } 
                     }
@@ -218,9 +218,6 @@ namespace TNS.API.IBApiWrapper
             lock (SecurityDataDic)
             {
                 var securityData = SecurityDataDic[tickerId];
-                var optionData = securityData as OptionData;
-                if (securityData.Symbol == "MSFT")
-                { }
                 switch (field)
                 {
                     case TickType.BID: //1
@@ -396,7 +393,7 @@ namespace TNS.API.IBApiWrapper
             {
                 var orderData = order.ToOrderData();
                 orderData.Contract = contract.ToContract();
-                status = new IBOrderStatusWrapper(new OrderStatusData(orderId.ToString(), orderData));
+                status = new IBOrderStatusWrapper(new OrderStatusData(orderId.ToString(), orderData) {Id = Guid.NewGuid()});
                 OrderStatusDic[orderId] = status;
             }
             status.Data.LastUpdateTime = DateTime.Now;
@@ -407,7 +404,7 @@ namespace TNS.API.IBApiWrapper
         }
         public void position(string account, Contract contract, int pos, double avgCost)
         {
-            var posData = new PositionData(contract.ToContract(), pos, avgCost);
+            var posData = PositionDataFactory.CreatePoisitionData(contract.ToContract(), pos, avgCost);
             Consumer.Enqueue(posData);
         }
         private void CloseIrrelevantOrders()
@@ -437,8 +434,12 @@ namespace TNS.API.IBApiWrapper
             lock (SecurityDataDic)
             {
                 var optionContract = contract as OptionContract;
-                var securityData = optionContract != null ? new OptionData() : new SecurityData();
-                securityData.Contract = contract;
+                BaseSecurityData securityData;
+                if (optionContract != null)
+                    securityData = new OptionData();
+                else
+                    securityData = new SecurityData();
+                securityData.SetContract(contract);
                 SecurityDataDic.Add(requestId, securityData);
             }
         }

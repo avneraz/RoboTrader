@@ -5,7 +5,7 @@ namespace TNS.BL.Interfaces
 {
     public interface IUnlBaseMemberManager
     {
-        SecurityData MainSecurityData { get; }
+        BaseSecurityData MainSecurityData { get; }
         bool IsConnected { get; }
         ConnectionStatus ConnectionStatus { get; }
         bool HandleMessage(IMessage message);

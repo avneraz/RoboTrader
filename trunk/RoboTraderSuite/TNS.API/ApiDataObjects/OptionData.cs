@@ -4,11 +4,21 @@ using Infra.Enum;
 
 namespace TNS.API.ApiDataObjects
 {
-    public class OptionData : SecurityData
+    public class OptionData : BaseSecurityData
     {
 
         public override EapiDataTypes APIDataType => EapiDataTypes.OptionData;
-        public OptionContract OptionContract => Contract as OptionContract;
+        public override ContractBase GetContract()
+        {
+            return OptionContract;
+        }
+
+        public override void SetContract(ContractBase contract)
+        {
+            OptionContract = (OptionContract)contract;
+        }
+
+        public virtual OptionContract OptionContract { get; set; }
 
         public double Delta { get; set; }
 
@@ -24,7 +34,13 @@ namespace TNS.API.ApiDataObjects
 
         public double UnderlinePrice { get; set; }
 
-        public string OptionKey => $"{OptionContract.Expiry}.{OptionContract.OptionType}.{OptionContract.Strike}";
+
+        public virtual string GetOptionKey()
+        {
+            return $"{OptionContract.Expiry}.{OptionContract.OptionType}.{OptionContract.Strike}";
+        }
+
+        //public virtual string OptionKey { get; set; }
 
         public override string ToString()
         {

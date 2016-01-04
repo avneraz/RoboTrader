@@ -37,7 +37,7 @@ namespace TNS.BL.UnlManagers
             if (_requestContractDetailsDataDone == false && 
                 message.APIDataType == EapiDataTypes.SecurityData)
             {
-                Debug.WriteLine(MainSecurityData.Contract);
+                Debug.WriteLine(MainSecurityData.GetContract());
                 APIWrapper.RequestContractDetailsData(MainSecurityData);
                 _requestContractDetailsDataDone = true;
             }
