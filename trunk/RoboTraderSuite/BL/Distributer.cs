@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DAL;
 using log4net;
 using TNS.API.ApiDataObjects;
 using Infra.Bus;
@@ -14,11 +15,14 @@ namespace TNS.BL
         {
             
         }
-        public void SetManagers(Dictionary<string, SimpleBaseLogic> unlManagerDic, AccountManager accountManager, MainSecuritiesManager mainSecuritiesManager)
+        public void SetManagers(Dictionary<string, SimpleBaseLogic> unlManagerDic,
+            AccountManager accountManager, MainSecuritiesManager mainSecuritiesManager,
+            DBWriter writer)
         {
             _unlManagersDic = unlManagerDic;
             _accountManager = accountManager;
             _mainSecuritiesManager = mainSecuritiesManager;
+            _dbWriter = writer;
         }
 
         public event Action<ExceptionData> ExceptionThrown;
@@ -30,6 +34,7 @@ namespace TNS.BL
 
         private  MainSecuritiesManager _mainSecuritiesManager;
         private  AccountManager _accountManager;
+        private DBWriter _dbWriter;
 
         protected override void HandleMessage(IMessage message)
         {
@@ -53,13 +58,15 @@ namespace TNS.BL
                 case EapiDataTypes.OrderData:
                     symbolMessage = (ISymbolMessage)message;
                     _unlManagersDic[symbolMessage.GetSymbolName()].Enqueue(symbolMessage, false);
+                    _dbWriter.Enqueue(message,false);
                     break;
                 case EapiDataTypes.SecurityData:
                     _mainSecuritiesManager.Enqueue(message, false);
                      symbolMessage = (ISymbolMessage)message;
                     var key = symbolMessage.GetSymbolName();
                     if (_unlManagersDic.ContainsKey(key))
-                    _unlManagersDic[key].Enqueue(symbolMessage, false);
+                        _unlManagersDic[key].Enqueue(symbolMessage, false);
+                    _dbWriter.Enqueue(message, false);
                     break;
                 case EapiDataTypes.BrokerConnectionStatus:
                     

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -55,7 +56,7 @@ namespace Tester
 
         static void Main(string[] args)
         {
-            string conString = "Server=localhost;database=postgres;user id=postgres;password=tom90raz";
+            var conString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
             //string conString = "server=localhost;port=3306;database=RobotDB;uid=root;password=tom90raz";
             DBWriter d = new DBWriter(conString);
             d.Connect();

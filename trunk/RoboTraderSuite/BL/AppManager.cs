@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DAL;
 using TNS.API.ApiDataObjects;
 using TNS.API.IBApiWrapper;
 using TNS.DbDAL;
@@ -82,7 +84,9 @@ namespace TNS.BL
                 UNLManagerDic.Add(mainSecurity.Symbol, unlManager);
             }
 
-            Distributer.SetManagers(UNLManagerDic,AccountManager,MainSecuritiesManager);
+            var connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+            DbWriter = new DBWriter(connectionString);
+            Distributer.SetManagers(UNLManagerDic,AccountManager,MainSecuritiesManager, DbWriter);
             UIDataManager = new UIDataManager(this);
         }
         private bool _doWorkAfterConnectionDone;
@@ -137,6 +141,7 @@ namespace TNS.BL
         public UIDataManager UIDataManager { get; set; }
         public Distributer Distributer { get; set; }
         public AccountManager AccountManager { get; private set; }
+        public DBWriter DbWriter { get; set; }
         public AllConfigurations Configurations { get; private set; }
         public MainSecuritiesManager MainSecuritiesManager { get; private set; }
 
