@@ -13,6 +13,7 @@ using Infra;
 using Infra.Bus;
 using Infra.PopUpMessages;
 using TNS.API;
+using TNS.BL.Interfaces;
 using TNS.BL.UnlManagers;
 
 namespace TNS.BL
@@ -82,9 +83,10 @@ namespace TNS.BL
             }
 
             Distributer.SetManagers(UNLManagerDic,AccountManager,MainSecuritiesManager);
+            UIDataManager = new UIDataManager(this);
         }
         private bool _doWorkAfterConnectionDone;
-        private Dictionary<string, SimpleBaseLogic> UNLManagerDic { get; set; }
+        public Dictionary<string, SimpleBaseLogic> UNLManagerDic { get; private set; }
 
         private Form ParentForm { get; set; }
 
@@ -112,7 +114,7 @@ namespace TNS.BL
 
             Distributer.Enqueue(connectionStatus);
             
-            UIDataManager = new UIDataManager(this);
+            
             AppManagerUp?.Invoke();
         }
 
@@ -140,6 +142,16 @@ namespace TNS.BL
 
         #endregion
 
-       
+        #region Testing
+
+        public void SendOneOrderTest(string symbol,bool sell)
+        {
+            IOrdersManager ordersManager = ((UNLManager) UNLManagerDic[symbol]).OrdersManager;
+            ordersManager.TestTrading(true);
+        }
+
+        #endregion
+
+
     }
 }

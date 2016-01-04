@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.gridControl1 = new DevExpress.XtraGrid.GridControl();
-            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.securityDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colAPIDataType = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colContract = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colLastPrice = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -45,9 +45,10 @@
             this.colBidSize = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colVolume = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colSymbol = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.securityDataBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // gridControl1
@@ -63,6 +64,10 @@
             this.gridControl1.TabIndex = 0;
             this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
+            // 
+            // securityDataBindingSource
+            // 
+            this.securityDataBindingSource.DataSource = typeof(TNS.API.ApiDataObjects.SecurityData);
             // 
             // gridView1
             // 
@@ -82,10 +87,6 @@
             this.colSymbol});
             this.gridView1.GridControl = this.gridControl1;
             this.gridView1.Name = "gridView1";
-            // 
-            // securityDataBindingSource
-            // 
-            this.securityDataBindingSource.DataSource = typeof(TNS.API.ApiDataObjects.SecurityData);
             // 
             // colAPIDataType
             // 
@@ -176,6 +177,11 @@
             this.colSymbol.Visible = true;
             this.colSymbol.VisibleIndex = 0;
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 26);
+            // 
             // MainSecuritiesView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -185,8 +191,8 @@
             this.Name = "MainSecuritiesView";
             this.Size = new System.Drawing.Size(958, 530);
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.securityDataBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -209,5 +215,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn colBidSize;
         private DevExpress.XtraGrid.Columns.GridColumn colVolume;
         private DevExpress.XtraGrid.Columns.GridColumn colSymbol;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }

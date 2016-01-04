@@ -37,11 +37,16 @@
             this.label1 = new System.Windows.Forms.Label();
             this.xtraPageMainSecurities = new DevExpress.XtraTab.XtraTabPage();
             this.mainSecuritiesView1 = new TNS.Controls.MainSecuritiesView();
+            this.xtraPageOrders = new DevExpress.XtraTab.XtraTabPage();
+            this.ordersView1 = new TNS.Controls.OrdersView();
+            this.btnSendOrder = new System.Windows.Forms.Button();
+            this.btnRegisterForData = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.xPageAPIMessages.SuspendLayout();
             this.xPageAccontSummary.SuspendLayout();
             this.xtraPageMainSecurities.SuspendLayout();
+            this.xtraPageOrders.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtMessages
@@ -64,7 +69,8 @@
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xPageAPIMessages,
             this.xPageAccontSummary,
-            this.xtraPageMainSecurities});
+            this.xtraPageMainSecurities,
+            this.xtraPageOrders});
             // 
             // xPageAPIMessages
             // 
@@ -124,6 +130,47 @@
             this.mainSecuritiesView1.TabIndex = 0;
             this.mainSecuritiesView1.UIDataManager = null;
             // 
+            // xtraPageOrders
+            // 
+            this.xtraPageOrders.Controls.Add(this.ordersView1);
+            this.xtraPageOrders.Controls.Add(this.btnRegisterForData);
+            this.xtraPageOrders.Controls.Add(this.btnSendOrder);
+            this.xtraPageOrders.Name = "xtraPageOrders";
+            this.xtraPageOrders.Size = new System.Drawing.Size(742, 515);
+            this.xtraPageOrders.Text = "Orders";
+            // 
+            // ordersView1
+            // 
+            this.ordersView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ordersView1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.ordersView1.Location = new System.Drawing.Point(11, 43);
+            this.ordersView1.Name = "ordersView1";
+            this.ordersView1.Size = new System.Drawing.Size(724, 465);
+            this.ordersView1.TabIndex = 1;
+            this.ordersView1.UIDataManager = null;
+            // 
+            // btnSendOrder
+            // 
+            this.btnSendOrder.Location = new System.Drawing.Point(217, 14);
+            this.btnSendOrder.Name = "btnSendOrder";
+            this.btnSendOrder.Size = new System.Drawing.Size(75, 23);
+            this.btnSendOrder.TabIndex = 0;
+            this.btnSendOrder.Text = "Send Order";
+            this.btnSendOrder.UseVisualStyleBackColor = true;
+            this.btnSendOrder.Click += new System.EventHandler(this.btnSendOrder_Click);
+            // 
+            // btnRegisterForData
+            // 
+            this.btnRegisterForData.Location = new System.Drawing.Point(11, 14);
+            this.btnRegisterForData.Name = "btnRegisterForData";
+            this.btnRegisterForData.Size = new System.Drawing.Size(102, 23);
+            this.btnRegisterForData.TabIndex = 0;
+            this.btnRegisterForData.Text = "Register For Data";
+            this.btnRegisterForData.UseVisualStyleBackColor = true;
+            this.btnRegisterForData.Click += new System.EventHandler(this.btnRegisterForData_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -140,6 +187,7 @@
             this.xPageAccontSummary.ResumeLayout(false);
             this.xPageAccontSummary.PerformLayout();
             this.xtraPageMainSecurities.ResumeLayout(false);
+            this.xtraPageOrders.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -155,6 +203,10 @@
         private System.Windows.Forms.Label label1;
         private DevExpress.XtraTab.XtraTabPage xtraPageMainSecurities;
         private Controls.MainSecuritiesView mainSecuritiesView1;
+        private DevExpress.XtraTab.XtraTabPage xtraPageOrders;
+        private System.Windows.Forms.Button btnSendOrder;
+        private Controls.OrdersView ordersView1;
+        private System.Windows.Forms.Button btnRegisterForData;
     }
 }
 

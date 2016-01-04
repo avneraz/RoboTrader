@@ -157,8 +157,9 @@ namespace TNS.API.IBApiWrapper
                     {
                         if (SecurityDataDic.ContainsKey(requestId))
                         {
-                            Logger.Debug($"Request Id({requestId}) Not found. " + 
+                            Logger.Alert($"Request Id({requestId}) Not found. " + 
                                         $" {SecurityDataDic[requestId].Contract}");
+                            
                         } 
                     }
                     return true;

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Infra.Bus;
 using Infra.Enum;
 using TNS.API;
@@ -10,33 +12,84 @@ namespace TNS.BL.UnlManagers
 {
     public class OrdersManager : UnlMemberBaseManager, IOrdersManager
     {
+        public event Action<OrderStatusData> OrderStatusDataUpdated;
         public OrdersManager(ITradingApi apiWrapper, MainSecurity mainSecurity, UNLManager unlManager) : base(apiWrapper, mainSecurity, unlManager)
         {
+            OrderStatusDataDic = new Dictionary<string, OrderStatusData>();
         }
+        /// <summary>
+        ///  = OrderType.LMT, used for testing
+        /// </summary>
+        private OrderType DefaultOrderType { get; set; } = OrderType.LMT;
 
+        //private bool _doSellOneOrderTesting;
         public override bool HandleMessage(IMessage message)
         {
             bool result = base.HandleMessage(message);
+             
+            //if (Symbol == "AAPL" && _doSellOneOrderTesting)
+            //{
+            //    DefaultOrderType = OrderType.MKT;
+            //    TestTrading(sell: true);
+            //    DefaultOrderType = OrderType.LMT;
+            //    _doSellOneOrderTesting = false;
+            //}
             if (result)
                 return true;
 
             switch (message.APIDataType)
             {
                 case EapiDataTypes.OrderStatus:
+                var order = (OrderStatusData) message;
+                OrderStatusDataDic[order.OrderId] = order;
+                    OrderStatusDataUpdated?.Invoke(order);
+                        result = true;
+                    break;
                 case EapiDataTypes.OrderData:
+
+                    //OrderStatusDataUpdated?.Invoke(order);
                     result = true;
                     break;
             }
+            //SellOption(UNLManager.OptionsManager.OptionDataDic.Values.ToList()[0], 1, 1);
             return result;
         }
 
         public override void DoWorkAfterConnection()
         {
-            ContractBase contractBase = new OptionContract("AAPL", 110, new DateTime(2015, 2, 19),OptionType.Call);
-            OrderData orderData = new OrderData(OrderType.MKT, OrderAction.SELL, 1.18, 1, contractBase);
-            string orderIdStr = APIWrapper.CreateOrder(orderData);
+            //_doSellOneOrderTesting = false;
+        }
+        public Dictionary<string, OrderStatusData> OrderStatusDataDic { get; }
+        public OrderData SellOption(OptionData optionData, double limitPrice, int quantity)
+        {
+            OrderData orderData = new OrderData(DefaultOrderType, OrderAction.SELL,
+                     limitPrice, quantity, optionData.OptionContract);
 
+            orderData.OrderId = APIWrapper.CreateOrder(orderData);
+
+            return orderData;
         }
 
+        public OrderData BuyOption(OptionData optionData, double limitPrice, int quantity)
+        {
+
+            OrderData orderData = new OrderData(DefaultOrderType, OrderAction.BUY, 
+                    limitPrice, quantity, optionData.OptionContract);
+
+            orderData.OrderId = APIWrapper.CreateOrder(orderData);
+
+            return orderData;
+        }
+
+        public OrderData TestTrading(bool sell)
+        {
+            DefaultOrderType = OrderType.MKT;
+            OrderData orderData = sell ? 
+                SellOption(UNLManager.OptionsManager.OptionDataDic.Values.ToList()[0], 1, 1) : 
+                BuyOption(UNLManager.OptionsManager.OptionDataDic.Values.ToList()[0], 1, 1);
+            DefaultOrderType = OrderType.LMT;
+            return orderData;
+
+        }
     }
 }

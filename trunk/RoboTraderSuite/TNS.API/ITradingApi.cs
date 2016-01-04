@@ -15,7 +15,7 @@ namespace TNS.API
         /// </summary>
         void RequestContractDetailsData(SecurityData securityData);
         void RequestContinousPositionsData();
-        string CreateOrder(OrderData order);
+        string CreateOrder(OrderData orderData);
         void UpdateOrder(string orderId, OrderData order);
         void CancelOrder(string orderId);
         bool IsConnected { get; }

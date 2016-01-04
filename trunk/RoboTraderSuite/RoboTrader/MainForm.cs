@@ -26,7 +26,7 @@ namespace TNS.RoboTrader
         {
             Logger.Info("Start Program - Tester");
             _appManager = new AppManager(this);
-            _appManager.AppManagerUp += AppManagerOnAppManagerUp;
+            //_appManager.AppManagerUp += AppManagerOnAppManagerUp;
             _appManager.Distributer.APIMessageArrive += DistributerOnAPIMessageArrive;
 
             _appManager.ConnectToBroker();
@@ -34,10 +34,6 @@ namespace TNS.RoboTrader
 
         }
 
-        private void AppManagerOnAppManagerUp()
-        {
-            mainSecuritiesView1.SetUIDataManager(_appManager.UIDataManager);
-        }
 
         private void DistributerOnAPIMessageArrive(APIMessageData apiMessageData)
         {
@@ -53,6 +49,24 @@ namespace TNS.RoboTrader
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             _appManager.ShutDownApplication();
+        }
+
+        private void btnSendOrder_Click(object sender, EventArgs e)
+        {
+            _appManager.SendOneOrderTest("AAPL",true);
+        }
+
+        private void btnRegisterForData_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                mainSecuritiesView1.SetUIDataManager(_appManager.UIDataManager);
+                ordersView1.SetUIDataManager(_appManager.UIDataManager);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

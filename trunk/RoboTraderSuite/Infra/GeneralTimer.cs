@@ -58,10 +58,8 @@ namespace Infra
         /// <value>
         /// The general timer new instance.
         /// </value>
-        public static GeneralTimer GeneralTimerInstance
-        {
-            get { return _generalTimerInstance ?? (_generalTimerInstance = new GeneralTimer()); }
-        }
+        public static GeneralTimer GeneralTimerInstance =>
+            _generalTimerInstance ?? (_generalTimerInstance = new GeneralTimer());
 
         public string AddTask(TimeSpan span, Action task, int occuringTimes = 1)
         {

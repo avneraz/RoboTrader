@@ -23,6 +23,9 @@ namespace TNS.API.ApiDataObjects
 
 
     }
+    /// <summary>
+    /// Represents the entire data for order trading, include the order, status, Margin, commission.
+    /// </summary>
     public class OrderStatusData : ISymbolMessage
     {
         public OrderStatusData(string orderId, OrderData order)

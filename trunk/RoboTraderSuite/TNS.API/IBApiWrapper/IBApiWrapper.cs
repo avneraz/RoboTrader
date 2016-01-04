@@ -164,15 +164,15 @@ namespace TNS.API.IBApiWrapper
             _requestContinousPositionsDataDone = true;
         }
 
-        public string CreateOrder(OrderData order)
+        public string CreateOrder(OrderData orderData)
         {
-            Logger.Info($"Create order was called with {order}");
+            Logger.Info($"Create orderData was called with {orderData}");
             int orderId = CurrentOrderId;
             string orderIdStr = orderId.ToString();
 
-            var ibOrder = order.ToIbOrder(_mainAccount, orderIdStr);
+            var ibOrder = orderData.ToIbOrder(_mainAccount, orderIdStr);
 
-            _clientSocket.placeOrder(orderId, order.Contract.ToIbContract(), ibOrder);
+            _clientSocket.placeOrder(orderId, orderData.Contract.ToIbContract(), ibOrder);
             return orderIdStr;
         }
 
