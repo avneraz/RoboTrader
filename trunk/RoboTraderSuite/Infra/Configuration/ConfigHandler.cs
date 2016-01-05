@@ -14,15 +14,7 @@ namespace Infra.Configuration
 
         public ConfigHandler(string path = null)
         {
-            if (path == null)
-            {
-                _path = "RobotConfig.json";
-            }
-            else
-            {
-                _path = path;
-            }
-            
+            _path = path ?? "RobotConfig.json";
         }
 
         public AllConfigurations ReadConfig()
