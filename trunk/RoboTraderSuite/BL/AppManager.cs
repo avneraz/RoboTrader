@@ -84,8 +84,8 @@ namespace TNS.BL
                 UNLManagerDic.Add(mainSecurity.Symbol, unlManager);
             }
 
-            var connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
-            DbWriter = new DBWriter(connectionString);
+            DbWriter = new DBWriter();
+            DbWriter.Connect();
             Distributer.SetManagers(UNLManagerDic,AccountManager,MainSecuritiesManager, DbWriter);
             UIDataManager = new UIDataManager(this);
         }

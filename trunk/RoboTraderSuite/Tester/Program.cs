@@ -60,33 +60,32 @@ namespace Tester
 
         static void Main(string[] args)
         {
-            ConfigHandler h = new ConfigHandler();
-            AllConfigurations a = new AllConfigurations();
-            a.Application.DefaultHost = "host";
-            a.Application.AppClientId = 1;
-            a.Application.AppPort = 7496;
-            a.Application.MainAccount = "account";
-            a.Application.WDAppClientId = 1;
-            a.Session.AAPLHighLoadingStrike = 100;
-            a.Session.AAPLLowLoadingStrike = 200;
-            a.Session.AAPLSessionsToLoad = "20150821;20151016;20160115";
-            a.Trading.AAPLUnderlinedRange = "111";
+            //ConfigHandler h = new ConfigHandler();
+            //AllConfigurations a = new AllConfigurations();
+            //a.Application.DefaultHost = "host";
+            //a.Application.AppClientId = 1;
+            //a.Application.AppPort = 7496;
+            //a.Application.MainAccount = "account";
+            //a.Application.WDAppClientId = 1;
+            //a.Session.AAPLHighLoadingStrike = 100;
+            //a.Session.AAPLLowLoadingStrike = 200;
+            //a.Session.AAPLSessionsToLoad = "20150821;20151016;20160115";
+            //a.Trading.AAPLUnderlinedRange = "111";
             
-            h.SaveConfig(a);
+            //h.SaveConfig(a);
 
 
-            var readConfig = h.ReadConfig();
+            //var readConfig = h.ReadConfig();
 
 
 
             //UIDal a = new UIDal();
             //var positions = a.GetAllPositions();
             //var appleOptions = a.GetOptionsBySymbol("AAPL");
-            return;
             //string conString = "server=localhost;port=3306;database=RobotDB;uid=root;password=tom90raz";
-            //DBWriter d = new DBWriter(conString);
-            //d.Connect();
-            //d.WriteToDB(new List<OptionData>() {new OptionData() {AskPrice = 5, Key = "a"} });
+            DBWriter d = new DBWriter();
+            d.Connect();
+            //d.WriteToDB(new List<OptionData>() { new OptionData() { AskPrice = 5, Key = "a" } });
             //d.WriteToDB(new List<TestModal>() { new TestModal() { B = "a" } });
             //Example.ExecuteExample();
 
@@ -104,7 +103,6 @@ namespace Tester
             //appManager.InitializeAppManager(null);
             //appManager.ConnectToBroker();
             Consumer c = new Consumer();
-            Distributer d = new Distributer();
             IBApiWrapper wrapper = new IBApiWrapper("127.0.0.1", 7496, 8, d, "U1450837");
             //var accMgr = new AccountManager(wrapper);
             //var mainSecMgr = new MainSecuritiesManager(wrapper);

@@ -14,15 +14,12 @@ namespace DAL
     public class DBWriter : SmartBaseLogic
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(DBWriter));
-        private string _conString;
-        private ISessionFactory _sessionFactory;
         private ISession _session;
         private readonly TimeSpan WriteTimeOut = TimeSpan.FromSeconds(10);
         private readonly Dictionary<string, object> _aggregator; 
 
-        public DBWriter(string conString)
+        public DBWriter()
         {
-            _conString = conString;
             _aggregator = new Dictionary<string, object>();
         }
 
