@@ -17,7 +17,6 @@ using TNS.API.IBApiWrapper;
 using TNS.BL;
 using Infra.Bus;
 using Infra.Configuration;
-using MySql.Data.Entity;
 using UILogic;
 using static System.Console;
 

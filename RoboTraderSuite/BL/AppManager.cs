@@ -83,7 +83,7 @@ namespace TNS.BL
                 var unlManager = new UNLManager(mainSecurity, APIWrapper);
                 UNLManagerDic.Add(mainSecurity.Symbol, unlManager);
             }
-
+            Stttam();
             DbWriter = new DBWriter();
             DbWriter.Connect();
             Distributer.SetManagers(UNLManagerDic,AccountManager,MainSecuritiesManager, DbWriter);
@@ -107,6 +107,10 @@ namespace TNS.BL
                 DoWorkAfterConnectionToBroker();
         }
 
+        private void Stttam()
+        {
+            
+        }
        
 
         private void DoWorkAfterConnectionToBroker()
