@@ -1,7 +1,7 @@
 *.pdb
 *.dll
-/trunk/RoboTraderSuite/packages
-/trunk/RoboTraderSuite/BinDebug
-/trunk/RoboTraderSuite/obj
+/RoboTraderSuite/packages
+/RoboTraderSuite/BinDebug
+/RoboTraderSuite/obj
 obj/
 bin/
