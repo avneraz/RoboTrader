@@ -81,7 +81,6 @@
     <Compile Include="DBSessionFactory.cs" />
     <Compile Include="DBWriter.cs" />
     <Compile Include="Mappings.cs" />
-    <Compile Include="NHibTest - Copy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

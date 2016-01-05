@@ -60,22 +60,22 @@ namespace Tester
 
         static void Main(string[] args)
         {
-            //ConfigHandler h = new ConfigHandler();
-            //AllConfigurations a = new AllConfigurations();
-            //a.Application.DefaultHost = "host";
-            //a.Application.AppClientId = 1;
-            //a.Application.AppPort = 7496;
-            //a.Application.MainAccount = "account";
-            //a.Application.WDAppClientId = 1;
-            //a.Session.AAPLHighLoadingStrike = 100;
-            //a.Session.AAPLLowLoadingStrike = 200;
-            //a.Session.AAPLSessionsToLoad = "20150821;20151016;20160115";
-            //a.Trading.AAPLUnderlinedRange = "111";
-            
-            //h.SaveConfig(a);
+            ConfigHandler h = new ConfigHandler();
+            AllConfigurations a = new AllConfigurations();
+            a.Application.DefaultHost = "host";
+            a.Application.AppClientId = 1;
+            a.Application.AppPort = 7496;
+            a.Application.MainAccount = "account";
+            a.Application.WDAppClientId = 1;
+            a.Session.AAPLHighLoadingStrike = 100;
+            a.Session.AAPLLowLoadingStrike = 200;
+            a.Session.AAPLSessionsToLoad = "20150821;20151016;20160115";
+            a.Trading.AAPLUnderlinedRange = "111";
+
+            h.SaveConfig(a);
 
 
-            //var readConfig = h.ReadConfig();
+            var readConfig = h.ReadConfig();
 
 
 
@@ -110,7 +110,7 @@ namespace Tester
 
 
             
-
+           //
 
 
             wrapper.ConnectToBroker();
