@@ -56,9 +56,9 @@ namespace Infra
 
             private string[] _unlSymbolsList;
 
-            public string[] UNLSymbolsListForTrading
+            public string[] UNLSymbolsListForTrading()
             {
-                get { return _unlSymbolsList ?? (_unlSymbolsList = UNLSymbolsList.Split(';')); }
+                return _unlSymbolsList ?? (_unlSymbolsList = UNLSymbolsList.Split(';')); 
             }
 
             /// <summary>

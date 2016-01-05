@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -9,11 +10,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DAL;
 using IBApi;
+using Infra;
 using log4net;
 using TNS.API.ApiDataObjects;
 using TNS.API.IBApiWrapper;
 using TNS.BL;
 using Infra.Bus;
+using Infra.Configuration;
 using MySql.Data.Entity;
 using UILogic;
 using static System.Console;
@@ -57,9 +60,28 @@ namespace Tester
 
         static void Main(string[] args)
         {
-            UIDal a = new UIDal();
-            var positions = a.GetAllPositions();
-            var appleOptions = a.GetOptionsBySymbol("AAPL");
+            ConfigHandler h = new ConfigHandler();
+            AllConfigurations a = new AllConfigurations();
+            a.Application.DefaultHost = "host";
+            a.Application.AppClientId = 1;
+            a.Application.AppPort = 7496;
+            a.Application.MainAccount = "account";
+            a.Application.WDAppClientId = 1;
+            a.Session.AAPLHighLoadingStrike = 100;
+            a.Session.AAPLLowLoadingStrike = 200;
+            a.Session.AAPLSessionsToLoad = "20150821;20151016;20160115";
+            a.Trading.AAPLUnderlinedRange = "111";
+            
+            h.SaveConfig(a);
+
+
+            var readConfig = h.ReadConfig();
+
+
+
+            //UIDal a = new UIDal();
+            //var positions = a.GetAllPositions();
+            //var appleOptions = a.GetOptionsBySymbol("AAPL");
             return;
             //string conString = "server=localhost;port=3306;database=RobotDB;uid=root;password=tom90raz";
             //DBWriter d = new DBWriter(conString);

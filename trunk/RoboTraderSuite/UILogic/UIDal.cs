@@ -23,7 +23,7 @@ namespace UILogic
 
         public IList<OptionData> GetOptionsBySymbol(string symbolName)
         {
-            return _session.Query<OptionData>().Where(a=> a.OptionContract.Symbol == symbolName && a.OptionContract.Strike == 101.0).ToList();
+            return _session.Query<OptionData>().Where(a=> a.OptionContract.Symbol == symbolName).ToList();
         }
     }
 }
