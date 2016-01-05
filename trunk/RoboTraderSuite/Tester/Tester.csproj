@@ -72,7 +72,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +97,10 @@
     <ProjectReference Include="..\TNS.API\TNS.API.csproj">
       <Project>{c50ba368-93c1-45ad-8779-683189b0ba34}</Project>
       <Name>TNS.API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UILogic\UILogic.csproj">
+      <Project>{70470A7B-5474-4EDC-8443-BA2E165BD147}</Project>
+      <Name>UILogic</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

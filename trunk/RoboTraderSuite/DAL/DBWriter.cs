@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using Infra.Bus;
-using Infra.Extensions;
 using log4net;
-using MySql.Data.MySqlClient;
 using NHibernate;
-using NHibernate.Linq;
 using NHibernate.Tool.hbm2ddl;
 using TNS.API.ApiDataObjects;
 
@@ -34,17 +28,7 @@ namespace DAL
 
         public void Connect()
         {
-            var configuration = Fluently.Configure()
-               .Database(PostgreSQLConfiguration.PostgreSQL82.ConnectionString(_conString))
-               .Mappings(m => m.FluentMappings.AddFromAssemblyOf<OptionDataMapping>()
-               .Conventions.Add(FluentNHibernate.Conventions.Helpers.DefaultLazy.Never()))
-               .BuildConfiguration();
-
-            var exporter = new SchemaExport(configuration);
-            exporter.Execute(true, true, false);
-
-            _sessionFactory = configuration.BuildSessionFactory();
-            _session = _sessionFactory.OpenSession();
+            _session = DBSessionFactory.Instance.OpenSession();
             AddScheduledTask(WriteTimeOut, WriteBulk, true);
         }
 
@@ -101,7 +85,7 @@ namespace DAL
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            using (IStatelessSession statelessSession = _sessionFactory.OpenStatelessSession())
+            using (IStatelessSession statelessSession = DBSessionFactory.Instance.OpenStatelessSession())
             using (ITransaction transaction = statelessSession.BeginTransaction())
             {
                 foreach (var item in _aggregator.Values)

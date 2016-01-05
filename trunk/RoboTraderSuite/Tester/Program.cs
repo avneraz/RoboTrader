@@ -15,6 +15,7 @@ using TNS.API.IBApiWrapper;
 using TNS.BL;
 using Infra.Bus;
 using MySql.Data.Entity;
+using UILogic;
 using static System.Console;
 
 
@@ -56,10 +57,13 @@ namespace Tester
 
         static void Main(string[] args)
         {
-            var conString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+            UIDal a = new UIDal();
+            var positions = a.GetAllPositions();
+            var appleOptions = a.GetOptionsBySymbol("AAPL");
+            return;
             //string conString = "server=localhost;port=3306;database=RobotDB;uid=root;password=tom90raz";
-            DBWriter d = new DBWriter(conString);
-            d.Connect();
+            //DBWriter d = new DBWriter(conString);
+            //d.Connect();
             //d.WriteToDB(new List<OptionData>() {new OptionData() {AskPrice = 5, Key = "a"} });
             //d.WriteToDB(new List<TestModal>() { new TestModal() { B = "a" } });
             //Example.ExecuteExample();
@@ -78,7 +82,7 @@ namespace Tester
             //appManager.InitializeAppManager(null);
             //appManager.ConnectToBroker();
             Consumer c = new Consumer();
-            //Distributer d = new Distributer();
+            Distributer d = new Distributer();
             IBApiWrapper wrapper = new IBApiWrapper("127.0.0.1", 7496, 8, d, "U1450837");
             //var accMgr = new AccountManager(wrapper);
             //var mainSecMgr = new MainSecuritiesManager(wrapper);
