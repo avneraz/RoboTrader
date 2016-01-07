@@ -15,7 +15,7 @@ namespace TNS.BL
         public UIDataManager(AppManager appManager)
         {
             _appManager = appManager;
-            GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(5), InitializeItems, false);
+            GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(10), InitializeItems, false);
         }
 
         public Dictionary<string, BaseSecurityData> Securities { get; set; }

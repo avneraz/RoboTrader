@@ -61,15 +61,7 @@ namespace Tester
         {
             ConfigHandler h = new ConfigHandler();
             AllConfigurations a = new AllConfigurations();
-            a.Application.DefaultHost = "host";
-            a.Application.AppClientId = 1;
-            a.Application.AppPort = 7496;
-            a.Application.MainAccount = "account";
-            a.Application.WDAppClientId = 1;
-            a.Session.AAPLHighLoadingStrike = 100;
-            a.Session.AAPLLowLoadingStrike = 200;
-            a.Session.AAPLSessionsToLoad = "20150821;20151016;20160115";
-            a.Trading.AAPLUnderlinedRange = "111";
+            WriteConfiguration(a);
 
             h.SaveConfig(a);
 
@@ -148,6 +140,30 @@ namespace Tester
             //wrapper.RequestAccountSummary();
             Thread.Sleep(10000000);
             
+        }
+
+        private static void WriteConfiguration(AllConfigurations a)
+        {
+            a.Application.DefaultHost = "host";
+            a.Application.AppClientId = 1;
+            a.Application.AppPort = 7496;
+            a.Application.MainAccount = "U1450837";
+            a.Application.WDAppClientId = 11;
+
+            a.Session.AAPLHighLoadingStrike = 100;
+            a.Session.AAPLLowLoadingStrike = 200;
+            a.Session.AAPLSessionsToLoad = "20150821;20151016;20160115";
+
+            a.Trading.USAInterestPercentage = 0.25;
+            a.Trading.StatisticsSaveIntervalSec = 300;
+
+            a.Trading.PolicyID = 3;
+            a.Trading.AlgorithmType = 2;
+            a.Trading.OTMOffsetPut = 12;
+            a.Trading.OTMOffsetCall = 10;
+            
+
+
         }
     }
 }

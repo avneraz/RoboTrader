@@ -28,7 +28,7 @@ namespace Infra.Bus
     public abstract class SimpleBaseLogic : IBaseLogic
     {
         private readonly ConcurrentQueue<IMessage> _queue;
-        private readonly int WORK_INTERVAL_MS = 100;
+        private const int WORK_INTERVAL_MS = 100;
 
         protected SimpleBaseLogic()
         {

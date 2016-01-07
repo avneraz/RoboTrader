@@ -1,0 +1,38 @@
+{
+  "Application": {
+    "AppClientId": 1,
+    "AppPort": 7496,
+    "DefaultHost": "127.0.0.1",
+    "WDAppClientId": 11,
+    "MainAccount": "U1450837"
+  },
+  "Trading": {
+    "UNLSymbolsList": null,
+    "DeltaLossThteshold": 0.0,
+    "RiskFreeInterestRate": 0.0,
+    "OTMOffsetCall": 10,
+    "OTMOffsetPut": 12,
+    "AlgorithmType": 2,
+    "AlgorithmTypeE": 2,
+    "InitNetLiquidation": 0.0,
+    "USAInterestPercentage": 0.25,
+    "StatisticsSaveIntervalSec": 300,
+    "PolicyID": 3,
+    "AAPLUnderlinedRange": null,
+    "MaxMarginTypical": 0,
+    "HedgeSpan": 0,
+    "TradingStartMode": 0,
+    "TradingStartModeEnum": 0
+  },
+  "Session": {
+    "AAPLLowLoadingStrike": 200.0,
+    "AAPLHighLoadingStrike": 100.0,
+    "AAPLSessionsToLoad": "20150821;20151016;20160115",
+    "SessionToLoad": [
+      "20150821",
+      "20151016",
+      "20160115"
+    ]
+  },
+  "TradingAlarm": {}
+}

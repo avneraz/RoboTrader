@@ -13,6 +13,7 @@ using TNS.API.IBApiWrapper;
 using TNS.DbDAL;
 using Infra;
 using Infra.Bus;
+using Infra.Configuration;
 using Infra.PopUpMessages;
 using TNS.API;
 using TNS.BL.Interfaces;
@@ -34,9 +35,18 @@ namespace TNS.BL
         private void InitializeAppManager(Form mainForm)
         {
             ParentForm = mainForm;
+            ConfigHandler configHandler = new ConfigHandler();
+            //Do the following just in case you want to create the configuration from scratch:
+            //WriteConfigurationFromScratch(configHandler);
 
-            ConfigurationBuilder.BuildAndInitializeConfiguration();
-            Configurations = AllConfigurations.AllConfigurationsObject;
+            Configurations = configHandler.ReadConfig();
+
+            Infra.AllConfigurations.AllConfigurationsObject = Configurations;
+            //h.SaveConfig(Configurations);
+
+
+            //ConfigurationBuilder.BuildAndInitializeConfiguration();
+            //Configurations = AllConfigurations.AllConfigurationsObject;
 
             Distributer = new Distributer();
             Distributer.ExceptionThrown += DistributerOnExceptionThrown;
@@ -147,7 +157,39 @@ namespace TNS.BL
         #endregion
 
         #region Testing
+        private static void WriteConfigurationFromScratch(ConfigHandler configHandler)
+        {
+            AllConfigurations allConfigurations = new AllConfigurations
+            {
+                Application =
+                {
+                    DefaultHost = "127.0.0.1",
+                    AppClientId = 1,
+                    AppPort = 7496,
+                    MainAccount = "U1450837",
+                    WDAppClientId = 11
+                },
+                Session =
+                {
+                    AAPLHighLoadingStrike = 100,
+                    AAPLLowLoadingStrike = 200,
+                    AAPLSessionsToLoad = "20150821;20151016;20160115"
+                },
+                Trading =
+                {
+                    USAInterestPercentage = 0.25,
+                    StatisticsSaveIntervalSec = 300,
+                    PolicyID = 3,
+                    AlgorithmType = 2,
+                    OTMOffsetPut = 12,
+                    OTMOffsetCall = 10
+                }
+            };
 
+
+            configHandler.SaveConfig(allConfigurations);
+
+        }
         public void SendOneOrderTest(string symbol,bool sell)
         {
             IOrdersManager ordersManager = ((UNLManager) UNLManagerDic[symbol]).OrdersManager;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Infra.Extensions;
 using log4net;
 using log4net.Repository.Hierarchy;
 using TNS.API.ApiDataObjects;
@@ -25,11 +26,19 @@ namespace TNS.RoboTrader
         private void MainForm_Load(object sender, System.EventArgs e)
         {
             Logger.Info("Start Program - Tester");
-            _appManager = new AppManager(this);
-            //_appManager.AppManagerUp += AppManagerOnAppManagerUp;
-            _appManager.Distributer.APIMessageArrive += DistributerOnAPIMessageArrive;
+            try
+            {
+                _appManager = new AppManager(this);
+                //_appManager.AppManagerUp += AppManagerOnAppManagerUp;
+                _appManager.Distributer.APIMessageArrive += DistributerOnAPIMessageArrive;
 
-            _appManager.ConnectToBroker();
+                _appManager.ConnectToBroker();
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
             
 
         }
@@ -37,18 +46,12 @@ namespace TNS.RoboTrader
 
         private void DistributerOnAPIMessageArrive(APIMessageData apiMessageData)
         {
-            Action action = () => apiMesagesView.AddMessage(apiMessageData);
-           
-            if (InvokeRequired)
-                Invoke(action);
-            else
-                action.Invoke();
-            
+            apiMesagesView.InvokeIfRequired(() => apiMesagesView.AddMessage(apiMessageData));
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _appManager.ShutDownApplication();
+            _appManager?.ShutDownApplication();
         }
 
         private void btnSendOrder_Click(object sender, EventArgs e)
