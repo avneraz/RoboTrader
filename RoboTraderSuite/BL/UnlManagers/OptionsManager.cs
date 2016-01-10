@@ -19,8 +19,15 @@ namespace TNS.BL.UnlManagers
         {
             OptionDataDic = new Dictionary<string, OptionData>();
         }
+        /// <summary>
+        /// The max month ahead for loading optiondata
+        /// </summary>
+        private const int MONTH_AHEAD = 2;
 
-        private const int MONTH_AHEAD = 3;
+        /// <summary>
+        /// The minimum days left of the loading options.
+        /// </summary>
+        private const int DAYS_TO_EXPIRE = 15;
         private  readonly ILog _logger = LogManager.GetLogger(typeof(OptionsManager));
 
         //public event Action<OptionData> OptionDataReceivd;
@@ -77,7 +84,7 @@ namespace TNS.BL.UnlManagers
                 base.MainSecurityData = value;
                 if (isFirstCall & (value != null))
                 {
-                   APIWrapper.RequestOptionChain(base.MainSecurityData, MONTH_AHEAD);
+                   APIWrapper.RequestOptionChain(base.MainSecurityData, MONTH_AHEAD, DAYS_TO_EXPIRE);
                 }
                 
             }

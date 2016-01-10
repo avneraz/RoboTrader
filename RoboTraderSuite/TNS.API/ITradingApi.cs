@@ -14,9 +14,11 @@ namespace TNS.API
         /// Request Options chain for specific UNL, the request applies for several months ahead!
         /// </summary>
         /// <param name="securityData"></param>
-        /// <param name="months"></param>
+        /// <param name="months">The max month ahead for loading option data</param>
+        /// <param name="minDaysToExpired">The minimum days left of the loading options.</param>
         /// <param name="multiplier"></param>
-        void RequestOptionChain(BaseSecurityData securityData, int months, int multiplier = 100);
+        void RequestOptionChain(BaseSecurityData securityData, int months,
+                                    int minDaysToExpired, int multiplier = 100);
         /// <summary>
         /// Request detail data for all securities taking place in trading.
         /// </summary>
