@@ -182,7 +182,6 @@ namespace TNS.API.IBApiWrapper
             var contractBase = contractDetails.Summary.ToContract();
             if (_contractToRequestIds.ContainsKey(contractBase))
                 return;
-            ++ForTestCounter1;
             _contractToRequestIds[contractBase] = requestId;
             int reqId = RequestId;
             if (contractBase.SecurityType != SecurityType.Option)
@@ -190,8 +189,6 @@ namespace TNS.API.IBApiWrapper
                 _clientSocket.reqMktData(reqId, contractDetails.Summary,
                     "100,225,233", false, new List<TagValue>());
                 _handler.RegisterContract(reqId, contractBase);
-                ++ForTestCounter2;
-                Thread.Sleep(300);
                 return;
             }
             var optionContractOrginal = (OptionContract)contractBase;
@@ -212,20 +209,13 @@ namespace TNS.API.IBApiWrapper
             {//don't request option chain that already exist
                 return;
             }
-            ++ForTestCounter3;
             int reqId2 = RequestId;
             _contractToRequestIds[optionContract] = reqId2;
-            //Second: request it
-            Contract newIbContract = contractDetails.Summary.Copy();
-            newIbContract.Right = "";
-            newIbContract.Strike = 0;
-            _clientSocket.reqContractDetails(reqId2, newIbContract);
+            _clientSocket.reqContractDetails(reqId2, optionContract.ToIbContract());
             
         }
 
-        public int ForTestCounter1;
-        public int ForTestCounter2;
-        public int ForTestCounter3;
+  
 
         /// <summary>
         /// Check if the option is between the time boundary.
