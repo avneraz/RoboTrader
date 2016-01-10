@@ -57,7 +57,8 @@ namespace TNS.API.ApiDataObjects
                 Symbol = Symbol,
                 Currency = Currency,
                 SecType = IBExtensions.GetSecType(SecurityType),
-                Exchange = Exchange
+                Exchange = Exchange,
+                Expiry = "",
             };
         }
 

@@ -35,19 +35,15 @@ namespace TNS.BL
         private void InitializeAppManager(Form mainForm)
         {
             ParentForm = mainForm;
+
             ConfigHandler configHandler = new ConfigHandler();
             //Do the following just in case you want to create the configuration from scratch:
             //WriteConfigurationFromScratch(configHandler);
 
             Configurations = configHandler.ReadConfig();
-
+            //var a = Configurations.Trading.UNLSymbolsListForTrading();
             Infra.AllConfigurations.AllConfigurationsObject = Configurations;
-            //h.SaveConfig(Configurations);
-
-
-            //ConfigurationBuilder.BuildAndInitializeConfiguration();
-            //Configurations = AllConfigurations.AllConfigurationsObject;
-
+            
             Distributer = new Distributer();
             Distributer.ExceptionThrown += DistributerOnExceptionThrown;
             Distributer.ConnectionChanged += DistributerOnConnectionChanged;
@@ -90,6 +86,8 @@ namespace TNS.BL
             List<MainSecurity> activeUNLList = DbDalManager.GetActiveUNLList();
             foreach (MainSecurity mainSecurity in activeUNLList)
             {
+                if (mainSecurity.Symbol == "MSFT")//For testing
+                    continue;
                 var unlManager = new UNLManager(mainSecurity, APIWrapper);
                 UNLManagerDic.Add(mainSecurity.Symbol, unlManager);
             }
@@ -164,10 +162,10 @@ namespace TNS.BL
                 Application =
                 {
                     DefaultHost = "127.0.0.1",
-                    AppClientId = 1,
+                    AppClientId = 11,
                     AppPort = 7496,
                     MainAccount = "U1450837",
-                    WDAppClientId = 11
+                    WDAppClientId = 12
                 },
                 Session =
                 {
@@ -182,7 +180,8 @@ namespace TNS.BL
                     PolicyID = 3,
                     AlgorithmType = 2,
                     OTMOffsetPut = 12,
-                    OTMOffsetCall = 10
+                    OTMOffsetCall = 10,
+                    UNLSymbolsList = "AAPL;MSFT"
                 }
             };
 

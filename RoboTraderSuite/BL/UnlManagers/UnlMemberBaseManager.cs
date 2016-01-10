@@ -25,7 +25,15 @@ namespace TNS.BL.UnlManagers
         protected readonly MainSecurity MainSecurity;
         protected readonly ITradingApi APIWrapper;
         protected readonly UNLManager UNLManager;
-        public BaseSecurityData MainSecurityData { get; private set; }
+        // ReSharper disable once InconsistentNaming
+        protected BaseSecurityData _mainSecurityData;
+
+        public virtual BaseSecurityData MainSecurityData
+        {
+            get { return _mainSecurityData; }
+            protected set { _mainSecurityData = value; }
+        }
+
         public bool IsConnected => ConnectionStatus == ConnectionStatus.Connected;
         public ConnectionStatus ConnectionStatus { get; private set; }
         public virtual bool HandleMessage(IMessage message)

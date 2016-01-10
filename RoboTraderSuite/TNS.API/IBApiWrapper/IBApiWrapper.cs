@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using IBApi;
 using Infra;
 using TNS.API.ApiDataObjects;
 using Infra.Bus;
+using Infra.Extensions;
 using Infra.Extensions.ArrayExtensions;
 using log4net;
 using log4net.Repository.Hierarchy;
 
 namespace TNS.API.IBApiWrapper
 {
-    public class IBApiWrapper : ITradingApi
+    public class IBApiWrapper : ITradingApi 
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(IBMessageHandler));
         private readonly int _clientId;
@@ -21,6 +23,7 @@ namespace TNS.API.IBApiWrapper
         private readonly IBMessageHandler _handler;
         private readonly Dictionary<ContractBase, int> _contractToRequestIds;
         private int? _currentOrderId;
+        // ReSharper disable once InconsistentNaming
         private readonly TimeSpan RECONNECTION_TIMEOUT = TimeSpan.FromSeconds(30);
         
         private int _curReqId;
@@ -110,6 +113,37 @@ namespace TNS.API.IBApiWrapper
             _clientSocket.reqAccountSummary(0, "All", tags);
             _clientSocket.reqAccountUpdates(true, _mainAccount);
         }
+
+        /// <summary>
+        /// Request Options chain for specific UNL, the request applies for several months ahead!
+        /// </summary>
+        /// <param name="securityData"></param>
+        /// <param name="months"></param>
+        /// <param name="multiplier"></param>
+        public void RequestOptionChain(BaseSecurityData securityData, int months, int multiplier = 100)
+        {
+            _monthsAheadToLoadOptionChain = months;
+            ContractBase contractBase = securityData.GetContract();
+
+            string exchange = contractBase.Exchange;
+            var strike = (int) Math.Round(securityData.LastPrice/10, 0, MidpointRounding.AwayFromZero)*10; 
+            //First: Load template
+            OptionContract optionContract = new OptionContract
+            {
+                Exchange = exchange,
+                Multiplier = multiplier,
+                Symbol = contractBase.Symbol,
+                SecurityType = SecurityType.Option,
+                Strike = strike, //TODO Add it from MainSecurity
+                OptionType = OptionType.Call
+            };
+
+            var requestId = RequestId;
+            var ibContract = optionContract.ToIbContract();
+            _clientSocket.reqContractDetails(requestId, ibContract);
+        }
+
+        private int _monthsAheadToLoadOptionChain;
         /// <summary>
         /// Request detail data for all securities taking place in trading.
         /// </summary>
@@ -140,16 +174,71 @@ namespace TNS.API.IBApiWrapper
         }
         private void HandlerOnContractDetailsMessage(int requestId, ContractDetails contractDetails)
         {
+            
             var contractBase = contractDetails.Summary.ToContract();
             if (_contractToRequestIds.ContainsKey(contractBase))
                 return;
+            ++ForTestCounter1;
             _contractToRequestIds[contractBase] = requestId;
             int reqId = RequestId;
+            if (contractBase.SecurityType != SecurityType.Option)
+            {//Get market data for main securities:
+                _clientSocket.reqMktData(reqId, contractDetails.Summary,
+                    "100,225,233", false, new List<TagValue>());
+                _handler.RegisterContract(reqId, contractBase);
+                ++ForTestCounter2;
+                Thread.Sleep(300);
+                return;
+            }
+            var optionContractOrginal = (OptionContract)contractBase;
+
+            if (IsOptionWithinTimeBoundary(optionContractOrginal) == false)
+                return;
+
             _clientSocket.reqMktData(reqId, contractDetails.Summary,
-                                     "100,225,233", false, new List<TagValue>());
+                "100,225,233", false, new List<TagValue>());
             _handler.RegisterContract(reqId, contractBase);
+            
+            //If it's option request all option chain:
+            //First: register it:
+            OptionContract optionContract = optionContractOrginal.Copy();
+            optionContract.OptionType = OptionType.None;
+            optionContract.Strike = 0;
+            if (_contractToRequestIds.ContainsKey(optionContract))
+            {//don't request option chain that already exist
+                return;
+            }
+            ++ForTestCounter3;
+            int reqId2 = RequestId;
+            _contractToRequestIds[optionContract] = reqId2;
+            //Second: request it
+            Contract newIbContract = contractDetails.Summary.Copy();
+            newIbContract.Right = "P";
+            newIbContract.Strike = 0;
+            _clientSocket.reqContractDetails(reqId2, newIbContract);
+            
         }
 
+        public int ForTestCounter1;
+        public int ForTestCounter2;
+        public int ForTestCounter3;
+
+        /// <summary>
+        /// Check if the option is between the time boundary.
+        /// 
+        /// </summary>
+        /// <param name="optionContractOrginal"></param>
+        /// <returns></returns>
+        private bool IsOptionWithinTimeBoundary(OptionContract optionContractOrginal)
+        {
+            const int minDaysForTrading = 20;
+           
+            bool isExpiryTooClose = (DateTime.Now.AddDays(minDaysForTrading) > optionContractOrginal.Expiry);
+            bool isExpiryTooFar = (optionContractOrginal.Expiry > DateTime.Now.AddMonths(_monthsAheadToLoadOptionChain));
+            if (isExpiryTooFar || isExpiryTooClose)
+                return false;
+            return true;
+        }
         /// <summary>
         /// IB Broker return all positions with this request it has to be only one request!
         /// </summary>
@@ -185,6 +274,7 @@ namespace TNS.API.IBApiWrapper
 
         public void CancelOrder(string orderId)
         {
+            // ReSharper disable once EmptyStatement
             Logger.Info($"CancelOrder was called, orderId: {orderId}");
             _clientSocket.cancelOrder(Convert.ToInt32(orderId));
         }

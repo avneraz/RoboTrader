@@ -4,10 +4,11 @@ using IBApi;
 namespace TNS.API.ApiDataObjects
 {
     /// <summary>
-    /// Call or Put
+    /// Call or Put or none
     /// </summary>
     public enum OptionType
     {
+        None,
         Call,
         Put
     }
@@ -37,9 +38,9 @@ namespace TNS.API.ApiDataObjects
             Multiplier = multiplier;
             OptionType = type;
         }
-        public DateTime Expiry { get;  }
-        public double Strike { get;  }
-        public OptionType OptionType { get;  }
+        public DateTime Expiry { get; set; }
+        public double Strike { get; set; }
+        public OptionType OptionType { get; set; }
         public int Multiplier { get; set; }
 
         public string OptionKey => $"{Expiry}.{OptionType}.{Strike}";
@@ -52,7 +53,7 @@ namespace TNS.API.ApiDataObjects
         {
             var contract =  base.ToIbContract();
             contract.Right = OptionType == OptionType.Call ? "C" : "P";
-            contract.Expiry = Expiry.ToString("yyyyMMdd");
+            contract.Expiry = Expiry < DateTime.Now ? null : Expiry.ToString("yyyyMMdd");
             contract.Strike = Strike;
             contract.Multiplier = Multiplier.ToString();
             return contract;

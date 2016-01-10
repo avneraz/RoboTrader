@@ -11,6 +11,13 @@ namespace TNS.API
         void RequestContinousContractData(List<ContractBase> contracts);
 
         /// <summary>
+        /// Request Options chain for specific UNL, the request applies for several months ahead!
+        /// </summary>
+        /// <param name="securityData"></param>
+        /// <param name="months"></param>
+        /// <param name="multiplier"></param>
+        void RequestOptionChain(BaseSecurityData securityData, int months, int multiplier = 100);
+        /// <summary>
         /// Request detail data for all securities taking place in trading.
         /// </summary>
         void RequestContractDetailsData(BaseSecurityData securityData);

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using Infra.Bus;
 using Infra.Enum;
 using log4net;
@@ -18,6 +20,7 @@ namespace TNS.BL.UnlManagers
             OptionDataDic = new Dictionary<string, OptionData>();
         }
 
+        private const int MONTH_AHEAD = 3;
         private  readonly ILog _logger = LogManager.GetLogger(typeof(OptionsManager));
 
         //public event Action<OptionData> OptionDataReceivd;
@@ -33,6 +36,7 @@ namespace TNS.BL.UnlManagers
         public override bool HandleMessage(IMessage message)
         {
             bool result = base.HandleMessage(message);
+           
             if (result)
                 return true;
 
@@ -41,41 +45,51 @@ namespace TNS.BL.UnlManagers
 
             if (OptionDataDic.ContainsKey(optionData.GetOptionKey()) == false)
             {
+               
                 OptionDataDic.Add(optionData.GetOptionKey(), optionData);
                 _logger.DebugFormat("OptionManager({0}, add OptionData: {1})", Symbol, optionData);
-                //OptionDataReceivd?.Invoke(optionData);
+              
             }
             else
                 OptionDataDic[optionData.GetOptionKey()] = optionData;
+            if (OptionDataDic.Count > _lastOptionCountForTest)
+            {
+                var elapsedMS = StopwatchT.ElapsedMilliseconds;
+                var msg = string.Format(
+                    "OptionManager({0}), Elapsed time from connection: {1:N} ms, OptionDataDic.Count:{2}", Symbol, elapsedMS,
+                    OptionDataDic.Count);
+                Debug.WriteLine(msg);
+                _logger.Debug(msg);
+                _lastOptionCountForTest = OptionDataDic.Count;
+            }
             return true;
         }
-       
+
+        private int _lastOptionCountForTest = 176;
+        private Stopwatch StopwatchT { get; } = new Stopwatch();
+
+        public override BaseSecurityData MainSecurityData
+        {
+            get { return base.MainSecurityData; }
+            protected set
+            {
+                bool isFirstCall = base.MainSecurityData == null;
+                base.MainSecurityData = value;
+                if (isFirstCall & (value != null))
+                {
+                   APIWrapper.RequestOptionChain(base.MainSecurityData, MONTH_AHEAD);
+                }
+                
+            }
+        }
         /// <summary>
         /// Loads the options chain of all active session of the active underlines.
         /// It send Request Contract details to load the option chain of the specified UNL.
         /// </summary>
         public override void DoWorkAfterConnection()
         {
-            
-            string exchange = MainSecurity.Exchange;
-            int multiplier = Convert.ToInt32(MainSecurity.Multiplier);//TOADO add it to the security data
-            string currency = MainSecurity.Currency;
-
-            _logger.InfoFormat("OptionManager({0}) Start load options from broker.", Symbol);
-
-            var expiryList = DbDalManager.GetUNLActiveExpiryList(Symbol);
-
-            var contractList = new List<ContractBase>();
-            foreach (var expiryDate in expiryList)
-            {
-                contractList.Add(new OptionContract(Symbol, expiryDate, OptionType.Call, exchange, multiplier, currency));
-                contractList.Add(new OptionContract(Symbol, expiryDate, OptionType.Put, exchange, multiplier, currency));
-            }
-
-            _logger.InfoFormat("OptionManager({0}) send {1} contracts to broker.", 
-                Symbol, contractList.Count);
-
-            RequestContinousContractData(contractList);
+            //UNLManager.AddScheduledTaskOnUnl(TimeSpan.FromSeconds(10), RequestOptionData, true);
+            StopwatchT.Start();
         }
 
         public void RequestContinousContractData(List<ContractBase> contractList)
@@ -84,4 +98,17 @@ namespace TNS.BL.UnlManagers
         }
     }
 
+    internal class LoadSessionInfo
+    {
+        public LoadSessionInfo(OptionData optionData)
+        {
+            OptionData = optionData;
+        }
+
+        public OptionData OptionData { get; set; }
+
+        public DateTime ExpiryDate => OptionData?.OptionContract.Expiry ?? DateTime.MinValue;
+
+        public bool OptionLoadRequestDone { get; set; }
+    }
 }

@@ -20,7 +20,20 @@ namespace TNS.API.IBApiWrapper
             switch (contract.SecType)
             {
                 case "OPT":
-                    var optionType = contract.Right == "C" ? OptionType.Call : OptionType.Put;
+                    // var optionType = contract.Right == "C" ? OptionType.Call : OptionType.Put;
+                    OptionType optionType;
+                    switch (contract.Right)
+                    {
+                        case "C":
+                            optionType = OptionType.Call;
+                            break;
+                        case "P":
+                            optionType = OptionType.Put;
+                            break;
+                        default:
+                            optionType = OptionType.None;
+                            break;
+                    }
                     return new OptionContract(contract.Symbol, contract.Strike, GetExpiryDate(contract.Expiry), optionType,
                         contract.Exchange, Convert.ToInt32(contract.Multiplier), contract.Currency);
                 case "STK":

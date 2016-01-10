@@ -87,7 +87,7 @@ namespace TNS.BL.UnlManagers
         {
             Logger.InfoFormat("PositionsDataBuilder({0}) Start load positions from broker.", Symbol);
            
-            APIWrapper.RequestContinousPositionsData();
+            //APIWrapper.RequestContinousPositionsData();
             UNLManager.AddScheduledTaskOnUnl(TimeSpan.FromSeconds(1), AddOptionDataToPosition, true);
         }
 
