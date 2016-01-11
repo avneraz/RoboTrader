@@ -115,39 +115,24 @@ namespace TNS.API.IBApiWrapper
         }
 
         /// <summary>
-        /// Request Options chain for specific UNL, the request applies for several months ahead!
+        ///  Request Options chain for specific UNL, the request applies for several months ahead!
         /// </summary>
-        /// <param name="securityData"></param>
-        /// <param name="months">The max month ahead for loading option data</param>
-        /// <param name="minDaysToExpired">The minimum days left of the loading options.</param>
-        /// <param name="multiplier"></param>
-        public void RequestOptionChain(BaseSecurityData securityData, int months,
-            int minDaysToExpired,int multiplier = 100)
+        /// <param name="optionToLoadParameters"></param>
+        public void RequestOptionChain(OptionToLoadParameters optionToLoadParameters)
         {
-            _monthsAheadToLoadOptionChain = months;
-            _minDaysToExpired = minDaysToExpired;
-            ContractBase contractBase = securityData.GetContract();
-
-            string exchange = contractBase.Exchange;
-            var strike = (int) Math.Round(securityData.LastPrice/10, 0, MidpointRounding.AwayFromZero)*10; 
-            //First: Load template
-            OptionContract optionContract = new OptionContract
-            {
-                Exchange = exchange,
-                Multiplier = multiplier,
-                Symbol = contractBase.Symbol,
-                SecurityType = SecurityType.Option,
-                Strike = strike, //TODO Add it from MainSecurity
-                OptionType = OptionType.Call
-            };
-
+            if(OptionToLoadParametersDic == null)
+                OptionToLoadParametersDic = new Dictionary<string, OptionToLoadParameters>();
+            OptionToLoadParametersDic.Add(optionToLoadParameters.Symbol, optionToLoadParameters);
+            //First: Load pivot option
+            OptionContract optionContract = optionToLoadParameters.OptionContractPivotToLoad;
+           
             var requestId = RequestId;
             var ibContract = optionContract.ToIbContract();
             _clientSocket.reqContractDetails(requestId, ibContract);
         }
 
-        private int _minDaysToExpired;
-        private int _monthsAheadToLoadOptionChain;
+        public Dictionary<string, OptionToLoadParameters> OptionToLoadParametersDic { get; set; }
+      
         /// <summary>
         /// Request detail data for all securities taking place in trading.
         /// </summary>
@@ -176,12 +161,21 @@ namespace TNS.API.IBApiWrapper
             });
             
         }
+        /// <summary>
+        /// handle all received ContractDetails and make decision to request the entire options.
+        /// </summary>
+        /// <param name="requestId"></param>
+        /// <param name="contractDetails"></param>
         private void HandlerOnContractDetailsMessage(int requestId, ContractDetails contractDetails)
         {
-            
             var contractBase = contractDetails.Summary.ToContract();
+
+            if (contractBase.Symbol == "MSFT")
+            { }
+
             if (_contractToRequestIds.ContainsKey(contractBase))
                 return;
+            
             _contractToRequestIds[contractBase] = requestId;
             int reqId = RequestId;
             if (contractBase.SecurityType != SecurityType.Option)
@@ -191,20 +185,25 @@ namespace TNS.API.IBApiWrapper
                 _handler.RegisterContract(reqId, contractBase);
                 return;
             }
+            if(contractBase.Symbol == "MSFT")
+            { }
+            OptionToLoadParameters optionToLoadParameters = OptionToLoadParametersDic
+                [contractBase.Symbol];
+
             var optionContractOrginal = (OptionContract)contractBase;
 
-            if (IsOptionWithinTimeBoundary(optionContractOrginal) == false)
+            if (optionToLoadParameters.IsOptionWithinLoadBoundaries(optionContractOrginal) == false)
                 return;
             //request market data for the current option:
-            _clientSocket.reqMktData(reqId, contractDetails.Summary,
-                "100,225,233", false, new List<TagValue>());
+            _clientSocket.reqMktData(reqId, contractDetails.Summary, "100,225,233",
+                false, new List<TagValue>());
             _handler.RegisterContract(reqId, contractBase);
             
             //If it's option, request all session option chain:
             //First: check if already exist, register it if needed:
             OptionContract optionContract = optionContractOrginal.Copy();
             optionContract.OptionType = OptionType.None;
-            optionContract.Strike = 0;
+            optionContract.Strike = 0;//Use zero to get all existing options contract.
             if (_contractToRequestIds.ContainsKey(optionContract))
             {//don't request option chain that already exist
                 return;
@@ -214,23 +213,7 @@ namespace TNS.API.IBApiWrapper
             _clientSocket.reqContractDetails(reqId2, optionContract.ToIbContract());
             
         }
-
-  
-
-        /// <summary>
-        /// Check if the option is between the time boundary.
-        /// 
-        /// </summary>
-        /// <param name="optionContractOrginal"></param>
-        /// <returns></returns>
-        private bool IsOptionWithinTimeBoundary(OptionContract optionContractOrginal)
-        {
-            bool isExpiryTooClose = (DateTime.Now.AddDays(_minDaysToExpired) > optionContractOrginal.Expiry);
-            bool isExpiryTooFar = (optionContractOrginal.Expiry > DateTime.Now.AddMonths(_monthsAheadToLoadOptionChain));
-            if (isExpiryTooFar || isExpiryTooClose)
-                return false;
-            return true;
-        }
+      
         /// <summary>
         /// IB Broker return all positions with this request it has to be only one request!
         /// </summary>

@@ -69,6 +69,7 @@
     <Compile Include="IBApiWrapper\IBApiWrapper.cs" />
     <Compile Include="IBApiWrapper\IBExtensions.cs" />
     <Compile Include="IBApiWrapper\IBMessageHandler.cs" />
+    <Compile Include="OptionToLoadParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

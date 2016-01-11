@@ -42,9 +42,9 @@ namespace TNS.BL
             Securities = _appManager.MainSecuritiesManager.Securities;
             _appManager.MainSecuritiesManager.SecuritiesUpdated += 
                                 MainSecuritiesManagerOnSecuritiesUpdated;
-            IOrdersManager ordersManager = ((UNLManager) (_appManager.UNLManagerDic["AAPL"])).OrdersManager;
-            OrderStatusDataDic = ordersManager.OrderStatusDataDic;
-            ordersManager.OrderStatusDataUpdated += OrderManagerOnOrderStatusDataUpdated;
+            //IOrdersManager ordersManager = ((UNLManager) (_appManager.UNLManagerDic["AAPL"])).OrdersManager;
+            //OrderStatusDataDic = ordersManager.OrderStatusDataDic;
+            //ordersManager.OrderStatusDataUpdated += OrderManagerOnOrderStatusDataUpdated;
 
         }
 

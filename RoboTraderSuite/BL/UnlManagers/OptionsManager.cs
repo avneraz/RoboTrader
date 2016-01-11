@@ -59,20 +59,38 @@ namespace TNS.BL.UnlManagers
             }
             else
                 OptionDataDic[optionData.GetOptionKey()] = optionData;
-            if (OptionDataDic.Count > _lastOptionCountForTest)
+            if (_lastOptionCountForTest < OptionDataDic.Count)
+                 _lastOptionCountForTest++; 
+
+            else if(_optionsHaveLoaded == false)
             {
-                var elapsedMS = StopwatchT.ElapsedMilliseconds;
-                var msg = string.Format(
-                    "OptionManager({0}), Elapsed time from connection: {1:N} ms, OptionDataDic.Count:{2}", Symbol, elapsedMS,
-                    OptionDataDic.Count);
-                Debug.WriteLine(msg);
-                _logger.Debug(msg);
-                _lastOptionCountForTest = OptionDataDic.Count;
+                _optionsHaveLoaded = true;
+                LogEvent();
+            }
+            else if(_lastOptionCountForTest == OptionDataDic.Count && _optionsHaveLoaded)
+            {
+                LogEvent();
+            }
+            else
+            {
+                
             }
             return true;
         }
 
-        private int _lastOptionCountForTest = 176;
+        private void LogEvent()
+        {
+            var elapsedMS = StopwatchT.ElapsedMilliseconds;
+            var msg = string.Format(
+                "OptionManager({0}), Elapsed time from connection: {1:N} ms, " +
+                "OptionDataDic.Count:{2}", Symbol, elapsedMS,
+                OptionDataDic.Count);
+            Debug.WriteLine(msg);
+            _logger.Warn(msg);
+        }
+
+        private bool _optionsHaveLoaded;
+        private int _lastOptionCountForTest = 0;
         private Stopwatch StopwatchT { get; } = new Stopwatch();
 
         public override BaseSecurityData MainSecurityData
@@ -80,15 +98,27 @@ namespace TNS.BL.UnlManagers
             get { return base.MainSecurityData; }
             protected set
             {
+
                 bool isFirstCall = base.MainSecurityData == null;
                 base.MainSecurityData = value;
-                if (isFirstCall & (value != null))
+               if(Symbol == "MSFT")
+                { }
+                if (_requestOptionChainDone == false && (value != null) && 
+                    base.MainSecurityData.LastPrice > 0)
                 {
-                   APIWrapper.RequestOptionChain(base.MainSecurityData, MONTH_AHEAD, DAYS_TO_EXPIRE);
+                    _requestOptionChainDone = true;
+                    OptionToLoadParameters optionToLoadParameters = 
+                        new OptionToLoadParameters(base.MainSecurityData);
+
+                   APIWrapper.RequestOptionChain(optionToLoadParameters);
                 }
                 
             }
         }
+        /// <summary>
+        /// Used as flag for request option chain:
+        /// </summary>
+        private bool _requestOptionChainDone;
         /// <summary>
         /// Loads the options chain of all active session of the active underlines.
         /// It send Request Contract details to load the option chain of the specified UNL.

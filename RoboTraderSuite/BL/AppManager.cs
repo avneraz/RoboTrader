@@ -86,8 +86,8 @@ namespace TNS.BL
             List<MainSecurity> activeUNLList = DbDalManager.GetActiveUNLList();
             foreach (MainSecurity mainSecurity in activeUNLList)
             {
-                if (mainSecurity.Symbol == "MSFT")//For testing
-                    continue;
+                //if (mainSecurity.Symbol == "AAPL")//For testing
+                //    continue;
                 var unlManager = new UNLManager(mainSecurity, APIWrapper);
                 UNLManagerDic.Add(mainSecurity.Symbol, unlManager);
             }

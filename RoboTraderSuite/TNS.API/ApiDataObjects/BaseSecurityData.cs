@@ -74,6 +74,7 @@ namespace TNS.API.ApiDataObjects
         /// </summary>
         public double Volume { get; set; }
 
+        public int Multiplier { get; set; } = 100;//TODO add it from the mainsecurity load from DB
 
         public virtual Guid Id { get; private set; }
 
