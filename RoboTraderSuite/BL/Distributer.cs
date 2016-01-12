@@ -16,12 +16,12 @@ namespace TNS.BL
             
         }
         public void SetManagers(Dictionary<string, SimpleBaseLogic> unlManagerDic,
-            AccountManager accountManager, MainSecuritiesManager mainSecuritiesManager,
+            AccountManager accountManager, ManagedSecuritiesManager managedSecuritiesManager,
             DBWriter writer)
         {
             _unlManagersDic = unlManagerDic;
             _accountManager = accountManager;
-            _mainSecuritiesManager = mainSecuritiesManager;
+            _managedSecuritiesManager = managedSecuritiesManager;
             _dbWriter = writer;
         }
 
@@ -32,7 +32,7 @@ namespace TNS.BL
         private  Dictionary<string, SimpleBaseLogic> _unlManagersDic;
         private static readonly ILog Logger = LogManager.GetLogger(typeof(Distributer));
 
-        private  MainSecuritiesManager _mainSecuritiesManager;
+        private  ManagedSecuritiesManager _managedSecuritiesManager;
         private  AccountManager _accountManager;
         private DBWriter _dbWriter;
 
@@ -61,7 +61,7 @@ namespace TNS.BL
                     _dbWriter.Enqueue(message,false);
                     break;
                 case EapiDataTypes.SecurityData:
-                    _mainSecuritiesManager.Enqueue(message, false);
+                    _managedSecuritiesManager.Enqueue(message, false);
                      symbolMessage = (ISymbolMessage)message;
                     var key = symbolMessage.GetSymbolName();
                     if (_unlManagersDic.ContainsKey(key))
@@ -88,7 +88,7 @@ namespace TNS.BL
         private void SendToAllComponents(IMessage message)
         {
             _accountManager.Enqueue(message, false);
-            _mainSecuritiesManager.Enqueue(message, false);
+            _managedSecuritiesManager.Enqueue(message, false);
             SendToAllUnlManagers(message);
         }
 

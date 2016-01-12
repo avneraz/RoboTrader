@@ -78,6 +78,8 @@ namespace TNS.API.ApiDataObjects
 
         public virtual Guid Id { get; private set; }
 
+        public DateTime LastUpdate { get; set; }
+
         public override string ToString()
         {
             return 

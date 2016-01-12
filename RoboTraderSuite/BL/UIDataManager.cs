@@ -39,8 +39,8 @@ namespace TNS.BL
         private void InitializeItems()
         {
             //Get Securities:
-            Securities = _appManager.MainSecuritiesManager.Securities;
-            _appManager.MainSecuritiesManager.SecuritiesUpdated += 
+            Securities = _appManager.ManagedSecuritiesManager.Securities;
+            _appManager.ManagedSecuritiesManager.SecuritiesUpdated += 
                                 MainSecuritiesManagerOnSecuritiesUpdated;
             //IOrdersManager ordersManager = ((UNLManager) (_appManager.UNLManagerDic["AAPL"])).OrdersManager;
             //OrderStatusDataDic = ordersManager.OrderStatusDataDic;

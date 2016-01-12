@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Infra;
 using TNS.API.ApiDataObjects;
 
 namespace TNS.API
@@ -14,23 +15,23 @@ namespace TNS.API
     /// </summary>
     public class OptionToLoadParameters
     {
-        //TODO ==> TAKE THE CONST FROM CONFIGURATION:
-        /// <summary>
-        ///  = 5%;
-        /// </summary>
-        private const int HIGH_STRIKE_PRECENTAGE = 10;
-        /// <summary>
-        ///   = 15%;
-        /// </summary>
-        private const int LOW_STRIKE_PRECENTAGE = 20;
-        /// <summary>
-        /// = 15 days.
-        /// </summary>
-        private const int MIN_DAYS_TO_EXPIRATION = 20;
-        /// <summary>
-        /// = 60 days
-        /// </summary>
-        private const int MAX_DAYS_TO_EXPIRATION = 60;
+        ////TODO ==> TAKE THE CONST FROM CONFIGURATION:
+        ///// <summary>
+        /////  = 5%;
+        ///// </summary>
+        //private const int HIGH_STRIKE_PRECENTAGE = 10;
+        ///// <summary>
+        /////   = 15%;
+        ///// </summary>
+        //private const int LOW_STRIKE_PRECENTAGE = 20;
+        ///// <summary>
+        ///// = 15 days.
+        ///// </summary>
+        //private const int MIN_DAYS_TO_EXPIRATION = 20;
+        ///// <summary>
+        ///// = 60 days
+        ///// </summary>
+        //private const int MAX_DAYS_TO_EXPIRATION = 60;
         public OptionToLoadParameters(BaseSecurityData baseSecurityData)
         {
             BaseSecurityData = baseSecurityData;
@@ -39,14 +40,22 @@ namespace TNS.API
         public BaseSecurityData BaseSecurityData { get; set; }
         public string Symbol => BaseSecurityData.GetContract().Symbol;
         public double UnlPrice => BaseSecurityData.LastPrice;
-        public int MinDaysToExpiration => MIN_DAYS_TO_EXPIRATION;
-        public int MaxDaysToExpiration => MAX_DAYS_TO_EXPIRATION;
-        public double CallMinStrike => (UnlPrice * (1 - (double)(HIGH_STRIKE_PRECENTAGE) / 100));
-        public double CallMaxStrike => (UnlPrice * (1 + (double)(LOW_STRIKE_PRECENTAGE) / 100));
-        public double PutMaxStrike =>  (UnlPrice * (1 + (double)(HIGH_STRIKE_PRECENTAGE) / 100));
-        public double PutMinStrike =>  (UnlPrice * (1 - (double)(LOW_STRIKE_PRECENTAGE) / 100));
+        public int MinDaysToExpiration => AllConfigurations.AllConfigurationsObject.Session.MinimumDaysToExpiration;
+        public int MaxDaysToExpiration => AllConfigurations.AllConfigurationsObject.Session.MaxmumDaysToExpiration;
+        public double CallMinStrike => (UnlPrice * (1 - (double)(AllConfigurations.AllConfigurationsObject.Session.HighStrikePercentage) / 100));
+        public double CallMaxStrike => (UnlPrice * (1 + (double)(AllConfigurations.AllConfigurationsObject.Session.LowStrikePercentage) / 100));
+        public double PutMaxStrike =>  (UnlPrice * (1 + (double)(AllConfigurations.AllConfigurationsObject.Session.HighStrikePercentage) / 100));
+        public double PutMinStrike =>  (UnlPrice * (1 - (double)(AllConfigurations.AllConfigurationsObject.Session.LowStrikePercentage) / 100));
         public int Multiplier => BaseSecurityData.Multiplier;
+        /// <summary>
+        /// Get or Set the number of request Data for options.
+        /// </summary>
+        public int RequestOptionMarketDataCount { get;private set; }
 
+        public void IncreamentRequestOptionMarketDataCounter()
+        {
+            RequestOptionMarketDataCount++;
+        }
         public double AtTheMoneyStrike
         {
             get

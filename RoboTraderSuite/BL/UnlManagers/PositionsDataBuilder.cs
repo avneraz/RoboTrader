@@ -7,7 +7,6 @@ using log4net;
 using TNS.API;
 using TNS.API.ApiDataObjects;
 using TNS.BL.Interfaces;
-using TNS.DbDAL;
 
 namespace TNS.BL.UnlManagers
 {
@@ -19,9 +18,9 @@ namespace TNS.BL.UnlManagers
     public class PositionsDataBuilder:UnlMemberBaseManager, IPositionsDataBuilder
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(PositionsDataBuilder));
-        public PositionsDataBuilder(ITradingApi apiWrapper, MainSecurity mainSecurity, 
+        public PositionsDataBuilder(ITradingApi apiWrapper, ManagedSecurities managedSecurity, 
             UNLManager unlManager) 
-            : base(apiWrapper, mainSecurity, unlManager)
+            : base(apiWrapper, managedSecurity, unlManager)
         {
             PositionDataDic = new Dictionary<string, PositionData>();
             OptionsManager = unlManager.OptionsManager;

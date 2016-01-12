@@ -34,6 +34,10 @@
       <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -56,7 +60,7 @@
     <Compile Include="Interfaces\ITradingManager.cs" />
     <Compile Include="Interfaces\ITradingTimeManager.cs" />
     <Compile Include="Interfaces\IUnlBaseMemberManager.cs" />
-    <Compile Include="MainSecuritiesManager.cs" />
+    <Compile Include="ManagedSecuritiesManager.cs" />
     <Compile Include="UnlManagers\OptionsManager.cs" />
     <Compile Include="UnlManagers\OrdersManager.cs" />
     <Compile Include="UnlManagers\PositionsDataBuilder.cs" />
@@ -75,10 +79,6 @@
     <ProjectReference Include="..\DAL\DAL.csproj">
       <Project>{B3C26503-8185-421C-920E-09A738D5BF29}</Project>
       <Name>DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DBAL\DbDAL.csproj">
-      <Project>{41e5cbc1-9d15-4e9a-9b0e-46fc9b823732}</Project>
-      <Name>DbDAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\IBApi\IBApi.csproj">
       <Project>{B121A8EC-D7CB-49EE-BB46-8E932EC79999}</Project>

@@ -62,6 +62,7 @@ namespace DAL
             Map(c => c.LowestPrice);
             Map(c => c.Volume);
             Map(c => c.OpeningPrice);
+            Map(c => c.LastUpdate);
 
         }
     }
@@ -139,6 +140,23 @@ namespace DAL
             Map(x => x.Commission);
             Map(x => x.MaintMargin);
             Component(x => x.Order);
+        }
+    }
+
+    class ManagedSecuritiesMapper : ClassMap<ManagedSecurities>
+    {
+        public ManagedSecuritiesMapper()
+        {
+            Table("ManagedSecurities");
+            Id(x => x.Id);
+            Map(c => c.Symbol);
+            Map(c => c.Exchange);
+            Map(c => c.Multiplier);
+            Map(c => c.SecurityType);
+            Map(c => c.Currency);
+            Map(c => c.IsActive);
+            Map(c => c.OptionChain);
+           
         }
     }
 }

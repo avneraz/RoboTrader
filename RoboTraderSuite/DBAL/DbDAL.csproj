@@ -59,7 +59,6 @@
       <DependentUpon>TNSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ConfigurationBuilder.cs" />
-    <Compile Include="DbDalManager.cs" />
     <Compile Include="Entities\ConfigurationExt.cs" />
     <Compile Include="MainSecurity.cs">
       <DependentUpon>TNSModel.tt</DependentUpon>

@@ -3,7 +3,6 @@ using Infra.Enum;
 using TNS.API;
 using TNS.API.ApiDataObjects;
 using TNS.BL.Interfaces;
-using TNS.DbDAL;
 
 namespace TNS.BL.UnlManagers
 {
@@ -11,18 +10,18 @@ namespace TNS.BL.UnlManagers
 
     public class UnlMemberBaseManager : IUnlBaseMemberManager
     {
-        public UnlMemberBaseManager(ITradingApi apiWrapper, MainSecurity mainSecurity, UNLManager unlManager)
+        public UnlMemberBaseManager(ITradingApi apiWrapper, ManagedSecurities managedSecurity, UNLManager unlManager)
         {
-            MainSecurity = mainSecurity;
+            ManagedSecurity = managedSecurity;
             APIWrapper = apiWrapper;
             UNLManager = unlManager;
             ConnectionStatus = ConnectionStatus.Disconnected;
-            Symbol = mainSecurity.Symbol;
+            Symbol = managedSecurity.Symbol;
             
         }
         protected const double EPSILON = 0.000000001;
         protected readonly string Symbol;
-        protected readonly MainSecurity MainSecurity;
+        protected readonly ManagedSecurities ManagedSecurity;
         protected readonly ITradingApi APIWrapper;
         protected readonly UNLManager UNLManager;
         // ReSharper disable once InconsistentNaming

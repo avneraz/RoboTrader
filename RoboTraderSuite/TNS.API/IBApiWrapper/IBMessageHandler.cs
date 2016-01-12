@@ -243,7 +243,10 @@ namespace TNS.API.IBApiWrapper
                     case TickType.OPEN:
                         securityData.OpeningPrice = price > int.MaxValue ? -1 : price;
                         break;
+                    default:
+                        return;
                 }
+                securityData.LastUpdate = DateTime.Now;
             }
         }
         public void tickSize(int tickerId, int field, int size)
@@ -264,7 +267,10 @@ namespace TNS.API.IBApiWrapper
                     case TickType.VOLUME:
                         securityData.Volume = size;
                         break;
+                    default:
+                        return;
                 }
+                securityData.LastUpdate = DateTime.Now;
             }
         }
         public void tickOptionComputation(int tickerId, int field, 
@@ -303,7 +309,10 @@ namespace TNS.API.IBApiWrapper
                     case TickType.MODEL_OPTION:
                         optionData.ModelPrice = optPrice > int.MaxValue ? -1 : optPrice;
                         break;
+                    default:
+                        return;
                 }
+                optionData.LastUpdate = DateTime.Now;
                 //filter defected values coming from IB
                 if (Math.Abs(delta) < 10)
                     optionData.Delta = delta;

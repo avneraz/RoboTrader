@@ -6,14 +6,13 @@ using Infra.Enum;
 using TNS.API;
 using TNS.API.ApiDataObjects;
 using TNS.BL.Interfaces;
-using TNS.DbDAL;
 
 namespace TNS.BL.UnlManagers
 {
     public class OrdersManager : UnlMemberBaseManager, IOrdersManager
     {
         public event Action<OrderStatusData> OrderStatusDataUpdated;
-        public OrdersManager(ITradingApi apiWrapper, MainSecurity mainSecurity, UNLManager unlManager) : base(apiWrapper, mainSecurity, unlManager)
+        public OrdersManager(ITradingApi apiWrapper, ManagedSecurities managedSecurity, UNLManager unlManager) : base(apiWrapper, managedSecurity, unlManager)
         {
             OrderStatusDataDic = new Dictionary<string, OrderStatusData>();
         }

@@ -9,7 +9,6 @@ using log4net;
 using TNS.API;
 using TNS.API.ApiDataObjects;
 using TNS.BL.Interfaces;
-using TNS.DbDAL;
 
 namespace TNS.BL.UnlManagers
 {
@@ -21,8 +20,8 @@ namespace TNS.BL.UnlManagers
         private static readonly ILog Logger = LogManager.GetLogger(typeof(TradingTimeManager));
         
 
-        public TradingTimeManager(ITradingApi apiWrapper, MainSecurity mainSecurity, UNLManager unlManager) :
-            base(apiWrapper, mainSecurity, unlManager)
+        public TradingTimeManager(ITradingApi apiWrapper, ManagedSecurities managedSecurity, UNLManager unlManager) :
+            base(apiWrapper, managedSecurity, unlManager)
         {
 
         }

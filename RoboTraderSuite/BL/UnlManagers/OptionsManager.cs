@@ -8,14 +8,13 @@ using log4net;
 using TNS.API;
 using TNS.API.ApiDataObjects;
 using TNS.BL.Interfaces;
-using TNS.DbDAL;
 
 namespace TNS.BL.UnlManagers
 {
     public class OptionsManager: UnlMemberBaseManager, IOptionsManager
     {
 
-        public OptionsManager(ITradingApi apiWrapper, MainSecurity mainSecurity, UNLManager unlManager) : base(apiWrapper, mainSecurity, unlManager)
+        public OptionsManager(ITradingApi apiWrapper, ManagedSecurities managedSecurity, UNLManager unlManager) : base(apiWrapper, managedSecurity, unlManager)
         {
             OptionDataDic = new Dictionary<string, OptionData>();
         }
@@ -59,27 +58,19 @@ namespace TNS.BL.UnlManagers
             }
             else
                 OptionDataDic[optionData.GetOptionKey()] = optionData;
-            if (_lastOptionCountForTest < OptionDataDic.Count)
-                 _lastOptionCountForTest++; 
 
-            else if(_optionsHaveLoaded == false)
-            {
-                _optionsHaveLoaded = true;
-                LogEvent();
-            }
-            else if(_lastOptionCountForTest == OptionDataDic.Count && _optionsHaveLoaded)
-            {
-                LogEvent();
-            }
-            else
-            {
-                
-            }
+            
+            if ((OptionDataDic.Count > _lastoptionCount) && 
+                    (OptionDataDic.Count == _optionToLoadParameters.RequestOptionMarketDataCount))
+                    LogEvent();
+            
             return true;
         }
 
+        private int _lastoptionCount = 11;
         private void LogEvent()
         {
+            _lastoptionCount = OptionDataDic.Count;
             var elapsedMS = StopwatchT.ElapsedMilliseconds;
             var msg = string.Format(
                 "OptionManager({0}), Elapsed time from connection: {1:N} ms, " +
@@ -88,9 +79,7 @@ namespace TNS.BL.UnlManagers
             Debug.WriteLine(msg);
             _logger.Warn(msg);
         }
-
-        private bool _optionsHaveLoaded;
-        private int _lastOptionCountForTest = 0;
+       
         private Stopwatch StopwatchT { get; } = new Stopwatch();
 
         public override BaseSecurityData MainSecurityData
@@ -98,23 +87,20 @@ namespace TNS.BL.UnlManagers
             get { return base.MainSecurityData; }
             protected set
             {
-
-                bool isFirstCall = base.MainSecurityData == null;
                 base.MainSecurityData = value;
-               if(Symbol == "MSFT")
-                { }
+              
                 if (_requestOptionChainDone == false && (value != null) && 
                     base.MainSecurityData.LastPrice > 0)
                 {
                     _requestOptionChainDone = true;
-                    OptionToLoadParameters optionToLoadParameters = 
-                        new OptionToLoadParameters(base.MainSecurityData);
-
-                   APIWrapper.RequestOptionChain(optionToLoadParameters);
+                    _optionToLoadParameters = new OptionToLoadParameters(base.MainSecurityData);
+                    APIWrapper.RequestOptionChain(_optionToLoadParameters);
                 }
                 
             }
         }
+
+        private OptionToLoadParameters _optionToLoadParameters;
         /// <summary>
         /// Used as flag for request option chain:
         /// </summary>

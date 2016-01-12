@@ -96,7 +96,7 @@ namespace Tester
             Consumer c = new Consumer();
             IBApiWrapper wrapper = new IBApiWrapper("127.0.0.1", 7496, 8, d, "U1450837");
             //var accMgr = new AccountManager(wrapper);
-            //var mainSecMgr = new MainSecuritiesManager(wrapper);
+            //var mainSecMgr = new ManagedSecuritiesManager(wrapper);
             //d.SetManagers()
 
 

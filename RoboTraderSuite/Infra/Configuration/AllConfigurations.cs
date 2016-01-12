@@ -209,6 +209,23 @@ namespace Infra
 
         public class SessionConfiguration
         {
+      
+            /// <summary>
+            /// The upper limit of the strike being load in percentage of the underline security.
+            /// </summary>
+            public int HighStrikePercentage { get; set; }
+            /// <summary>
+            /// The lower limit of the strike being load in percentage of the underline security
+            /// </summary>
+            public int LowStrikePercentage { get; set; }
+            /// <summary>
+            /// The minimum days of expiration of the loaded session expiry.
+            /// </summary>
+            public int MinimumDaysToExpiration { get; set; }
+            /// <summary>
+            /// The maximum days of expiration of the loaded session expiry.
+            /// </summary>
+            public int MaxmumDaysToExpiration { get; set; }
             /// <summary>
             /// Gets or sets the LOW strike for loading in OptionManager.(usually 90)
             /// </summary>

@@ -10,11 +10,12 @@ using System.Windows.Forms;
 using DAL;
 using TNS.API.ApiDataObjects;
 using TNS.API.IBApiWrapper;
-using TNS.DbDAL;
 using Infra;
 using Infra.Bus;
 using Infra.Configuration;
 using Infra.PopUpMessages;
+using NHibernate;
+using NHibernate.Linq;
 using TNS.API;
 using TNS.BL.Interfaces;
 using TNS.BL.UnlManagers;
@@ -79,22 +80,24 @@ namespace TNS.BL
         {
 
             AccountManager = new AccountManager(APIWrapper);
-            MainSecuritiesManager = new MainSecuritiesManager(APIWrapper);
+            ManagedSecuritiesManager = new ManagedSecuritiesManager(APIWrapper);
 
             UNLManagerDic = new Dictionary<string, SimpleBaseLogic>();
+            ISession session = DBSessionFactory.Instance.OpenSession();
+            List<ManagedSecurities> activeUNLList = session.Query<ManagedSecurities>().Where(contract => contract.IsActive && contract.OptionChain).ToList();
 
-            List<MainSecurity> activeUNLList = DbDalManager.GetActiveUNLList();
-            foreach (MainSecurity mainSecurity in activeUNLList)
+            //List<MainSecurity> activeUNLList = DbDalManager.GetActiveUNLList();
+            foreach (ManagedSecurities managedSecurities in activeUNLList)
             {
                 //if (mainSecurity.Symbol == "AAPL")//For testing
                 //    continue;
-                var unlManager = new UNLManager(mainSecurity, APIWrapper);
-                UNLManagerDic.Add(mainSecurity.Symbol, unlManager);
+                var unlManager = new UNLManager(managedSecurities, APIWrapper);
+                UNLManagerDic.Add(managedSecurities.Symbol, unlManager);
             }
            
             DbWriter = new DBWriter();
             DbWriter.Connect();
-            Distributer.SetManagers(UNLManagerDic,AccountManager,MainSecuritiesManager, DbWriter);
+            Distributer.SetManagers(UNLManagerDic,AccountManager,ManagedSecuritiesManager, DbWriter);
             UIDataManager = new UIDataManager(this);
         }
         private bool _doWorkAfterConnectionDone;
@@ -150,7 +153,7 @@ namespace TNS.BL
         public AccountManager AccountManager { get; private set; }
         public DBWriter DbWriter { get; set; }
         public AllConfigurations Configurations { get; private set; }
-        public MainSecuritiesManager MainSecuritiesManager { get; private set; }
+        public ManagedSecuritiesManager ManagedSecuritiesManager { get; private set; }
 
         #endregion
 
@@ -171,7 +174,11 @@ namespace TNS.BL
                 {
                     AAPLHighLoadingStrike = 100,
                     AAPLLowLoadingStrike = 200,
-                    AAPLSessionsToLoad = "20150821;20151016;20160115"
+                    AAPLSessionsToLoad = "20150821;20151016;20160115",
+                    HighStrikePercentage = 10,
+                    LowStrikePercentage = 20,
+                    MinimumDaysToExpiration = 20,
+                    MaxmumDaysToExpiration = 60,
                 },
                 Trading =
                 {
@@ -189,6 +196,7 @@ namespace TNS.BL
             configHandler.SaveConfig(allConfigurations);
 
         }
+       
         public void SendOneOrderTest(string symbol,bool sell)
         {
             IOrdersManager ordersManager = ((UNLManager) UNLManagerDic[symbol]).OrdersManager;

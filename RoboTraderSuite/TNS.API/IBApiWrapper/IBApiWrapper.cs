@@ -169,10 +169,7 @@ namespace TNS.API.IBApiWrapper
         private void HandlerOnContractDetailsMessage(int requestId, ContractDetails contractDetails)
         {
             var contractBase = contractDetails.Summary.ToContract();
-
-            if (contractBase.Symbol == "MSFT")
-            { }
-
+            
             if (_contractToRequestIds.ContainsKey(contractBase))
                 return;
             
@@ -185,8 +182,7 @@ namespace TNS.API.IBApiWrapper
                 _handler.RegisterContract(reqId, contractBase);
                 return;
             }
-            if(contractBase.Symbol == "MSFT")
-            { }
+            
             OptionToLoadParameters optionToLoadParameters = OptionToLoadParametersDic
                 [contractBase.Symbol];
 
@@ -197,8 +193,10 @@ namespace TNS.API.IBApiWrapper
             //request market data for the current option:
             _clientSocket.reqMktData(reqId, contractDetails.Summary, "100,225,233",
                 false, new List<TagValue>());
+
+            optionToLoadParameters.IncreamentRequestOptionMarketDataCounter();
             _handler.RegisterContract(reqId, contractBase);
-            
+            Logger.NoticeFormat("##Request#{0} to _clientSocket.reqMktData: {1}", optionToLoadParameters.RequestOptionMarketDataCount, optionContractOrginal.ToString());
             //If it's option, request all session option chain:
             //First: check if already exist, register it if needed:
             OptionContract optionContract = optionContractOrginal.Copy();

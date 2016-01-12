@@ -3,23 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using Infra.Bus;
 using Infra.Enum;
-using Infra.Extensions.ArrayExtensions;
 using log4net;
 using TNS.API;
 using TNS.API.ApiDataObjects;
-using TNS.DbDAL;
+using DAL;
+using NHibernate;
+using NHibernate.Linq;
 
 namespace TNS.BL
 {
     /// <summary>
     /// Deal with all Main Securities data. Retrieves contract and market data.
     /// </summary>
-    public class MainSecuritiesManager : SimpleBaseLogic
+    public class ManagedSecuritiesManager : SimpleBaseLogic
     {
         public event Action<BaseSecurityData> SecuritiesUpdated;
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(MainSecuritiesManager));
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(ManagedSecuritiesManager));
         private readonly ITradingApi _apiWrapper;
-        public MainSecuritiesManager(ITradingApi apiWrapper)
+        public ManagedSecuritiesManager(ITradingApi apiWrapper)
         {
             InitializeMainSecurities();
             _apiWrapper = apiWrapper;
@@ -27,24 +28,16 @@ namespace TNS.BL
 
         private void InitializeMainSecurities()
         {
-            List<MainSecurity> mainSecurityList = DbDalManager.GetMainSecurityList();
+            ISession session = DBSessionFactory.Instance.OpenSession();
+            List<ManagedSecurities> managedSecuritiesList = session.Query<ManagedSecurities>().ToList();
+
             Securities = new Dictionary<string, BaseSecurityData>();
 
-            foreach (var security in mainSecurityList)
+            foreach (var security in managedSecuritiesList)
             {
-                SecurityType securityType;
-                try
-                {
-                    securityType = (SecurityType) Enum.Parse(typeof (SecurityType), security.SecType);
-                }
-                catch (Exception ex)
-                {
-                    Logger.Error(ex);
-                    continue;
-                }
-
-                var stockContract = new SecurityContract(security.Symbol, 
-                    securityType, security.Exchange, security.Currency);
+             
+                var stockContract = new SecurityContract(security.Symbol,
+                    security.SecurityType, security.Exchange, security.Currency);
 
                 Securities.Add(stockContract.Symbol, new SecurityData() {SecurityContract = stockContract});
             }
