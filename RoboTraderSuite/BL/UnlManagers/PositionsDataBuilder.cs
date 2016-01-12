@@ -18,7 +18,7 @@ namespace TNS.BL.UnlManagers
     public class PositionsDataBuilder:UnlMemberBaseManager, IPositionsDataBuilder
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(PositionsDataBuilder));
-        public PositionsDataBuilder(ITradingApi apiWrapper, ManagedSecurities managedSecurity, 
+        public PositionsDataBuilder(ITradingApi apiWrapper, ManagedSecurity managedSecurity, 
             UNLManager unlManager) 
             : base(apiWrapper, managedSecurity, unlManager)
         {

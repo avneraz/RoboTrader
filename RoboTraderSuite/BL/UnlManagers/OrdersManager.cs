@@ -12,7 +12,7 @@ namespace TNS.BL.UnlManagers
     public class OrdersManager : UnlMemberBaseManager, IOrdersManager
     {
         public event Action<OrderStatusData> OrderStatusDataUpdated;
-        public OrdersManager(ITradingApi apiWrapper, ManagedSecurities managedSecurity, UNLManager unlManager) : base(apiWrapper, managedSecurity, unlManager)
+        public OrdersManager(ITradingApi apiWrapper, ManagedSecurity managedSecurity, UNLManager unlManager) : base(apiWrapper, managedSecurity, unlManager)
         {
             OrderStatusDataDic = new Dictionary<string, OrderStatusData>();
         }

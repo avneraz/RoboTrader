@@ -12,11 +12,11 @@ namespace TNS.BL.UnlManagers
     public class UNLManager : SimpleBaseLogic
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(UNLManager));
-        public UNLManager(ManagedSecurities managedSecurities, ITradingApi apiWrapper)
+        public UNLManager(ManagedSecurity managedSecurity, ITradingApi apiWrapper)
         {
-            ManagedSecurities = managedSecurities;
+            ManagedSecurity = managedSecurity;
             APIWrapper = apiWrapper;
-            Logger.InfoFormat("UNLManager({0}) was created!", managedSecurities.Symbol);
+            Logger.InfoFormat("UNLManager({0}) was created!", managedSecurity.Symbol);
         }
 
         internal string AddScheduledTaskOnUnl(TimeSpan span, Action task, bool reOccuring = false)
@@ -30,8 +30,8 @@ namespace TNS.BL.UnlManagers
         }
         private List<IUnlBaseMemberManager> _memberManagersList;
         private ITradingApi APIWrapper { get; }
-        private ManagedSecurities ManagedSecurities { get; }
-        protected override string ThreadName => ManagedSecurities.Symbol + "_UNLManager_Work";
+        private ManagedSecurity ManagedSecurity { get; }
+        protected override string ThreadName => ManagedSecurity.Symbol + "_UNLManager_Work";
         protected override void HandleMessage(IMessage message)
         {
             switch (message.APIDataType)
@@ -85,19 +85,19 @@ namespace TNS.BL.UnlManagers
         {
             _memberManagersList = new List<IUnlBaseMemberManager>();
 
-            TradingTimeManager = new TradingTimeManager(APIWrapper, ManagedSecurities, this);
+            TradingTimeManager = new TradingTimeManager(APIWrapper, ManagedSecurity, this);
             _memberManagersList.Add(TradingTimeManager);
 
-            OptionsManager = new OptionsManager(APIWrapper, ManagedSecurities, this);
+            OptionsManager = new OptionsManager(APIWrapper, ManagedSecurity, this);
             _memberManagersList.Add(OptionsManager);
 
-            PositionsDataBuilder = new PositionsDataBuilder(APIWrapper, ManagedSecurities,this);
+            PositionsDataBuilder = new PositionsDataBuilder(APIWrapper, ManagedSecurity,this);
             _memberManagersList.Add(PositionsDataBuilder);
 
-            TradingManager = new TradingManager(APIWrapper, ManagedSecurities, this);
+            TradingManager = new TradingManager(APIWrapper, ManagedSecurity, this);
            _memberManagersList.Add(TradingManager);
 
-            OrdersManager = new OrdersManager(APIWrapper, ManagedSecurities, this);
+            OrdersManager = new OrdersManager(APIWrapper, ManagedSecurity, this);
             _memberManagersList.Add(OrdersManager);
         }
 

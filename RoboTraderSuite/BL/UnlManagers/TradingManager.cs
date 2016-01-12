@@ -8,7 +8,7 @@ namespace TNS.BL.UnlManagers
 {
     public class TradingManager : UnlMemberBaseManager, ITradingManager
     {
-        public TradingManager(ITradingApi apiWrapper, ManagedSecurities managedSecurity, UNLManager unlManager) : base(apiWrapper, managedSecurity, unlManager)
+        public TradingManager(ITradingApi apiWrapper, ManagedSecurity managedSecurity, UNLManager unlManager) : base(apiWrapper, managedSecurity, unlManager)
         {
         }
 

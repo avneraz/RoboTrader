@@ -10,7 +10,7 @@ namespace TNS.BL.UnlManagers
 
     public class UnlMemberBaseManager : IUnlBaseMemberManager
     {
-        public UnlMemberBaseManager(ITradingApi apiWrapper, ManagedSecurities managedSecurity, UNLManager unlManager)
+        public UnlMemberBaseManager(ITradingApi apiWrapper, ManagedSecurity managedSecurity, UNLManager unlManager)
         {
             ManagedSecurity = managedSecurity;
             APIWrapper = apiWrapper;
@@ -21,7 +21,7 @@ namespace TNS.BL.UnlManagers
         }
         protected const double EPSILON = 0.000000001;
         protected readonly string Symbol;
-        protected readonly ManagedSecurities ManagedSecurity;
+        protected readonly ManagedSecurity ManagedSecurity;
         protected readonly ITradingApi APIWrapper;
         protected readonly UNLManager UNLManager;
         // ReSharper disable once InconsistentNaming

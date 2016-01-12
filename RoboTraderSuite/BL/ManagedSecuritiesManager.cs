@@ -29,7 +29,7 @@ namespace TNS.BL
         private void InitializeMainSecurities()
         {
             ISession session = DBSessionFactory.Instance.OpenSession();
-            List<ManagedSecurities> managedSecuritiesList = session.Query<ManagedSecurities>().ToList();
+            List<ManagedSecurity> managedSecuritiesList = session.Query<ManagedSecurity>().ToList();
 
             Securities = new Dictionary<string, BaseSecurityData>();
 
