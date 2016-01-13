@@ -14,7 +14,7 @@ namespace TNS.BL.UnlManagers
     public class OptionsManager: UnlMemberBaseManager, IOptionsManager
     {
 
-        public OptionsManager(ITradingApi apiWrapper, ManagedSecurities managedSecurity, UNLManager unlManager) : base(apiWrapper, managedSecurity, unlManager)
+        public OptionsManager(ITradingApi apiWrapper, ManagedSecurity managedSecurity, UNLManager unlManager) : base(apiWrapper, managedSecurity, unlManager)
         {
             OptionDataDic = new Dictionary<string, OptionData>();
         }

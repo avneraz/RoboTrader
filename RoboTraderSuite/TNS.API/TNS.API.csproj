@@ -49,7 +49,7 @@
     <Compile Include="ApiDataObjects\ContractDetailsData.cs" />
     <Compile Include="ApiDataObjects\ExceptionData.cs" />
     <Compile Include="ApiDataObjects\ISymbolMessage.cs" />
-    <Compile Include="ApiDataObjects\ManagedSecurities.cs" />
+    <Compile Include="ApiDataObjects\ManagedSecurity.cs" />
     <Compile Include="ApiDataObjects\OrderStatusData.cs" />
     <Compile Include="ApiDataObjects\OptionsPositionData.cs" />
     <Compile Include="ApiDataObjects\PositionDataFactory.cs" />

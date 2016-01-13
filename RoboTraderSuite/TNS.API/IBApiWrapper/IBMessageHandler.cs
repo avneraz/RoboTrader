@@ -213,8 +213,6 @@ namespace TNS.API.IBApiWrapper
         }
         public void tickPrice(int tickerId, int field, double price, int canAutoExecute)
         {
-            if(tickerId>4)
-            { }
             lock (SecurityDataDic)
             {
                 var securityData = SecurityDataDic[tickerId];

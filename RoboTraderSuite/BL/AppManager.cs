@@ -84,15 +84,15 @@ namespace TNS.BL
 
             UNLManagerDic = new Dictionary<string, SimpleBaseLogic>();
             ISession session = DBSessionFactory.Instance.OpenSession();
-            List<ManagedSecurities> activeUNLList = session.Query<ManagedSecurities>().Where(contract => contract.IsActive && contract.OptionChain).ToList();
+            List<ManagedSecurity> activeUNLList = session.Query<ManagedSecurity>().Where(contract => contract.IsActive && contract.OptionChain).ToList();
 
             //List<MainSecurity> activeUNLList = DbDalManager.GetActiveUNLList();
-            foreach (ManagedSecurities managedSecurities in activeUNLList)
+            foreach (var managedSecurity in activeUNLList)
             {
                 //if (mainSecurity.Symbol == "AAPL")//For testing
                 //    continue;
-                var unlManager = new UNLManager(managedSecurities, APIWrapper);
-                UNLManagerDic.Add(managedSecurities.Symbol, unlManager);
+                var unlManager = new UNLManager(managedSecurity, APIWrapper);
+                UNLManagerDic.Add(managedSecurity.Symbol, unlManager);
             }
            
             DbWriter = new DBWriter();

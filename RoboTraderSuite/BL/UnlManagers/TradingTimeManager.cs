@@ -20,7 +20,7 @@ namespace TNS.BL.UnlManagers
         private static readonly ILog Logger = LogManager.GetLogger(typeof(TradingTimeManager));
         
 
-        public TradingTimeManager(ITradingApi apiWrapper, ManagedSecurities managedSecurity, UNLManager unlManager) :
+        public TradingTimeManager(ITradingApi apiWrapper, ManagedSecurity managedSecurity, UNLManager unlManager) :
             base(apiWrapper, managedSecurity, unlManager)
         {
 

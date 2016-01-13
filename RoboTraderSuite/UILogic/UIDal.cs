@@ -28,5 +28,42 @@ namespace UILogic
             return list;
             //return _session.Query<OptionData>().Where(a=> a.OptionContract.Symbol == symbolName).ToList();
         }
+
+        public IList<OptionData> GetLastOptionData()
+        {
+
+            return 
+                _session.CreateSQLQuery(@"
+                                        select o.*
+                                        from optionsdata o
+                                        inner join (
+                                            select optioncontract_id, max(lastupdate) as MaxDate
+                                            from optionsdata
+                                            group by optioncontract_id
+                                        ) om on o.optioncontract_id = om.optioncontract_id and o.lastupdate = om.MaxDate
+                                        ")
+                                        .AddEntity(typeof(OptionData))
+                                        .List<OptionData>();
+        }
+
+        public IList<SecurityData> GetLastSeucirtyData()
+        {
+
+            return
+                _session.CreateSQLQuery(@"
+                                        select o.*
+                                         from securitydata o
+                                         inner join (
+                                             select securitycontract_id, max(lastupdate) as MaxDate
+                                             from securitydata
+                                             group by securitycontract_id
+                                         ) om on o.securitycontract_id = om.securitycontract_id and o.lastupdate = om.MaxDate
+                                        ")
+                                        .AddEntity(typeof(SecurityData))
+                                        .List<SecurityData>();
+        }
+
+
+
     }
 }

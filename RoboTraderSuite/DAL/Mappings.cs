@@ -143,7 +143,7 @@ namespace DAL
         }
     }
 
-    class ManagedSecuritiesMapper : ClassMap<ManagedSecurities>
+    class ManagedSecuritiesMapper : ClassMap<ManagedSecurity>
     {
         public ManagedSecuritiesMapper()
         {
