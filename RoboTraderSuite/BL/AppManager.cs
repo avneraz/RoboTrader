@@ -98,7 +98,6 @@ namespace TNS.BL
             DbWriter = new DBWriter();
             DbWriter.Connect();
             Distributer.SetManagers(UNLManagerDic,AccountManager,ManagedSecuritiesManager, DbWriter);
-            UIDataManager = new UIDataManager(this);
         }
         private bool _doWorkAfterConnectionDone;
         public Dictionary<string, SimpleBaseLogic> UNLManagerDic { get; private set; }
@@ -148,7 +147,6 @@ namespace TNS.BL
 
         #region Managers Properties
 
-        public UIDataManager UIDataManager { get; set; }
         public Distributer Distributer { get; set; }
         public AccountManager AccountManager { get; private set; }
         public DBWriter DbWriter { get; set; }

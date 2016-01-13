@@ -117,6 +117,10 @@
       <Project>{60C9BF13-7546-40A8-9FC4-814E565782C5}</Project>
       <Name>TNS.Controls</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UILogic\UILogic.csproj">
+      <Project>{70470a7b-5474-4edc-8443-ba2e165bd147}</Project>
+      <Name>UILogic</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

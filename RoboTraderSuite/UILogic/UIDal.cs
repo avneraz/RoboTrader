@@ -21,9 +21,12 @@ namespace UILogic
             return _session.Query<OptionsPositionData>().ToList();
         }
 
-        public IList<OptionData> GetOptionsBySymbol(string symbolName)
+        public List<OptionData> GetOptionsBySymbol(string symbolName)
         {
-            return _session.Query<OptionData>().Where(a=> a.OptionContract.Symbol == symbolName).ToList();
+            var list = _session.Query<OptionData>().Where(a => a.OptionContract.Symbol == symbolName).
+                OrderByDescending(od=>od.LastUpdate).Take(70).ToList();
+            return list;
+            //return _session.Query<OptionData>().Where(a=> a.OptionContract.Symbol == symbolName).ToList();
         }
     }
 }

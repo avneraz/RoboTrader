@@ -1,20 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Infra;
 using TNS.API.ApiDataObjects;
-using TNS.BL.Interfaces;
-using TNS.BL.UnlManagers;
 
-namespace TNS.BL
+namespace UILogic
 {
     public class UIDataManager
     {
-        public UIDataManager(AppManager appManager)
+        public UIDataManager()
         {
-            _appManager = appManager;
             GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(10), InitializeItems, false);
         }
 
@@ -34,17 +29,10 @@ namespace TNS.BL
 
         public event Action<OrderStatusData> OrderStatusDataUpdated;
 
-        private readonly AppManager _appManager;
 
         private void InitializeItems()
         {
-            //Get Securities:
-            Securities = _appManager.ManagedSecuritiesManager.Securities;
-            _appManager.ManagedSecuritiesManager.SecuritiesUpdated += 
-                                MainSecuritiesManagerOnSecuritiesUpdated;
-            //IOrdersManager ordersManager = ((UNLManager) (_appManager.UNLManagerDic["AAPL"])).OrdersManager;
-            //OrderStatusDataDic = ordersManager.OrderStatusDataDic;
-            //ordersManager.OrderStatusDataUpdated += OrderManagerOnOrderStatusDataUpdated;
+           
 
         }
 

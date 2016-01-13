@@ -5,6 +5,7 @@ using log4net;
 using log4net.Repository.Hierarchy;
 using TNS.API.ApiDataObjects;
 using TNS.BL;
+using UILogic;
 
 namespace TNS.RoboTrader
 {
@@ -63,8 +64,8 @@ namespace TNS.RoboTrader
         {
             try
             {
-                mainSecuritiesView1.SetUIDataManager(_appManager.UIDataManager);
-                ordersView1.SetUIDataManager(_appManager.UIDataManager);
+                UIDal uiDal = new UIDal();
+                var list = uiDal.GetOptionsBySymbol("AAPL");
             }
             catch (Exception ex)
             {
