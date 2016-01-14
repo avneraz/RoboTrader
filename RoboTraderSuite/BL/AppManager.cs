@@ -35,19 +35,17 @@ namespace TNS.BL
                 Logger.Error("Unhandled exception caught", exception);
             };
         }
-        public AppManager(Form mainForm)
+        public AppManager()
         {
             InitalizeUnhandledExceptionHandler();
-            InitializeAppManager(mainForm);
+            InitializeAppManager();
         }
 
-        public event Action AppManagerUp;
         /// <summary>
         /// Must be called once application is up by the main GUI object
         /// </summary>
-        private void InitializeAppManager(Form mainForm)
+        private void InitializeAppManager()
         {
-            ParentForm = mainForm;
 
             ConfigHandler configHandler = new ConfigHandler();
             //Do the following just in case you want to create the configuration from scratch:
@@ -58,7 +56,6 @@ namespace TNS.BL
             Infra.AllConfigurations.AllConfigurationsObject = Configurations;
             
             Distributer = new Distributer();
-            Distributer.ExceptionThrown += DistributerOnExceptionThrown;
             Distributer.ConnectionChanged += DistributerOnConnectionChanged;
 
             //Change the wrapper object according to the actual broker, 
@@ -124,7 +121,6 @@ namespace TNS.BL
         private bool _doWorkAfterConnectionDone;
         public Dictionary<string, SimpleBaseLogic> UNLManagerDic { get; private set; }
 
-        private Form ParentForm { get; set; }
 
         public bool IsConnected { get; set; }
 
@@ -150,22 +146,9 @@ namespace TNS.BL
             Distributer.Enqueue(connectionStatus);
             
             
-            AppManagerUp?.Invoke();
         }
 
-        private void DistributerOnExceptionThrown(ExceptionData exceptionData)
-        {
-            if (!(exceptionData.ThrownException is SocketException)) return;
-
-            if (ParentForm.InvokeRequired)
-            {
-                Action action = () =>
-                {
-                    PopupMessageForm.ShowMessage(exceptionData.ToString(), Color.Red, ParentForm, 5, withSiren: true);
-                };
-                ParentForm.Invoke(action);
-            }
-        }
+      
 
         #region Managers Properties
 

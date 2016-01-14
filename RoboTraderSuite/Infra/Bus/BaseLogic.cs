@@ -77,8 +77,6 @@ namespace Infra.Bus
 
         protected abstract void HandleMessage(IMessage message);
 
-        protected abstract void DoWorkAfterConnection();
-
         protected string AddScheduledTask(TimeSpan span, Action task, bool reOccuring = false)
         {
             string uniqueIdentifier = GeneralTimer.GeneralTimerInstance.AddTask(span, () =>

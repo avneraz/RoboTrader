@@ -76,7 +76,7 @@ namespace TNS.BL.UnlManagers
 
         private bool IsConnected => ConnectionStatus == ConnectionStatus.Connected;
         private ConnectionStatus ConnectionStatus { get; set; }
-        protected override void DoWorkAfterConnection()
+        protected void DoWorkAfterConnection()
         {
             CreateManagers();
         }
