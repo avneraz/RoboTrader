@@ -28,6 +28,7 @@ namespace TNS.API.IBApiWrapper
         
         private int _curReqId;
         private readonly string _mainAccount;
+        private readonly IBaseLogic _consumer;
 
 
         public int RequestId => ++_curReqId;
@@ -54,6 +55,7 @@ namespace TNS.API.IBApiWrapper
             _port = port;
             _clientId = clientId;
             _mainAccount = mainAccount;
+            _consumer = consumer;
             _handler = new IBMessageHandler(consumer);
             _clientSocket = new EClientSocket(_handler);
             _curReqId = 0;
@@ -91,6 +93,9 @@ namespace TNS.API.IBApiWrapper
             {
                 //this tells tws to send market data even when there is no active trading
                 _clientSocket.reqMarketDataType(2);
+                _consumer.Enqueue(new BrokerConnectionStatusMessage(
+                                ConnectionStatus.Connected, null)
+                                { AfterConnectionToApiWrapper = true } );
             }
             
         }
@@ -216,6 +221,9 @@ namespace TNS.API.IBApiWrapper
         /// IB Broker return all positions with this request it has to be only one request!
         /// </summary>
         private bool _requestContinousPositionsDataDone = false;
+
+        
+
         public void RequestContinousPositionsData()
         {
             if(_requestContinousPositionsDataDone)

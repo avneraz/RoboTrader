@@ -25,7 +25,6 @@ namespace TNS.BL
             _dbWriter = writer;
         }
 
-        public event Action<BrokerConnectionStatusMessage> ConnectionChanged;
 
         private  Dictionary<string, SimpleBaseLogic> _unlManagersDic;
         private static readonly ILog Logger = LogManager.GetLogger(typeof(Distributer));
@@ -69,10 +68,7 @@ namespace TNS.BL
                     _dbWriter.Enqueue(message, false);
                     break;
                 case EapiDataTypes.BrokerConnectionStatus:
-                    
-                    var connectionStatusMessage = (BrokerConnectionStatusMessage)message;
-                    SendToAllComponents(connectionStatusMessage);
-                    ConnectionChanged?.Invoke(connectionStatusMessage);
+                    SendToAllComponents(message);
                     break;
                 case EapiDataTypes.EndAsynchData:
                     //SendToAllUnlManagers(message);
@@ -111,7 +107,6 @@ namespace TNS.BL
             Logger.Error(exceptionData.ThrownException);
           
         }
-       
 
         public void AddUIMessageHandler(IBaseLogic uiMessageHandler)
         {
