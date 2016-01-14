@@ -49,7 +49,7 @@ namespace TNS.BL
 
             ConfigHandler configHandler = new ConfigHandler();
             //Do the following just in case you want to create the configuration from scratch:
-            //WriteConfigurationFromScratch(configHandler);
+            WriteConfigurationFromScratch(configHandler);
 
             Configurations = configHandler.ReadConfig();
             //var a = Configurations.Trading.UNLSymbolsListForTrading();
