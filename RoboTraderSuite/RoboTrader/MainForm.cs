@@ -31,7 +31,7 @@ namespace TNS.RoboTrader
 
         private void MainForm_Load(object sender, System.EventArgs e)
         {
-            Logger.Info("Start Program - Tester");
+            Logger.Info("Start Program - Main Form");
             try
             {
                 _appManager = new AppManager();

@@ -91,6 +91,10 @@
       <Project>{c50ba368-93c1-45ad-8779-683189b0ba34}</Project>
       <Name>TNS.API</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UILogic\UILogic.csproj">
+      <Project>{70470a7b-5474-4edc-8443-ba2e165bd147}</Project>
+      <Name>UILogic</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataObjects\" />
