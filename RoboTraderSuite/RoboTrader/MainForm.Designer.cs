@@ -39,14 +39,17 @@
             this.mainSecuritiesView1 = new TNS.Controls.MainSecuritiesView();
             this.xtraPageOrders = new DevExpress.XtraTab.XtraTabPage();
             this.ordersView1 = new TNS.Controls.OrdersView();
-            this.btnSendOrder = new System.Windows.Forms.Button();
             this.btnRegisterForData = new System.Windows.Forms.Button();
+            this.btnSendOrder = new System.Windows.Forms.Button();
+            this.xtraPageOptions = new DevExpress.XtraTab.XtraTabPage();
+            this.optionsView1 = new TNS.Controls.OptionsView();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.xPageAPIMessages.SuspendLayout();
             this.xPageAccontSummary.SuspendLayout();
             this.xtraPageMainSecurities.SuspendLayout();
             this.xtraPageOrders.SuspendLayout();
+            this.xtraPageOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtMessages
@@ -70,7 +73,8 @@
             this.xPageAPIMessages,
             this.xPageAccontSummary,
             this.xtraPageMainSecurities,
-            this.xtraPageOrders});
+            this.xtraPageOrders,
+            this.xtraPageOptions});
             // 
             // xPageAPIMessages
             // 
@@ -151,6 +155,16 @@
             this.ordersView1.TabIndex = 1;
             this.ordersView1.UIDataManager = null;
             // 
+            // btnRegisterForData
+            // 
+            this.btnRegisterForData.Location = new System.Drawing.Point(11, 14);
+            this.btnRegisterForData.Name = "btnRegisterForData";
+            this.btnRegisterForData.Size = new System.Drawing.Size(102, 23);
+            this.btnRegisterForData.TabIndex = 0;
+            this.btnRegisterForData.Text = "Register For Data";
+            this.btnRegisterForData.UseVisualStyleBackColor = true;
+            this.btnRegisterForData.Click += new System.EventHandler(this.btnRegisterForData_Click);
+            // 
             // btnSendOrder
             // 
             this.btnSendOrder.Location = new System.Drawing.Point(217, 14);
@@ -161,15 +175,21 @@
             this.btnSendOrder.UseVisualStyleBackColor = true;
             this.btnSendOrder.Click += new System.EventHandler(this.btnSendOrder_Click);
             // 
-            // btnRegisterForData
+            // xtraPageOptions
             // 
-            this.btnRegisterForData.Location = new System.Drawing.Point(11, 14);
-            this.btnRegisterForData.Name = "btnRegisterForData";
-            this.btnRegisterForData.Size = new System.Drawing.Size(102, 23);
-            this.btnRegisterForData.TabIndex = 0;
-            this.btnRegisterForData.Text = "Register For Data";
-            this.btnRegisterForData.UseVisualStyleBackColor = true;
-            this.btnRegisterForData.Click += new System.EventHandler(this.btnRegisterForData_Click);
+            this.xtraPageOptions.Controls.Add(this.optionsView1);
+            this.xtraPageOptions.Name = "xtraPageOptions";
+            this.xtraPageOptions.Size = new System.Drawing.Size(742, 515);
+            this.xtraPageOptions.Text = "Options";
+            // 
+            // optionsView1
+            // 
+            this.optionsView1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.optionsView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.optionsView1.Location = new System.Drawing.Point(0, 0);
+            this.optionsView1.Name = "optionsView1";
+            this.optionsView1.Size = new System.Drawing.Size(742, 515);
+            this.optionsView1.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -188,6 +208,7 @@
             this.xPageAccontSummary.PerformLayout();
             this.xtraPageMainSecurities.ResumeLayout(false);
             this.xtraPageOrders.ResumeLayout(false);
+            this.xtraPageOptions.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -207,6 +228,8 @@
         private System.Windows.Forms.Button btnSendOrder;
         private Controls.OrdersView ordersView1;
         private System.Windows.Forms.Button btnRegisterForData;
+        private DevExpress.XtraTab.XtraTabPage xtraPageOptions;
+        private Controls.OptionsView optionsView1;
     }
 }
 

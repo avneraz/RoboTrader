@@ -8,6 +8,7 @@ using log4net;
 using log4net.Repository.Hierarchy;
 using TNS.API.ApiDataObjects;
 using TNS.BL;
+using UILogic;
 
 namespace TNS.RoboTrader
 {
@@ -78,14 +79,16 @@ namespace TNS.RoboTrader
         private void btnSendOrder_Click(object sender, EventArgs e)
         {
             _appManager.SendOneOrderTest("AAPL",true);
+            _appManager.SendOneOrderTest("AAPL",false);
+
         }
 
         private void btnRegisterForData_Click(object sender, EventArgs e)
         {
             try
             {
-                mainSecuritiesView1.SetUIDataManager(_appManager.UIDataManager);
-                ordersView1.SetUIDataManager(_appManager.UIDataManager);
+                UIDal uiDal = new UIDal();
+                var list = uiDal.GetOptionsBySymbol("AAPL");
             }
             catch (Exception ex)
             {

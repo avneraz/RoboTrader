@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Infra.Extensions;
 using TNS.API.ApiDataObjects;
 using TNS.BL;
+using UILogic;
 
 namespace TNS.Controls
 {

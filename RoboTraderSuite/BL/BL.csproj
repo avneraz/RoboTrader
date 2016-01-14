@@ -67,7 +67,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnlManagers\TradingManager.cs" />
     <Compile Include="UnlManagers\TradingTimeManager.cs" />
-    <Compile Include="UIDataManager.cs" />
     <Compile Include="UnlManagers\UNLManager.cs" />
     <Compile Include="UnlManagers\UnlMemberBaseManager.cs" />
   </ItemGroup>
