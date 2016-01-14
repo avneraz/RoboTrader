@@ -21,6 +21,7 @@ using NHibernate.Linq;
 using TNS.API;
 using TNS.BL.Interfaces;
 using TNS.BL.UnlManagers;
+using UILogic;
 
 namespace TNS.BL
 {
@@ -107,7 +108,7 @@ namespace TNS.BL
             }
             DbWriter = new DBWriter(Configurations.Application.DBWritePeriod);
             Distributer.SetManagers(UNLManagerDic,AccountManager,ManagedSecuritiesManager, DbWriter);
-            UIDataManager = new UIDataManager(this);
+            UIDataManager = new UIDataManager();
         }
         public Dictionary<string, SimpleBaseLogic> UNLManagerDic { get; private set; }
         public ITradingApi APIWrapper { get; private set; }
