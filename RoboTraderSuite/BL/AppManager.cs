@@ -49,14 +49,13 @@ namespace TNS.BL
 
             ConfigHandler configHandler = new ConfigHandler();
             //Do the following just in case you want to create the configuration from scratch:
-            WriteConfigurationFromScratch(configHandler);
+            //WriteConfigurationFromScratch(configHandler);
 
             Configurations = configHandler.ReadConfig();
             //var a = Configurations.Trading.UNLSymbolsListForTrading();
             Infra.AllConfigurations.AllConfigurationsObject = Configurations;
             
             Distributer = new Distributer();
-            Distributer.ConnectionChanged += DistributerOnConnectionChanged;
 
             //Change the wrapper object according to the actual broker, 
             //for now it's Interactive Broker.
@@ -71,14 +70,9 @@ namespace TNS.BL
         /// </summary>
         public void ConnectToBroker()
         {
-
             BuildManagers();
             StartManagers();
-
             APIWrapper.ConnectToBroker();
-            if (APIWrapper.IsConnected)
-                DoWorkAfterConnectionToBroker();
-
         }
 
         private void StartManagers()
@@ -106,51 +100,20 @@ namespace TNS.BL
             ISession session = DBSessionFactory.Instance.OpenSession();
             List<ManagedSecurity> activeUNLList = session.Query<ManagedSecurity>().Where(contract => contract.IsActive && contract.OptionChain).ToList();
 
-            //List<MainSecurity> activeUNLList = DbDalManager.GetActiveUNLList();
             foreach (var managedSecurity in activeUNLList)
             {
-                //if (mainSecurity.Symbol == "AAPL")//For testing
-                //    continue;
                 var unlManager = new UNLManager(managedSecurity, APIWrapper);
                 UNLManagerDic.Add(managedSecurity.Symbol, unlManager);
             }
             DbWriter = new DBWriter(Configurations.Application.DBWritePeriod);
             Distributer.SetManagers(UNLManagerDic,AccountManager,ManagedSecuritiesManager, DbWriter);
+            UIDataManager = new UIDataManager(this);
         }
-        private bool _doWorkAfterConnectionDone;
         public Dictionary<string, SimpleBaseLogic> UNLManagerDic { get; private set; }
-
-
-        public bool IsConnected { get; set; }
-
         public ITradingApi APIWrapper { get; private set; }
 
-
-
-        private void DistributerOnConnectionChanged(BrokerConnectionStatusMessage brokerConnectionStatusMessage)
-        {
-            IsConnected = (brokerConnectionStatusMessage.Status == ConnectionStatus.Connected);
-            if (_doWorkAfterConnectionDone == false)
-                DoWorkAfterConnectionToBroker();
-        }
-       
-
-        private void DoWorkAfterConnectionToBroker()
-        {
-            _doWorkAfterConnectionDone = true;
-
-            var connectionStatus = new BrokerConnectionStatusMessage(
-                ConnectionStatus.Connected, null) {AfterConnectionToApiWrapper = true};
-
-            Distributer.Enqueue(connectionStatus);
-            
-            
-        }
-
-      
-
         #region Managers Properties
-
+        public UIDataManager UIDataManager { get; set; }
         public Distributer Distributer { get; set; }
         public AccountManager AccountManager { get; private set; }
         public DBWriter DbWriter { get; set; }
@@ -203,7 +166,7 @@ namespace TNS.BL
         public void SendOneOrderTest(string symbol,bool sell)
         {
             IOrdersManager ordersManager = ((UNLManager) UNLManagerDic[symbol]).OrdersManager;
-            ordersManager.TestTrading(sell);
+            ordersManager.TestTrading(true);
         }
 
         #endregion
