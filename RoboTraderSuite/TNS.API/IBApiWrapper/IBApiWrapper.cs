@@ -125,6 +125,7 @@ namespace TNS.API.IBApiWrapper
         /// <param name="optionToLoadParameters"></param>
         public void RequestOptionChain(OptionToLoadParameters optionToLoadParameters)
         {
+            Logger.Info($"{nameof(RequestOptionChain)} was called, loading {optionToLoadParameters}");
             if(OptionToLoadParametersDic == null)
                 OptionToLoadParametersDic = new Dictionary<string, OptionToLoadParameters>();
             OptionToLoadParametersDic.Add(optionToLoadParameters.Symbol, optionToLoadParameters);

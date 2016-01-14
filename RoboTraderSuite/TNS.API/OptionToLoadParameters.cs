@@ -120,5 +120,12 @@ namespace TNS.API
             return true;
         }
 
+        public override string ToString()
+        {
+            return $"Symbol: {Symbol}, MinDaysToExpiration: {MinDaysToExpiration}," +
+                   $" MaxDaysToExpiration: {MaxDaysToExpiration}," +
+                   $" CallMinStrike: {CallMinStrike}, CallMaxStrike: {CallMaxStrike}," +
+                   $" PutMaxStrike: {PutMaxStrike}, PutMinStrike: {PutMinStrike}, Multiplier: {Multiplier}";
+        }
     }
 }
