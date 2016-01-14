@@ -25,8 +25,6 @@ namespace TNS.BL
             _dbWriter = writer;
         }
 
-        public event Action<ExceptionData> ExceptionThrown;
-        public event Action<APIMessageData> APIMessageArrive;
         public event Action<BrokerConnectionStatusMessage> ConnectionChanged;
 
         private  Dictionary<string, SimpleBaseLogic> _unlManagersDic;
@@ -35,6 +33,7 @@ namespace TNS.BL
         private  ManagedSecuritiesManager _managedSecuritiesManager;
         private  AccountManager _accountManager;
         private DBWriter _dbWriter;
+        private IBaseLogic _uiMessageHandler;
 
         protected override void HandleMessage(IMessage message)
         {
@@ -46,7 +45,8 @@ namespace TNS.BL
                     break;
                 case EapiDataTypes.APIMessageData:
                     var apiMessageData = (APIMessageData)message ;
-                    APIMessageArrive?.Invoke(apiMessageData);
+                    _uiMessageHandler?.Enqueue(message, false);
+                    //APIMessageArrive?.Invoke(apiMessageData);
                     Logger.Debug(apiMessageData.ToString());
                     break;
                 case EapiDataTypes.AccountSummaryData:
@@ -89,6 +89,7 @@ namespace TNS.BL
         {
             _accountManager.Enqueue(message, false);
             _managedSecuritiesManager.Enqueue(message, false);
+            _uiMessageHandler.Enqueue(message, false);
             SendToAllUnlManagers(message);
         }
 
@@ -100,27 +101,21 @@ namespace TNS.BL
             }
         }
 
-        private  void HandleException(IMessage meesage)
+        private  void HandleException(IMessage message)
         {
-
-            try
-            {
-                ExceptionData exceptionData = meesage as ExceptionData;
-                if (exceptionData == null)
-                    return;
-                ExceptionThrown?.Invoke(exceptionData);
-
-                Logger.Error(exceptionData.ThrownException);
-            }
-            catch (Exception ex)
-            {
-
-                Logger.Error(ex);
-            }
+            ExceptionData exceptionData = message as ExceptionData;
+            if (exceptionData == null)
+                return;
+            _uiMessageHandler?.Enqueue(message, false);
+            //ExceptionThrown?.Invoke(exceptionData);
+            Logger.Error(exceptionData.ThrownException);
+          
         }
-        protected override void DoWorkAfterConnection()
+       
+
+        public void AddUIMessageHandler(IBaseLogic uiMessageHandler)
         {
-            throw new NotImplementedException();
+            _uiMessageHandler = uiMessageHandler;
         }
     }
 }

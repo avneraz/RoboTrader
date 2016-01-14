@@ -56,7 +56,7 @@ namespace TNS.BL
         /// </summary>
         public double NetLiquidation { get; set; }
 
-        protected override void DoWorkAfterConnection()
+        protected void DoWorkAfterConnection()
         {
             _apiWrapper.RequestAccountData();
         }

@@ -127,10 +127,7 @@ namespace DAL
 
         }
 
-        protected override void DoWorkAfterConnection()
-        {
-            throw new NotImplementedException();
-        }
+     
 
        
     }

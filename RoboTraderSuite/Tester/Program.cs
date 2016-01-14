@@ -35,10 +35,7 @@ namespace Tester
             Logger.Info(message);
 
         }
-        protected override void DoWorkAfterConnection()
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 
     //[DbConfigurationType(typeof(MySqlEFConfiguration))]
@@ -80,7 +77,6 @@ namespace Tester
             //var appleOptions = a.GetOptionsBySymbol("AAPL");
             //string conString = "server=localhost;port=3306;database=RobotDB;uid=root;password=tom90raz";
             DBWriter d = new DBWriter();
-            d.Connect();
             //d.WriteToDB(new List<OptionData>() { new OptionData() { AskPrice = 5, Key = "a" } });
             //d.WriteToDB(new List<TestModal>() { new TestModal() { B = "a" } });
             //Example.ExecuteExample();

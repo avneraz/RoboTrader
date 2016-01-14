@@ -65,7 +65,7 @@ namespace TNS.BL
         }
 
         public Dictionary<string, BaseSecurityData> Securities { get; private set; }
-        protected override void DoWorkAfterConnection()
+        protected void DoWorkAfterConnection()
         {
             var contractList = Securities.Values.Select(securityData => securityData.GetContract()).ToList();
 

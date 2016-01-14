@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Drawing;
+using System.Net.Sockets;
 using System.Windows.Forms;
 using Infra.Extensions;
+using Infra.PopUpMessages;
 using log4net;
 using log4net.Repository.Hierarchy;
 using TNS.API.ApiDataObjects;
@@ -24,15 +27,20 @@ namespace TNS.RoboTrader
         }
 
         private AppManager _appManager;
+        private UIMessageHandler _uiMessageHandler;
+
         private void MainForm_Load(object sender, System.EventArgs e)
         {
             Logger.Info("Start Program - Tester");
             try
             {
-                _appManager = new AppManager(this);
-                //_appManager.AppManagerUp += AppManagerOnAppManagerUp;
-                _appManager.Distributer.APIMessageArrive += DistributerOnAPIMessageArrive;
+                _appManager = new AppManager();
+                _uiMessageHandler = new UIMessageHandler();
+                _uiMessageHandler.Start();
+                _uiMessageHandler.APIMessageArrive += DistributerOnAPIMessageArrive;
+                _uiMessageHandler.ExceptionThrown += DistributerOnExceptionThrown;
 
+                _appManager.Distributer.AddUIMessageHandler(_uiMessageHandler);
                 _appManager.ConnectToBroker();
             }
             catch (Exception ex)
@@ -45,6 +53,19 @@ namespace TNS.RoboTrader
         }
 
 
+        private void DistributerOnExceptionThrown(ExceptionData exceptionData)
+        {
+            if (!(exceptionData.ThrownException is SocketException)) return;
+
+            if (ParentForm.InvokeRequired)
+            {
+                Action action = () =>
+                {
+                    PopupMessageForm.ShowMessage(exceptionData.ToString(), Color.Red, ParentForm, 5, withSiren: true);
+                };
+                ParentForm.Invoke(action);
+            }
+        }
         private void DistributerOnAPIMessageArrive(APIMessageData apiMessageData)
         {
             apiMesagesView.InvokeIfRequired(() => apiMesagesView.AddMessage(apiMessageData));
