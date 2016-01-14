@@ -42,6 +42,7 @@ namespace Infra
             public int WDAppClientId { get; set; }
 
             public string MainAccount { get; set; }
+            public TimeSpan DBWritePeriod { get; set; }
         }
 
         public class TradingConfiguration

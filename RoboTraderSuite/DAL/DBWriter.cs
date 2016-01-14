@@ -15,15 +15,21 @@ namespace DAL
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(DBWriter));
         private ISession _session;
+
         private readonly TimeSpan WriteTimeOut = TimeSpan.FromSeconds(10);
         private readonly Dictionary<string, object> _aggregator; 
 
-        public DBWriter()
+        public DBWriter(TimeSpan? writeTimeOut = null)
         {
+            if (writeTimeOut != null)
+            {
+                WriteTimeOut = writeTimeOut.Value;
+            }
             _aggregator = new Dictionary<string, object>();
+            Connect();
         }
 
-        public void Connect()
+        private void Connect()
         {
             _session = DBSessionFactory.Instance.OpenSession();
             AddScheduledTask(WriteTimeOut, WriteBulk, true);
@@ -57,7 +63,14 @@ namespace DAL
             using (ITransaction transaction = _session.BeginTransaction())
             {
                 _session.SaveOrMerge(data, data.Id);
-                transaction.Commit();
+                try
+                {
+                    transaction.Commit();
+                }
+                catch (Exception exception)
+                {
+                    Logger.Error("Could not write to DB", exception);
+                }
             }
         }
 
@@ -68,7 +81,14 @@ namespace DAL
                 using (ITransaction transaction = _session.BeginTransaction())
                 {
                     _session.Save(contract);
-                    transaction.Commit();
+                    try
+                    {
+                        transaction.Commit();
+                    }
+                     catch (Exception exception)
+                    {
+                        Logger.Error("Could not write to DB", exception);
+                    }
                 }
             }
         }
@@ -89,8 +109,15 @@ namespace DAL
                 {
                     statelessSession.Insert(item);
                 }
-
-                transaction.Commit();
+                try
+                {
+                    transaction.Commit();
+                }
+                catch (Exception exception)
+                {
+                    Logger.Error("Could not write to DB", exception);
+                }
+                
             }
 
             stopwatch.Stop();

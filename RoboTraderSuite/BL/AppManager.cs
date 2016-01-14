@@ -13,7 +13,9 @@ using TNS.API.IBApiWrapper;
 using Infra;
 using Infra.Bus;
 using Infra.Configuration;
+using Infra.Extensions.ArrayExtensions;
 using Infra.PopUpMessages;
+using log4net;
 using NHibernate;
 using NHibernate.Linq;
 using TNS.API;
@@ -24,8 +26,18 @@ namespace TNS.BL
 {
     public class AppManager
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(DBWriter));
+        private void InitalizeUnhandledExceptionHandler()
+        {
+            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+            {
+                var exception = (Exception)e.ExceptionObject;
+                Logger.Error("Unhandled exception caught", exception);
+            };
+        }
         public AppManager(Form mainForm)
         {
+            InitalizeUnhandledExceptionHandler();
             InitializeAppManager(mainForm);
         }
 
@@ -64,12 +76,23 @@ namespace TNS.BL
         {
 
             BuildManagers();
+            StartManagers();
 
             APIWrapper.ConnectToBroker();
             if (APIWrapper.IsConnected)
                 DoWorkAfterConnectionToBroker();
 
         }
+
+        private void StartManagers()
+        {
+            AccountManager.Start();
+            ManagedSecuritiesManager.Start();
+            UNLManagerDic.Values.ForEach(mgr => mgr.Start());
+            DbWriter.Start();
+            Distributer.Start();
+        }
+
         public void ShutDownApplication()
         {
             GeneralTimer.GeneralTimerInstance.StopGeneralTimer();
@@ -94,9 +117,7 @@ namespace TNS.BL
                 var unlManager = new UNLManager(managedSecurity, APIWrapper);
                 UNLManagerDic.Add(managedSecurity.Symbol, unlManager);
             }
-           
-            DbWriter = new DBWriter();
-            DbWriter.Connect();
+            DbWriter = new DBWriter(Configurations.Application.DBWritePeriod);
             Distributer.SetManagers(UNLManagerDic,AccountManager,ManagedSecuritiesManager, DbWriter);
         }
         private bool _doWorkAfterConnectionDone;
@@ -156,7 +177,7 @@ namespace TNS.BL
         #endregion
 
         #region Testing
-        private static void WriteConfigurationFromScratch(ConfigHandler configHandler)
+        public static void WriteConfigurationFromScratch(ConfigHandler configHandler)
         {
             AllConfigurations allConfigurations = new AllConfigurations
             {
@@ -166,7 +187,8 @@ namespace TNS.BL
                     AppClientId = 11,
                     AppPort = 7496,
                     MainAccount = "U1450837",
-                    WDAppClientId = 12
+                    WDAppClientId = 12,
+                    DBWritePeriod = TimeSpan.FromSeconds(10)
                 },
                 Session =
                 {
