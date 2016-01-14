@@ -21,18 +21,10 @@ namespace TNS.BL.UnlManagers
         /// </summary>
         private OrderType DefaultOrderType { get; set; } = OrderType.LMT;
 
-        //private bool _doSellOneOrderTesting;
         public override bool HandleMessage(IMessage message)
         {
             bool result = base.HandleMessage(message);
-             
-            //if (Symbol == "AAPL" && _doSellOneOrderTesting)
-            //{
-            //    DefaultOrderType = OrderType.MKT;
-            //    TestTrading(sell: true);
-            //    DefaultOrderType = OrderType.LMT;
-            //    _doSellOneOrderTesting = false;
-            //}
+            
             if (result)
                 return true;
 
@@ -44,11 +36,11 @@ namespace TNS.BL.UnlManagers
                     OrderStatusDataUpdated?.Invoke(order);
                         result = true;
                     break;
-                case EapiDataTypes.OrderData:
+                //case EapiDataTypes.OrderData:
 
-                    //OrderStatusDataUpdated?.Invoke(order);
-                    result = true;
-                    break;
+                //    //OrderStatusDataUpdated?.Invoke(order);
+                //    result = true;
+                //    break;
             }
             //SellOption(UNLManager.OptionsManager.OptionDataDic.Values.ToList()[0], 1, 1);
             return result;
@@ -92,13 +84,18 @@ namespace TNS.BL.UnlManagers
 
         public OrderData TestTrading(bool sell)
         {
+            string optionKey = GetOptionKey(new DateTime(2016, 2, 19), OptionType.Call, 100);
             DefaultOrderType = OrderType.MKT;
             OrderData orderData = sell ? 
-                SellOption(UNLManager.OptionsManager.OptionDataDic.Values.ToList()[0], 1, 1) : 
-                BuyOption(UNLManager.OptionsManager.OptionDataDic.Values.ToList()[0], 1, 1);
+                SellOption(UNLManager.OptionsManager.GetOptionData(optionKey), 1, 2) : 
+                BuyOption(UNLManager.OptionsManager.GetOptionData(optionKey), 1, 1);
             DefaultOrderType = OrderType.LMT;
             return orderData;
 
+        }
+        public string GetOptionKey(DateTime expiry, OptionType optionType, double strike)
+        {
+            return $"{expiry}.{optionType}.{strike}";
         }
     }
 }

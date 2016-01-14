@@ -58,6 +58,8 @@ namespace TNS.RoboTrader
         private void btnSendOrder_Click(object sender, EventArgs e)
         {
             _appManager.SendOneOrderTest("AAPL",true);
+            _appManager.SendOneOrderTest("AAPL",false);
+
         }
 
         private void btnRegisterForData_Click(object sender, EventArgs e)

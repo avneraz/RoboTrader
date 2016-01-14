@@ -198,7 +198,7 @@ namespace TNS.BL
         public void SendOneOrderTest(string symbol,bool sell)
         {
             IOrdersManager ordersManager = ((UNLManager) UNLManagerDic[symbol]).OrdersManager;
-            ordersManager.TestTrading(true);
+            ordersManager.TestTrading(sell);
         }
 
         #endregion
