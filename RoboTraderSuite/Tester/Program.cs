@@ -59,6 +59,11 @@ namespace Tester
 
         static void Main(string[] args)
         {
+
+            AppManager.WriteConfigurationFromScratch(new ConfigHandler());
+
+            UIDal dal = new UIDal();
+            var bla = dal.GetLastOptionData();
             ConfigHandler h = new ConfigHandler();
             AllConfigurations a = new AllConfigurations();
             WriteConfiguration(a);

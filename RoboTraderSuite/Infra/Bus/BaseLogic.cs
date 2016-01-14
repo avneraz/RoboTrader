@@ -33,8 +33,6 @@ namespace Infra.Bus
         protected SimpleBaseLogic()
         {
             _queue = new ConcurrentQueue<IMessage>();
-            var t = new Thread(Work) {IsBackground = true };
-            t.Start();
         }
 
         protected virtual string ThreadName => "SimpleBaseLogic_Work";
@@ -69,6 +67,12 @@ namespace Infra.Bus
         public void Enqueue(IMessage message, bool duplicate=true)
         {
             _queue.Enqueue(duplicate ? message.Copy() : message);
+        }
+
+        public void Start()
+        {
+            var t = new Thread(Work) { IsBackground = true };
+            t.Start();
         }
 
         protected abstract void HandleMessage(IMessage message);
