@@ -46,7 +46,6 @@
   <ItemGroup>
     <Compile Include="ApiDataObjects\APIMessageData.cs" />
     <Compile Include="ApiDataObjects\BrokerConnectionStatusMessage.cs" />
-    <Compile Include="ApiDataObjects\ContractDetailsData.cs" />
     <Compile Include="ApiDataObjects\ExceptionData.cs" />
     <Compile Include="ApiDataObjects\ISymbolMessage.cs" />
     <Compile Include="ApiDataObjects\ManagedSecurity.cs" />
@@ -84,6 +83,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ApiDataObjects\ApiDataObjectsClassDiagram.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

@@ -9,7 +9,7 @@ namespace Infra.Enum
     /// <summary>
     /// Unknown = 0, ExceptionData = 1, AccountSummaryData = 2, OptionData = 3,
     /// PositionData = 4, OrderData = 5, APIMessageData = 6, SecurityData = 7,
-    /// OrderStatus = 8, BrokerConnectionStatus = 9, EndAsynchData = 10, ContractDetailsData = 11,
+    /// OrderStatus = 8, BrokerConnectionStatus = 9, EndAsynchData = 10, UnlSecurityData = 11,
     /// </summary>
     public enum EapiDataTypes
     {
@@ -24,6 +24,6 @@ namespace Infra.Enum
         OrderStatus = 8,
         BrokerConnectionStatus,
         EndAsynchData,
-        ContractDetailsData,
+        SecurityContract,
     }
 }

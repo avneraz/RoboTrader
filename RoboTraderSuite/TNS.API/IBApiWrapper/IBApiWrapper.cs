@@ -138,27 +138,38 @@ namespace TNS.API.IBApiWrapper
         }
 
         public Dictionary<string, OptionToLoadParameters> OptionToLoadParametersDic { get; set; }
-      
         /// <summary>
-        /// Request detail data for all securities taking place in trading.
+        /// Request detail data for one security that is not option.
+        /// The same like "RequestContinousContractData" but for 1 security.
         /// </summary>
-        public void RequestContractDetailsData(BaseSecurityData securityData)
+        public void RequestSecurityContractDetails(SecurityData securityData)
         {
-            Contract ibContract = securityData.GetContract().ToIbContract();
-            _handler.AddSecurityTrader(ibContract);
-            Logger.Info($"{nameof(RequestContractDetailsData)} " +
+            ContractBase contractBase = securityData.GetContract();
+
+            if (contractBase.SecurityType == SecurityType.Option)
+                throw new Exception("This method is for securities other than options!!!");
+
+            Contract ibContract = contractBase.ToIbContract();
+            _handler.AddManagedSecurity(ibContract);
+            Logger.Info($"{nameof(RequestSecurityContractDetails)} " +
                             $"called, requesting {ibContract}");
-
-           _clientSocket.reqContractDetails(RequestId, ibContract);
+            int reqId = RequestId;
+            _handler.RegisterContract(reqId, contractBase);
+            _clientSocket.reqContractDetails(reqId, ibContract);
         }
-
+        /// <summary>
+        /// Request detail data for several securities taking place in trading.
+        /// </summary>
+        /// <param name="contracts"></param>
         public void RequestContinousContractData(List<ContractBase> contracts)
         {
-
+            
             Logger.Info($"{nameof(RequestContinousContractData)} " + 
                             $"called, requesting {contracts.Count} contracts");
             contracts.ForEach(contract =>
             {
+                if (contract.SecurityType != SecurityType.Option)
+                    throw new Exception("This method is for option request only!!!");
                 var requestId = RequestId;
                 var ibContract = contract.ToIbContract();
                

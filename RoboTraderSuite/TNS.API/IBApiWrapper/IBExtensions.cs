@@ -124,19 +124,9 @@ namespace TNS.API.IBApiWrapper
             };
         }
 
-        public static ContractDetailsData ToContractDetailsData(this ContractDetails contractDetails)
+        public static void UpdateSecurityData(this ContractDetails contractDetails, SecurityContract securityContract)
         {
-            var contractBase = contractDetails.Summary.ToContract();
-            var contractDetailsData = new ContractDetailsData(contractBase.Symbol,
-                contractBase.SecurityType, contractBase.Exchange, contractBase.Currency);
-
-            CalculateWorkTime(contractDetails, contractDetailsData);
-
-            return contractDetailsData;
-        }
-        private static void CalculateWorkTime(ContractDetails contractDetails, 
-            ContractDetailsData contractDetailsData)
-        {
+        
             //LiquidHours="20150427:0930-1600;20150428:0930-1600" 
             //"20090507:0700-1830,1830-2330;20090508:CLOSED." "20150503:CLOSED;20150504:0930-1600"
             //TimeZoneId="EST5EDT"
@@ -158,36 +148,36 @@ namespace TNS.API.IBApiWrapper
 
             string closedStr = workingDays[0].Substring(9, 6);
 
-            contractDetailsData.IsWorkingDay = closedStr.Equals("CLOSED") == false;
+            securityContract.IsWorkingDay = closedStr.Equals("CLOSED") == false;
 
-            contractDetailsData.NextWorkingDay = DateTime.ParseExact(workingDays[1].Substring(0, 13),
+            securityContract.NextWorkingDay = DateTime.ParseExact(workingDays[1].Substring(0, 13),
                 "yyyyMMdd:HHmm", CultureInfo.CurrentCulture, DateTimeStyles.None);
 
-            contractDetailsData.NextWorkingDay = TimeZoneInfo.ConvertTime
-                (contractDetailsData.NextWorkingDay, est, ist);
-            if (!contractDetailsData.IsWorkingDay) return;
+            securityContract.NextWorkingDay = TimeZoneInfo.ConvertTime
+                (securityContract.NextWorkingDay, est, ist);
+            if (!securityContract.IsWorkingDay) return;
 
-            contractDetailsData.StartTradingTime = DateTime.ParseExact(workingDays[0].Substring(0, 13),
+            securityContract.StartTradingTime = DateTime.ParseExact(workingDays[0].Substring(0, 13),
                 "yyyyMMdd:HHmm",CultureInfo.CurrentCulture, DateTimeStyles.None);
 
-            contractDetailsData.StartTradingTimeLocal = TimeZoneInfo.ConvertTime
-                (contractDetailsData.StartTradingTime, est, ist);
+            securityContract.StartTradingTimeLocal = TimeZoneInfo.ConvertTime
+                (securityContract.StartTradingTime, est, ist);
             //For Test:  StartTradingTimeLocal = DateTime.Now.AddMinutes(1);
             string endTimeStr = workingDays[0].Substring(0, 8) + " " + workingDays[0].Substring(14, 4);
-            contractDetailsData.EndTradingTime = DateTime.ParseExact(endTimeStr, "yyyyMMdd HHmm",
+            securityContract.EndTradingTime = DateTime.ParseExact(endTimeStr, "yyyyMMdd HHmm",
                 CultureInfo.CurrentCulture, DateTimeStyles.None);
-            contractDetailsData.EndTradingTimeLocal = TimeZoneInfo.ConvertTime
-                (contractDetailsData.EndTradingTime, est, ist);
+            securityContract.EndTradingTimeLocal = TimeZoneInfo.ConvertTime
+                (securityContract.EndTradingTime, est, ist);
             //For Test:  EndTradingTimeLocal = DateTime.Now.AddMinutes(2);
             string msg;
-            if (contractDetailsData.IsWorkingDay == false)
+            if (securityContract.IsWorkingDay == false)
             {
                 msg = string.Format("Today is not workingDay. NextWorkingDay={0}", 
-                    contractDetailsData.NextWorkingDay);
+                    securityContract.NextWorkingDay);
             }
             else
                 msg = string.Format("Today is workingDay! StartTradingTime={0}, EndTradingTime:{1}. ",
-                    contractDetailsData.StartTradingTimeLocal, contractDetailsData.EndTradingTimeLocal);
+                    securityContract.StartTradingTimeLocal, securityContract.EndTradingTimeLocal);
             Logger.Info(msg);
            
         }

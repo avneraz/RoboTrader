@@ -32,8 +32,8 @@ namespace TNS.API.IBApiWrapper
             OrderStatusDic = new Dictionary<int, IBOrderStatusWrapper>();
             AccountSummary = new AccountSummaryData();
             Consumer = consumer;
-            SecurityTradersList = new List<Contract>();
-            GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(1), PublishOptions, true);
+            ManagedSecurityList = new List<Contract>();
+            GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(1), PublishSecurities, true);
         }
 
         private Dictionary<int, IBOrderStatusWrapper> OrderStatusDic { get; }
@@ -43,7 +43,7 @@ namespace TNS.API.IBApiWrapper
         /// <summary>
         /// Contains all the securities that are taking place in trading.
         /// </summary>
-        private List<Contract> SecurityTradersList { get; }
+        private List<Contract> ManagedSecurityList { get; }
         #region EWrapper Overrides
 
         #region NotUsedMethods
@@ -104,12 +104,17 @@ namespace TNS.API.IBApiWrapper
         public void contractDetails(int reqId, ContractDetails contractDetails)
         {
             ContractDetailsMessageReceived?.Invoke(reqId, contractDetails);
-            if (SecurityTradersList.Any(cb => cb.SecType == contractDetails.Summary.SecType
-                                          && cb.Symbol == contractDetails.Summary.Symbol))
-            {
-                Consumer.Enqueue(contractDetails.ToContractDetailsData());
-            }
 
+            if (!ManagedSecurityList.Any(cb => cb.SecType == contractDetails.Summary.SecType
+                                               && cb.Symbol == contractDetails.Summary.Symbol))
+                return;
+
+            lock (SecurityDataDic)
+            {
+                var securityData = (SecurityData) SecurityDataDic[reqId];
+                contractDetails.UpdateSecurityData(securityData.SecurityContract);
+                Consumer.Enqueue(securityData.SecurityContract);
+            }
         }
        
         public void contractDetailsEnd(int reqId){}
@@ -211,11 +216,11 @@ namespace TNS.API.IBApiWrapper
             Consumer.Enqueue(exceptionData);
             Logger.Error(exceptionData);
         }
-        public void tickPrice(int tickerId, int field, double price, int canAutoExecute)
+        public void tickPrice(int requestId, int field, double price, int canAutoExecute)
         {
             lock (SecurityDataDic)
             {
-                var securityData = SecurityDataDic[tickerId];
+                var securityData = SecurityDataDic[requestId];
                 switch (field)
                 {
                     case TickType.BID: //1
@@ -245,8 +250,21 @@ namespace TNS.API.IBApiWrapper
                         return;
                 }
                 securityData.LastUpdate = DateTime.Now;
+
+                //SetValueForTesting(securityData);
             }
         }
+
+        private static void SetValueForTesting(BaseSecurityData securityData)
+        {
+            var optionData = securityData as OptionData;
+
+            if (optionData?.OptionContract.Strike - 80 <= 0.01)
+            {
+                optionData.LastPrice = 11.111;
+            }
+        }
+
         public void tickSize(int tickerId, int field, int size)
         {
             lock (SecurityDataDic)
@@ -422,11 +440,11 @@ namespace TNS.API.IBApiWrapper
         public int NextOrderId { get; set; }
         #endregion
         #endregion
-        internal void AddSecurityTrader(Contract ibContract)
+        internal void AddManagedSecurity(Contract ibContract)
         {
-            SecurityTradersList.Add(ibContract);
+            ManagedSecurityList.Add(ibContract);
         }
-        private void PublishOptions()
+        private void PublishSecurities()
         {
             lock (SecurityDataDic)
             {

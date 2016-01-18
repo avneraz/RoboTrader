@@ -55,8 +55,11 @@ namespace TNS.BL
                 case EapiDataTypes.PositionData:
                 case EapiDataTypes.OrderStatus:
                 case EapiDataTypes.OrderData:
+                case EapiDataTypes.SecurityContract:
                     symbolMessage = (ISymbolMessage)message;
-                    _unlManagersDic[symbolMessage.GetSymbolName()].Enqueue(symbolMessage, false);
+                    string symbol = symbolMessage.GetSymbolName();
+                    if (_unlManagersDic.ContainsKey(symbol))
+                        _unlManagersDic[symbol].Enqueue(symbolMessage, false);
                     _dbWriter.Enqueue(message,false);
                     break;
                 case EapiDataTypes.SecurityData:
@@ -71,11 +74,8 @@ namespace TNS.BL
                     SendToAllComponents(message);
                     break;
                 case EapiDataTypes.EndAsynchData:
-                    //SendToAllUnlManagers(message);
-                    break;
-                case EapiDataTypes.ContractDetailsData:
-                    SendToAllUnlManagers(message);
-                    break;
+                    
+                   break;
                 default:
                      throw new ArgumentOutOfRangeException();
             }

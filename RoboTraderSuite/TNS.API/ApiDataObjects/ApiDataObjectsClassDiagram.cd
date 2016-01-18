@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TNS.API.ApiDataObjects.OptionContract" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAACAAAAAEgAAQgAJAAAACAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>ApiDataObjects\OptionContract.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.API.ApiDataObjects.OptionData" Collapsed="true">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QEAAABIAAAAAgAIEAAAACAAAAAAABEIAAAAAAAgBAAA=</HashCode>
+      <FileName>ApiDataObjects\OptionData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.API.ApiDataObjects.BaseSecurityData" Collapsed="true">
+    <Position X="5.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BCQCAgAAABgAgAAEAAAACABQAAAAAEAAAAIAAAgIIAQ=</HashCode>
+      <FileName>ApiDataObjects\BaseSecurityData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.971" />
+  </Class>
+  <Class Name="TNS.API.ApiDataObjects.ContractBase" Collapsed="true">
+    <Position X="1.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAABAAAAAAAAEgABgAAIACAAAAIAAAAAQAAAACAA=</HashCode>
+      <FileName>ApiDataObjects\ContractBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.API.ApiDataObjects.OptionsPositionData" Collapsed="true">
+    <Position X="8" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAABAAAAAAAAAgAAAA=</HashCode>
+      <FileName>ApiDataObjects\OptionsPositionData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.API.ApiDataObjects.PositionData" Collapsed="true">
+    <Position X="9" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAKAAAAAAAAgAAkAAAAAAAAAAAAAEAAAAAAAggIAAA=</HashCode>
+      <FileName>ApiDataObjects\PositionData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.1" />
+  </Class>
+  <Class Name="TNS.API.ApiDataObjects.SecurityContract" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ChAAAAAAAAAAAAAACAAAAAIAAAAAAEgAAAAAAAgJAAg=</HashCode>
+      <FileName>ApiDataObjects\SecurityContract.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TNS.API.ApiDataObjects.SecurityData" Collapsed="true">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>ApiDataObjects\SecurityData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.API.ApiDataObjects.StocksPositionData" Collapsed="true">
+    <Position X="10" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>ApiDataObjects\StocksPositionData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.API.ApiDataObjects.AccountSummaryData" Collapsed="true">
+    <Position X="10.75" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AASAAAAAAAAAAABEAAAQAAAAAAAAAEAAAAAgAAAAAAA=</HashCode>
+      <FileName>ApiDataObjects\AccountSummaryData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TNS.API.ApiDataObjects.APIMessageData" Collapsed="true">
+    <Position X="9" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAQAEAAAAAAAAAAgAAEAAAAAAIAAAAAA=</HashCode>
+      <FileName>ApiDataObjects\APIMessageData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TNS.API.ApiDataObjects.BrokerConnectionStatusMessage" Collapsed="true">
+    <Position X="12.75" Y="3.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAIAEAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>ApiDataObjects\BrokerConnectionStatusMessage.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TNS.API.ApiDataObjects.OrderData" Collapsed="true">
+    <Position X="7" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAEAgAAAEAAAAAAAEAAAAAYgAQAAAA=</HashCode>
+      <FileName>ApiDataObjects\OrderData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="TNS.API.ApiDataObjects.ISymbolMessage" Collapsed="true">
+    <Position X="13.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgIAAA=</HashCode>
+      <FileName>ApiDataObjects\ISymbolMessage.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Infra.Bus.IMessage" Collapsed="true">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Enum Name="TNS.API.ApiDataObjects.OptionType" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAg=</HashCode>
+      <FileName>ApiDataObjects\OptionContract.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TNS.API.ApiDataObjects.SecurityType" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAgAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>ApiDataObjects\ContractBase.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TNS.API.ApiDataObjects.OrderAction" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ApiDataObjects\OrderData.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TNS.API.ApiDataObjects.OrderType" Collapsed="true">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>ApiDataObjects\OrderData.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TNS.API.ApiDataObjects.ConnectionStatus" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>ApiDataObjects\BrokerConnectionStatusMessage.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

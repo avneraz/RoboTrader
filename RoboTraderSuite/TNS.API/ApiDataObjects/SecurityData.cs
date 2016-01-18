@@ -19,5 +19,6 @@ namespace TNS.API.ApiDataObjects
         }
 
         public SecurityContract SecurityContract { get; set; }
+
     }
 }

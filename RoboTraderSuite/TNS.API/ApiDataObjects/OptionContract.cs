@@ -52,7 +52,8 @@ namespace TNS.API.ApiDataObjects
         public override Contract ToIbContract()
         {
             var contract =  base.ToIbContract();
-            contract.Right = OptionType == OptionType.Call ? "C" : "P";
+            if(OptionType != OptionType.None)
+                contract.Right = OptionType == OptionType.Call ? "C" : "P";
             contract.Expiry = Expiry < DateTime.Now ? null : Expiry.ToString("yyyyMMdd");
             contract.Strike = Strike;
             contract.Multiplier = Multiplier.ToString();

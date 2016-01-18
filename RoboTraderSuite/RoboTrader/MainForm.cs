@@ -56,15 +56,11 @@ namespace TNS.RoboTrader
         private void DistributerOnExceptionThrown(ExceptionData exceptionData)
         {
             if (!(exceptionData.ThrownException is SocketException)) return;
-
-            if (ParentForm.InvokeRequired)
+            this.InvokeIfRequired(() =>
             {
-                Action action = () =>
-                {
-                    PopupMessageForm.ShowMessage(exceptionData.ToString(), Color.Red, ParentForm, 5, withSiren: true);
-                };
-                ParentForm.Invoke(action);
-            }
+                PopupMessageForm.ShowMessage(exceptionData.ToString(), Color.Red, ParentForm, 5, withSiren: true);
+            });
+
         }
         private void DistributerOnAPIMessageArrive(APIMessageData apiMessageData)
         {

@@ -11,7 +11,6 @@ namespace TNS.BL.Interfaces
         event Action Trading60SecondsToEnd;
         event Action TradingEnd;
         event Action TradingStart;
-        ContractDetailsData ContractDetailsData { get; set; }
 
         /// <summary>
         /// Get indication if today is working day for AAPL security.

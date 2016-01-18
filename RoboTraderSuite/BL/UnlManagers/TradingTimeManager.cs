@@ -37,11 +37,11 @@ namespace TNS.BL.UnlManagers
                 message.APIDataType == EapiDataTypes.SecurityData)
             {
                 Debug.WriteLine(MainSecurityData.GetContract());
-                APIWrapper.RequestContractDetailsData(MainSecurityData);
+                APIWrapper.RequestSecurityContractDetails(MainSecurityData.GetContract());
                 _requestContractDetailsDataDone = true;
             }
             
-            if (message.APIDataType != EapiDataTypes.ContractDetailsData) return false;
+            if (message.APIDataType != EapiDataTypes.UnlSecurityData) return false;
 
             ContractDetailsData = (ContractDetailsData) message;
             if (_cancellationTokenSource == null)

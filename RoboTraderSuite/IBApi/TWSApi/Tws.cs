@@ -1174,11 +1174,11 @@ namespace TWSLib
                 InvokeIfRequired(t_currentTime, (int)time);
         }
 
-        void EWrapper.tickPrice(int tickerId, int field, double price, int canAutoExecute)
+        void EWrapper.tickPrice(int requestId, int field, double price, int canAutoExecute)
         {
             var t_tickPrice = this.tickPrice;
             if (t_tickPrice != null)
-                InvokeIfRequired(t_tickPrice, tickerId, field, price, canAutoExecute);
+                InvokeIfRequired(t_tickPrice, requestId, field, price, canAutoExecute);
         }
 
         void EWrapper.tickSize(int tickerId, int field, int size)

@@ -14,7 +14,7 @@ namespace TNS.API.ApiDataObjects
             string exchange = "SMART", string currency = "USD") 
             : base(symbol, type, exchange, currency)
         {
-            APIDataType = EapiDataTypes.ContractDetailsData;
+            APIDataType = EapiDataTypes.UnlSecurityData;
         }
 
         /// <summary>

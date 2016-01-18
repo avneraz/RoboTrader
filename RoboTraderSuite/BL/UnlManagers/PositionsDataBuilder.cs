@@ -37,23 +37,20 @@ namespace TNS.BL.UnlManagers
 
             if (message.APIDataType != EapiDataTypes.PositionData)
                 return false;
-
+            //This is position message:
             var positionData = (PositionData) message;
             var contract = positionData.GetContract();
             if ((contract is OptionContract) == false)
                 return false;
-
+            //It's Option:
             var optionContract = (OptionContract) contract;
             var key = optionContract.OptionKey;
 
             PositionDataDic[key] = positionData;
-           
-            if (OptionsManager.OptionDataDic.ContainsKey(key) == false)
-                OptionsManager.RequestContinousContractData(new List<ContractBase>() {optionContract});
-            else
-            {
-                positionData.OptionData = OptionsManager.OptionDataDic[key];
-            }
+
+            if (GetOptionData(positionData, key) == false)
+                APIWrapper.RequestContinousContractData(new List<ContractBase>() { optionContract });
+
             return true;
         }
 
@@ -69,17 +66,28 @@ namespace TNS.BL.UnlManagers
             foreach (var positionData in list)
             {
                 var key = ((OptionContract)(positionData.GetContract())).OptionKey;
-
-                if (OptionsManager.OptionDataDic.ContainsKey(key))
-                    positionData.OptionData = OptionsManager.OptionDataDic[key];
-                else
+                if (GetOptionData(positionData, key) == false)
                     contractList.Add(PositionDataDic[key].GetContract());
-                
             }
             if(contractList.Count > 0)
                 //Request option data
-                OptionsManager.RequestContinousContractData(contractList);
+                APIWrapper.RequestContinousContractData(contractList);
             
+        }
+        /// <summary>
+        /// Get OptionData from OptionManager.
+        /// </summary>
+        /// <param name="positionData"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        private bool GetOptionData(PositionData positionData, string key)
+        {
+            OptionData optionData = OptionsManager.GetOptionData(key);
+            if (optionData == null)
+                return false;
+
+            positionData.OptionData = optionData;
+            return true;
         }
 
         public override void DoWorkAfterConnection()

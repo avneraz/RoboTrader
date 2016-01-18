@@ -28,6 +28,8 @@ namespace TNS.BL.UnlManagers
         {
             RemoveScheduledTask(uniqueIdentifier);
         }
+
+        public SecurityContract SecurityContract { get; set; }
         private List<IUnlBaseMemberManager> _memberManagersList;
         private ITradingApi APIWrapper { get; }
         private ManagedSecurity ManagedSecurity { get; }
@@ -36,6 +38,9 @@ namespace TNS.BL.UnlManagers
         {
             switch (message.APIDataType)
             {
+                case EapiDataTypes.SecurityContract:
+                    SecurityContract = (SecurityContract)message;
+                    break;
                 case EapiDataTypes.SecurityData:
                     SendToAllComponents(message);
                     break;
@@ -57,9 +62,6 @@ namespace TNS.BL.UnlManagers
                     if (connectionStatusMessage.AfterConnectionToApiWrapper)
                         DoWorkAfterConnection();
                     SendToAllComponents( message);
-                    break;
-                case EapiDataTypes.ContractDetailsData:
-                    TradingTimeManager.HandleMessage(message);
                     break;
             }
         }
@@ -85,9 +87,6 @@ namespace TNS.BL.UnlManagers
         {
             _memberManagersList = new List<IUnlBaseMemberManager>();
 
-            TradingTimeManager = new TradingTimeManager(APIWrapper, ManagedSecurity, this);
-            _memberManagersList.Add(TradingTimeManager);
-
             OptionsManager = new OptionsManager(APIWrapper, ManagedSecurity, this);
             _memberManagersList.Add(OptionsManager);
 
@@ -104,8 +103,26 @@ namespace TNS.BL.UnlManagers
         public IOptionsManager OptionsManager { get; set; }
         public IPositionsDataBuilder PositionsDataBuilder { get; set; }
         public ITradingManager TradingManager { get; set; }
-        public ITradingTimeManager TradingTimeManager { get; set; }
         public IOrdersManager OrdersManager { get; set; }
+
+
+        #region TradingTime
+
+        public bool IsWorkingDay => SecurityContract.IsWorkingDay;
+        public DateTime NextWorkingDay => SecurityContract.NextWorkingDay;
+        public DateTime StartTradingTimeLocal => SecurityContract.StartTradingTimeLocal;
+        public DateTime EndTradingTimeLocal => SecurityContract.EndTradingTimeLocal;
+
+        public bool IsNowWorkingTime
+        {
+            get
+            {
+                DateTime now = DateTime.Now;
+
+                return IsWorkingDay && now >= StartTradingTimeLocal && now < EndTradingTimeLocal;
+            }
+        }
+        #endregion
 
     }
 }
