@@ -5,9 +5,9 @@ namespace TNS.BL.Interfaces
 {
     public interface IOptionsManager: IUnlBaseMemberManager
     {
-        Dictionary<string, OptionData> OptionDataDic { get; }
+        //Dictionary<string, OptionData> OptionDataDic { get; }
         OptionData GetOptionData(string optionKey);
 
-        void RequestContinousContractData(List<ContractBase> contractList);
+        //void RequestContinousContractData(List<ContractBase> contractList);
     }
 }
