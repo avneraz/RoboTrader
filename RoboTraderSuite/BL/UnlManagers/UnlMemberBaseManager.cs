@@ -8,9 +8,9 @@ namespace TNS.BL.UnlManagers
 {
    
 
-    public class UnlMemberBaseManager : IUnlBaseMemberManager
+    public abstract class UnlMemberBaseManager : IUnlBaseMemberManager
     {
-        public UnlMemberBaseManager(ITradingApi apiWrapper, ManagedSecurity managedSecurity, UNLManager unlManager)
+        protected UnlMemberBaseManager(ITradingApi apiWrapper, ManagedSecurity managedSecurity, UNLManager unlManager)
         {
             ManagedSecurity = managedSecurity;
             APIWrapper = apiWrapper;
@@ -19,7 +19,6 @@ namespace TNS.BL.UnlManagers
             Symbol = managedSecurity.Symbol;
             
         }
-        protected const double EPSILON = 0.000000001;
         protected readonly string Symbol;
         protected readonly ManagedSecurity ManagedSecurity;
         protected readonly ITradingApi APIWrapper;
