@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using Infra.Bus;
 using Infra.Enum;
 using log4net;
+using NHibernate.Mapping;
 using TNS.API;
 using TNS.API.ApiDataObjects;
+using TNS.BL.DataObjects;
 using TNS.BL.Interfaces;
 
 namespace TNS.BL.UnlManagers
@@ -16,7 +19,8 @@ namespace TNS.BL.UnlManagers
         {
             ManagedSecurity = managedSecurity;
             APIWrapper = apiWrapper;
-            Logger.InfoFormat("UNLManager({0}) was created!", managedSecurity.Symbol);
+            //PendingTradingTimeEventDic = new Dictionary<ETradingTimeEventType, TradingTimeEvent>();
+            Logger.InfoFormat("UNLManager({0}) was created!", managedSecurity.Symbol); 
         }
 
         internal string AddScheduledTaskOnUnl(TimeSpan span, Action task, bool reOccuring = false)
@@ -40,9 +44,10 @@ namespace TNS.BL.UnlManagers
             {
                 case EapiDataTypes.SecurityContract:
                     SecurityContract = (SecurityContract)message;
+                    EvaluateTradingEvents();
                     break;
                 case EapiDataTypes.SecurityData:
-                    SendToAllComponents(message);
+                    SendMessageToAllComponents(message);
                     break;
                 case EapiDataTypes.OptionData:
                     OptionsManager.HandleMessage(message);
@@ -61,12 +66,12 @@ namespace TNS.BL.UnlManagers
                     ConnectionStatus = connectionStatusMessage.Status;
                     if (connectionStatusMessage.AfterConnectionToApiWrapper)
                         DoWorkAfterConnection();
-                    SendToAllComponents( message);
+                    SendMessageToAllComponents( message);
                     break;
             }
         }
 
-        private void SendToAllComponents(IMessage message)
+        private void SendMessageToAllComponents(IMessage message)
         {
             if(_memberManagersList == null)
                 return;
@@ -107,7 +112,9 @@ namespace TNS.BL.UnlManagers
 
 
         #region TradingTime
-
+        /// <summary>
+        /// Get indication if today is working day for the UNL security.
+        /// </summary>
         public bool IsWorkingDay => SecurityContract.IsWorkingDay;
         public DateTime NextWorkingDay => SecurityContract.NextWorkingDay;
         public DateTime StartTradingTimeLocal => SecurityContract.StartTradingTimeLocal;
@@ -122,7 +129,68 @@ namespace TNS.BL.UnlManagers
                 return IsWorkingDay && now >= StartTradingTimeLocal && now < EndTradingTimeLocal;
             }
         }
-        #endregion
+       
+        /// <summary>
+        /// Evaluate the trading events according to the trading time of the UNL.
+        /// </summary>
+        private void EvaluateTradingEvents()
+        {
+            if (IsNowWorkingTime == false)
+            {
+                if (IsWorkingDay)
+                {
+                    AddTimeEventTask(ETradingTimeEventType.StartTrading);
+                    AddTimeEventTask(ETradingTimeEventType.EndTradingIn30Seconds);
+                    AddTimeEventTask(ETradingTimeEventType.EndTradingIn60Seconds);
+                    AddTimeEventTask(ETradingTimeEventType.EndTrading);
 
+                }
+                //Evaluate again tomorrow:
+                 AddScheduledTask((DateTime.Today.AddDays(1).AddSeconds(1)).Subtract(DateTime.Now),EvaluateTradingEvents);
+            }
+            else //Now is Working Time, The trading is already start
+            {
+                //Set end events
+                AddTimeEventTask(ETradingTimeEventType.StartTrading, 10);//Send also the start event because the trader will start in 10 sec
+                AddTimeEventTask(ETradingTimeEventType.EndTradingIn30Seconds);
+                AddTimeEventTask(ETradingTimeEventType.EndTradingIn60Seconds);
+                AddTimeEventTask(ETradingTimeEventType.EndTrading);
+                //Evaluate again tomorrow:
+                AddScheduledTask((DateTime.Today.AddDays(1).AddSeconds(1)).Subtract(DateTime.Now), EvaluateTradingEvents);
+            }
+        }
+
+        private void AddTimeEventTask(ETradingTimeEventType eventType, int startTimeDelaySec = 0)
+        {
+            var tradingTimeEvent = new TradingTimeEvent(eventType);
+            switch (eventType)
+            {
+                case ETradingTimeEventType.StartTrading:
+                    if (startTimeDelaySec == 0)
+                        tradingTimeEvent.EventTime = StartTradingTimeLocal;
+                    else
+                        tradingTimeEvent.EventTime = DateTime.Now.AddSeconds(startTimeDelaySec);
+                    break;
+                case ETradingTimeEventType.EndTradingIn30Seconds:
+                    tradingTimeEvent.EventTime = EndTradingTimeLocal.AddSeconds(-30);
+                    break;
+                case ETradingTimeEventType.EndTradingIn60Seconds:
+                    tradingTimeEvent.EventTime = EndTradingTimeLocal.AddSeconds(-60);
+                    break;
+                case ETradingTimeEventType.EndTrading:
+                    tradingTimeEvent.EventTime = EndTradingTimeLocal;
+                    break;
+                default:
+                    return;
+            }
+
+            
+            AddScheduledTask(tradingTimeEvent.EventTime.Subtract(DateTime.Now), () =>
+            {
+                SendMessageToAllComponents(tradingTimeEvent);
+            });
+        }
+
+        #endregion
     }
 }

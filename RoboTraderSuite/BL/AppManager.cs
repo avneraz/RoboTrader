@@ -132,7 +132,7 @@ namespace TNS.BL
                 {
                     DefaultHost = "127.0.0.1",
                     AppClientId = 11,
-                    AppPort = 4001,//7496,
+                    AppPort = 7496,//7496,4001,
                     MainAccount = "U1450837",
                     WDAppClientId = 12,
                     DBWritePeriod = TimeSpan.FromSeconds(10)

@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="AccountManager.cs" />
     <Compile Include="AppManager.cs" />
+    <Compile Include="DataObjects\TradingTimeEvent.cs" />
     <Compile Include="Distributer.cs" />
     <Compile Include="Interfaces\IOptionsManager.cs" />
     <Compile Include="Interfaces\IOrdersManager.cs" />
@@ -94,9 +95,7 @@
       <Name>UILogic</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataObjects\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
