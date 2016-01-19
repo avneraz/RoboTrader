@@ -140,8 +140,8 @@ namespace TNS.BL.UnlManagers
                 if (IsWorkingDay)
                 {
                     AddTimeEventTask(ETradingTimeEventType.StartTrading);
-                    AddTimeEventTask(ETradingTimeEventType.EndTradingIn30Seconds);
                     AddTimeEventTask(ETradingTimeEventType.EndTradingIn60Seconds);
+                    AddTimeEventTask(ETradingTimeEventType.EndTradingIn30Seconds);
                     AddTimeEventTask(ETradingTimeEventType.EndTrading);
 
                 }
@@ -151,9 +151,9 @@ namespace TNS.BL.UnlManagers
             else //Now is Working Time, The trading is already start
             {
                 //Set end events
-                AddTimeEventTask(ETradingTimeEventType.StartTrading, 10);//Send also the start event because the trader will start in 10 sec
-                AddTimeEventTask(ETradingTimeEventType.EndTradingIn30Seconds);
+                AddTimeEventTask(ETradingTimeEventType.StartTrading, 20);//Send also the start event because the trader will start in 10 sec
                 AddTimeEventTask(ETradingTimeEventType.EndTradingIn60Seconds);
+                AddTimeEventTask(ETradingTimeEventType.EndTradingIn30Seconds);
                 AddTimeEventTask(ETradingTimeEventType.EndTrading);
                 //Evaluate again tomorrow:
                 AddScheduledTask((DateTime.Today.AddDays(1).AddSeconds(1)).Subtract(DateTime.Now), EvaluateTradingEvents);
@@ -168,11 +168,11 @@ namespace TNS.BL.UnlManagers
                 case ETradingTimeEventType.StartTrading:
                     tradingTimeEvent.EventTime = startTimeDelaySec == 0 ? StartTradingTimeLocal : DateTime.Now.AddSeconds(startTimeDelaySec);
                     break;
-                case ETradingTimeEventType.EndTradingIn30Seconds:
-                    tradingTimeEvent.EventTime = EndTradingTimeLocal.AddSeconds(-30);
-                    break;
                 case ETradingTimeEventType.EndTradingIn60Seconds:
                     tradingTimeEvent.EventTime = EndTradingTimeLocal.AddSeconds(-60);
+                    break;
+                case ETradingTimeEventType.EndTradingIn30Seconds:
+                    tradingTimeEvent.EventTime = EndTradingTimeLocal.AddSeconds(-30);
                     break;
                 case ETradingTimeEventType.EndTrading:
                     tradingTimeEvent.EventTime = EndTradingTimeLocal;
@@ -184,6 +184,7 @@ namespace TNS.BL.UnlManagers
             
             AddScheduledTask(tradingTimeEvent.EventTime.Subtract(DateTime.Now), () =>
             {
+                Logger.InfoFormat("Event invocation : {0}", tradingTimeEvent);
                 SendMessageToAllComponents(tradingTimeEvent);
             });
         }

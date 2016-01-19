@@ -23,5 +23,12 @@ namespace TNS.BL.DataObjects
         public ETradingTimeEventType TradingTimeEventType { get; }
         public DateTime EventTime { get; set; }
         public bool  Done { get; set; }
+
+        public override string ToString()
+        {
+            string toString = $"Event type: {TradingTimeEventType}, EventTime={EventTime}.";
+
+            return toString;
+        }
     }
 }
