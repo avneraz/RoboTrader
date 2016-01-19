@@ -116,7 +116,7 @@ namespace TNS.BL.UnlManagers
         /// Get indication if today is working day for the UNL security.
         /// </summary>
         public bool IsWorkingDay => SecurityContract.IsWorkingDay;
-        public DateTime NextWorkingDay => SecurityContract.NextWorkingDay;
+        public DateTime NextWorkingTime => SecurityContract.NextWorkingTime;
         public DateTime StartTradingTimeLocal => SecurityContract.StartTradingTimeLocal;
         public DateTime EndTradingTimeLocal => SecurityContract.EndTradingTimeLocal;
 
@@ -166,10 +166,7 @@ namespace TNS.BL.UnlManagers
             switch (eventType)
             {
                 case ETradingTimeEventType.StartTrading:
-                    if (startTimeDelaySec == 0)
-                        tradingTimeEvent.EventTime = StartTradingTimeLocal;
-                    else
-                        tradingTimeEvent.EventTime = DateTime.Now.AddSeconds(startTimeDelaySec);
+                    tradingTimeEvent.EventTime = startTimeDelaySec == 0 ? StartTradingTimeLocal : DateTime.Now.AddSeconds(startTimeDelaySec);
                     break;
                 case ETradingTimeEventType.EndTradingIn30Seconds:
                     tradingTimeEvent.EventTime = EndTradingTimeLocal.AddSeconds(-30);

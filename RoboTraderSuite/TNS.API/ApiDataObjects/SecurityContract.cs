@@ -35,7 +35,7 @@ namespace TNS.API.ApiDataObjects
         /// Get indication if today is working day for AAPL security.
         /// </summary>
         public bool IsWorkingDay { get; set; }
-        public DateTime NextWorkingDay { get; set; }
+        public DateTime NextWorkingTime { get; set; }
         public DateTime StartTradingTime { get; set; }
         public DateTime StartTradingTimeLocal { get; set; }
         public DateTime EndTradingTime { get; set; }
