@@ -74,6 +74,7 @@ namespace TNS.BL
             BuildManagers();
             StartManagers();
             APIWrapper.ConnectToBroker();
+            Logger.InfoFormat( "AppManager up! ");
         }
 
         private void StartManagers()
@@ -89,6 +90,7 @@ namespace TNS.BL
         {
             GeneralTimer.GeneralTimerInstance.StopGeneralTimer();
             APIWrapper.DisconnectFromBroker();
+            Logger.InfoFormat("ShutDown Application! ");
             //TOADO add another shutdown actions:
         }
         private void BuildManagers()
@@ -132,7 +134,7 @@ namespace TNS.BL
                 {
                     DefaultHost = "127.0.0.1",
                     AppClientId = 11,
-                    AppPort = 4001,//7496,4001,
+                    AppPort = 7496,//7496,4001,
                     MainAccount = "U1450837",
                     WDAppClientId = 12,
                     DBWritePeriod = TimeSpan.FromSeconds(10)
@@ -145,7 +147,7 @@ namespace TNS.BL
                     HighStrikePercentage = 10,
                     LowStrikePercentage = 20,
                     MinimumDaysToExpiration = 20,
-                    MaxmumDaysToExpiration = 60,
+                    MaxmumDaysToExpiration = 45,
                 },
                 Trading =
                 {
