@@ -24,9 +24,11 @@ namespace TNS.BL.DataObjects
         public DateTime EventTime { get; set; }
         public bool  Done { get; set; }
 
+        public string TaskUniqueIdentifier { get; set; }
+
         public override string ToString()
         {
-            string toString = $"Event type: {TradingTimeEventType}, EventTime={EventTime}.";
+            string toString = $" {TradingTimeEventType}, Task time: {EventTime}. (task: '{TaskUniqueIdentifier}')";
 
             return toString;
         }
