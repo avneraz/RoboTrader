@@ -45,8 +45,9 @@ namespace TNS.BL.UnlManagers
             //It's Option:
             var optionContract = (OptionContract) contract;
             var key = optionContract.OptionKey;
-
-            PositionDataDic[key] = positionData;
+            var optionsPositionData = PositionDataFactory.CreatePoisitionData(contract, positionData.Position,
+                positionData.AverageCost);
+            PositionDataDic[key] = optionsPositionData;//positionData;
 
             if (GetOptionData(positionData, key) == false)
                 APIWrapper.RequestContinousContractData(new List<ContractBase>() { optionContract });
@@ -94,7 +95,7 @@ namespace TNS.BL.UnlManagers
         {
             Logger.InfoFormat("PositionsDataBuilder({0}) Start load positions from broker.", Symbol);
            
-            //APIWrapper.RequestContinousPositionsData();
+            APIWrapper.RequestContinousPositionsData();
             UNLManager.AddScheduledTaskOnUnl(TimeSpan.FromSeconds(1), AddOptionDataToPosition, true);
         }
 
