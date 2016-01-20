@@ -182,8 +182,8 @@ namespace TNS.API.IBApiWrapper
             securityContract.EndTradingTimeLocal = TimeZoneInfo.ConvertTime
                 (securityContract.EndTradingTime, est, ist);
 
-            //For Test: securityContract.StartTradingTimeLocal = DateTime.Now.AddMinutes(1);
-            //For Test: securityContract.EndTradingTimeLocal = DateTime.Now.AddMinutes(3);
+            //For Testing: securityContract.StartTradingTimeLocal = DateTime.Now.AddMinutes(1);
+            //For Testing: securityContract.EndTradingTimeLocal = DateTime.Now.AddMinutes(3);
 
             msg = string.Format("Today is workingDay! StartTradingTime={0}, EndTradingTime:{1}. ",
                 securityContract.StartTradingTimeLocal, securityContract.EndTradingTimeLocal);

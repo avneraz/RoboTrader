@@ -6,8 +6,6 @@ using TNS.BL.Interfaces;
 
 namespace TNS.BL.UnlManagers
 {
-   
-
     public abstract class UnlMemberBaseManager : IUnlBaseMemberManager
     {
         protected UnlMemberBaseManager(ITradingApi apiWrapper, ManagedSecurity managedSecurity, UNLManager unlManager)
@@ -23,15 +21,14 @@ namespace TNS.BL.UnlManagers
         protected readonly ManagedSecurity ManagedSecurity;
         protected readonly ITradingApi APIWrapper;
         protected readonly UNLManager UNLManager;
-        // ReSharper disable once InconsistentNaming
-        protected BaseSecurityData _mainSecurityData;
+      
 
-        public virtual BaseSecurityData MainSecurityData
-        {
-            get { return _mainSecurityData; }
-            protected set { _mainSecurityData = value; }
-        }
-
+        public virtual SecurityData MainSecurityData { get; protected set; }
+       
+        /// <summary>
+        /// Used as flag for request option chain:
+        /// </summary>
+        protected bool RequestOptionChainDone { get; set; }
         public bool IsConnected => ConnectionStatus == ConnectionStatus.Connected;
         public ConnectionStatus ConnectionStatus { get; private set; }
         public virtual bool HandleMessage(IMessage message)
@@ -40,8 +37,7 @@ namespace TNS.BL.UnlManagers
             switch (message.APIDataType)
             {
                 case EapiDataTypes.SecurityData:
-                    var securityData = message as BaseSecurityData;
-                    MainSecurityData = securityData;
+                    MainSecurityData = (SecurityData)message;
                     result = true;
                     break;
                 case EapiDataTypes.BrokerConnectionStatus:
@@ -55,7 +51,6 @@ namespace TNS.BL.UnlManagers
             }
             return result;
         }
-
         public virtual void DoWorkAfterConnection()
         {
         }

@@ -213,7 +213,9 @@ namespace TNS.API.IBApiWrapper
 
             optionToLoadParameters.IncreamentRequestOptionMarketDataCounter();
             _handler.RegisterContract(reqId, contractBase);
-            Logger.NoticeFormat("##Request#{0} to _clientSocket.reqMktData: {1}", optionToLoadParameters.RequestOptionMarketDataCount, optionContractOrginal.ToString());
+
+            Logger.DebugFormat("##Request Market Data#{0}:{1}==>{2}", optionToLoadParameters.RequestOptionMarketDataCount, 
+                optionContractOrginal.Symbol, optionContractOrginal.OptionKey);
             //If it's option, request all session option chain:
             //First: check if already exist, register it if needed:
             OptionContract optionContract = optionContractOrginal.Copy();

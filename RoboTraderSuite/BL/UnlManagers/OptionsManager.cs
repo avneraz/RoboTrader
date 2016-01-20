@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using Infra.Bus;
 using Infra.Enum;
 using log4net;
@@ -34,7 +33,18 @@ namespace TNS.BL.UnlManagers
         public override bool HandleMessage(IMessage message)
         {
             bool result = base.HandleMessage(message);
-           
+
+            if ((RequestOptionChainDone == false) && (message.APIDataType == EapiDataTypes.SecurityData))
+            {
+                //Request detail contract only on the first time:
+                if ((MainSecurityData != null) && MainSecurityData.LastPrice > 0)
+                {
+                    RequestOptionChainDone = true;
+                    _optionToLoadParameters = new OptionToLoadParameters(MainSecurityData);
+                    APIWrapper.RequestOptionChain(_optionToLoadParameters);
+                    //ForTest: if (Symbol == "MSFT") { }
+                }
+            }
             if (result)
                 return true;
 
@@ -75,29 +85,26 @@ namespace TNS.BL.UnlManagers
        
         private Stopwatch StopwatchT { get; } = new Stopwatch();
 
-        public override BaseSecurityData MainSecurityData
-        {
-            get { return base.MainSecurityData; }
-            protected set
-            {
-                base.MainSecurityData = value;
+        //public override SecurityData MainSecurityData
+        //{
+        //    get { return base.MainSecurityData; }
+        //    protected set
+        //    {
+        //        base.MainSecurityData = value;
               
-                if (_requestOptionChainDone == false && (value != null) && 
-                    base.MainSecurityData.LastPrice > 0)
-                {
-                    _requestOptionChainDone = true;
-                    _optionToLoadParameters = new OptionToLoadParameters(base.MainSecurityData);
-                    APIWrapper.RequestOptionChain(_optionToLoadParameters);
-                }
+        //        if (RequestOptionChainDone == false && (value != null) && 
+        //            base.MainSecurityData.LastPrice > 0)
+        //        {
+        //            RequestOptionChainDone = true;
+        //            _optionToLoadParameters = new OptionToLoadParameters(base.MainSecurityData);
+        //            APIWrapper.RequestOptionChain(_optionToLoadParameters);
+        //        }
                 
-            }
-        }
+        //    }
+        //}
 
         private OptionToLoadParameters _optionToLoadParameters;
-        /// <summary>
-        /// Used as flag for request option chain:
-        /// </summary>
-        private bool _requestOptionChainDone;
+       
         /// <summary>
         /// Loads the options chain of all active session of the active underlines.
         /// It send Request Contract details to load the option chain of the specified UNL.

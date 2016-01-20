@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using Infra.Bus;
 using Infra.Enum;
 using log4net;
-using NHibernate.Mapping;
 using TNS.API;
 using TNS.API.ApiDataObjects;
 using TNS.BL.DataObjects;
 using TNS.BL.Interfaces;
+using IMessage = Infra.Bus.IMessage;
 
 namespace TNS.BL.UnlManagers
 {
@@ -33,6 +32,8 @@ namespace TNS.BL.UnlManagers
             RemoveScheduledTask(uniqueIdentifier);
         }
 
+        public string Symbol => MainSecurityData != null ? MainSecurityData.GetContract().Symbol : string.Empty;
+        public SecurityData MainSecurityData { get; set; }
         public SecurityContract SecurityContract { get; set; }
         private List<IUnlBaseMemberManager> _memberManagersList;
         private ITradingApi APIWrapper { get; }
@@ -47,6 +48,7 @@ namespace TNS.BL.UnlManagers
                     EvaluateTradingEvents();
                     break;
                 case EapiDataTypes.SecurityData:
+                    MainSecurityData = (SecurityData)message;
                     SendMessageToAllComponents(message);
                     break;
                 case EapiDataTypes.OptionData:
@@ -81,8 +83,8 @@ namespace TNS.BL.UnlManagers
             }
         }
 
-        private bool IsConnected => ConnectionStatus == ConnectionStatus.Connected;
-        private ConnectionStatus ConnectionStatus { get; set; }
+        public bool IsConnected => ConnectionStatus == ConnectionStatus.Connected;
+        public ConnectionStatus ConnectionStatus { get; private set; }
         protected void DoWorkAfterConnection()
         {
             CreateManagers();
@@ -129,7 +131,8 @@ namespace TNS.BL.UnlManagers
                 return IsWorkingDay && now >= StartTradingTimeLocal && now < EndTradingTimeLocal;
             }
         }
-       
+       private Dictionary<ETradingTimeEventType, TradingTimeEvent> TradingTimeEventDic { get; } =
+            new Dictionary<ETradingTimeEventType, TradingTimeEvent>();
         /// <summary>
         /// Evaluate the trading events according to the trading time of the UNL.
         /// </summary>
@@ -139,25 +142,34 @@ namespace TNS.BL.UnlManagers
             {
                 if (IsWorkingDay)
                 {
-                    AddTimeEventTask(ETradingTimeEventType.StartTrading);
-                    AddTimeEventTask(ETradingTimeEventType.EndTradingIn60Seconds);
-                    AddTimeEventTask(ETradingTimeEventType.EndTradingIn30Seconds);
-                    AddTimeEventTask(ETradingTimeEventType.EndTrading);
-
+                    AddTimeEventTasks();
                 }
-                //Evaluate again tomorrow:
-                 AddScheduledTask((DateTime.Today.AddDays(1).AddSeconds(1)).Subtract(DateTime.Now),EvaluateTradingEvents);
             }
-            else //Now is Working Time, The trading is already start
+            else //Now is Working Time, The trading is already start and doesn't end.
             {
-                //Set end events
-                AddTimeEventTask(ETradingTimeEventType.StartTrading, 20);//Send also the start event because the trader will start in 10 sec
-                AddTimeEventTask(ETradingTimeEventType.EndTradingIn60Seconds);
-                AddTimeEventTask(ETradingTimeEventType.EndTradingIn30Seconds);
-                AddTimeEventTask(ETradingTimeEventType.EndTrading);
-                //Evaluate again tomorrow:
-                AddScheduledTask((DateTime.Today.AddDays(1).AddSeconds(1)).Subtract(DateTime.Now), EvaluateTradingEvents);
+                AddTimeEventTasks(10);
             }
+            //Evaluate again tomorrow on first seconds:
+            RefreshContractDetailOnNextDay();
+
+        }
+
+        private void RefreshContractDetailOnNextDay()
+        {
+            DateTime nextContractRefreshingTime = (DateTime.Today.AddDays(1).AddSeconds(1));
+
+            //For test: nextContractRefreshingTime = (DateTime.Now.AddMinutes(1).AddSeconds(1));
+
+            AddScheduledTask(nextContractRefreshingTime.Subtract(DateTime.Now), 
+                () => { APIWrapper.RequestSecurityContractDetails(MainSecurityData); } );
+            Logger.InfoFormat("~~~~~{0}: Scheduled task for refreshing contract at:  {1:G}",Symbol, nextContractRefreshingTime);
+        }
+        private void AddTimeEventTasks(int startTimeDelaySec = 0)
+        {
+            AddTimeEventTask(ETradingTimeEventType.StartTrading, startTimeDelaySec);
+            AddTimeEventTask(ETradingTimeEventType.EndTradingIn60Seconds);
+            AddTimeEventTask(ETradingTimeEventType.EndTradingIn30Seconds);
+            AddTimeEventTask(ETradingTimeEventType.EndTrading);
         }
 
         private void AddTimeEventTask(ETradingTimeEventType eventType, int startTimeDelaySec = 0)
@@ -167,6 +179,7 @@ namespace TNS.BL.UnlManagers
             {
                 case ETradingTimeEventType.StartTrading:
                     tradingTimeEvent.EventTime = startTimeDelaySec == 0 ? StartTradingTimeLocal : DateTime.Now.AddSeconds(startTimeDelaySec);
+
                     break;
                 case ETradingTimeEventType.EndTradingIn60Seconds:
                     tradingTimeEvent.EventTime = EndTradingTimeLocal.AddSeconds(-60);
@@ -180,13 +193,34 @@ namespace TNS.BL.UnlManagers
                 default:
                     return;
             }
-
+            //Verify task time is logical
+            if(DateTime.Now>=tradingTimeEvent.EventTime)
+                return;
             
-            AddScheduledTask(tradingTimeEvent.EventTime.Subtract(DateTime.Now), () =>
+            AddTradingTimeEvent(tradingTimeEvent);
+            Logger.InfoFormat("{0}: Event Registration: ***** {1} ",Symbol, tradingTimeEvent);
+        }
+
+        private void AddTradingTimeEvent(TradingTimeEvent tradingTimeEvent)
+        {
+            lock (TradingTimeEventDic)
             {
-                Logger.InfoFormat("Event invocation : {0}", tradingTimeEvent);
-                SendMessageToAllComponents(tradingTimeEvent);
-            });
+                if (TradingTimeEventDic.ContainsKey(tradingTimeEvent.TradingTimeEventType))
+                {
+                    RemoveScheduledTask(tradingTimeEvent.TaskUniqueIdentifier);
+                    Logger.InfoFormat("{0}: RemoveScheduledTask: ----- {1}", Symbol,
+                        TradingTimeEventDic[tradingTimeEvent.TradingTimeEventType]);
+                }
+            }
+
+            tradingTimeEvent.TaskUniqueIdentifier =
+                AddScheduledTask(tradingTimeEvent.EventTime.Subtract(DateTime.Now), () =>
+                {
+                    Logger.InfoFormat("{0}: Event invocation: !!!!! {1}", Symbol, tradingTimeEvent);
+                    SendMessageToAllComponents(tradingTimeEvent);
+                });
+            TradingTimeEventDic[tradingTimeEvent.TradingTimeEventType] = tradingTimeEvent;
+           
         }
 
         #endregion
