@@ -211,16 +211,16 @@ namespace TNS.BL.UnlManagers
                     Logger.InfoFormat("{0}: RemoveScheduledTask: ----- {1}", Symbol,
                         TradingTimeEventDic[tradingTimeEvent.TradingTimeEventType]);
                 }
-            }
 
-            tradingTimeEvent.TaskUniqueIdentifier =
-                AddScheduledTask(tradingTimeEvent.EventTime.Subtract(DateTime.Now), () =>
-                {
-                    Logger.InfoFormat("{0}: Event invocation: !!!!! {1}", Symbol, tradingTimeEvent);
-                    SendMessageToAllComponents(tradingTimeEvent);
-                });
-            TradingTimeEventDic[tradingTimeEvent.TradingTimeEventType] = tradingTimeEvent;
-           
+
+                tradingTimeEvent.TaskUniqueIdentifier =
+                    AddScheduledTask(tradingTimeEvent.EventTime.Subtract(DateTime.Now), () =>
+                    {
+                        Logger.InfoFormat("{0}: Event invocation: !!!!! {1}", Symbol, tradingTimeEvent);
+                        SendMessageToAllComponents(tradingTimeEvent);
+                    });
+                TradingTimeEventDic[tradingTimeEvent.TradingTimeEventType] = tradingTimeEvent;
+            }
         }
 
         #endregion

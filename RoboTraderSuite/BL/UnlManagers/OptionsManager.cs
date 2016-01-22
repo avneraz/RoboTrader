@@ -85,26 +85,13 @@ namespace TNS.BL.UnlManagers
        
         private Stopwatch StopwatchT { get; } = new Stopwatch();
 
-        //public override SecurityData MainSecurityData
-        //{
-        //    get { return base.MainSecurityData; }
-        //    protected set
-        //    {
-        //        base.MainSecurityData = value;
-              
-        //        if (RequestOptionChainDone == false && (value != null) && 
-        //            base.MainSecurityData.LastPrice > 0)
-        //        {
-        //            RequestOptionChainDone = true;
-        //            _optionToLoadParameters = new OptionToLoadParameters(base.MainSecurityData);
-        //            APIWrapper.RequestOptionChain(_optionToLoadParameters);
-        //        }
-                
-        //    }
-        //}
-
+      
         private OptionToLoadParameters _optionToLoadParameters;
-       
+
+        public void UpdateOutOfBoundaryOption(List<OptionContract> optionContractList)
+        {
+            APIWrapper.UpdateOutOfBoundaryOption(Symbol,optionContractList);
+        }
         /// <summary>
         /// Loads the options chain of all active session of the active underlines.
         /// It send Request Contract details to load the option chain of the specified UNL.
@@ -115,10 +102,7 @@ namespace TNS.BL.UnlManagers
             StopwatchT.Start();
         }
 
-        //public void RequestContinousContractData(List<ContractBase> contractList)
-        //{
-        //    APIWrapper.RequestContinousContractData(contractList);
-        //}
+     
     }
 
     internal class LoadSessionInfo

@@ -10,5 +10,6 @@ namespace TNS.BL.Interfaces
         ConnectionStatus ConnectionStatus { get; }
         bool HandleMessage(IMessage message);
         void DoWorkAfterConnection();
+        bool RequestOptionChainDone { get; set; }
     }
 }

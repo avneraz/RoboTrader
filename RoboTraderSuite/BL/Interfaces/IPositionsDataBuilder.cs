@@ -7,6 +7,6 @@ namespace TNS.BL.Interfaces
     {
         //Dictionary<string, PositionData> PositionDataDic { get; }
        
-        void AddOptionDataToPosition();
+        void AddOrUpdateDataToPosition();
     }
 }

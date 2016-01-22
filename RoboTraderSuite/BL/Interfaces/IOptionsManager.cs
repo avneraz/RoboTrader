@@ -8,6 +8,8 @@ namespace TNS.BL.Interfaces
         //Dictionary<string, OptionData> OptionDataDic { get; }
         OptionData GetOptionData(string optionKey);
 
-        //void RequestContinousContractData(List<ContractBase> contractList);
+        void UpdateOutOfBoundaryOption(List<OptionContract> optionContractList);
+
+       
     }
 }

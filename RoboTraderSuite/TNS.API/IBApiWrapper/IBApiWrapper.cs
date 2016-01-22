@@ -126,9 +126,14 @@ namespace TNS.API.IBApiWrapper
         public void RequestOptionChain(OptionToLoadParameters optionToLoadParameters)
         {
             Logger.Info($"{nameof(RequestOptionChain)} was called, loading {optionToLoadParameters}");
+
             if(OptionToLoadParametersDic == null)
                 OptionToLoadParametersDic = new Dictionary<string, OptionToLoadParameters>();
-            OptionToLoadParametersDic.Add(optionToLoadParameters.Symbol, optionToLoadParameters);
+
+            lock (OptionToLoadParametersDic)
+            {
+                OptionToLoadParametersDic.Add(optionToLoadParameters.Symbol, optionToLoadParameters); 
+            }
             //First: Load pivot option
             OptionContract optionContract = optionToLoadParameters.OptionContractPivotToLoad;
            
@@ -137,6 +142,14 @@ namespace TNS.API.IBApiWrapper
             _clientSocket.reqContractDetails(requestId, ibContract);
         }
 
+        public void UpdateOutOfBoundaryOption(string symbol, List<OptionContract> optionContractList)
+        {
+            lock (OptionToLoadParametersDic)
+            {
+                OptionToLoadParametersDic[symbol].AddOutOfBoundaryOptionContract(optionContractList);
+            }
+        }
+      
         public Dictionary<string, OptionToLoadParameters> OptionToLoadParametersDic { get; set; }
         /// <summary>
         /// Request detail data for one security that is not option.
@@ -186,10 +199,10 @@ namespace TNS.API.IBApiWrapper
         private void HandlerOnContractDetailsMessage(int requestId, ContractDetails contractDetails)
         {
             var contractBase = contractDetails.Summary.ToContract();
-            
+
             if (_contractToRequestIds.ContainsKey(contractBase))
                 return;
-            
+
             _contractToRequestIds[contractBase] = requestId;
             int reqId = RequestId;
             if (contractBase.SecurityType != SecurityType.Option)
@@ -199,9 +212,14 @@ namespace TNS.API.IBApiWrapper
                 _handler.RegisterContract(reqId, contractBase);
                 return;
             }
-            
-            OptionToLoadParameters optionToLoadParameters = OptionToLoadParametersDic
-                [contractBase.Symbol];
+            if(OptionToLoadParametersDic == null)
+                return;
+
+            OptionToLoadParameters optionToLoadParameters;
+            lock (OptionToLoadParametersDic)
+            {
+                optionToLoadParameters = OptionToLoadParametersDic[contractBase.Symbol]; 
+            }
 
             var optionContractOrginal = (OptionContract)contractBase;
 

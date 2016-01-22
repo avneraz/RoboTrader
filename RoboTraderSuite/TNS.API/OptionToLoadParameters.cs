@@ -15,23 +15,7 @@ namespace TNS.API
     /// </summary>
     public class OptionToLoadParameters
     {
-        ////TODO ==> TAKE THE CONST FROM CONFIGURATION:
-        ///// <summary>
-        /////  = 5%;
-        ///// </summary>
-        //private const int HIGH_STRIKE_PRECENTAGE = 10;
-        ///// <summary>
-        /////   = 15%;
-        ///// </summary>
-        //private const int LOW_STRIKE_PRECENTAGE = 20;
-        ///// <summary>
-        ///// = 15 days.
-        ///// </summary>
-        //private const int MIN_DAYS_TO_EXPIRATION = 20;
-        ///// <summary>
-        ///// = 60 days
-        ///// </summary>
-        //private const int MAX_DAYS_TO_EXPIRATION = 60;
+       
         public OptionToLoadParameters(BaseSecurityData baseSecurityData)
         {
             BaseSecurityData = baseSecurityData;
@@ -67,6 +51,8 @@ namespace TNS.API
             }
         }
         private double? _atTheMoneyStrike;
+        private Dictionary<string, OptionContract> _outOfBoundaryOptionContractDic;
+
         public OptionContract OptionContractPivotToLoad
         {
             get
@@ -84,6 +70,28 @@ namespace TNS.API
                 return optionContract;
             }
         }
+
+        /// <summary>
+        /// contains OptionContract that requested separately by PositionDataBuilder.
+        /// </summary>
+        public Dictionary<string, OptionContract> OutOfBoundaryOptionContractDic =>
+            _outOfBoundaryOptionContractDic ?? (_outOfBoundaryOptionContractDic = new Dictionary<string, OptionContract>());
+
+        public void AddOutOfBoundaryOptionContract(OptionContract optionContract)
+        {
+            if (IsOptionWithinLoadBoundaries(optionContract)) return;
+
+            OutOfBoundaryOptionContractDic[optionContract.OptionKey] = optionContract;
+        }
+
+        public void AddOutOfBoundaryOptionContract(List<OptionContract> optionContractList)
+        {
+            foreach (var optionContract in optionContractList)
+            {
+                AddOutOfBoundaryOptionContract(optionContract);
+            }
+        }
+
         /// <summary>
         /// Check if the option is between the time boundary.
         /// 
@@ -92,6 +100,9 @@ namespace TNS.API
         /// <returns></returns>
         public bool IsOptionWithinLoadBoundaries(OptionContract optionContract)
         {
+            if(OutOfBoundaryOptionContractDic.ContainsKey(optionContract.OptionKey))
+                return true;
+
             //Check expiration boundaries:
             if (DateTime.Now.AddDays(MinDaysToExpiration) > optionContract.Expiry)
                 return false;
@@ -101,7 +112,6 @@ namespace TNS.API
             //Check strike boundaries:
             switch (optionContract.OptionType)
             {
-                
                 case OptionType.Call:
                     if (optionContract.Strike > CallMaxStrike)
                         return false;

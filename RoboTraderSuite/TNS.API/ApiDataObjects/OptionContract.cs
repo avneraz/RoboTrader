@@ -65,6 +65,15 @@ namespace TNS.API.ApiDataObjects
             return $"OptionContract: [{base.ToString()}, Expiry: {Expiry}, Strike: {Strike}, OptionType: {OptionType}, Multiplier: {Multiplier}]";
         }
 
+        public string Description
+        {
+            get
+            {
+                string desc = string.Format("{0}.{1:dd-MMM}:{2}{3}, {4}, Multiplier:{5}",
+                    Symbol, Expiry, OptionType, Strike, Currency, Multiplier);
+                return desc;
+            }
+        }
         public override bool Equals(object obj)
         {
 

@@ -28,7 +28,7 @@ namespace TNS.BL.UnlManagers
         /// <summary>
         /// Used as flag for request option chain:
         /// </summary>
-        protected bool RequestOptionChainDone { get; set; }
+        public bool RequestOptionChainDone { get; set; }
         public bool IsConnected => ConnectionStatus == ConnectionStatus.Connected;
         public ConnectionStatus ConnectionStatus { get; private set; }
         public virtual bool HandleMessage(IMessage message)
