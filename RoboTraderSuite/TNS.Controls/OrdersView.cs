@@ -14,32 +14,32 @@ using UILogic;
 
 namespace TNS.Controls
 {
-    public partial class OrdersView : UserControl, IUIData
+    public partial class OrdersView : UserControl
     {
         public OrdersView()
         {
             InitializeComponent();
         }
-        public UIDataManager UIDataManager { get; set; }
-        public void SetUIDataManager(UIDataManager uiDataManager)
-        {
+        //public UIDataManager UIDataManager { get; set; }
+        //public void SetUIDataManager(UIDataManager uiDataManager)
+        //{
             
-            UIDataManager = uiDataManager;
-            this.InvokeIfRequired(() => {
-                orderStatusDataBindingSource.DataSource = UIDataManager.GetOrderStatusDataList();
-                orderStatusDataBindingSource.ResetBindings(false);
-            });
-            UIDataManager.OrderStatusDataUpdated += UIDataManagerOnOrderStatusDataUpdated;
-        }
+        //    UIDataManager = uiDataManager;
+        //    this.InvokeIfRequired(() => {
+        //        orderStatusDataBindingSource.DataSource = UIDataManager.GetOrderStatusDataList();
+        //        orderStatusDataBindingSource.ResetBindings(false);
+        //    });
+        //    UIDataManager.OrderStatusDataUpdated += UIDataManagerOnOrderStatusDataUpdated;
+        //}
 
-        private void UIDataManagerOnOrderStatusDataUpdated(OrderStatusData orderStatusData)
-        {
-            this.InvokeIfRequired(() =>
-            {
-                orderStatusDataBindingSource.DataSource = UIDataManager.GetOrderStatusDataList();
-                orderStatusDataBindingSource.ResetBindings(false);
-            });
-        }
+        //private void UIDataManagerOnOrderStatusDataUpdated(OrderStatusData orderStatusData)
+        //{
+        //    this.InvokeIfRequired(() =>
+        //    {
+        //        orderStatusDataBindingSource.DataSource = UIDataManager.GetOrderStatusDataList();
+        //        orderStatusDataBindingSource.ResetBindings(false);
+        //    });
+        //}
 
 
 

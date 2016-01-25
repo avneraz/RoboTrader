@@ -59,6 +59,7 @@ namespace TNS.API.ApiDataObjects
         /// The last known VIX, normally it's updated by the associated manager (TradingManager).
         /// </summary>
         public double VIX  { get; set; }
+        public double UnderlinePrice  { get; set; }
         #endregion
 
         public double MarketValue { get; set; }

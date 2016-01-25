@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Net.Sockets;
+using System.Threading;
 using System.Windows.Forms;
+using Infra;
 using Infra.Extensions;
 using Infra.PopUpMessages;
 using log4net;
@@ -31,7 +33,25 @@ namespace TNS.RoboTrader
 
         private void MainForm_Load(object sender, System.EventArgs e)
         {
-            Logger.Info("Start Program - Main Form");
+            Logger.Info("Start RoboTrader - Main Form");
+            GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromMilliseconds(1), StartApplication, false);
+            GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(30),
+                () =>
+                {
+                    if (_startApplicationMethodDone == false)
+                    {
+                        this.InvokeIfRequired(() =>
+                        {
+                            PopupMessageForm.ShowMessage("Start Application Method fail, Time out 30 sec!!!!!!",
+                                Color.Red, ParentForm, 5, withSiren: true);
+                        });
+                    }
+                }, false);
+
+        }
+
+        private void StartApplication()
+        {
             try
             {
                 _appManager = new AppManager();
@@ -42,16 +62,23 @@ namespace TNS.RoboTrader
 
                 _appManager.Distributer.AddUIMessageHandler(_uiMessageHandler);
                 _appManager.ConnectToBroker();
+                //For Test: Thread.Sleep(30000);
+                _startApplicationMethodDone = true;
+                this.InvokeIfRequired(() =>
+                {
+                    PopupMessageForm.ShowMessage("Start Application Method finish successfully!!!", Color.Green,
+                        ParentForm, 5, withSiren: false);
+                });
             }
             catch (Exception ex)
             {
                 Logger.Error(ex);
-                MessageBox.Show(ex.Message);
+                this.InvokeIfRequired(() => { MessageBox.Show(ex.Message); });
+                
             }
-            
-
         }
 
+        private bool _startApplicationMethodDone;
 
         private void DistributerOnExceptionThrown(ExceptionData exceptionData)
         {

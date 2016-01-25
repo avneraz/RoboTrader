@@ -61,6 +61,8 @@ namespace TNS.API.ApiDataObjects
                 return CalculatedOptionPrice * Position * OptionData.Multiplier * CurrencyRate;
             }
         }
+        public double IV => OptionData?.ImpliedVolatility ?? 0;
+
         public double CalculatedOptionPrice
         {
             get

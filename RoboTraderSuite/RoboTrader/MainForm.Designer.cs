@@ -132,7 +132,7 @@
             this.mainSecuritiesView1.Name = "mainSecuritiesView1";
             this.mainSecuritiesView1.Size = new System.Drawing.Size(742, 515);
             this.mainSecuritiesView1.TabIndex = 0;
-            this.mainSecuritiesView1.UIDataManager = null;
+            //this.mainSecuritiesView1.UIDataManager = null;
             // 
             // xtraPageOrders
             // 
@@ -153,7 +153,7 @@
             this.ordersView1.Name = "ordersView1";
             this.ordersView1.Size = new System.Drawing.Size(724, 465);
             this.ordersView1.TabIndex = 1;
-            this.ordersView1.UIDataManager = null;
+            //this.ordersView1.UIDataManager = null;
             // 
             // btnRegisterForData
             // 

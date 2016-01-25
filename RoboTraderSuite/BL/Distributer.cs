@@ -67,10 +67,14 @@ namespace TNS.BL
                     break;
                 case EapiDataTypes.SecurityData:
                     _managedSecuritiesManager.Enqueue(message, false);
-                     symbolMessage = (ISymbolMessage)message;
-                    var key = symbolMessage.GetSymbolName();
-                    if (_unlManagersDic.ContainsKey(key))
-                        _unlManagersDic[key].Enqueue(symbolMessage, false);
+                    SecurityData securityData = (SecurityData) message;
+                    //ForTesting: if(securityData.SecurityContract.Symbol == "VIX"){ }
+
+                    SendToAllUnlManagers(message);
+                     //symbolMessage = (ISymbolMessage)message;
+                    //var key = symbolMessage.GetSymbolName();
+                    //if (_unlManagersDic.ContainsKey(key))
+                    //    _unlManagersDic[key].Enqueue(symbolMessage, false);
                     _dbWriter.Enqueue(message, false);
                     break;
                 case EapiDataTypes.BrokerConnectionStatus:
@@ -101,7 +105,7 @@ namespace TNS.BL
         {
             foreach (var unlManager in _unlManagersDic.Values)
             {
-                unlManager.Enqueue(message);
+                unlManager.Enqueue(message,false);
             }
         }
 

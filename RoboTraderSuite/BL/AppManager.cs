@@ -112,13 +112,13 @@ namespace TNS.BL
             MarginManager = new MarginManager(UNLManagerDic.Keys.ToList(), Distributer);
             DbWriter = new DBWriter(Configurations.Application.DBWritePeriod);
             Distributer.SetManagers(UNLManagerDic,AccountManager,ManagedSecuritiesManager, DbWriter,MarginManager);
-            UIDataManager = new UIDataManager();
+            //UIDataManager = new UIDataManager();
         }
         public Dictionary<string, SimpleBaseLogic> UNLManagerDic { get; private set; }
         public ITradingApi APIWrapper { get; private set; }
 
         #region Managers Properties
-        public UIDataManager UIDataManager { get; set; }
+        //public UIDataManager UIDataManager { get; set; }
         public Distributer Distributer { get; set; }
         public AccountManager AccountManager { get; private set; }
         public DBWriter DbWriter { get; set; }

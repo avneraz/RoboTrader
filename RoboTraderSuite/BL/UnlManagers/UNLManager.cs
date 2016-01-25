@@ -61,8 +61,17 @@ namespace TNS.BL.UnlManagers
                     EvaluateTradingEvents();
                     break;
                 case EapiDataTypes.SecurityData:
-                    MainSecurityData = (SecurityData)message;
-                    SendMessageToAllComponents(message);
+                    var securityData = (SecurityData) message;
+                    if (securityData.SecurityContract.Symbol == "VIX")
+                    {
+                        UnlTradingData.VIX = securityData.LastPrice;
+                    }
+                    else if (securityData.SecurityContract.Symbol == ManagedSecurity.Symbol)
+                    {
+                        UnlTradingData.UnderlinePrice = securityData.LastPrice;
+                        MainSecurityData = securityData;
+                        SendMessageToAllComponents(message);
+                    }
                     break;
                 case EapiDataTypes.OptionData:
                     OptionsManager.HandleMessage(message);

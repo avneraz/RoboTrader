@@ -45,7 +45,7 @@ namespace TNS.BL.UnlManagers
                 AddTaskForUpdateOptionDataOnPosition();
                 _taskAddOptionToPosisionIsActive = true;
             }
-
+           
             if (result)
                 return true;
 
@@ -66,13 +66,16 @@ namespace TNS.BL.UnlManagers
             var newPosition = PositionDataDic.ContainsKey(key) == false;
             PositionDataDic[key] = optionsPositionData;
             //Log:
-            var msg = string.Format("{0}.PDB +++ add PositionData:", Symbol);
+            var msg = $"{Symbol}.PDB +++ add PositionData:";
             if (newPosition == false)
-                msg = string.Format("{0}.PDB update PositionData:", Symbol);
-            Logger.NoticeFormat("{0} {1}. Total positions={2}", msg, optionsPositionData.Description, PositionDataDic.Count);
+            {
+                msg = $"{Symbol}.PDB update PositionData:";
+            }
+            Logger.Notice($"{msg} {optionsPositionData.Description}. Total positions={PositionDataDic.Count}");
             return true;
            
         }
+
 
         private void AddTaskForUpdateOptionDataOnPosition()
         {
@@ -82,7 +85,7 @@ namespace TNS.BL.UnlManagers
                 UNLManager.AddScheduledTaskOnUnl(TimeSpan.FromSeconds(1), AddOrUpdateDataToPosition, true);
                 Logger.InfoFormat("{0} PDB start repeated task for add or update options to position objects.", Symbol);
             });
-           
+
         }
 
         private bool _taskAddOptionToPosisionIsActive;
@@ -120,6 +123,9 @@ namespace TNS.BL.UnlManagers
             UnlTradingData.ThetaTotal = PositionDataDic.Values.Sum(pd => pd.ThetaTotal);
             UnlTradingData.VegaTotal = PositionDataDic.Values.Sum(pd => pd.VegaTotal);
             UnlTradingData.MarketValue = PositionDataDic.Values.Sum(pd => pd.MarketValue);
+
+            UnlTradingData.IVWeightedAvg = PositionDataDic.Values.Sum(pd => pd.IV * Math.Abs(pd.Position))/ 
+                PositionDataDic.Values.Sum(pd => Math.Abs(pd.Position));
             UnlTradingData.SetLastUpdate();
 
         }
