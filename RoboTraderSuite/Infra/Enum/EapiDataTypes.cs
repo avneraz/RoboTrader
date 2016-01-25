@@ -26,5 +26,7 @@ namespace Infra.Enum
         EndAsynchData,
         SecurityContract,
         TradingTimeEvent,
+        MarginData,
+        UnlTradingData,
     }
 }

@@ -86,7 +86,9 @@ namespace TNS.BL.UnlManagers
         }
 
         private bool _taskAddOptionToPosisionIsActive;
-
+        /// <summary>
+        /// This method called by the General timer every 1 sec.
+        /// </summary>
         public void AddOrUpdateDataToPosition()
         {
 
@@ -99,6 +101,7 @@ namespace TNS.BL.UnlManagers
                 if (GetOptionData(positionData, key) == false)
                     contractList.Add((OptionContract) PositionDataDic[key].GetContract());
             }
+            CalculateUnlTradingData();
             if (contractList.Count < 1)
                 return;
 
@@ -109,6 +112,17 @@ namespace TNS.BL.UnlManagers
 
         }
 
+        private void CalculateUnlTradingData()
+        {
+            UnlTradingData.CostTotal = PositionDataDic.Values.Sum(pd => pd.TotalCost);
+            UnlTradingData.DeltaTotal = PositionDataDic.Values.Sum(pd => pd.DeltaTotal);
+            UnlTradingData.GammaTotal = PositionDataDic.Values.Sum(pd => pd.GammaTotal);
+            UnlTradingData.ThetaTotal = PositionDataDic.Values.Sum(pd => pd.ThetaTotal);
+            UnlTradingData.VegaTotal = PositionDataDic.Values.Sum(pd => pd.VegaTotal);
+            UnlTradingData.MarketValue = PositionDataDic.Values.Sum(pd => pd.MarketValue);
+            UnlTradingData.SetLastUpdate();
+
+        }
         /// <summary>
         /// Get OptionData from OptionManager.
         /// </summary>

@@ -156,7 +156,8 @@ namespace DAL
             Map(c => c.Currency);
             Map(c => c.IsActive);
             Map(c => c.OptionChain);
-           
+            Map(c => c.MarginMaxAllowed);
+
         }
     }
 }

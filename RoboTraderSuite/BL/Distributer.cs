@@ -17,12 +17,13 @@ namespace TNS.BL
         }
         public void SetManagers(Dictionary<string, SimpleBaseLogic> unlManagerDic,
             AccountManager accountManager, ManagedSecuritiesManager managedSecuritiesManager,
-            DBWriter writer)
+            DBWriter writer, MarginManager marginManager)
         {
             _unlManagersDic = unlManagerDic;
             _accountManager = accountManager;
             _managedSecuritiesManager = managedSecuritiesManager;
             _dbWriter = writer;
+            _marginManager = marginManager;
         }
 
 
@@ -33,6 +34,7 @@ namespace TNS.BL
         private  AccountManager _accountManager;
         private DBWriter _dbWriter;
         private IBaseLogic _uiMessageHandler;
+        private MarginManager _marginManager;
 
         protected override void HandleMessage(IMessage message)
         {
@@ -50,6 +52,7 @@ namespace TNS.BL
                     break;
                 case EapiDataTypes.AccountSummaryData:
                     _accountManager.Enqueue(message, false);
+                    _marginManager.UpdateAccountData((AccountSummaryData) message);
                     break;
                 case EapiDataTypes.OptionData:
                 case EapiDataTypes.PositionData:
@@ -73,9 +76,14 @@ namespace TNS.BL
                 case EapiDataTypes.BrokerConnectionStatus:
                     SendToAllComponents(message);
                     break;
-                case EapiDataTypes.EndAsynchData:
-                    
+                case EapiDataTypes.UnlTradingData:
+                    _marginManager.UpdateUnlTradingData((UnlTradingData) message);
                    break;
+                case EapiDataTypes.MarginData:
+                    var marginData = (MarginData) message;
+                    if (_unlManagersDic.ContainsKey(marginData.Symbol))
+                        _unlManagersDic[marginData.Symbol].Enqueue(marginData,false);
+                    break;
                 default:
                      throw new ArgumentOutOfRangeException();
             }

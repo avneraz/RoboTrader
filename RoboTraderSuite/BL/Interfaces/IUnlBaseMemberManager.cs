@@ -11,5 +11,6 @@ namespace TNS.BL.Interfaces
         bool HandleMessage(IMessage message);
         void DoWorkAfterConnection();
         bool RequestOptionChainDone { get; set; }
+        UnlTradingData UnlTradingData { get; set; }
     }
 }

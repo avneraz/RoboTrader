@@ -49,6 +49,7 @@
     <Compile Include="ApiDataObjects\ExceptionData.cs" />
     <Compile Include="ApiDataObjects\ISymbolMessage.cs" />
     <Compile Include="ApiDataObjects\ManagedSecurity.cs" />
+    <Compile Include="ApiDataObjects\MarginData.cs" />
     <Compile Include="ApiDataObjects\OrderStatusData.cs" />
     <Compile Include="ApiDataObjects\OptionsPositionData.cs" />
     <Compile Include="ApiDataObjects\PositionDataFactory.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="ApiDataObjects\ContractBase.cs" />
     <Compile Include="ApiDataObjects\SecurityData.cs" />
     <Compile Include="ApiDataObjects\StocksPositionData.cs" />
+    <Compile Include="ApiDataObjects\UnlTradingData.cs" />
     <Compile Include="IBApiWrapper\IBOrderStatusWrapper.cs" />
     <Compile Include="ITradingApi.cs" />
     <Compile Include="ApiDataObjects\OptionContract.cs" />

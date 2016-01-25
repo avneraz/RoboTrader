@@ -58,18 +58,32 @@ namespace TNS.API.ApiDataObjects
             {
                 if ((OptionData == null) || (Position == 0))
                     return 0;
-
+                return CalculatedOptionPrice * Position * OptionData.Multiplier * CurrencyRate;
+            }
+        }
+        public double CalculatedOptionPrice
+        {
+            get
+            {
+                if ((OptionData == null))
+                    return 0;
+                
                 var optionPrice = ((OptionData.AskPrice <= 0) || OptionData.BidPrice <= 0)
                     ? ((OptionData.LastPrice <= 0 && OptionData.ModelPrice >= 0)
                         ? OptionData.ModelPrice
                         : OptionData.LastPrice)
-                    : (OptionData.AskPrice + OptionData.BidPrice)/2;
-
-                return optionPrice * Position * OptionData.Multiplier;
+                    : (OptionData.AskPrice + OptionData.BidPrice) / 2;
+                return optionPrice;
             }
         }
-        public double TotalCost => AverageCost * Position * -1;
+
+        public double TotalCost => AverageCost * Position * CurrencyRate * -1;
         public double PnL => MarketValue + TotalCost;
+        /// <summary>
+        /// This rate will be used when the currency will be none USD, it's needed to convert the foreign currency to USD.
+        /// For now it's always 1!
+        /// </summary>
+        public double CurrencyRate { get; set; } = 1;
 
         #endregion
     }

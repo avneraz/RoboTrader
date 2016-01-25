@@ -68,7 +68,7 @@ namespace Infra
             /// <value>
             /// The delta loss thteshold.
             /// </value>
-            public double DeltaLossThteshold { get; set; }
+            public double DeltaLossThreshold { get; set; }
             /// <summary>
             /// Gets or sets the risk free interest rate.
             /// </summary>

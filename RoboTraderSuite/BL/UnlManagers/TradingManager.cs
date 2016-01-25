@@ -17,6 +17,8 @@ namespace TNS.BL.UnlManagers
         public AccountSummaryData AccountSummaryData { get; set; }
         public override bool HandleMessage(IMessage message)
         {
+            //ForTest:if(UnlTradingData.Margin > 0){ }
+
             bool result = base.HandleMessage(message);
             if (result)
                 return true;

@@ -16,6 +16,7 @@ namespace TNS.API.ApiDataObjects
         public string Currency { get; set; }
         public bool IsActive { get; set; }
         public bool OptionChain { get; set; }
+        public double MarginMaxAllowed { get; set; }
 
     }
 }

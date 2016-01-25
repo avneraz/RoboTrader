@@ -15,16 +15,17 @@ namespace TNS.BL.UnlManagers
             UNLManager = unlManager;
             ConnectionStatus = ConnectionStatus.Disconnected;
             Symbol = managedSecurity.Symbol;
-            
+            UnlTradingData = unlManager.UnlTradingData;
+
         }
         protected readonly string Symbol;
         protected readonly ManagedSecurity ManagedSecurity;
         protected readonly ITradingApi APIWrapper;
         protected readonly UNLManager UNLManager;
-      
+        
 
         public virtual SecurityData MainSecurityData { get; protected set; }
-       
+        public UnlTradingData UnlTradingData { get; set; }
         /// <summary>
         /// Used as flag for request option chain:
         /// </summary>

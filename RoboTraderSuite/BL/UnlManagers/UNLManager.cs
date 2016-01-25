@@ -14,13 +14,34 @@ namespace TNS.BL.UnlManagers
     public class UNLManager : SimpleBaseLogic
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(UNLManager));
-        public UNLManager(ManagedSecurity managedSecurity, ITradingApi apiWrapper)
+        public UNLManager(ManagedSecurity managedSecurity, ITradingApi apiWrapper, SimpleBaseLogic distributer)
         {
             ManagedSecurity = managedSecurity;
             APIWrapper = apiWrapper;
             //PendingTradingTimeEventDic = new Dictionary<ETradingTimeEventType, TradingTimeEvent>();
-            Logger.InfoFormat("UNLManager({0}) was created!", managedSecurity.Symbol); 
+            Logger.InfoFormat("UNLManager({0}) was created!", managedSecurity.Symbol);
+            Distributer = distributer;
+            UnlTradingData = new UnlTradingData(ManagedSecurity.Symbol);
         }
+
+
+        #region Properties
+
+        public SimpleBaseLogic Distributer { get; }
+        public UnlTradingData UnlTradingData { get; set; }
+        public bool IsConnected => ConnectionStatus == ConnectionStatus.Connected;
+        public ConnectionStatus ConnectionStatus { get; private set; }
+        public string Symbol => MainSecurityData != null ? MainSecurityData.GetContract().Symbol : string.Empty;
+        public SecurityData MainSecurityData { get; set; }
+        public SecurityContract SecurityContract { get; set; }
+        private List<IUnlBaseMemberManager> _memberManagersList;
+        private ITradingApi APIWrapper { get; }
+        public ManagedSecurity ManagedSecurity { get; }
+        protected override string ThreadName => ManagedSecurity.Symbol + "_UNLManager_Work";
+
+        #endregion
+
+        #region Methods
 
         internal string AddScheduledTaskOnUnl(TimeSpan span, Action task, bool reOccuring = false)
         {
@@ -31,14 +52,6 @@ namespace TNS.BL.UnlManagers
         {
             RemoveScheduledTask(uniqueIdentifier);
         }
-
-        public string Symbol => MainSecurityData != null ? MainSecurityData.GetContract().Symbol : string.Empty;
-        public SecurityData MainSecurityData { get; set; }
-        public SecurityContract SecurityContract { get; set; }
-        private List<IUnlBaseMemberManager> _memberManagersList;
-        private ITradingApi APIWrapper { get; }
-        private ManagedSecurity ManagedSecurity { get; }
-        protected override string ThreadName => ManagedSecurity.Symbol + "_UNLManager_Work";
         protected override void HandleMessage(IMessage message)
         {
             switch (message.APIDataType)
@@ -68,14 +81,17 @@ namespace TNS.BL.UnlManagers
                     ConnectionStatus = connectionStatusMessage.Status;
                     if (connectionStatusMessage.AfterConnectionToApiWrapper)
                         DoWorkAfterConnection();
-                    SendMessageToAllComponents( message);
+                    SendMessageToAllComponents(message);
+                    break;
+                case EapiDataTypes.MarginData:
+                    UnlTradingData.Margin = ((MarginData) message).Margin;
                     break;
             }
         }
 
         private void SendMessageToAllComponents(IMessage message)
         {
-            if(_memberManagersList == null)
+            if (_memberManagersList == null)
                 return;
             foreach (var manager in _memberManagersList)
             {
@@ -83,12 +99,19 @@ namespace TNS.BL.UnlManagers
             }
         }
 
-        public bool IsConnected => ConnectionStatus == ConnectionStatus.Connected;
-        public ConnectionStatus ConnectionStatus { get; private set; }
         protected void DoWorkAfterConnection()
         {
             CreateManagers();
+            //Start repeated task (every 1 sec) to Distributer:
+            AddScheduledTask(TimeSpan.FromSeconds(10),
+                () => { AddScheduledTask(TimeSpan.FromSeconds(1),
+                    () => { Distributer.Enqueue(UnlTradingData); }, true); },false);
         }
+
+
+        #endregion
+
+        #region Managers
 
         private void CreateManagers()
         {
@@ -97,11 +120,11 @@ namespace TNS.BL.UnlManagers
             OptionsManager = new OptionsManager(APIWrapper, ManagedSecurity, this);
             _memberManagersList.Add(OptionsManager);
 
-            PositionsDataBuilder = new PositionsDataBuilder(APIWrapper, ManagedSecurity,this);
+            PositionsDataBuilder = new PositionsDataBuilder(APIWrapper, ManagedSecurity, this);
             _memberManagersList.Add(PositionsDataBuilder);
 
             TradingManager = new TradingManager(APIWrapper, ManagedSecurity, this);
-           _memberManagersList.Add(TradingManager);
+            _memberManagersList.Add(TradingManager);
 
             OrdersManager = new OrdersManager(APIWrapper, ManagedSecurity, this);
             _memberManagersList.Add(OrdersManager);
@@ -110,8 +133,8 @@ namespace TNS.BL.UnlManagers
         public IOptionsManager OptionsManager { get; set; }
         public IPositionsDataBuilder PositionsDataBuilder { get; set; }
         public ITradingManager TradingManager { get; set; }
-        public IOrdersManager OrdersManager { get; set; }
-
+        public IOrdersManager OrdersManager { get; set; } 
+        #endregion
 
         #region TradingTime
         /// <summary>
@@ -190,6 +213,7 @@ namespace TNS.BL.UnlManagers
                 case ETradingTimeEventType.EndTrading:
                     tradingTimeEvent.EventTime = EndTradingTimeLocal;
                     break;
+               
                 default:
                     return;
             }

@@ -97,6 +97,7 @@ namespace TNS.BL
         {
 
             AccountManager = new AccountManager(APIWrapper);
+            
             ManagedSecuritiesManager = new ManagedSecuritiesManager(APIWrapper);
 
             UNLManagerDic = new Dictionary<string, SimpleBaseLogic>();
@@ -105,11 +106,12 @@ namespace TNS.BL
 
             foreach (var managedSecurity in activeUNLList)
             {
-                var unlManager = new UNLManager(managedSecurity, APIWrapper);
+                var unlManager = new UNLManager(managedSecurity, APIWrapper, Distributer);
                 UNLManagerDic.Add(managedSecurity.Symbol, unlManager);
             }
+            MarginManager = new MarginManager(UNLManagerDic.Keys.ToList(), Distributer);
             DbWriter = new DBWriter(Configurations.Application.DBWritePeriod);
-            Distributer.SetManagers(UNLManagerDic,AccountManager,ManagedSecuritiesManager, DbWriter);
+            Distributer.SetManagers(UNLManagerDic,AccountManager,ManagedSecuritiesManager, DbWriter,MarginManager);
             UIDataManager = new UIDataManager();
         }
         public Dictionary<string, SimpleBaseLogic> UNLManagerDic { get; private set; }
@@ -122,6 +124,7 @@ namespace TNS.BL
         public DBWriter DbWriter { get; set; }
         public AllConfigurations Configurations { get; private set; }
         public ManagedSecuritiesManager ManagedSecuritiesManager { get; private set; }
+        public MarginManager MarginManager { get; set; }
 
         #endregion
 
@@ -153,6 +156,7 @@ namespace TNS.BL
                 {
                     USAInterestPercentage = 0.25,
                     StatisticsSaveIntervalSec = 300,
+                    DeltaLossThreshold = 0.25,
                     PolicyID = 3,
                     AlgorithmType = 2,
                     OTMOffsetPut = 12,
