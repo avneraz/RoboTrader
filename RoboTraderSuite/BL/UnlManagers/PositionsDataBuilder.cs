@@ -123,6 +123,9 @@ namespace TNS.BL.UnlManagers
             UnlTradingData.ThetaTotal = PositionDataDic.Values.Sum(pd => pd.ThetaTotal);
             UnlTradingData.VegaTotal = PositionDataDic.Values.Sum(pd => pd.VegaTotal);
             UnlTradingData.MarketValue = PositionDataDic.Values.Sum(pd => pd.MarketValue);
+            UnlTradingData.Shorts = PositionDataDic.Values.Where(pd=>pd.Position<0).Sum(pd => pd.Position);
+            UnlTradingData.Longs = PositionDataDic.Values.Where(pd=>pd.Position>0).Sum(pd => pd.Position);
+
 
             UnlTradingData.IVWeightedAvg = PositionDataDic.Values.Sum(pd => pd.IV * Math.Abs(pd.Position))/ 
                 PositionDataDic.Values.Sum(pd => Math.Abs(pd.Position));

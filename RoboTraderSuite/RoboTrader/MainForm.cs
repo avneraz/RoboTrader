@@ -30,6 +30,7 @@ namespace TNS.RoboTrader
 
         private AppManager _appManager;
         private UIMessageHandler _uiMessageHandler;
+        private UIDataBroker UIDataBroker { get; set; }
 
         private void MainForm_Load(object sender, System.EventArgs e)
         {
@@ -61,6 +62,11 @@ namespace TNS.RoboTrader
                 _uiMessageHandler.ExceptionThrown += DistributerOnExceptionThrown;
 
                 _appManager.Distributer.AddUIMessageHandler(_uiMessageHandler);
+
+                UIDataBroker = new UIDataBroker();
+                UIDataBroker.Start();
+                _appManager.Distributer.AddUIDataBroker(UIDataBroker);
+
                 _appManager.ConnectToBroker();
                 //For Test: Thread.Sleep(30000);
                 _startApplicationMethodDone = true;
@@ -68,7 +74,9 @@ namespace TNS.RoboTrader
                 {
                     PopupMessageForm.ShowMessage("Start Application Method finish successfully!!!", Color.Green,
                         ParentForm, 5, withSiren: false);
+                    UpdateGuiComponents();
                 });
+                
             }
             catch (Exception ex)
             {
@@ -76,6 +84,11 @@ namespace TNS.RoboTrader
                 this.InvokeIfRequired(() => { MessageBox.Show(ex.Message); });
                 
             }
+        }
+
+        private void UpdateGuiComponents()
+        {
+            unlTradingView1.SetUnlTradingDataDic(UIDataBroker.UnlTradingDataDic);
         }
 
         private bool _startApplicationMethodDone;

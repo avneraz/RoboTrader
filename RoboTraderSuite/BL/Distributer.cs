@@ -34,10 +34,14 @@ namespace TNS.BL
         private  AccountManager _accountManager;
         private DBWriter _dbWriter;
         private IBaseLogic _uiMessageHandler;
+        private IBaseLogic UIDataBroker { get; set; }
         private MarginManager _marginManager;
 
         protected override void HandleMessage(IMessage message)
         {
+            //For evaluation only:
+            UIDataBroker.Enqueue(message);
+
             ISymbolMessage symbolMessage;
             switch (message.APIDataType)
             {
@@ -123,6 +127,10 @@ namespace TNS.BL
         public void AddUIMessageHandler(IBaseLogic uiMessageHandler)
         {
             _uiMessageHandler = uiMessageHandler;
+        }
+        public void AddUIDataBroker(IBaseLogic uiDataBroker)
+        {
+            UIDataBroker = uiDataBroker;
         }
     }
 }

@@ -43,6 +43,8 @@
             this.btnSendOrder = new System.Windows.Forms.Button();
             this.xtraPageOptions = new DevExpress.XtraTab.XtraTabPage();
             this.optionsView1 = new TNS.Controls.OptionsView();
+            this.xtraPageUnlDataTrading = new DevExpress.XtraTab.XtraTabPage();
+            this.unlTradingView1 = new TNS.Controls.UnlTradingView();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.xPageAPIMessages.SuspendLayout();
@@ -50,6 +52,7 @@
             this.xtraPageMainSecurities.SuspendLayout();
             this.xtraPageOrders.SuspendLayout();
             this.xtraPageOptions.SuspendLayout();
+            this.xtraPageUnlDataTrading.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtMessages
@@ -67,14 +70,15 @@
             this.xtraTabControl1.Location = new System.Drawing.Point(0, 0);
             this.xtraTabControl1.Name = "xtraTabControl1";
             this.xtraTabControl1.SelectedTabPage = this.xPageAPIMessages;
-            this.xtraTabControl1.Size = new System.Drawing.Size(748, 543);
+            this.xtraTabControl1.Size = new System.Drawing.Size(1057, 543);
             this.xtraTabControl1.TabIndex = 1;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xPageAPIMessages,
             this.xPageAccontSummary,
             this.xtraPageMainSecurities,
             this.xtraPageOrders,
-            this.xtraPageOptions});
+            this.xtraPageOptions,
+            this.xtraPageUnlDataTrading});
             // 
             // xPageAPIMessages
             // 
@@ -132,7 +136,6 @@
             this.mainSecuritiesView1.Name = "mainSecuritiesView1";
             this.mainSecuritiesView1.Size = new System.Drawing.Size(742, 515);
             this.mainSecuritiesView1.TabIndex = 0;
-            //this.mainSecuritiesView1.UIDataManager = null;
             // 
             // xtraPageOrders
             // 
@@ -153,7 +156,6 @@
             this.ordersView1.Name = "ordersView1";
             this.ordersView1.Size = new System.Drawing.Size(724, 465);
             this.ordersView1.TabIndex = 1;
-            //this.ordersView1.UIDataManager = null;
             // 
             // btnRegisterForData
             // 
@@ -191,11 +193,27 @@
             this.optionsView1.Size = new System.Drawing.Size(742, 515);
             this.optionsView1.TabIndex = 0;
             // 
+            // xtraPageUnlDataTrading
+            // 
+            this.xtraPageUnlDataTrading.Controls.Add(this.unlTradingView1);
+            this.xtraPageUnlDataTrading.Name = "xtraPageUnlDataTrading";
+            this.xtraPageUnlDataTrading.Size = new System.Drawing.Size(1051, 515);
+            this.xtraPageUnlDataTrading.Text = "Unl. Trading Data";
+            // 
+            // unlTradingView1
+            // 
+            this.unlTradingView1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.unlTradingView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.unlTradingView1.Location = new System.Drawing.Point(0, 0);
+            this.unlTradingView1.Name = "unlTradingView1";
+            this.unlTradingView1.Size = new System.Drawing.Size(1051, 515);
+            this.unlTradingView1.TabIndex = 0;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(748, 543);
+            this.ClientSize = new System.Drawing.Size(1057, 543);
             this.Controls.Add(this.xtraTabControl1);
             this.Name = "MainForm";
             this.Text = "MainForm";
@@ -209,6 +227,7 @@
             this.xtraPageMainSecurities.ResumeLayout(false);
             this.xtraPageOrders.ResumeLayout(false);
             this.xtraPageOptions.ResumeLayout(false);
+            this.xtraPageUnlDataTrading.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -230,6 +249,8 @@
         private System.Windows.Forms.Button btnRegisterForData;
         private DevExpress.XtraTab.XtraTabPage xtraPageOptions;
         private Controls.OptionsView optionsView1;
+        private DevExpress.XtraTab.XtraTabPage xtraPageUnlDataTrading;
+        private Controls.UnlTradingView unlTradingView1;
     }
 }
 

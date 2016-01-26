@@ -125,6 +125,7 @@ namespace TNS.BL
         public AllConfigurations Configurations { get; private set; }
         public ManagedSecuritiesManager ManagedSecuritiesManager { get; private set; }
         public MarginManager MarginManager { get; set; }
+        public SimpleBaseLogic UIDataBroker { get; set; }
 
         #endregion
 

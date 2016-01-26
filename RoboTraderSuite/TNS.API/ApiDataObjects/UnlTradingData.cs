@@ -37,7 +37,8 @@ namespace TNS.API.ApiDataObjects
         {
             LastUpdate = DateTime.Now;
         }
-
+        public int Shorts{get;set;}
+        public int Longs{get;set;}
         public ETradingState TradingState { get; set; }
         #endregion
 
@@ -48,7 +49,7 @@ namespace TNS.API.ApiDataObjects
         public double GammaTotal { get; set; }
         public double ThetaTotal { get; set; }
         public double VegaTotal { get; set; }
-        public double MarginTotal { get; set; }
+        public double MaxAllowedMargin { get; set; }
 
         /// <summary>
         /// Hold the calculated IV of all positions taking part on trading.<para></para>

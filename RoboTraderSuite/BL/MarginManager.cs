@@ -40,8 +40,8 @@ namespace TNS.BL
         {
 
             GammaTotal = MarginDataDic.Values.Sum(md => md.UnlGammaTotal);
-
-            if(IsGammaTotalHasValue())
+            //ForTest GammaTotal = 456;
+            if (IsGammaTotalHasValue())
                 return;
 
             foreach (var marginData in MarginDataDic.Values)
@@ -75,9 +75,9 @@ namespace TNS.BL
             foreach (var symbol in UnlSymbolList)
             {
                 var marginData = new MarginData(symbol);
-                var firstOrDefault = activeUNLList.FirstOrDefault(unl => unl.Symbol == symbol);
-                if (firstOrDefault != null)
-                    marginData.MarginMaxAllowed = firstOrDefault.MarginMaxAllowed;
+                var managedSecurity = activeUNLList.FirstOrDefault(unl => unl.Symbol == symbol);
+                if (managedSecurity != null)
+                    marginData.MarginMaxAllowed = managedSecurity.MarginMaxAllowed;
 
                 MarginDataDic[symbol] = marginData;
 

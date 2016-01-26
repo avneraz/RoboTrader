@@ -78,6 +78,12 @@
       <DependentUpon>OrdersView.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnlTradingView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UnlTradingView.Designer.cs">
+      <DependentUpon>UnlTradingView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="APIMesagesView.resx">
@@ -93,6 +99,9 @@
       <DependentUpon>OrdersView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="UnlTradingView.resx">
+      <DependentUpon>UnlTradingView.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj">
@@ -118,6 +127,7 @@
     <None Include="Properties\DataSources\TNS.API.ApiDataObjects.OptionData.datasource" />
     <None Include="Properties\DataSources\TNS.API.ApiDataObjects.OrderStatusData.datasource" />
     <None Include="Properties\DataSources\TNS.API.ApiDataObjects.SecurityData.datasource" />
+    <None Include="Properties\DataSources\TNS.API.ApiDataObjects.UnlTradingData.datasource" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

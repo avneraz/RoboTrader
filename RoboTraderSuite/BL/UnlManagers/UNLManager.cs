@@ -65,12 +65,14 @@ namespace TNS.BL.UnlManagers
                     if (securityData.SecurityContract.Symbol == "VIX")
                     {
                         UnlTradingData.VIX = securityData.LastPrice;
+                        UnlTradingData.SetLastUpdate();
                     }
                     else if (securityData.SecurityContract.Symbol == ManagedSecurity.Symbol)
                     {
                         UnlTradingData.UnderlinePrice = securityData.LastPrice;
                         MainSecurityData = securityData;
                         SendMessageToAllComponents(message);
+                        UnlTradingData.SetLastUpdate();
                     }
                     break;
                 case EapiDataTypes.OptionData:
@@ -93,7 +95,10 @@ namespace TNS.BL.UnlManagers
                     SendMessageToAllComponents(message);
                     break;
                 case EapiDataTypes.MarginData:
-                    UnlTradingData.Margin = ((MarginData) message).Margin;
+                    var marginData = (MarginData) message;
+                    UnlTradingData.Margin = marginData.Margin;
+                    UnlTradingData.MaxAllowedMargin = marginData.MarginMaxAllowed;
+                    UnlTradingData.SetLastUpdate();
                     break;
             }
         }
