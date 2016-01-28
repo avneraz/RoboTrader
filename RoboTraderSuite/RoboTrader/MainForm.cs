@@ -89,6 +89,7 @@ namespace TNS.RoboTrader
         private void UpdateGuiComponents()
         {
             unlTradingView1.SetUnlTradingDataDic(UIDataBroker.UnlTradingDataDic);
+            positionsView1.SetUnlTradingDataDic(UIDataBroker.PositionDataDic);
         }
 
         private bool _startApplicationMethodDone;

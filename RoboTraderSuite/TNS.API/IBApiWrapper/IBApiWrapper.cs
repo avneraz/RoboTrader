@@ -200,8 +200,8 @@ namespace TNS.API.IBApiWrapper
         {
             var contractBase = contractDetails.Summary.ToContract();
 
-            if (_contractToRequestIds.ContainsKey(contractBase))
-                return;
+            //if (_contractToRequestIds.ContainsKey(contractBase))
+            //    return;
 
             _contractToRequestIds[contractBase] = requestId;
             int reqId = RequestId;

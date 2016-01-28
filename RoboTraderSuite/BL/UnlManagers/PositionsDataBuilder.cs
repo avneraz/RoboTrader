@@ -51,18 +51,15 @@ namespace TNS.BL.UnlManagers
 
             if (message.APIDataType != EapiDataTypes.PositionData)
                 return false;
-
             //handle PositionData message:
             var positionData = (PositionData) message;
             var contract = positionData.GetContract();
             if ((contract is OptionContract) == false)
                 return false;
             //It's Option:
-            var optionContract = (OptionContract) contract;
-            var key = optionContract.OptionKey;
-            var optionsPositionData = (OptionsPositionData) PositionDataFactory.CreatePoisitionData(
-                optionContract, positionData.Position, positionData.AverageCost);
-
+            var key = ((OptionContract)contract).OptionKey;
+            var optionsPositionData = (OptionsPositionData)message;
+            optionsPositionData.HandledByPositionDataBuilder = true;
             var newPosition = PositionDataDic.ContainsKey(key) == false;
             PositionDataDic[key] = optionsPositionData;
             //Log:
@@ -95,14 +92,16 @@ namespace TNS.BL.UnlManagers
         public void AddOrUpdateDataToPosition()
         {
 
-            List<OptionContract> contractList = new List<OptionContract>();
+            var contractList = new List<OptionContract>();
 
-            // ReSharper disable once LoopCanBeConvertedToQuery
+            
             foreach (var positionData in PositionDataDic.Values)
             {
                 var key = ((OptionContract) (positionData.GetContract())).OptionKey;
                 if (GetOptionData(positionData, key) == false)
                     contractList.Add((OptionContract) PositionDataDic[key].GetContract());
+                //used for UIDataBroker
+                UNLManager.Distributer.Enqueue(positionData, false);
             }
             CalculateUnlTradingData();
             if (contractList.Count < 1)

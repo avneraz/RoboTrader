@@ -40,8 +40,9 @@ namespace TNS.BL
         protected override void HandleMessage(IMessage message)
         {
             //For evaluation only:
-            UIDataBroker.Enqueue(message);
-
+            SendMessageToUIDataBroker(message);
+            //if((message.APIDataType) == EapiDataTypes.PositionData)
+            //{ }
             ISymbolMessage symbolMessage;
             switch (message.APIDataType)
             {
@@ -58,8 +59,15 @@ namespace TNS.BL
                     _accountManager.Enqueue(message, false);
                     _marginManager.UpdateAccountData((AccountSummaryData) message);
                     break;
-                case EapiDataTypes.OptionData:
                 case EapiDataTypes.PositionData:
+                    symbolMessage = (ISymbolMessage)message;
+                    string symbol1 = symbolMessage.GetSymbolName();
+                    if (_unlManagersDic.ContainsKey(symbol1))
+                        _unlManagersDic[symbol1].Enqueue(symbolMessage, false);
+                    _dbWriter.Enqueue(message, false);
+                    break;
+                case EapiDataTypes.OptionData:
+                //case EapiDataTypes.PositionData:
                 case EapiDataTypes.OrderStatus:
                 case EapiDataTypes.OrderData:
                 case EapiDataTypes.SecurityContract:
@@ -71,14 +79,10 @@ namespace TNS.BL
                     break;
                 case EapiDataTypes.SecurityData:
                     _managedSecuritiesManager.Enqueue(message, false);
-                    SecurityData securityData = (SecurityData) message;
+                   
                     //ForTesting: if(securityData.SecurityContract.Symbol == "VIX"){ }
-
                     SendToAllUnlManagers(message);
-                     //symbolMessage = (ISymbolMessage)message;
-                    //var key = symbolMessage.GetSymbolName();
-                    //if (_unlManagersDic.ContainsKey(key))
-                    //    _unlManagersDic[key].Enqueue(symbolMessage, false);
+                  
                     _dbWriter.Enqueue(message, false);
                     break;
                 case EapiDataTypes.BrokerConnectionStatus:
@@ -92,8 +96,7 @@ namespace TNS.BL
                     if (_unlManagersDic.ContainsKey(marginData.Symbol))
                         _unlManagersDic[marginData.Symbol].Enqueue(marginData,false);
                     break;
-                default:
-                     throw new ArgumentOutOfRangeException();
+                
             }
         }
 
@@ -122,6 +125,23 @@ namespace TNS.BL
             //ExceptionThrown?.Invoke(exceptionData);
             Logger.Error(exceptionData.ThrownException);
           
+        }
+
+        private void SendMessageToUIDataBroker(IMessage message)
+        {
+            switch (message.APIDataType)
+            {
+
+                case EapiDataTypes.PositionData:
+                    var optionsPositionData = message as OptionsPositionData;
+                    if((optionsPositionData != null) && optionsPositionData.HandledByPositionDataBuilder)
+                        UIDataBroker.Enqueue(optionsPositionData);
+                    break;
+                case EapiDataTypes.UnlTradingData:
+                    UIDataBroker.Enqueue(message);
+                    break;
+
+            }
         }
 
         public void AddUIMessageHandler(IBaseLogic uiMessageHandler)

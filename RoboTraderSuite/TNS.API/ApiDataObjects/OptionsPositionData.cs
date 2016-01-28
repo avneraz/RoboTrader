@@ -1,5 +1,8 @@
 ﻿
 
+using System;
+using Infra.Enum;
+
 namespace TNS.API.ApiDataObjects
 {
     public class OptionsPositionData : PositionData
@@ -8,6 +11,8 @@ namespace TNS.API.ApiDataObjects
         {
 
         }
+
+        //public override EapiDataTypes APIDataType => EapiDataTypes.PositionData;
         public OptionsPositionData(OptionContract contract, int position, double averageCost)
             : base(position, averageCost)
         {
@@ -31,12 +36,13 @@ namespace TNS.API.ApiDataObjects
             get
             {
                 //var description = $"{Symbol}"
-                var desc = string.Format("{0}. Position={1}, AverageCost={2:F1}", OptionContract.Description, Position,
-                    AverageCost);
+                var desc = $"{OptionContract.Description}. Position={Position}, AverageCost={AverageCost:F1}";
                 return desc;
             }
         }
 
+        public string Symbol => OptionContract.Symbol;
+        public DateTime Expiry => OptionContract.Expiry;
         #region Option Calculated Properties
 
         #region Greek
@@ -86,6 +92,10 @@ namespace TNS.API.ApiDataObjects
         /// For now it's always 1!
         /// </summary>
         public double CurrencyRate { get; set; } = 1;
+        /// <summary>
+        /// Used to mark if PositionDataBuilder handle the object, used for UIDataBroker.
+        /// </summary>
+        public bool HandledByPositionDataBuilder { get; set; }
 
         #endregion
     }

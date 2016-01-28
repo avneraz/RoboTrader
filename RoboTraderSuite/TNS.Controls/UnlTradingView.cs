@@ -39,8 +39,8 @@ namespace TNS.Controls
                     {
                         gridControl1.InvokeIfRequired(() =>
                         {
-                            unlTradingDataBindingSource.ResetBindings(false);
                             unlTradingDataBindingSource.DataSource = UnlTradingDataDic.Values.ToList();
+                            unlTradingDataBindingSource.ResetBindings(false);
 
                         });
                     },

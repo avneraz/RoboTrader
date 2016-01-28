@@ -15,7 +15,7 @@ namespace TNS.API.ApiDataObjects
             Position = position;
             AverageCost = averageCost;
         }
-        public EapiDataTypes APIDataType => EapiDataTypes.PositionData;
+        public virtual EapiDataTypes APIDataType => EapiDataTypes.PositionData;
         public string GetSymbolName()
         {
             return GetContract().Symbol;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Infra.Bus;
 using Infra.Enum;
 using TNS.API.ApiDataObjects;
@@ -7,7 +8,7 @@ using TNS.API.ApiDataObjects;
 namespace UILogic
 {
     /// <summary>
-    /// Used as broker between BL layer data and the UI. Used for test purposes only.
+    /// Used as broker between BL layer data and the UI. Used for evaluation and test purposes only.
     /// </summary>
     public class UIDataBroker:  SimpleBaseLogic
     {
@@ -15,6 +16,8 @@ namespace UILogic
         public UIDataBroker ()
         {
             UnlTradingDataDic = new Dictionary<string, UnlTradingData>();
+            PositionDataDic = new Dictionary<string, OptionsPositionData>();
+            OptionsPositionDataList = new List<OptionsPositionData>();
         }
 
       
@@ -25,43 +28,25 @@ namespace UILogic
         {
             switch (message.APIDataType)
             {
-                case EapiDataTypes.Unknown:
-                    break;
-                case EapiDataTypes.ExceptionData:
-                    break;
-                case EapiDataTypes.AccountSummaryData:
-                    break;
-                case EapiDataTypes.OptionData:
-                    break;
+               
                 case EapiDataTypes.PositionData:
+                    var optionsPositionData = (OptionsPositionData)message;
+                    var key = ((OptionContract)optionsPositionData.GetContract()).OptionKey;
+                    //var existingposData = OptionsPositionDataList.FirstOrDefault(pd =>
+                    //    ((OptionContract) pd.GetContract()).OptionKey == key);
+                    PositionDataDic[key] = optionsPositionData;
                     break;
-                case EapiDataTypes.OrderData:
-                    break;
-                case EapiDataTypes.APIMessageData:
-                    break;
-                case EapiDataTypes.SecurityData:
-                    break;
-                case EapiDataTypes.OrderStatus:
-                    break;
-                case EapiDataTypes.BrokerConnectionStatus:
-                    break;
-                case EapiDataTypes.EndAsynchData:
-                    break;
-                case EapiDataTypes.SecurityContract:
-                    break;
-                case EapiDataTypes.TradingTimeEvent:
-                    break;
-                case EapiDataTypes.MarginData:
-                    break;
+               
                 case EapiDataTypes.UnlTradingData:
                     var unlTradingData = (UnlTradingData)message;
                     UnlTradingDataDic[unlTradingData.Symbol] = unlTradingData;
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+             
             }
         }
 
-        public Dictionary<string,UnlTradingData> UnlTradingDataDic { get;private set; }
+        public Dictionary<string,UnlTradingData> UnlTradingDataDic { get; }
+        public Dictionary<string, OptionsPositionData> PositionDataDic { get; }
+        public List<OptionsPositionData> OptionsPositionDataList { get; set; }
     }
 }

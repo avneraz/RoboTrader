@@ -427,11 +427,13 @@ namespace TNS.API.IBApiWrapper
                 status.Data.MaintMargin = maintMargin;
 
         }
+
         public void position(string account, Contract contract, int pos, double avgCost)
         {
             var posData = PositionDataFactory.CreatePoisitionData(contract.ToContract(), pos, avgCost);
             Consumer.Enqueue(posData);
         }
+
         private void CloseIrrelevantOrders()
         {
             OrderStatusDic.RemoveAll(item => DateTime.Now - item.Data.LastUpdateTime > ORDER_MAX_TIME_SPAN &&
