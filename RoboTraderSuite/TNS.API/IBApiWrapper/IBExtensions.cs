@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using IBApi;
+using Infra.Enum;
 using log4net;
 using log4net.Repository.Hierarchy;
 using TNS.API.ApiDataObjects;
@@ -20,18 +21,18 @@ namespace TNS.API.IBApiWrapper
             switch (contract.SecType)
             {
                 case "OPT":
-                    // var optionType = contract.Right == "C" ? OptionType.Call : OptionType.Put;
-                    OptionType optionType;
+                    // var EOptionType = contract.Right == "C" ? EOptionType.Call : EOptionType.Put;
+                    EOptionType optionType;
                     switch (contract.Right)
                     {
                         case "C":
-                            optionType = OptionType.Call;
+                            optionType = EOptionType.Call;
                             break;
                         case "P":
-                            optionType = OptionType.Put;
+                            optionType = EOptionType.Put;
                             break;
                         default:
-                            optionType = OptionType.None;
+                            optionType = EOptionType.None;
                             break;
                     }
                     return new OptionContract(contract.Symbol, contract.Strike, GetExpiryDate(contract.Expiry), optionType,

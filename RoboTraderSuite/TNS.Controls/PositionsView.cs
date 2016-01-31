@@ -38,7 +38,7 @@ namespace TNS.Controls
                             optionsPositionDataBindingSource.DataSource = PositionDataDic.Values.ToList();
                             optionsPositionDataBindingSource.ResetBindings(false);
                             //OptionsPositionDataList = PositionDataDic.Values.ToList();
-                            grdPositionData.Height = 200 + (gridView1.RowHeight + 1) * (optionsPositionDataBindingSource.Count);
+                            grdPositionData.Height = 208 + (gridView1.RowHeight + 1) * (optionsPositionDataBindingSource.Count);
 
                         });
                     },
@@ -61,7 +61,7 @@ namespace TNS.Controls
         private void PositionsView_Resize(object sender, EventArgs e)
         {
             
-            grdPositionData.Height = 200 + (gridView1.RowHeight + 1) * (optionsPositionDataBindingSource.Count);
+            grdPositionData.Height = 208 + (gridView1.RowHeight + 1) * (optionsPositionDataBindingSource.Count);
         }
     }
 }

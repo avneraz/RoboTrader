@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Infra;
+using Infra.Enum;
 using TNS.API.ApiDataObjects;
 
 namespace TNS.API
@@ -65,7 +66,7 @@ namespace TNS.API
                     Symbol = contractBase.Symbol,
                     SecurityType = SecurityType.Option,
                     Strike = AtTheMoneyStrike,
-                    OptionType = OptionType.Call
+                    OptionType = EOptionType.Call
                 };
                 return optionContract;
             }
@@ -112,13 +113,13 @@ namespace TNS.API
             //Check strike boundaries:
             switch (optionContract.OptionType)
             {
-                case OptionType.Call:
+                case EOptionType.Call:
                     if (optionContract.Strike > CallMaxStrike)
                         return false;
                     if (optionContract.Strike < CallMinStrike)
                         return false;
                     break;
-                case OptionType.Put:
+                case EOptionType.Put:
                     if (optionContract.Strike > PutMaxStrike)
                         return false;
                     if (optionContract.Strike < PutMinStrike)

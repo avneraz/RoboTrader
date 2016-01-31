@@ -65,6 +65,12 @@
     <Compile Include="MainSecuritiesView.Designer.cs">
       <DependentUpon>MainSecuritiesView.cs</DependentUpon>
     </Compile>
+    <Compile Include="OptionCalculatorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OptionCalculatorForm.designer.cs">
+      <DependentUpon>OptionCalculatorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="OptionsView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -97,6 +103,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainSecuritiesView.resx">
       <DependentUpon>MainSecuritiesView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OptionCalculatorForm.resx">
+      <DependentUpon>OptionCalculatorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OptionsView.resx">
       <DependentUpon>OptionsView.cs</DependentUpon>

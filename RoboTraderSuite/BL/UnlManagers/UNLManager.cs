@@ -56,6 +56,9 @@ namespace TNS.BL.UnlManagers
         {
             switch (message.APIDataType)
             {
+                case EapiDataTypes.AccountSummaryData:
+                    TradingManager.HandleMessage(message);
+                    break;
                 case EapiDataTypes.SecurityContract:
                     SecurityContract = (SecurityContract)message;
                     EvaluateTradingEvents();

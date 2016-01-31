@@ -5,6 +5,8 @@ using log4net;
 using TNS.API.ApiDataObjects;
 using Infra.Bus;
 using Infra.Enum;
+using TNS.BL.Analysis;
+using TNS.BL.UnlManagers;
 
 namespace TNS.BL
 {
@@ -25,7 +27,15 @@ namespace TNS.BL
             _dbWriter = writer;
             _marginManager = marginManager;
         }
+        /// <summary>
+        /// Indicate if the Greek  values of the options will be calculated locally, 
+        /// usually it's activated by the user when the broker don't send Greek values.
+        /// </summary>
+        public bool CalculateGreekLocally { get; set; }
 
+        BnSCalcHelpper BnSCalcHelpper => _bnsCalcHelpper ?? (_bnsCalcHelpper = new BnSCalcHelpper());
+
+        private BnSCalcHelpper _bnsCalcHelpper;
 
         private  Dictionary<string, SimpleBaseLogic> _unlManagersDic;
         private static readonly ILog Logger = LogManager.GetLogger(typeof(Distributer));
@@ -43,7 +53,6 @@ namespace TNS.BL
             SendMessageToUIDataBroker(message);
             //if((message.APIDataType) == EapiDataTypes.PositionData)
             //{ }
-            ISymbolMessage symbolMessage;
             switch (message.APIDataType)
             {
                 case EapiDataTypes.ExceptionData:
@@ -52,41 +61,49 @@ namespace TNS.BL
                 case EapiDataTypes.APIMessageData:
                     var apiMessageData = (APIMessageData)message ;
                     _uiMessageHandler?.Enqueue(message, false);
-                    //APIMessageArrive?.Invoke(apiMessageData);
                     Logger.Debug(apiMessageData.ToString());
                     break;
                 case EapiDataTypes.AccountSummaryData:
                     _accountManager.Enqueue(message, false);
                     _marginManager.UpdateAccountData((AccountSummaryData) message);
-                    break;
-                case EapiDataTypes.PositionData:
-                    symbolMessage = (ISymbolMessage)message;
-                    string symbol1 = symbolMessage.GetSymbolName();
-                    if (_unlManagersDic.ContainsKey(symbol1))
-                        _unlManagersDic[symbol1].Enqueue(symbolMessage, false);
-                    _dbWriter.Enqueue(message, false);
+                    PropagateMessageToAllUnlManagers(message);
                     break;
                 case EapiDataTypes.OptionData:
-                //case EapiDataTypes.PositionData:
+                    var optionData = (OptionData)message;
+                    if (CalculateGreekLocally)
+                    {
+                        //ForTesting:
+                        //if ((optionData.OptionContract.Symbol == "MSFT") && (optionData.OptionContract.Strike == 52) &
+                        //    optionData.OptionContract.OptionType == EOptionType.Put )
+
+                        {
+                            optionData.UnderlinePrice =
+                                ((UNLManager) (_unlManagersDic[optionData.OptionContract.Symbol])).
+                                    MainSecurityData.LastPrice;
+                            BnSCalcHelpper.UpdateGreekValues(optionData);
+                        }
+
+                    }
+                    PropagateMessageToAdequateUnlManager(optionData);
+                    _dbWriter.Enqueue(message, false);
+                    break;
+                case EapiDataTypes.PositionData:
                 case EapiDataTypes.OrderStatus:
                 case EapiDataTypes.OrderData:
                 case EapiDataTypes.SecurityContract:
-                    symbolMessage = (ISymbolMessage)message;
-                    string symbol = symbolMessage.GetSymbolName();
-                    if (_unlManagersDic.ContainsKey(symbol))
-                        _unlManagersDic[symbol].Enqueue(symbolMessage, false);
-                    _dbWriter.Enqueue(message,false);
+                    PropagateMessageToAdequateUnlManager(message);
+                    _dbWriter.Enqueue(message, false);
                     break;
                 case EapiDataTypes.SecurityData:
                     _managedSecuritiesManager.Enqueue(message, false);
                    
                     //ForTesting: if(securityData.SecurityContract.Symbol == "VIX"){ }
-                    SendToAllUnlManagers(message);
+                    PropagateMessageToAllUnlManagers(message);
                   
                     _dbWriter.Enqueue(message, false);
                     break;
                 case EapiDataTypes.BrokerConnectionStatus:
-                    SendToAllComponents(message);
+                    PropagateMessageToAllComponents(message);
                     break;
                 case EapiDataTypes.UnlTradingData:
                     _marginManager.UpdateUnlTradingData((UnlTradingData) message);
@@ -100,15 +117,24 @@ namespace TNS.BL
             }
         }
 
-        private void SendToAllComponents(IMessage message)
+        private void PropagateMessageToAdequateUnlManager(IMessage message)
+        {
+            var symbolMessage = (ISymbolMessage) message;
+            string symbol = symbolMessage.GetSymbolName();
+            if (_unlManagersDic.ContainsKey(symbol))
+                _unlManagersDic[symbol].Enqueue(symbolMessage, false);
+           
+        }
+
+        private void PropagateMessageToAllComponents(IMessage message)
         {
             _accountManager.Enqueue(message, false);
             _managedSecuritiesManager.Enqueue(message, false);
             _uiMessageHandler.Enqueue(message, false);
-            SendToAllUnlManagers(message);
+            PropagateMessageToAllUnlManagers(message);
         }
 
-        private void SendToAllUnlManagers(IMessage message)
+        private void PropagateMessageToAllUnlManagers(IMessage message)
         {
             foreach (var unlManager in _unlManagersDic.Values)
             {

@@ -30,6 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevExpress.Data.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGrid.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPrinting.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
@@ -50,6 +55,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BnS\BlackNScholesCaculator.cs" />
+    <Compile Include="BnS\OptionCalculationData.cs" />
     <Compile Include="Bus\BaseLogic.cs" />
     <Compile Include="Bus\Bus.cs" />
     <Compile Include="Bus\IBaseLogic.cs" />
@@ -59,6 +66,7 @@
     <Compile Include="Enum\EAlgorithmType.cs" />
     <Compile Include="Enum\EapiDataTypes.cs" />
     <Compile Include="Enum\EConfigurationCategory.cs" />
+    <Compile Include="Enum\EOptionType.cs" />
     <Compile Include="Enum\ETradingStartMode.cs" />
     <Compile Include="Enum\ETradingState.cs" />
     <Compile Include="Enum\ETradingTimeEventType.cs" />
@@ -66,12 +74,7 @@
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\GeneralExtensions.cs" />
     <Compile Include="Extensions\Log4NetExtensions.cs" />
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Extensions\MyExtensionMethods.cs" />
     <Compile Include="GeneralTimer.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="PopUpMessages\PopupMessageForm.cs">
@@ -91,9 +94,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="PopUpMessages\PopupMessageForm.resx">
       <DependentUpon>PopupMessageForm.cs</DependentUpon>
     </EmbeddedResource>

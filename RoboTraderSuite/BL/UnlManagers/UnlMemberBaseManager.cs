@@ -22,7 +22,10 @@ namespace TNS.BL.UnlManagers
         protected readonly ManagedSecurity ManagedSecurity;
         protected readonly ITradingApi APIWrapper;
         protected readonly UNLManager UNLManager;
-        
+        protected bool IsNowWorkingTime => UNLManager.IsNowWorkingTime;
+        protected bool IsWorkingDay => UNLManager.IsWorkingDay;
+
+
 
         public virtual SecurityData MainSecurityData { get; protected set; }
         public UnlTradingData UnlTradingData { get; set; }

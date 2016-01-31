@@ -6,6 +6,7 @@ using IBApi;
 using Infra;
 using TNS.API.ApiDataObjects;
 using Infra.Bus;
+using Infra.Enum;
 using Infra.Extensions;
 using Infra.Extensions.ArrayExtensions;
 using log4net;
@@ -237,7 +238,7 @@ namespace TNS.API.IBApiWrapper
             //If it's option, request all session option chain:
             //First: check if already exist, register it if needed:
             OptionContract optionContract = optionContractOrginal.Copy();
-            optionContract.OptionType = OptionType.None;
+            optionContract.OptionType = EOptionType.None;
             optionContract.Strike = 0;//Use zero to get all existing options contract.
             if (_contractToRequestIds.ContainsKey(optionContract))
             {//don't request option chain that already exist

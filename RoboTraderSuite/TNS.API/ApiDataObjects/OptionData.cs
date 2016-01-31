@@ -1,5 +1,7 @@
-﻿using Infra.Bus;
+﻿using System;
+using Infra.Bus;
 using Infra.Enum;
+using Infra.Extensions;
 
 
 namespace TNS.API.ApiDataObjects
@@ -34,6 +36,40 @@ namespace TNS.API.ApiDataObjects
 
         public double UnderlinePrice { get; set; }
 
+
+        public double CalculatedOptionPrice
+        {
+            get
+            {
+               var optionPrice = (AskPrice <= 0) || BidPrice <= 0
+                    ? (LastPrice <= 0 && ModelPrice >= 0
+                        ? ModelPrice
+                        : LastPrice)
+                    : (AskPrice + BidPrice) / 2;
+                return optionPrice;
+            }
+        }
+
+        /// <summary>
+        /// Return the price of 1 option (Position = 1)
+        /// </summary>
+        public double PriceOfOneOption => CalculatedOptionPrice*Multiplier;
+        /// <summary>
+        /// Gets the days left from now to the expiry date.
+        /// </summary>
+        /// <value>
+        /// The days left.
+        /// </value>
+        public int DaysLeft
+        {
+            get
+            {
+                TimeZoneInfo est = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");//Israel Standard Time
+                DateTime dateTimeInUsa = TimeZoneInfo.ConvertTime(DateTime.Now, est);
+
+                return (int)OptionContract.Expiry.Subtract(dateTimeInUsa).TotalDays;
+            }
+        }
 
         public virtual string GetOptionKey()
         {

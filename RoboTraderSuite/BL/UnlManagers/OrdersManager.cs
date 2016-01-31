@@ -84,7 +84,7 @@ namespace TNS.BL.UnlManagers
 
         public OrderData TestTrading(bool sell)
         {
-            string optionKey = GetOptionKey(new DateTime(2016, 2, 19), OptionType.Call, 100);
+            string optionKey = GetOptionKey(new DateTime(2016, 2, 19), EOptionType.Call, 100);
             DefaultOrderType = OrderType.MKT;
             OrderData orderData = sell ? 
                 SellOption(UNLManager.OptionsManager.GetOptionData(optionKey), 1, 2) : 
@@ -93,7 +93,7 @@ namespace TNS.BL.UnlManagers
             return orderData;
 
         }
-        public string GetOptionKey(DateTime expiry, OptionType optionType, double strike)
+        public string GetOptionKey(DateTime expiry, EOptionType optionType, double strike)
         {
             return $"{expiry}.{optionType}.{strike}";
         }

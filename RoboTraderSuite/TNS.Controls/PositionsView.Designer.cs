@@ -36,6 +36,7 @@
             this.colExpiry = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOptionContract_OptionType = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPosition = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colCalculatedOptionPrice = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colAverageCost = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colConId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colStrike = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -109,6 +110,7 @@
             this.colExpiry,
             this.colOptionContract_OptionType,
             this.colPosition,
+            this.colCalculatedOptionPrice,
             this.colAverageCost,
             this.colConId,
             this.colStrike,
@@ -209,6 +211,16 @@
             this.colPosition.Visible = true;
             this.colPosition.VisibleIndex = 3;
             this.colPosition.Width = 36;
+            // 
+            // colCalculatedOptionPrice
+            // 
+            this.colCalculatedOptionPrice.Caption = "Calc. Price";
+            this.colCalculatedOptionPrice.DisplayFormat.FormatString = "#,##0.00";
+            this.colCalculatedOptionPrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colCalculatedOptionPrice.FieldName = "CalculatedOptionPrice";
+            this.colCalculatedOptionPrice.Name = "colCalculatedOptionPrice";
+            this.colCalculatedOptionPrice.Visible = true;
+            this.colCalculatedOptionPrice.VisibleIndex = 8;
             // 
             // colAverageCost
             // 
@@ -322,7 +334,7 @@
             this.colOptionDelta.MaxWidth = 70;
             this.colOptionDelta.Name = "colOptionDelta";
             this.colOptionDelta.Visible = true;
-            this.colOptionDelta.VisibleIndex = 17;
+            this.colOptionDelta.VisibleIndex = 18;
             this.colOptionDelta.Width = 33;
             // 
             // colContract_ExpiryDate
@@ -335,7 +347,7 @@
             // 
             // colOptionData_OptionType
             // 
-            this.colOptionData_OptionType.FieldName = "OptionData.OptionType";
+            this.colOptionData_OptionType.FieldName = "OptionData.EOptionType";
             this.colOptionData_OptionType.MaxWidth = 50;
             this.colOptionData_OptionType.Name = "colOptionData_OptionType";
             this.colOptionData_OptionType.Width = 50;
@@ -362,7 +374,7 @@
             this.colDeltaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "DeltaTotal", "{0:#,##0}")});
             this.colDeltaTotal.Visible = true;
-            this.colDeltaTotal.VisibleIndex = 13;
+            this.colDeltaTotal.VisibleIndex = 14;
             this.colDeltaTotal.Width = 45;
             // 
             // colTotalCost
@@ -402,7 +414,7 @@
             this.colLastPrice.MinWidth = 50;
             this.colLastPrice.Name = "colLastPrice";
             this.colLastPrice.Visible = true;
-            this.colLastPrice.VisibleIndex = 8;
+            this.colLastPrice.VisibleIndex = 12;
             this.colLastPrice.Width = 51;
             // 
             // colMarketValue
@@ -425,7 +437,7 @@
             this.colMarketValue.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "MarketValue", "{0:#,##0}")});
             this.colMarketValue.Visible = true;
-            this.colMarketValue.VisibleIndex = 6;
+            this.colMarketValue.VisibleIndex = 5;
             this.colMarketValue.Width = 71;
             // 
             // colPNL
@@ -448,7 +460,7 @@
             this.colPNL.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "PnL", "{0:#,##0}")});
             this.colPNL.Visible = true;
-            this.colPNL.VisibleIndex = 7;
+            this.colPNL.VisibleIndex = 6;
             this.colPNL.Width = 71;
             // 
             // colGammaTotal
@@ -475,7 +487,7 @@
             this.colGammaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "GammaTotal", "{0:#,##0}")});
             this.colGammaTotal.Visible = true;
-            this.colGammaTotal.VisibleIndex = 14;
+            this.colGammaTotal.VisibleIndex = 15;
             this.colGammaTotal.Width = 45;
             // 
             // colOptionData_ModelPrice
@@ -527,7 +539,7 @@
             this.colThetaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ThetaTotal", "{0:#,##0}")});
             this.colThetaTotal.Visible = true;
-            this.colThetaTotal.VisibleIndex = 15;
+            this.colThetaTotal.VisibleIndex = 16;
             this.colThetaTotal.Width = 45;
             // 
             // colVegaTotal
@@ -555,7 +567,7 @@
             this.colVegaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "VegaTotal", "{0:#,##0}")});
             this.colVegaTotal.Visible = true;
-            this.colVegaTotal.VisibleIndex = 16;
+            this.colVegaTotal.VisibleIndex = 17;
             this.colVegaTotal.Width = 45;
             // 
             // colOptionData_Gamma
@@ -578,7 +590,7 @@
             this.colOptionData_Gamma.MinWidth = 45;
             this.colOptionData_Gamma.Name = "colOptionData_Gamma";
             this.colOptionData_Gamma.Visible = true;
-            this.colOptionData_Gamma.VisibleIndex = 18;
+            this.colOptionData_Gamma.VisibleIndex = 19;
             this.colOptionData_Gamma.Width = 70;
             // 
             // colOptionData_ImpliedVolatility
@@ -601,7 +613,7 @@
             this.colOptionData_ImpliedVolatility.MinWidth = 50;
             this.colOptionData_ImpliedVolatility.Name = "colOptionData_ImpliedVolatility";
             this.colOptionData_ImpliedVolatility.Visible = true;
-            this.colOptionData_ImpliedVolatility.VisibleIndex = 12;
+            this.colOptionData_ImpliedVolatility.VisibleIndex = 13;
             this.colOptionData_ImpliedVolatility.Width = 51;
             // 
             // colContract_Symbol
@@ -620,7 +632,7 @@
             this.colAvgPrice.UnboundExpression = "[TotalCostUSD] / [Position]";
             this.colAvgPrice.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
             this.colAvgPrice.Visible = true;
-            this.colAvgPrice.VisibleIndex = 5;
+            this.colAvgPrice.VisibleIndex = 7;
             this.colAvgPrice.Width = 71;
             // 
             // btnLoadData
@@ -686,5 +698,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn colAvgPrice;
         private System.Windows.Forms.Button btnLoadData;
         private DevExpress.XtraGrid.Columns.GridColumn colExpiry;
+        private DevExpress.XtraGrid.Columns.GridColumn colCalculatedOptionPrice;
     }
 }

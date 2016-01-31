@@ -162,7 +162,9 @@ namespace TNS.BL
                     AlgorithmType = 2,
                     OTMOffsetPut = 12,
                     OTMOffsetCall = 10,
-                    UNLSymbolsList = "AAPL;MSFT"
+                    UNLSymbolsList = "AAPL;MSFT",
+                    RiskFreeInterestRate = 0.01,
+
                 }
             };
 

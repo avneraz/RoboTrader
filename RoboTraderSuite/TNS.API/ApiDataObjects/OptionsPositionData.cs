@@ -69,21 +69,7 @@ namespace TNS.API.ApiDataObjects
         }
         public double IV => OptionData?.ImpliedVolatility ?? 0;
 
-        public double CalculatedOptionPrice
-        {
-            get
-            {
-                if ((OptionData == null))
-                    return 0;
-                
-                var optionPrice = ((OptionData.AskPrice <= 0) || OptionData.BidPrice <= 0)
-                    ? ((OptionData.LastPrice <= 0 && OptionData.ModelPrice >= 0)
-                        ? OptionData.ModelPrice
-                        : OptionData.LastPrice)
-                    : (OptionData.AskPrice + OptionData.BidPrice) / 2;
-                return optionPrice;
-            }
-        }
+        public double CalculatedOptionPrice => OptionData.CalculatedOptionPrice;
 
         public double TotalCost => AverageCost * Position * CurrencyRate * -1;
         public double PnL => MarketValue + TotalCost;

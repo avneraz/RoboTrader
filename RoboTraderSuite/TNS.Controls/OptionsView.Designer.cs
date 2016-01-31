@@ -145,7 +145,7 @@
             // colOptionContract_OptionType
             // 
             this.colOptionContract_OptionType.Caption = "Type";
-            this.colOptionContract_OptionType.FieldName = "OptionContract.OptionType";
+            this.colOptionContract_OptionType.FieldName = "OptionContract.EOptionType";
             this.colOptionContract_OptionType.Name = "colOptionContract_OptionType";
             this.colOptionContract_OptionType.Visible = true;
             this.colOptionContract_OptionType.VisibleIndex = 2;

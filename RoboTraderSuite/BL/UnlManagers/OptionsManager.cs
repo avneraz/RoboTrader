@@ -6,6 +6,7 @@ using Infra.Enum;
 using log4net;
 using TNS.API;
 using TNS.API.ApiDataObjects;
+using TNS.BL.Analysis;
 using TNS.BL.Interfaces;
 
 namespace TNS.BL.UnlManagers
@@ -23,6 +24,8 @@ namespace TNS.BL.UnlManagers
         //public event Action<OptionData> OptionDataReceivd;
 
         public Dictionary<string, OptionData> OptionDataDic { get; }
+
+       
 
         public OptionData GetOptionData(string optionKey)
         {

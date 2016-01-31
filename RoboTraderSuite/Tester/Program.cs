@@ -17,6 +17,8 @@ using TNS.API.IBApiWrapper;
 using TNS.BL;
 using Infra.Bus;
 using Infra.Configuration;
+using Infra.Enum;
+using TNS.BL.Analysis;
 using UILogic;
 using static System.Console;
 
@@ -109,17 +111,17 @@ namespace Tester
             wrapper.RequestAccountData();
             wrapper.RequestContinousContractData(new List<ContractBase>()
             {
-                //new OptionContract("AAPL", 0, new DateTime(2015, 12, 31), OptionType.Call),
-                new OptionContract("AAPL", new DateTime(2016, 1, 15), OptionType.Call),
+                //new OptionContract("AAPL", 0, new DateTime(2015, 12, 31), EOptionType.Call),
+                new OptionContract("AAPL", new DateTime(2016, 1, 15), EOptionType.Call),
                 new SecurityContract("AAPL", SecurityType.Stock)
             }); 
 
             wrapper.RequestContinousPositionsData();
             //Thread.Sleep(2000);
-            //string orderIdStr = wrapper.CreateOrder(new OptionContract("AAPL", 120, new DateTime(2015, 12, 24), OptionType.Call), new OrderData(OrderType.MKT, OrderAction.Sell, 1.8, 1));
+            //string orderIdStr = wrapper.CreateOrder(new OptionContract("AAPL", 120, new DateTime(2015, 12, 24), EOptionType.Call), new OrderData(OrderType.MKT, OrderAction.Sell, 1.8, 1));
             //Console.WriteLine("Placed Order ID = " + orderIdStr);
             //Thread.Sleep(10000);
-            //orderIdStr = wrapper.CreateOrder(new OptionContract("AAPL", 125, new DateTime(2015, 12, 24), OptionType.Call), new OrderData(OrderType.MKT, OrderAction.Sell, 1.8, 1));
+            //orderIdStr = wrapper.CreateOrder(new OptionContract("AAPL", 125, new DateTime(2015, 12, 24), EOptionType.Call), new OrderData(OrderType.MKT, OrderAction.Sell, 1.8, 1));
             //Console.WriteLine("Placed Order ID = " + orderIdStr);
             //Thread.Sleep(10000);
             Thread.Sleep(1000);
@@ -130,7 +132,7 @@ namespace Tester
                     OrderAction = OrderAction.SELL,
                     Quantity = 1,
                     //LimitPrice = 0.2,
-                    Contract = new OptionContract("AAPL", 110, new DateTime(2016, 1, 15), OptionType.Call)
+                    Contract = new OptionContract("AAPL", 110, new DateTime(2016, 1, 15), EOptionType.Call)
                 });
 
             
@@ -140,6 +142,8 @@ namespace Tester
             //string tags = "NetLiquidation,EquityWithLoanValue,BuyingPower,ExcessLiquidity,FullMaintMarginReq,FullInitMarginReq";
             //wrapper.RequestAccountSummary();
             Thread.Sleep(10000000);
+            BnSCalcHelpper bnSCalc = new BnSCalcHelpper();
+            bnSCalc.UpdateGreekValues(new OptionData());
             
         }
 

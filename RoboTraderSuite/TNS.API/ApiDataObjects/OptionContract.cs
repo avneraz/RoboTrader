@@ -1,17 +1,10 @@
 ﻿using System;
 using IBApi;
+using Infra.Enum;
 
 namespace TNS.API.ApiDataObjects
 {
-	/// <summary>
-	/// Call or Put or none
-	/// </summary>
-	public enum OptionType
-	{
-		None,
-		Call,
-		Put
-	}
+	
 	public class OptionContract : ContractBase
 	{
 		public OptionContract() 
@@ -19,7 +12,7 @@ namespace TNS.API.ApiDataObjects
 			
 		}
 		public OptionContract(string symbol, double strike, DateTime expiry, 
-			OptionType type, string exchange="SMART", int multiplier = 100, string currency = "USD")
+			EOptionType type, string exchange="SMART", int multiplier = 100, string currency = "USD")
 			:base(symbol, SecurityType.Option)
 			
 		{
@@ -29,7 +22,7 @@ namespace TNS.API.ApiDataObjects
 			Multiplier = multiplier;
 		}
 
-		public OptionContract(string symbol, DateTime expiry, OptionType type,
+		public OptionContract(string symbol, DateTime expiry, EOptionType type,
 			 string exchange = "SMART", int multiplier = 100, string currency = "USD")
 			: base(symbol, SecurityType.Option)
 
@@ -40,7 +33,7 @@ namespace TNS.API.ApiDataObjects
 		}
 		public DateTime Expiry { get; set; }
 		public double Strike { get; set; }
-		public OptionType OptionType { get; set; }
+		public EOptionType OptionType { get; set; }
 		public int Multiplier { get; set; }
 
        
@@ -54,8 +47,8 @@ namespace TNS.API.ApiDataObjects
 		public override Contract ToIbContract()
 		{
 			var contract =  base.ToIbContract();
-			if(OptionType != OptionType.None)
-				contract.Right = OptionType == OptionType.Call ? "C" : "P";
+			if(OptionType != EOptionType.None)
+				contract.Right = OptionType == EOptionType.Call ? "C" : "P";
 			contract.Expiry = Expiry < DateTime.Now ? null : Expiry.ToString("yyyyMMdd");
 			contract.Strike = Strike;
 			contract.Multiplier = Multiplier.ToString();

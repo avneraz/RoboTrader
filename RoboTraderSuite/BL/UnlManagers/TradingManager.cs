@@ -33,8 +33,6 @@ namespace TNS.BL.UnlManagers
                     var eventType = tradingTimeEvent.TradingTimeEventType;
                     switch (eventType)
                     {
-                        case ETradingTimeEventType.Unknown:
-                            return true;
                         case ETradingTimeEventType.StartTrading:
                             break;
                         case ETradingTimeEventType.EndTradingIn30Seconds:
@@ -43,11 +41,7 @@ namespace TNS.BL.UnlManagers
                             break;
                         case ETradingTimeEventType.EndTrading:
                             break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
                     }
-
-
                     return true;
             }
             return false;
