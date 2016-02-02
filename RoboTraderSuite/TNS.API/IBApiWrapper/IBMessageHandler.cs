@@ -297,7 +297,11 @@ namespace TNS.API.IBApiWrapper
 
             {
                 var optionData = SecurityDataDic[tickerId] as OptionData;
-                optionData.ImpliedVolatility = impliedVolatility;
+                if (impliedVolatility < LARGE_NUBMER)//Filter big long number
+                {
+                    optionData.ImpliedVolatility = impliedVolatility;
+                }
+                //optionData.ImpliedVolatility = impliedVolatility;
                 double price;
                 //TODO - reason for this switch case?
                 switch (field)
@@ -340,7 +344,7 @@ namespace TNS.API.IBApiWrapper
                     optionData.Theta = theta;
                 optionData.UnderlinePrice = undPrice > int.MaxValue ? -1 : undPrice;
 
-                if (optionData.ImpliedVolatility < EPSILON)
+                if ((optionData.ImpliedVolatility < EPSILON) && (impliedVolatility < LARGE_NUBMER))
                 {
                     optionData.ImpliedVolatility = impliedVolatility;
                 }

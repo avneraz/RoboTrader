@@ -33,6 +33,7 @@
             this.xPageAPIMessages = new DevExpress.XtraTab.XtraTabPage();
             this.apiMesagesView = new TNS.Controls.APIMesagesView();
             this.xPagePositions = new DevExpress.XtraTab.XtraTabPage();
+            this.positionsView1 = new TNS.Controls.PositionsView();
             this.xtraPageMainSecurities = new DevExpress.XtraTab.XtraTabPage();
             this.mainSecuritiesView1 = new TNS.Controls.MainSecuritiesView();
             this.xtraPageOrders = new DevExpress.XtraTab.XtraTabPage();
@@ -43,7 +44,7 @@
             this.optionsView1 = new TNS.Controls.OptionsView();
             this.xtraPageUnlDataTrading = new DevExpress.XtraTab.XtraTabPage();
             this.unlTradingView1 = new TNS.Controls.UnlTradingView();
-            this.positionsView1 = new TNS.Controls.PositionsView();
+            this.btnBnsLocal = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.xPageAPIMessages.SuspendLayout();
@@ -65,11 +66,13 @@
             // 
             // xtraTabControl1
             // 
-            this.xtraTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.xtraTabControl1.Location = new System.Drawing.Point(0, 0);
+            this.xtraTabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.xtraTabControl1.Location = new System.Drawing.Point(-1, 65);
             this.xtraTabControl1.Name = "xtraTabControl1";
             this.xtraTabControl1.SelectedTabPage = this.xPageAPIMessages;
-            this.xtraTabControl1.Size = new System.Drawing.Size(1057, 543);
+            this.xtraTabControl1.Size = new System.Drawing.Size(1067, 520);
             this.xtraTabControl1.TabIndex = 1;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xPageAPIMessages,
@@ -83,7 +86,7 @@
             // 
             this.xPageAPIMessages.Controls.Add(this.apiMesagesView);
             this.xPageAPIMessages.Name = "xPageAPIMessages";
-            this.xPageAPIMessages.Size = new System.Drawing.Size(1051, 515);
+            this.xPageAPIMessages.Size = new System.Drawing.Size(1061, 492);
             this.xPageAPIMessages.Text = "API Messages";
             // 
             // apiMesagesView
@@ -92,7 +95,7 @@
             this.apiMesagesView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.apiMesagesView.Location = new System.Drawing.Point(0, 0);
             this.apiMesagesView.Name = "apiMesagesView";
-            this.apiMesagesView.Size = new System.Drawing.Size(1051, 515);
+            this.apiMesagesView.Size = new System.Drawing.Size(1061, 492);
             this.apiMesagesView.TabIndex = 0;
             // 
             // xPagePositions
@@ -102,6 +105,15 @@
             this.xPagePositions.Name = "xPagePositions";
             this.xPagePositions.Size = new System.Drawing.Size(1051, 515);
             this.xPagePositions.Text = "Positions";
+            // 
+            // positionsView1
+            // 
+            this.positionsView1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.positionsView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.positionsView1.Location = new System.Drawing.Point(0, 0);
+            this.positionsView1.Name = "positionsView1";
+            this.positionsView1.Size = new System.Drawing.Size(1051, 515);
+            this.positionsView1.TabIndex = 1;
             // 
             // xtraPageMainSecurities
             // 
@@ -191,20 +203,22 @@
             this.unlTradingView1.Size = new System.Drawing.Size(1051, 515);
             this.unlTradingView1.TabIndex = 0;
             // 
-            // positionsView1
+            // btnBnsLocal
             // 
-            this.positionsView1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.positionsView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.positionsView1.Location = new System.Drawing.Point(0, 0);
-            this.positionsView1.Name = "positionsView1";
-            this.positionsView1.Size = new System.Drawing.Size(1051, 515);
-            this.positionsView1.TabIndex = 1;
+            this.btnBnsLocal.Location = new System.Drawing.Point(13, 13);
+            this.btnBnsLocal.Name = "btnBnsLocal";
+            this.btnBnsLocal.Size = new System.Drawing.Size(75, 23);
+            this.btnBnsLocal.TabIndex = 2;
+            this.btnBnsLocal.Text = "B n S Local ";
+            this.btnBnsLocal.UseVisualStyleBackColor = true;
+            this.btnBnsLocal.Click += new System.EventHandler(this.btnBnsLocal_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1057, 543);
+            this.ClientSize = new System.Drawing.Size(1066, 585);
+            this.Controls.Add(this.btnBnsLocal);
             this.Controls.Add(this.xtraTabControl1);
             this.Name = "MainForm";
             this.Text = "MainForm";
@@ -241,6 +255,7 @@
         private DevExpress.XtraTab.XtraTabPage xtraPageUnlDataTrading;
         private Controls.UnlTradingView unlTradingView1;
         private Controls.PositionsView positionsView1;
+        private System.Windows.Forms.Button btnBnsLocal;
     }
 }
 

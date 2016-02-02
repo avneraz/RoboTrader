@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Forms;
+using DevExpress.XtraPrinting.HtmlExport;
 using Infra;
 using Infra.Extensions;
 using Infra.PopUpMessages;
@@ -131,6 +132,26 @@ namespace TNS.RoboTrader
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+        /// <summary>
+        /// Indicate if the Greek  values of the options will be calculated locally, 
+        /// usually it's activated by the user when the broker don't send Greek values.
+        /// </summary>
+        public bool CalculateGreekLocally { get; set; }
+        private void btnBnsLocal_Click(object sender, EventArgs e)
+        {
+            CalculateGreekLocally = !CalculateGreekLocally;
+            if (CalculateGreekLocally)
+            {
+                btnBnsLocal.Text = "TWS BnS";
+                _appManager.Distributer.CalculateGreekLocally = true;
+            }
+            else
+            {
+                btnBnsLocal.Text = "Local BnS";
+                _appManager.Distributer.CalculateGreekLocally = false;
+            }
+
         }
     }
 }

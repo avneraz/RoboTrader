@@ -43,6 +43,7 @@ namespace TNS.API.ApiDataObjects
 
         public string Symbol => OptionContract.Symbol;
         public DateTime Expiry => OptionContract.Expiry;
+
         #region Option Calculated Properties
 
         #region Greek

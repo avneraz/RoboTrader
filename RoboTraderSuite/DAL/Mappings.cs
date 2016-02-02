@@ -106,6 +106,9 @@ namespace DAL
     {
         public OptionPositionDataMapping()
         {
+            //References(x => x.OptionContract);
+            //Table("OptionsPositions");
+
             References(x => x.OptionContract);
             Table("OptionsPositions");
         }

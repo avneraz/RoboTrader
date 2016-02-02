@@ -107,7 +107,8 @@ namespace TNS.BL
                     break;
                 case EapiDataTypes.UnlTradingData:
                     _marginManager.UpdateUnlTradingData((UnlTradingData) message);
-                   break;
+                    _dbWriter.Enqueue(message, false);
+                    break;
                 case EapiDataTypes.MarginData:
                     var marginData = (MarginData) message;
                     if (_unlManagersDic.ContainsKey(marginData.Symbol))
