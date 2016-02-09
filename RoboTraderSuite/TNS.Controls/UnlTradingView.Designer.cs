@@ -29,12 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.gridControl1 = new DevExpress.XtraGrid.GridControl();
+            this.grdUnLTradingData = new DevExpress.XtraGrid.GridControl();
             this.unlTradingDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridViewUnLTradingData = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colAPIDataType = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colSymbol = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colLastUpdate = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colShorts = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colTradingState = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colDeltaTotal = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colGammaTotal = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -53,33 +54,32 @@
             this.colMaxAbsoluteDelta = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colMargin = new DevExpress.XtraGrid.Columns.GridColumn();
             this.btnLoadData = new System.Windows.Forms.Button();
-            this.colShorts = new DevExpress.XtraGrid.Columns.GridColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdUnLTradingData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.unlTradingDataBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewUnLTradingData)).BeginInit();
             this.SuspendLayout();
             // 
-            // gridControl1
+            // grdUnLTradingData
             // 
-            this.gridControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.grdUnLTradingData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gridControl1.DataSource = this.unlTradingDataBindingSource;
-            this.gridControl1.Location = new System.Drawing.Point(5, 63);
-            this.gridControl1.MainView = this.gridView1;
-            this.gridControl1.Name = "gridControl1";
-            this.gridControl1.Size = new System.Drawing.Size(1200, 512);
-            this.gridControl1.TabIndex = 0;
-            this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView1});
+            this.grdUnLTradingData.DataSource = this.unlTradingDataBindingSource;
+            this.grdUnLTradingData.Location = new System.Drawing.Point(5, 63);
+            this.grdUnLTradingData.MainView = this.gridViewUnLTradingData;
+            this.grdUnLTradingData.Name = "grdUnLTradingData";
+            this.grdUnLTradingData.Size = new System.Drawing.Size(1200, 512);
+            this.grdUnLTradingData.TabIndex = 0;
+            this.grdUnLTradingData.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridViewUnLTradingData});
             // 
             // unlTradingDataBindingSource
             // 
             this.unlTradingDataBindingSource.DataSource = typeof(TNS.API.ApiDataObjects.UnlTradingData);
             // 
-            // gridView1
+            // gridViewUnLTradingData
             // 
-            this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridViewUnLTradingData.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colAPIDataType,
             this.colSymbol,
             this.colLastUpdate,
@@ -101,8 +101,8 @@
             this.colDailyPnL,
             this.colMaxAbsoluteDelta,
             this.colMargin});
-            this.gridView1.GridControl = this.gridControl1;
-            this.gridView1.Name = "gridView1";
+            this.gridViewUnLTradingData.GridControl = this.grdUnLTradingData;
+            this.gridViewUnLTradingData.Name = "gridViewUnLTradingData";
             // 
             // colAPIDataType
             // 
@@ -127,6 +127,14 @@
             this.colLastUpdate.Visible = true;
             this.colLastUpdate.VisibleIndex = 19;
             this.colLastUpdate.Width = 121;
+            // 
+            // colShorts
+            // 
+            this.colShorts.Caption = "Shorts #";
+            this.colShorts.FieldName = "Shorts";
+            this.colShorts.Name = "colShorts";
+            this.colShorts.Visible = true;
+            this.colShorts.VisibleIndex = 3;
             // 
             // colTradingState
             // 
@@ -321,34 +329,26 @@
             this.btnLoadData.UseVisualStyleBackColor = true;
             this.btnLoadData.Click += new System.EventHandler(this.btnLoadData_Click);
             // 
-            // colShorts
-            // 
-            this.colShorts.Caption = "Shorts #";
-            this.colShorts.FieldName = "Shorts";
-            this.colShorts.Name = "colShorts";
-            this.colShorts.Visible = true;
-            this.colShorts.VisibleIndex = 3;
-            // 
             // UnlTradingView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.Controls.Add(this.btnLoadData);
-            this.Controls.Add(this.gridControl1);
+            this.Controls.Add(this.grdUnLTradingData);
             this.Name = "UnlTradingView";
             this.Size = new System.Drawing.Size(1210, 580);
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdUnLTradingData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.unlTradingDataBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewUnLTradingData)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private DevExpress.XtraGrid.GridControl gridControl1;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private DevExpress.XtraGrid.GridControl grdUnLTradingData;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewUnLTradingData;
         private System.Windows.Forms.Button btnLoadData;
         private System.Windows.Forms.BindingSource unlTradingDataBindingSource;
         private DevExpress.XtraGrid.Columns.GridColumn colAPIDataType;

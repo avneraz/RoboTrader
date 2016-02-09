@@ -36,6 +36,8 @@ namespace TNS.API.ApiDataObjects
 
         public double UnderlinePrice { get; set; }
 
+        public string OptionKey => OptionContract.OptionKey;
+
 
         public double CalculatedOptionPrice
         {

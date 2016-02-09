@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using Infra;
 using Infra.Extensions;
@@ -14,6 +13,23 @@ namespace TNS.Controls
         {
             InitializeComponent();
         }
+        public List<AccountSummaryData> AccountSummaryDataList { get; set; }
+        //public AccountSummaryData AccountSummaryData { get; set; }
+
+        /// <summary>
+        /// Current money plus option market value
+        /// </summary>
+        public double EquityWithLoanValue => AccountSummaryDataList[0].EquityWithLoanValue;
+
+        /// <summary>
+        /// Margin maintenance required 
+        /// </summary>
+        public double FullMaintMarginReq => AccountSummaryDataList[0].FullMaintMarginReq;
+
+        /// <summary>
+        /// Invested money plus PnL
+        /// </summary>
+        public double NetLiquidation => AccountSummaryDataList[0].NetLiquidation;
 
         private void btnLoadData_Click(object sender, EventArgs e)
         {
@@ -22,41 +38,74 @@ namespace TNS.Controls
         }
         private void SetAndUpdate()
         {
-            //optionsPositionDataBindingSource.DataSource = PositionDataDic.Values.ToList();
-            optionsPositionDataBindingSource.DataSource = OptionsPositionDataList;
-            grdPositionData.Refresh();
             if (_dataloaded)
                 return;
-            if (PositionDataDic.Count > 0)
-            {
-                _dataloaded = true;
-                GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(1),
-                    () =>
+            _dataloaded = true;
+            GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(1),
+                () =>
+                {
+                    grdPositionData.InvokeIfRequired(() =>
                     {
-                        grdPositionData.InvokeIfRequired(() =>
-                        {
-                            optionsPositionDataBindingSource.DataSource = PositionDataDic.Values.ToList();
-                            optionsPositionDataBindingSource.ResetBindings(false);
-                            //OptionsPositionDataList = PositionDataDic.Values.ToList();
+                        optionsPositionDataBindingSource.ResetBindings(false);
                             grdPositionData.Height = 208 + (gridView1.RowHeight + 1) * (optionsPositionDataBindingSource.Count);
 
-                        });
-                    },
-                    true);
-            }
+                    });
+                    grpAccountSummary.InvokeIfRequired(() =>
+                    {
+                        accountSummaryDataBindingSource.ResetBindings(false);
+                    });
+                    grdUnLTradingData.InvokeIfRequired(() =>
+                    {
+                        unlTradingDataBindingSource.ResetBindings(false);
+
+                    });
+                },
+                true);
         }
 
         private bool _dataloaded;
-        private List<OptionsPositionData> OptionsPositionDataList { get; set; }
-        public void SetUnlTradingDataDic(Dictionary<string, OptionsPositionData> positionDataDic)
+        //private List<OptionsPositionData> OptionsPositionDataList { get; set; }
+        //public void SetPositionDataDicTBD(Dictionary<string, OptionsPositionData> positionDataDic)
+        //{
+        //    //PositionDataDic = positionDataDic;
+        //    GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(15), () => grdPositionData.InvokeIfRequired(SetAndUpdate), false);
+        //}
+
+        public void SetPositionDataList(List<OptionsPositionData> positionDataList)
         {
-            PositionDataDic = positionDataDic;
-            OptionsPositionDataList = positionDataDic.Values.ToList();
-            GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(30), () => grdPositionData.InvokeIfRequired(SetAndUpdate), false);
-         
+
+            grdPositionData.InvokeIfRequired(() =>
+            {
+                optionsPositionDataBindingSource.DataSource = positionDataList;
+                optionsPositionDataBindingSource.ResetBindings(false);
+                grdPositionData.Height = 208 + (gridView1.RowHeight + 1) * (optionsPositionDataBindingSource.Count);
+                SetAndUpdate();
+            });
         }
 
-        private Dictionary<string, OptionsPositionData> PositionDataDic { get;  set; }
+        public void SetUnlTradingDataList(List<UnlTradingData> unlTradingDataList)
+        {
+            grdUnLTradingData.InvokeIfRequired(() =>
+            {
+                unlTradingDataBindingSource.DataSource = unlTradingDataList;
+                unlTradingDataBindingSource.ResetBindings(false);
+
+            });
+
+        }
+        //public Dictionary<string, UnlTradingData> UnlTradingDataDic { get; private set; }
+        public void SetAccountSummaryData(List<AccountSummaryData> accountSummaryDataList)
+        {
+            AccountSummaryDataList = accountSummaryDataList;
+            grpAccountSummary.InvokeIfRequired(() =>
+            {
+                accountSummaryDataBindingSource.DataSource = AccountSummaryDataList;
+                accountSummaryDataBindingSource.ResetBindings(false);
+                grpAccountSummary.ResetBindings();
+            });
+
+        }
+        //private Dictionary<string, OptionsPositionData> PositionDataDic { get;  set; }
 
         private void PositionsView_Resize(object sender, EventArgs e)
         {

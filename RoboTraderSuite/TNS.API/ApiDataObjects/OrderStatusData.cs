@@ -51,6 +51,9 @@ namespace TNS.API.ApiDataObjects
             return Order.Contract;
         }
 
+        public double Strike => ((OptionContract) Order.Contract).Strike;
+
+        public string OptionKey => ((OptionContract)Order.Contract).OptionKey;
         public Guid Id { get; set; }
         public OrderStatus OrderStatus { get; set; }
         public string OrderId { get;  }

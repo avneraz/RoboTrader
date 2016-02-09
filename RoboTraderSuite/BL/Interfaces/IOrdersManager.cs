@@ -10,7 +10,8 @@ namespace TNS.BL.Interfaces
         OrderData BuyOption(OptionData optionData, double limitPrice, int quantity);
         OrderData SellOption(OptionData optionData, double limitPrice, int quantity);
         OrderData TestTrading(bool sell);
+        void CancelOrder(string orderId);
 
-        event Action<OrderStatusData> OrderStatusDataUpdated;
+        //event Action<OrderStatusData> OrderStatusDataUpdated;
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Infra;
 using Infra.Bus;
 using Infra.Enum;
 
@@ -17,6 +18,8 @@ namespace TNS.API.ApiDataObjects
         public double FullInitMarginReq { get; set; }
         public double FullMaintMarginReq { get; set; }
         public double NetLiquidation { get; set; }
+
+        public double PnL => NetLiquidation - AllConfigurations.AllConfigurationsObject.Trading.InitNetLiquidation;
 
         public EapiDataTypes APIDataType => EapiDataTypes.AccountSummaryData;
 

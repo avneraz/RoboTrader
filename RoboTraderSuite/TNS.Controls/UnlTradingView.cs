@@ -28,7 +28,7 @@ namespace TNS.Controls
         private void SetAndUpdate()
         {
             unlTradingDataBindingSource.DataSource = UnlTradingDataDic.Values.ToList();
-            gridControl1.Refresh();
+            grdUnLTradingData.Refresh();
             if(_dataloaded)
                 return;
             if (UnlTradingDataDic.Count > 0)
@@ -37,7 +37,7 @@ namespace TNS.Controls
                 GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(1),
                     () =>
                     {
-                        gridControl1.InvokeIfRequired(() =>
+                        grdUnLTradingData.InvokeIfRequired(() =>
                         {
                             unlTradingDataBindingSource.DataSource = UnlTradingDataDic.Values.ToList();
                             unlTradingDataBindingSource.ResetBindings(false);
@@ -52,7 +52,7 @@ namespace TNS.Controls
         public void SetUnlTradingDataDic(Dictionary<string, UnlTradingData> unlTradingDataDic)
         {
             UnlTradingDataDic = unlTradingDataDic;
-            GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(30), () => gridControl1.InvokeIfRequired(SetAndUpdate), false);
+            GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(30), () => grdUnLTradingData.InvokeIfRequired(SetAndUpdate), false);
             //unlTradingDataBindingSource.DataSource = UnlTradingDataDic.Values.ToList();
             //GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(1),
             //    () => { gridControl1.InvokeIfRequired(() => { unlTradingDataBindingSource.ResetBindings(false); }); }, true);

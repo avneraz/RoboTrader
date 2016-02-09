@@ -45,12 +45,15 @@
             this.colOrder_Quantity = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOptionKey = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colStrike = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.iCancelOrder = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdOrders)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.orderStatusDataBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdViewOrders)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -73,6 +76,7 @@
             // 
             // grdOrders
             // 
+            this.grdOrders.ContextMenuStrip = this.contextMenuStrip1;
             this.grdOrders.DataSource = this.orderStatusDataBindingSource;
             this.grdOrders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdOrders.Location = new System.Drawing.Point(5, 5);
@@ -195,7 +199,7 @@
             // colOptionKey
             // 
             this.colOptionKey.Caption = "Option Key";
-            this.colOptionKey.FieldName = "Order.OptionContract.OptionKey";
+            this.colOptionKey.FieldName = "OptionKey";
             this.colOptionKey.Name = "colOptionKey";
             this.colOptionKey.Visible = true;
             this.colOptionKey.VisibleIndex = 1;
@@ -203,10 +207,24 @@
             // colStrike
             // 
             this.colStrike.Caption = "Strike";
-            this.colStrike.FieldName = "Order.OptionContract.Strike";
+            this.colStrike.FieldName = "Strike";
             this.colStrike.Name = "colStrike";
             this.colStrike.Visible = true;
             this.colStrike.VisibleIndex = 2;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.iCancelOrder});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 48);
+            // 
+            // iCancelOrder
+            // 
+            this.iCancelOrder.Name = "iCancelOrder";
+            this.iCancelOrder.Size = new System.Drawing.Size(152, 22);
+            this.iCancelOrder.Text = "Cancel Order";
+            this.iCancelOrder.Click += new System.EventHandler(this.iCancelOrder_Click);
             // 
             // OrdersView
             // 
@@ -222,6 +240,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.grdOrders)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.orderStatusDataBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdViewOrders)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -244,5 +263,7 @@
         private DevExpress.XtraGrid.Columns.GridColumn colOrder_Quantity;
         private DevExpress.XtraGrid.Columns.GridColumn colOptionKey;
         private DevExpress.XtraGrid.Columns.GridColumn colStrike;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem iCancelOrder;
     }
 }

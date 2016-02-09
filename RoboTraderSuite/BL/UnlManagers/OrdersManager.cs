@@ -11,7 +11,7 @@ namespace TNS.BL.UnlManagers
 {
     public class OrdersManager : UnlMemberBaseManager, IOrdersManager
     {
-        public event Action<OrderStatusData> OrderStatusDataUpdated;
+        //public event Action<OrderStatusData> OrderStatusDataUpdated;
         public OrdersManager(ITradingApi apiWrapper, ManagedSecurity managedSecurity, UNLManager unlManager) : base(apiWrapper, managedSecurity, unlManager)
         {
             OrderStatusDataDic = new Dictionary<string, OrderStatusData>();
@@ -33,14 +33,14 @@ namespace TNS.BL.UnlManagers
                 case EapiDataTypes.OrderStatus:
                 var order = (OrderStatusData) message;
                 OrderStatusDataDic[order.OrderId] = order;
-                    OrderStatusDataUpdated?.Invoke(order);
+                    //OrderStatusDataUpdated?.Invoke(order);
                         result = true;
                     break;
-                //case EapiDataTypes.OrderData:
+                case EapiDataTypes.OrderData:
 
-                //    //OrderStatusDataUpdated?.Invoke(order);
-                //    result = true;
-                //    break;
+                    //OrderStatusDataUpdated?.Invoke(order);
+                    result = true;
+                    break;
             }
             //SellOption(UNLManager.OptionsManager.OptionDataDic.Values.ToList()[0], 1, 1);
             return result;
@@ -53,6 +53,7 @@ namespace TNS.BL.UnlManagers
         public Dictionary<string, OrderStatusData> OrderStatusDataDic { get; }
         public OrderData SellOption(OptionData optionData, double limitPrice, int quantity)
         {
+
             OrderData orderData = new OrderData()
             {
                 OrderType = DefaultOrderType,
@@ -82,9 +83,13 @@ namespace TNS.BL.UnlManagers
             return orderData;
         }
 
+        public void CancelOrder(string orderId)
+        {
+            APIWrapper.CancelOrder(orderId);
+        }
         public OrderData TestTrading(bool sell)
         {
-            string optionKey = GetOptionKey(new DateTime(2016, 2, 19), EOptionType.Call, 100);
+            string optionKey = GetOptionKey(new DateTime(2016, 2, 26), EOptionType.Call, 100);
             DefaultOrderType = OrderType.MKT;
             OrderData orderData = sell ? 
                 SellOption(UNLManager.OptionsManager.GetOptionData(optionKey), 1, 2) : 

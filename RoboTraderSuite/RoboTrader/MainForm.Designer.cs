@@ -45,6 +45,7 @@
             this.xtraPageUnlDataTrading = new DevExpress.XtraTab.XtraTabPage();
             this.unlTradingView1 = new TNS.Controls.UnlTradingView();
             this.btnBnsLocal = new System.Windows.Forms.Button();
+            this.btnCancelOrder = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.xPageAPIMessages.SuspendLayout();
@@ -61,7 +62,7 @@
             this.txtMessages.Location = new System.Drawing.Point(0, 0);
             this.txtMessages.Multiline = true;
             this.txtMessages.Name = "txtMessages";
-            this.txtMessages.Size = new System.Drawing.Size(1051, 515);
+            this.txtMessages.Size = new System.Drawing.Size(1061, 492);
             this.txtMessages.TabIndex = 0;
             // 
             // xtraTabControl1
@@ -103,7 +104,7 @@
             this.xPagePositions.Controls.Add(this.positionsView1);
             this.xPagePositions.Controls.Add(this.txtMessages);
             this.xPagePositions.Name = "xPagePositions";
-            this.xPagePositions.Size = new System.Drawing.Size(1051, 515);
+            this.xPagePositions.Size = new System.Drawing.Size(1061, 492);
             this.xPagePositions.Text = "Positions";
             // 
             // positionsView1
@@ -112,14 +113,14 @@
             this.positionsView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.positionsView1.Location = new System.Drawing.Point(0, 0);
             this.positionsView1.Name = "positionsView1";
-            this.positionsView1.Size = new System.Drawing.Size(1051, 515);
+            this.positionsView1.Size = new System.Drawing.Size(1061, 492);
             this.positionsView1.TabIndex = 1;
             // 
             // xtraPageMainSecurities
             // 
             this.xtraPageMainSecurities.Controls.Add(this.mainSecuritiesView1);
             this.xtraPageMainSecurities.Name = "xtraPageMainSecurities";
-            this.xtraPageMainSecurities.Size = new System.Drawing.Size(1051, 515);
+            this.xtraPageMainSecurities.Size = new System.Drawing.Size(1061, 492);
             this.xtraPageMainSecurities.Text = "Main Securities";
             // 
             // mainSecuritiesView1
@@ -128,16 +129,17 @@
             this.mainSecuritiesView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainSecuritiesView1.Location = new System.Drawing.Point(0, 0);
             this.mainSecuritiesView1.Name = "mainSecuritiesView1";
-            this.mainSecuritiesView1.Size = new System.Drawing.Size(1051, 515);
+            this.mainSecuritiesView1.Size = new System.Drawing.Size(1061, 492);
             this.mainSecuritiesView1.TabIndex = 0;
             // 
             // xtraPageOrders
             // 
             this.xtraPageOrders.Controls.Add(this.ordersView1);
             this.xtraPageOrders.Controls.Add(this.btnRegisterForData);
+            this.xtraPageOrders.Controls.Add(this.btnCancelOrder);
             this.xtraPageOrders.Controls.Add(this.btnSendOrder);
             this.xtraPageOrders.Name = "xtraPageOrders";
-            this.xtraPageOrders.Size = new System.Drawing.Size(1051, 515);
+            this.xtraPageOrders.Size = new System.Drawing.Size(1061, 492);
             this.xtraPageOrders.Text = "Orders";
             // 
             // ordersView1
@@ -146,9 +148,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ordersView1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ordersView1.Location = new System.Drawing.Point(11, 43);
+            this.ordersView1.Location = new System.Drawing.Point(3, 43);
             this.ordersView1.Name = "ordersView1";
-            this.ordersView1.Size = new System.Drawing.Size(724, 465);
+            this.ordersView1.Size = new System.Drawing.Size(1055, 465);
             this.ordersView1.TabIndex = 1;
             // 
             // btnRegisterForData
@@ -175,7 +177,7 @@
             // 
             this.xtraPageOptions.Controls.Add(this.optionsView1);
             this.xtraPageOptions.Name = "xtraPageOptions";
-            this.xtraPageOptions.Size = new System.Drawing.Size(1051, 515);
+            this.xtraPageOptions.Size = new System.Drawing.Size(1061, 492);
             this.xtraPageOptions.Text = "Options";
             // 
             // optionsView1
@@ -184,14 +186,14 @@
             this.optionsView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.optionsView1.Location = new System.Drawing.Point(0, 0);
             this.optionsView1.Name = "optionsView1";
-            this.optionsView1.Size = new System.Drawing.Size(1051, 515);
+            this.optionsView1.Size = new System.Drawing.Size(1061, 492);
             this.optionsView1.TabIndex = 0;
             // 
             // xtraPageUnlDataTrading
             // 
             this.xtraPageUnlDataTrading.Controls.Add(this.unlTradingView1);
             this.xtraPageUnlDataTrading.Name = "xtraPageUnlDataTrading";
-            this.xtraPageUnlDataTrading.Size = new System.Drawing.Size(1051, 515);
+            this.xtraPageUnlDataTrading.Size = new System.Drawing.Size(1061, 492);
             this.xtraPageUnlDataTrading.Text = "Unl. Trading Data";
             // 
             // unlTradingView1
@@ -200,7 +202,7 @@
             this.unlTradingView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.unlTradingView1.Location = new System.Drawing.Point(0, 0);
             this.unlTradingView1.Name = "unlTradingView1";
-            this.unlTradingView1.Size = new System.Drawing.Size(1051, 515);
+            this.unlTradingView1.Size = new System.Drawing.Size(1061, 492);
             this.unlTradingView1.TabIndex = 0;
             // 
             // btnBnsLocal
@@ -212,6 +214,16 @@
             this.btnBnsLocal.Text = "B n S Local ";
             this.btnBnsLocal.UseVisualStyleBackColor = true;
             this.btnBnsLocal.Click += new System.EventHandler(this.btnBnsLocal_Click);
+            // 
+            // btnCancelOrder
+            // 
+            this.btnCancelOrder.Location = new System.Drawing.Point(361, 14);
+            this.btnCancelOrder.Name = "btnCancelOrder";
+            this.btnCancelOrder.Size = new System.Drawing.Size(136, 23);
+            this.btnCancelOrder.TabIndex = 0;
+            this.btnCancelOrder.Text = "Cancel Selected Order";
+            this.btnCancelOrder.UseVisualStyleBackColor = true;
+            this.btnCancelOrder.Click += new System.EventHandler(this.btnCancelOrder_Click);
             // 
             // MainForm
             // 
@@ -256,6 +268,7 @@
         private Controls.UnlTradingView unlTradingView1;
         private Controls.PositionsView positionsView1;
         private System.Windows.Forms.Button btnBnsLocal;
+        private System.Windows.Forms.Button btnCancelOrder;
     }
 }
 

@@ -49,6 +49,8 @@ namespace TNS.API.ApiDataObjects
         /// </summary>
         public double OpeningPrice { get; set; }
 
+        public double Change => (LastPrice - BasePrice)/BasePrice;
+
         /// <summary>
         /// Price a seller is willing to accept for a security
         /// </summary>

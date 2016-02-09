@@ -33,6 +33,7 @@
             this.optionDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colOptionContractOptionKey = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colOptionContract_Symbol = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOptionContract_Expiry = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOptionContract_OptionType = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOptionContract_Strike = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -56,8 +57,6 @@
             this.colMultiplier = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colId = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colLastUpdate = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.btnLoadOptions = new System.Windows.Forms.Button();
-            this.colOptionContract_Symbol = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.optionDataBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
@@ -75,7 +74,7 @@
             this.gridControl1.Margin = new System.Windows.Forms.Padding(5);
             this.gridControl1.Name = "gridControl1";
             this.gridControl1.Padding = new System.Windows.Forms.Padding(5);
-            this.gridControl1.Size = new System.Drawing.Size(1392, 596);
+            this.gridControl1.Size = new System.Drawing.Size(1392, 624);
             this.gridControl1.TabIndex = 0;
             this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -117,12 +116,11 @@
             this.colId,
             this.colLastUpdate});
             this.gridView1.GridControl = this.gridControl1;
-            this.gridView1.GroupCount = 3;
+            this.gridView1.GroupCount = 2;
             this.gridView1.Name = "gridView1";
             this.gridView1.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colOptionContract_Symbol, DevExpress.Data.ColumnSortOrder.Ascending),
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colOptionContract_Expiry, DevExpress.Data.ColumnSortOrder.Ascending),
-            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colOptionContract_OptionType, DevExpress.Data.ColumnSortOrder.Ascending),
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colOptionContract_Strike, DevExpress.Data.ColumnSortOrder.Ascending)});
             // 
             // colOptionContractOptionKey
@@ -130,9 +128,16 @@
             this.colOptionContractOptionKey.Caption = "Op. Key";
             this.colOptionContractOptionKey.FieldName = "OptionContract.OptionKey";
             this.colOptionContractOptionKey.Name = "colOptionContractOptionKey";
-            this.colOptionContractOptionKey.Visible = true;
-            this.colOptionContractOptionKey.VisibleIndex = 0;
             this.colOptionContractOptionKey.Width = 88;
+            // 
+            // colOptionContract_Symbol
+            // 
+            this.colOptionContract_Symbol.Caption = "Symbol";
+            this.colOptionContract_Symbol.FieldName = "OptionContract.Symbol";
+            this.colOptionContract_Symbol.Name = "colOptionContract_Symbol";
+            this.colOptionContract_Symbol.Visible = true;
+            this.colOptionContract_Symbol.VisibleIndex = 0;
+            this.colOptionContract_Symbol.Width = 130;
             // 
             // colOptionContract_Expiry
             // 
@@ -140,15 +145,16 @@
             this.colOptionContract_Expiry.FieldName = "OptionContract.Expiry";
             this.colOptionContract_Expiry.Name = "colOptionContract_Expiry";
             this.colOptionContract_Expiry.Visible = true;
-            this.colOptionContract_Expiry.VisibleIndex = 1;
+            this.colOptionContract_Expiry.VisibleIndex = 0;
+            this.colOptionContract_Expiry.Width = 100;
             // 
             // colOptionContract_OptionType
             // 
             this.colOptionContract_OptionType.Caption = "Type";
-            this.colOptionContract_OptionType.FieldName = "OptionContract.EOptionType";
+            this.colOptionContract_OptionType.FieldName = "OptionContract.OptionType";
             this.colOptionContract_OptionType.Name = "colOptionContract_OptionType";
             this.colOptionContract_OptionType.Visible = true;
-            this.colOptionContract_OptionType.VisibleIndex = 2;
+            this.colOptionContract_OptionType.VisibleIndex = 0;
             // 
             // colOptionContract_Strike
             // 
@@ -166,7 +172,7 @@
             this.colBasePrice.FieldName = "BasePrice";
             this.colBasePrice.Name = "colBasePrice";
             this.colBasePrice.Visible = true;
-            this.colBasePrice.VisibleIndex = 3;
+            this.colBasePrice.VisibleIndex = 2;
             this.colBasePrice.Width = 59;
             // 
             // colLastPrice
@@ -176,7 +182,7 @@
             this.colLastPrice.FieldName = "LastPrice";
             this.colLastPrice.Name = "colLastPrice";
             this.colLastPrice.Visible = true;
-            this.colLastPrice.VisibleIndex = 4;
+            this.colLastPrice.VisibleIndex = 3;
             this.colLastPrice.Width = 51;
             // 
             // colAskPrice
@@ -186,7 +192,7 @@
             this.colAskPrice.FieldName = "AskPrice";
             this.colAskPrice.Name = "colAskPrice";
             this.colAskPrice.Visible = true;
-            this.colAskPrice.VisibleIndex = 15;
+            this.colAskPrice.VisibleIndex = 4;
             this.colAskPrice.Width = 51;
             // 
             // colBidPrice
@@ -196,7 +202,7 @@
             this.colBidPrice.FieldName = "BidPrice";
             this.colBidPrice.Name = "colBidPrice";
             this.colBidPrice.Visible = true;
-            this.colBidPrice.VisibleIndex = 16;
+            this.colBidPrice.VisibleIndex = 5;
             this.colBidPrice.Width = 51;
             // 
             // colDelta
@@ -206,7 +212,7 @@
             this.colDelta.FieldName = "Delta";
             this.colDelta.Name = "colDelta";
             this.colDelta.Visible = true;
-            this.colDelta.VisibleIndex = 7;
+            this.colDelta.VisibleIndex = 6;
             this.colDelta.Width = 51;
             // 
             // colGamma
@@ -216,7 +222,7 @@
             this.colGamma.FieldName = "Gamma";
             this.colGamma.Name = "colGamma";
             this.colGamma.Visible = true;
-            this.colGamma.VisibleIndex = 8;
+            this.colGamma.VisibleIndex = 7;
             this.colGamma.Width = 51;
             // 
             // colVega
@@ -226,7 +232,7 @@
             this.colVega.FieldName = "Vega";
             this.colVega.Name = "colVega";
             this.colVega.Visible = true;
-            this.colVega.VisibleIndex = 9;
+            this.colVega.VisibleIndex = 8;
             this.colVega.Width = 51;
             // 
             // colTheta
@@ -236,7 +242,7 @@
             this.colTheta.FieldName = "Theta";
             this.colTheta.Name = "colTheta";
             this.colTheta.Visible = true;
-            this.colTheta.VisibleIndex = 10;
+            this.colTheta.VisibleIndex = 9;
             this.colTheta.Width = 51;
             // 
             // colImpliedVolatility
@@ -246,7 +252,7 @@
             this.colImpliedVolatility.FieldName = "ImpliedVolatility";
             this.colImpliedVolatility.Name = "colImpliedVolatility";
             this.colImpliedVolatility.Visible = true;
-            this.colImpliedVolatility.VisibleIndex = 6;
+            this.colImpliedVolatility.VisibleIndex = 10;
             this.colImpliedVolatility.Width = 51;
             // 
             // colModelPrice
@@ -256,7 +262,7 @@
             this.colModelPrice.FieldName = "ModelPrice";
             this.colModelPrice.Name = "colModelPrice";
             this.colModelPrice.Visible = true;
-            this.colModelPrice.VisibleIndex = 5;
+            this.colModelPrice.VisibleIndex = 11;
             this.colModelPrice.Width = 51;
             // 
             // colUnderlinePrice
@@ -266,7 +272,7 @@
             this.colUnderlinePrice.FieldName = "UnderlinePrice";
             this.colUnderlinePrice.Name = "colUnderlinePrice";
             this.colUnderlinePrice.Visible = true;
-            this.colUnderlinePrice.VisibleIndex = 11;
+            this.colUnderlinePrice.VisibleIndex = 12;
             this.colUnderlinePrice.Width = 51;
             // 
             // colHighestPrice
@@ -276,7 +282,7 @@
             this.colHighestPrice.FieldName = "HighestPrice";
             this.colHighestPrice.Name = "colHighestPrice";
             this.colHighestPrice.Visible = true;
-            this.colHighestPrice.VisibleIndex = 12;
+            this.colHighestPrice.VisibleIndex = 13;
             this.colHighestPrice.Width = 51;
             // 
             // colLowestPrice
@@ -286,7 +292,7 @@
             this.colLowestPrice.FieldName = "LowestPrice";
             this.colLowestPrice.Name = "colLowestPrice";
             this.colLowestPrice.Visible = true;
-            this.colLowestPrice.VisibleIndex = 13;
+            this.colLowestPrice.VisibleIndex = 14;
             this.colLowestPrice.Width = 51;
             // 
             // colOpeningPrice
@@ -296,7 +302,7 @@
             this.colOpeningPrice.FieldName = "OpeningPrice";
             this.colOpeningPrice.Name = "colOpeningPrice";
             this.colOpeningPrice.Visible = true;
-            this.colOpeningPrice.VisibleIndex = 14;
+            this.colOpeningPrice.VisibleIndex = 15;
             this.colOpeningPrice.Width = 51;
             // 
             // colAskSize
@@ -304,7 +310,7 @@
             this.colAskSize.FieldName = "AskSize";
             this.colAskSize.Name = "colAskSize";
             this.colAskSize.Visible = true;
-            this.colAskSize.VisibleIndex = 17;
+            this.colAskSize.VisibleIndex = 16;
             this.colAskSize.Width = 51;
             // 
             // colBidSize
@@ -312,7 +318,7 @@
             this.colBidSize.FieldName = "BidSize";
             this.colBidSize.Name = "colBidSize";
             this.colBidSize.Visible = true;
-            this.colBidSize.VisibleIndex = 18;
+            this.colBidSize.VisibleIndex = 17;
             this.colBidSize.Width = 51;
             // 
             // colVolume
@@ -320,7 +326,7 @@
             this.colVolume.FieldName = "Volume";
             this.colVolume.Name = "colVolume";
             this.colVolume.Visible = true;
-            this.colVolume.VisibleIndex = 19;
+            this.colVolume.VisibleIndex = 18;
             this.colVolume.Width = 51;
             // 
             // colMultiplier
@@ -328,7 +334,7 @@
             this.colMultiplier.FieldName = "Multiplier";
             this.colMultiplier.Name = "colMultiplier";
             this.colMultiplier.Visible = true;
-            this.colMultiplier.VisibleIndex = 20;
+            this.colMultiplier.VisibleIndex = 19;
             this.colMultiplier.Width = 51;
             // 
             // colId
@@ -337,7 +343,7 @@
             this.colId.Name = "colId";
             this.colId.OptionsColumn.ReadOnly = true;
             this.colId.Visible = true;
-            this.colId.VisibleIndex = 21;
+            this.colId.VisibleIndex = 20;
             this.colId.Width = 76;
             // 
             // colLastUpdate
@@ -347,36 +353,17 @@
             this.colLastUpdate.FieldName = "LastUpdate";
             this.colLastUpdate.Name = "colLastUpdate";
             this.colLastUpdate.Visible = true;
-            this.colLastUpdate.VisibleIndex = 2;
+            this.colLastUpdate.VisibleIndex = 21;
             this.colLastUpdate.Width = 123;
-            // 
-            // btnLoadOptions
-            // 
-            this.btnLoadOptions.Location = new System.Drawing.Point(5, 13);
-            this.btnLoadOptions.Name = "btnLoadOptions";
-            this.btnLoadOptions.Size = new System.Drawing.Size(88, 23);
-            this.btnLoadOptions.TabIndex = 1;
-            this.btnLoadOptions.Text = "Load Options";
-            this.btnLoadOptions.UseVisualStyleBackColor = true;
-            this.btnLoadOptions.Click += new System.EventHandler(this.btnLoadOptions_Click);
-            // 
-            // colOptionContract_Symbol
-            // 
-            this.colOptionContract_Symbol.Caption = "Symbol";
-            this.colOptionContract_Symbol.FieldName = "OptionContract.Symbol";
-            this.colOptionContract_Symbol.Name = "colOptionContract_Symbol";
-            this.colOptionContract_Symbol.Visible = true;
-            this.colOptionContract_Symbol.VisibleIndex = 1;
             // 
             // OptionsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.Controls.Add(this.btnLoadOptions);
             this.Controls.Add(this.gridControl1);
             this.Name = "OptionsView";
-            this.Size = new System.Drawing.Size(1368, 650);
+            this.Size = new System.Drawing.Size(1368, 678);
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.optionDataBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
@@ -410,7 +397,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn colMultiplier;
         private DevExpress.XtraGrid.Columns.GridColumn colId;
         private DevExpress.XtraGrid.Columns.GridColumn colLastUpdate;
-        private System.Windows.Forms.Button btnLoadOptions;
         private DevExpress.XtraGrid.Columns.GridColumn colOptionContract_OptionType;
         private DevExpress.XtraGrid.Columns.GridColumn colOptionContract_Strike;
         private DevExpress.XtraGrid.Columns.GridColumn colOptionContract_Expiry;

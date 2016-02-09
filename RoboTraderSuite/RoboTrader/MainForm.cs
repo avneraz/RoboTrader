@@ -87,10 +87,15 @@ namespace TNS.RoboTrader
             }
         }
 
+
         private void UpdateGuiComponents()
         {
             unlTradingView1.SetUnlTradingDataDic(UIDataBroker.UnlTradingDataDic);
-            positionsView1.SetUnlTradingDataDic(UIDataBroker.PositionDataDic);
+            positionsView1.SetPositionDataList(UIDataBroker.PositionDataList);
+            ordersView1.SetOrderStatusDataDic(UIDataBroker.OrderStatusDataDic);
+            optionsView1.SetOptionDataList(UIDataBroker.OptionDataList);
+            positionsView1.SetAccountSummaryData(UIDataBroker.AccountSummaryDataList);
+            positionsView1.SetUnlTradingDataList(UIDataBroker.UnlTradingDataList);
         }
 
         private bool _startApplicationMethodDone;
@@ -116,9 +121,20 @@ namespace TNS.RoboTrader
 
         private void btnSendOrder_Click(object sender, EventArgs e)
         {
-            _appManager.SendOneOrderTest("AAPL",true);
-            _appManager.SendOneOrderTest("AAPL",false);
+            try
+            {
+                _appManager.SendOneOrderTest("AAPL", true);
+                _appManager.SendOneOrderTest("AAPL", false);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
+        private void CancelOrderTest(string orderId)
+        {
+            _appManager.CancelOrderTest("AAPL", orderId);
         }
 
         private void btnRegisterForData_Click(object sender, EventArgs e)
@@ -152,6 +168,18 @@ namespace TNS.RoboTrader
                 _appManager.Distributer.CalculateGreekLocally = false;
             }
 
+        }
+
+        private void btnCancelOrder_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CancelOrderTest(ordersView1.SelectedOrderStatusData.OrderId);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

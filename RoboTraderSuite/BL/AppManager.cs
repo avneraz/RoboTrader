@@ -164,6 +164,7 @@ namespace TNS.BL
                     OTMOffsetCall = 10,
                     UNLSymbolsList = "AAPL;MSFT",
                     RiskFreeInterestRate = 0.01,
+                    InitNetLiquidation = 159282,
 
                 }
             };
@@ -178,7 +179,11 @@ namespace TNS.BL
             IOrdersManager ordersManager = ((UNLManager) UNLManagerDic[symbol]).OrdersManager;
             ordersManager.TestTrading(true);
         }
-
+        public void CancelOrderTest(string symbol, string orderId)
+        {
+            IOrdersManager ordersManager = ((UNLManager)UNLManagerDic[symbol]).OrdersManager;
+            ordersManager.CancelOrder(orderId);
+        }
         #endregion
 
 

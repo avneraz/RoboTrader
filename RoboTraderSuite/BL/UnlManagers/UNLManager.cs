@@ -73,6 +73,10 @@ namespace TNS.BL.UnlManagers
                     else if (securityData.SecurityContract.Symbol == ManagedSecurity.Symbol)
                     {
                         UnlTradingData.UnderlinePrice = securityData.LastPrice;
+                        UnlTradingData.UnlAsk = securityData.AskPrice;
+                        UnlTradingData.UnlBid = securityData.BidPrice;
+                        UnlTradingData.UnlBasePrice = securityData.BasePrice;
+                        UnlTradingData.UnlChange = securityData.Change;
                         MainSecurityData = securityData;
                         SendMessageToAllComponents(message);
                         UnlTradingData.SetLastUpdate();

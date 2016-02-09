@@ -158,13 +158,15 @@ namespace TNS.BL
         {
             switch (message.APIDataType)
             {
-
                 case EapiDataTypes.PositionData:
                     var optionsPositionData = message as OptionsPositionData;
                     if((optionsPositionData != null) && optionsPositionData.HandledByPositionDataBuilder)
                         UIDataBroker.Enqueue(optionsPositionData);
                     break;
                 case EapiDataTypes.UnlTradingData:
+                case EapiDataTypes.OrderStatus:
+                case EapiDataTypes.OptionData:
+                case EapiDataTypes.AccountSummaryData:
                     UIDataBroker.Enqueue(message);
                     break;
 

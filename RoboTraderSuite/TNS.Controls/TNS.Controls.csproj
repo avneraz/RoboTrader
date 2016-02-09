@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\TNS.API.ApiDataObjects.AccountSummaryData.datasource" />
     <None Include="Properties\DataSources\TNS.API.ApiDataObjects.APIMessageData.datasource" />
     <None Include="Properties\DataSources\TNS.API.ApiDataObjects.OptionData.datasource" />
     <None Include="Properties\DataSources\TNS.API.ApiDataObjects.OptionsPositionData.datasource" />
