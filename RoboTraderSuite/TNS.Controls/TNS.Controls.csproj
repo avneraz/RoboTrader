@@ -33,6 +33,7 @@
     <Reference Include="DevExpress.Data.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Printing.v15.1.Core, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Utils.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraBars.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraGrid.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraLayout.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
@@ -59,6 +60,7 @@
     <Compile Include="APIMesagesView.Designer.cs">
       <DependentUpon>APIMesagesView.cs</DependentUpon>
     </Compile>
+    <Compile Include="IPositionView.cs" />
     <Compile Include="MainSecuritiesView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -77,6 +79,12 @@
     <Compile Include="OptionsView.Designer.cs">
       <DependentUpon>OptionsView.cs</DependentUpon>
     </Compile>
+    <Compile Include="OptionTradingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OptionTradingControl.Designer.cs">
+      <DependentUpon>OptionTradingControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="OrdersView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -90,6 +98,11 @@
       <DependentUpon>PositionsView.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="UnlTradingView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -110,6 +123,9 @@
     <EmbeddedResource Include="OptionsView.resx">
       <DependentUpon>OptionsView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="OptionTradingControl.resx">
+      <DependentUpon>OptionTradingControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OrdersView.resx">
       <DependentUpon>OrdersView.cs</DependentUpon>
     </EmbeddedResource>
@@ -117,6 +133,10 @@
       <DependentUpon>PositionsView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="UnlTradingView.resx">
       <DependentUpon>UnlTradingView.cs</DependentUpon>
     </EmbeddedResource>
@@ -148,6 +168,18 @@
     <None Include="Properties\DataSources\TNS.API.ApiDataObjects.OrderStatusData.datasource" />
     <None Include="Properties\DataSources\TNS.API.ApiDataObjects.SecurityData.datasource" />
     <None Include="Properties\DataSources\TNS.API.ApiDataObjects.UnlTradingData.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Basket-Add.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Basket-delete.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Basket-Add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\analysis.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

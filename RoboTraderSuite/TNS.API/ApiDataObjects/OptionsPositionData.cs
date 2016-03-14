@@ -52,6 +52,8 @@ namespace TNS.API.ApiDataObjects
 
         public string OptionKey => OptionContract.OptionKey;
 
+        public EOptionType OptionType => OptionContract.OptionType;
+
         #region Option Calculated Properties
 
         #region Greek

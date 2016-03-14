@@ -5,11 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using log4net;
 
 namespace Infra.Extensions
 {
     public static class GeneralExtensions
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof (GeneralExtensions));
+
         public static bool In<T>(this T val, params T[] values) where T : struct
         {
             return values.Contains(val);
@@ -22,15 +25,26 @@ namespace Infra.Extensions
         /// <param name="action"></param>
         /// <param name="args"></param>
         public static void InvokeIfRequired(this ISynchronizeInvoke obj,
-                                         MethodInvoker action, object[] args = null)
+            MethodInvoker action, object[] args = null)
         {
-            if (obj.InvokeRequired)
+
+
+
+            try
             {
-                obj.Invoke(action, args);
+                if (obj.InvokeRequired)
+                {
+                    obj.Invoke(action, args);
+                }
+                else
+                {
+                    action();
+                }
             }
-            else
+            catch (ObjectDisposedException ex)
             {
-                action();
+                Logger.Error(ex.Message, ex);
+
             }
         }
     }

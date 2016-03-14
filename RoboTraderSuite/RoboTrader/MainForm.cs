@@ -90,12 +90,14 @@ namespace TNS.RoboTrader
 
         private void UpdateGuiComponents()
         {
-            unlTradingView1.SetUnlTradingDataDic(UIDataBroker.UnlTradingDataDic);
             positionsView1.SetPositionDataList(UIDataBroker.PositionDataList);
-            ordersView1.SetOrderStatusDataDic(UIDataBroker.OrderStatusDataDic);
-            optionsView1.SetOptionDataList(UIDataBroker.OptionDataList);
             positionsView1.SetAccountSummaryData(UIDataBroker.AccountSummaryDataList);
             positionsView1.SetUnlTradingDataList(UIDataBroker.UnlTradingDataList);
+            positionsView1.SetSecurityDataList(UIDataBroker.SecurityDataList);
+            positionsView1.SetAppManager(_appManager);
+            //ordersView1.SetOrderStatusDataDic(UIDataBroker.OrderStatusDataDic);
+            ordersView1.SetOrderStatusDataList(UIDataBroker.OrderStatusDataList);
+            optionsView1.SetOptionDataList(UIDataBroker.OptionsDataList);
         }
 
         private bool _startApplicationMethodDone;
@@ -123,8 +125,8 @@ namespace TNS.RoboTrader
         {
             try
             {
-                _appManager.SendOneOrderTest("AAPL", true);
-                _appManager.SendOneOrderTest("AAPL", false);
+                _appManager.SendOneOrderTest("UNH", true);
+                //_appManager.SendOneOrderTest("AAPL", false);
             }
             catch (Exception ex)
             {

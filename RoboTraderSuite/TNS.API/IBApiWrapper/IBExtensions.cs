@@ -121,7 +121,8 @@ namespace TNS.API.IBApiWrapper
                 OrderAction = (OrderAction) Enum.Parse(typeof (OrderAction), order.Action),
                 LimitPrice = order.LmtPrice,
                 Quantity = order.TotalQuantity,
-                OrderId = order.OrderId.ToString()
+                OrderId = order.OrderId.ToString(),
+                WhatIf = order.WhatIf
             };
         }
 

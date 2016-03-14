@@ -37,7 +37,7 @@ namespace TNS.BL.UnlManagers
         public override bool HandleMessage(IMessage message)
         {
             var result = base.HandleMessage(message);
-
+            //APIWrapper.RequestContinousPositionsData();
             if ((_taskAddOptionToPosisionIsActive == false) && (PositionDataDic.Count > 0) &&
                 (OptionsManager.RequestOptionChainDone))
             {

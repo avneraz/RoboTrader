@@ -21,9 +21,17 @@ namespace TNS.API.IBApiWrapper
         private const double EPSILON = 0.000000001;
         private const double LARGE_NUBMER = 100000000;
 
-        //max time to close orders that are filled/failed in OrderStatusDic dic
+        /// <summary>
+        /// max time to close orders that are filled/failed in OrderStatusDic dic
+        /// = TimeSpan.FromMinutes(5);
+        /// </summary>
         private readonly TimeSpan ORDER_MAX_TIME_SPAN = TimeSpan.FromMinutes(5);
         private ConnectionStatus _connectionStatus = ConnectionStatus.Connected;
+        /// <summary>
+        /// Invoked when: Connectivity between IB and TWS has been restored- data maintained. <para></para>
+        /// Or when A market data farm is connected.
+        /// </summary>
+        public event Action ConnectivityIbTwsRestored;
 
         public event Action<int, ContractDetails> ContractDetailsMessageReceived;
         public IBMessageHandler(IBaseLogic consumer)
@@ -44,6 +52,11 @@ namespace TNS.API.IBApiWrapper
         /// Contains all the securities that are taking place in trading.
         /// </summary>
         private List<Contract> ManagedSecurityList { get; }
+        public void managedAccounts(string accountsList)
+        {
+            AccountSummary.ManagedAccounts = new List<string>(accountsList.Split(','));
+        }
+
         #region EWrapper Overrides
 
         #region NotUsedMethods
@@ -68,7 +81,8 @@ namespace TNS.API.IBApiWrapper
         public void tickEFP(int tickerId, int tickType, double basisPoints, string formattedBasisPoints,double impliedFuture,int holdDays, 
             string futureExpiry, double dividendImpact, double dividendsToExpiry){}
         public void tickSnapshotEnd(int tickerId){}
-        public void managedAccounts(string accountsList){}
+
+       
         public void connectionClosed(){}
         public void bondContractDetails(int reqId, ContractDetails contract){}
         public void updateAccountValue(string key, string value, 
@@ -190,10 +204,12 @@ namespace TNS.API.IBApiWrapper
                         Logger.Warn($"Connection status changed to connected: {data}");
                         Consumer.Enqueue(data);
                     }
+                    ConnectivityIbTwsRestored?.Invoke();
                     return true;
 
                 case EtwsErrorCode.MarketDataFarmConnected:
                     Consumer.Enqueue(new BrokerConnectionStatusMessage(ConnectionStatus.Connected, data));
+                    ConnectivityIbTwsRestored?.Invoke();
                     return true;
                 default:
                     return false;
@@ -350,7 +366,42 @@ namespace TNS.API.IBApiWrapper
                 }
             }
         }
-       
+        #region Account Summary Tag
+        /*
+        * @params tags a comma separated list with the desired tags:
+         *      - AccountType
+         *      - NetLiquidation,
+         *      - TotalCashValue — Total cash including futures pnl
+         *      - SettledCash — For cash accounts, this is the same as TotalCashValue
+         *      - AccruedCash — Net accrued interest
+         *      - BuyingPower — The maximum amount of marginable US stocks the account can buy
+         *      - EquityWithLoanValue — Cash + stocks + bonds + mutual funds
+         *      - PreviousEquityWithLoanValue,
+         *      - GrossPositionValue — The sum of the absolute value of all stock and equity option positions
+         *      - RegTEquity,
+         *      - RegTMargin,
+         *      - SMA — Special Memorandum Account
+         *      - InitMarginReq,
+         *      - MaintMarginReq,
+         *      - AvailableFunds,
+         *      - ExcessLiquidity,
+         *      - Cushion — Excess liquidity as a percentage of net liquidation value
+         *      - FullInitMarginReq,
+         *      - FullMaintMarginReq,
+         *      - FullAvailableFunds,
+         *      - FullExcessLiquidity,
+         *      - LookAheadNextChange — Time when look-ahead values take effect
+         *      - LookAheadInitMarginReq,
+         *      - LookAheadMaintMarginReq,
+         *      - LookAheadAvailableFunds,
+         *      - LookAheadExcessLiquidity,
+         *      - HighestSeverity — A measure of how close the account is to liquidation
+         *      - DayTradesRemaining — The Number of Open/Close trades a user could put on before Pattern Day Trading is detected. A value of "-1" means that the user can put on unlimited day trades.
+         *      - Leverage — GrossPositionValue / NetLiquidation
+            
+            
+       */
+        #endregion
         public void accountSummary(int reqId, string account, string tag, string value, string currency)
         {
             switch (tag)
@@ -372,6 +423,9 @@ namespace TNS.API.IBApiWrapper
                     break;
                 case "NetLiquidation":
                     AccountSummary.NetLiquidation = Convert.ToDouble(value);
+                    break;
+                case "FullExcessLiquidity":
+                    AccountSummary.FullExcessLiquidity = Convert.ToDouble(value);
                     break;
                 default:
                     return;
@@ -429,7 +483,7 @@ namespace TNS.API.IBApiWrapper
             double maintMargin = Convert.ToDouble(orderState.MaintMargin);
             if (maintMargin < LARGE_NUBMER)
                 status.Data.MaintMargin = maintMargin;
-
+            Consumer.Enqueue(OrderStatusDic[orderId].Data);
         }
 
         public void position(string account, Contract contract, int pos, double avgCost)

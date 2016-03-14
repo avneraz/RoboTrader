@@ -42,6 +42,7 @@ namespace TNS.API.ApiDataObjects
         public ETradingState TradingState { get; set; }
         #endregion
 
+        
         #region Greek
 
 
@@ -50,6 +51,15 @@ namespace TNS.API.ApiDataObjects
         public double ThetaTotal { get; set; }
         public double VegaTotal { get; set; }
         public double MaxAllowedMargin { get; set; }
+        /// <summary>
+        /// Hold the additional Delta that can be added by the current sent orders.
+        /// </summary>
+        public double DeltaTotalSentOrders { get; set; }
+
+        /// <summary>
+        /// Hold the additional Gamma that can be added by the current sent orders.
+        /// </summary>
+        public double GammaTotalSentOrders { get; set; }
 
         /// <summary>
         /// Hold the calculated IV of all positions taking part on trading.<para></para>
@@ -62,6 +72,7 @@ namespace TNS.API.ApiDataObjects
         public double VIX  { get; set; }
 
         #endregion
+
         #region Underline Properties
         public double UnderlinePrice { get; set; }
 
@@ -71,6 +82,7 @@ namespace TNS.API.ApiDataObjects
         public double UnlBid { get; set; }
         public double UnlChange { get; set; }
         #endregion
+
         public double MarketValue { get; set; }
         public double CostTotal { get; set; }
         public double PnLTotal => MarketValue + CostTotal;
@@ -88,6 +100,10 @@ namespace TNS.API.ApiDataObjects
         /// Gets or sets the actual margin for this underline.
         /// </summary>
         public double Margin { get; set; }
+        /// <summary>
+        /// Hold the additional Margin that can be added by the current sent orders.
+        /// </summary>
+        public double MarginSentOrders { get; set; }
         
         #endregion
 

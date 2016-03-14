@@ -15,13 +15,12 @@ namespace UILogic
        
         public UIDataBroker ()
         {
-            UnlTradingDataDic = new Dictionary<string, UnlTradingData>();
             UnlTradingDataList = new List<UnlTradingData>();
-            PositionDataDic = new Dictionary<string, OptionsPositionData>();
             PositionDataList = new List<OptionsPositionData>();
-            OrderStatusDataDic = new Dictionary<string, OrderStatusData>();
-            OptionDataList = new List<OptionData>();
+            OrderStatusDataList = new List<OrderStatusData>();
+            OptionsDataList = new List<OptionData>();
             AccountSummaryDataList = new List<AccountSummaryData>() {new AccountSummaryData()};
+            SecurityDataList = new List<SecurityData>();
         }
 
       
@@ -30,6 +29,7 @@ namespace UILogic
         
         protected override void HandleMessage(IMessage message)
         {
+            int index;
             switch (message.APIDataType)
             {
                
@@ -37,21 +37,25 @@ namespace UILogic
                     var optionsPositionData = (OptionsPositionData)message;
 
                     var existingPositionData =
-                        PositionDataList.FirstOrDefault(data => data.OptionKey == optionsPositionData.OptionKey);
-                    if(existingPositionData == null)
+                        PositionDataList.FirstOrDefault(data => data.OptionKey == optionsPositionData.OptionKey && data.Symbol == optionsPositionData.Symbol);
+                    if((existingPositionData == null) && (optionsPositionData.Position != 0))
                         PositionDataList.Add(optionsPositionData);
+                    if (existingPositionData == null)
+                        break;
+                    //else
+                    index = PositionDataList.IndexOf(existingPositionData);
+                    //Remove no position entry:
+                    if (optionsPositionData.Position == 0)
+                        PositionDataList.RemoveAt(index);
                     else
-                    {
-                        var index = PositionDataList.IndexOf(existingPositionData);
                         PositionDataList[index] = optionsPositionData;
-                    }
+
 
 
                     break;
                
                 case EapiDataTypes.UnlTradingData:
                     var unlTradingData = (UnlTradingData)message;
-                    UnlTradingDataDic[unlTradingData.Symbol] = unlTradingData;
 
                     var existingUnlTradingData =
                         UnlTradingDataList.FirstOrDefault(data => data.Symbol == unlTradingData.Symbol);
@@ -61,7 +65,7 @@ namespace UILogic
                     }
                     else
                     {
-                        var index = UnlTradingDataList.IndexOf(existingUnlTradingData);
+                        index = UnlTradingDataList.IndexOf(existingUnlTradingData);
                         UnlTradingDataList[index] = unlTradingData;
                     }
 
@@ -69,19 +73,34 @@ namespace UILogic
                     break;
                 case EapiDataTypes.OrderStatus:
                     var order = (OrderStatusData)message;
-                    OrderStatusDataDic[order.OrderId] = order;
+
+                    if ((order.OrderStatus == OrderStatus.Filled) && (order.WhatIf))
+                    {
+                        order.Margin = order.MaintMargin -
+                                                 this.AccountSummaryDataList[0].FullMaintMarginReq;
+                    }
+
+                    //OrderStatusDataDic[order.OrderId] = order;
+                        var orderDataExist = OrderStatusDataList.FirstOrDefault(od => od.OrderId == order.OrderId);
+                    if (orderDataExist == null)
+                        OrderStatusDataList.Add(order);
+                    else
+                    {
+                        index = OrderStatusDataList.IndexOf(orderDataExist);
+                        OrderStatusDataList[index] = order;
+                    }
                     break;
                 case EapiDataTypes.OptionData:
                     var optionData = (OptionData)message;
 
-                    var optionDataExist = OptionDataList.FirstOrDefault(od => od.OptionKey == optionData.OptionKey);
+                    var optionDataExist = OptionsDataList.FirstOrDefault(od => od.OptionKey == optionData.OptionKey);
 
                     if (optionDataExist == null)
-                        OptionDataList.Add(optionData);
+                        OptionsDataList.Add(optionData);
                     else
                     {
-                        var index = OptionDataList.IndexOf(optionDataExist);
-                        OptionDataList[index] = optionData;
+                        index = OptionsDataList.IndexOf(optionDataExist);
+                        OptionsDataList[index] = optionData;
                     }
                     break;
                 case EapiDataTypes.AccountSummaryData:
@@ -89,16 +108,29 @@ namespace UILogic
                     AccountSummaryDataList[0] = accountData;
 
                     break;
+                case EapiDataTypes.SecurityData:
+                    var securityData = (SecurityData)message;
+                    var securityDataExist = SecurityDataList.FirstOrDefault(od => od.Symbol == securityData.Symbol);
+
+                    if (securityDataExist == null)
+                        SecurityDataList.Add(securityData);
+                    else
+                    {
+                        index = SecurityDataList.IndexOf(securityDataExist);
+                        SecurityDataList[index] = securityData;
+                    }
+                    //Securities[securityData.GetSymbolName()] = securityData;
+                    break;
             }
         }
 
+        public List<SecurityData> SecurityDataList { get; set; }
         public List<AccountSummaryData> AccountSummaryDataList { get; set; }
-       
         public List<UnlTradingData> UnlTradingDataList { get; set; }
-        public Dictionary<string,UnlTradingData> UnlTradingDataDic { get; }
-        public Dictionary<string, OptionsPositionData> PositionDataDic { get; }
+        //public Dictionary<string,UnlTradingData> UnlTradingDataDic { get; }
         public List<OptionsPositionData> PositionDataList { get; }
-        public List<OptionData> OptionDataList { get; set; }
-        public Dictionary<string, OrderStatusData> OrderStatusDataDic { get; }
+        public List<OptionData> OptionsDataList { get; set; }
+
+        public List<OrderStatusData> OrderStatusDataList{ get; set; }
     }
 }

@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.grdPositionData = new DevExpress.XtraGrid.GridControl();
-            this.optionsPositionDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.optionsPositionDataBindingSource = new System.Windows.Forms.BindingSource();
+            this.grdViewPositionData = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colDescription = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colExpiry = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOptionContract_OptionType = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPosition = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colOffsetUnl = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCalculatedOptionPrice = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colAverageCost = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colConId = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -68,13 +68,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lblNetLiquidation = new System.Windows.Forms.Label();
-            this.accountSummaryDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.accountSummaryDataBindingSource = new System.Windows.Forms.BindingSource();
             this.lblMargin = new System.Windows.Forms.Label();
             this.grpAccountSummary = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.lblPnL = new System.Windows.Forms.Label();
             this.grdUnLTradingData = new DevExpress.XtraGrid.GridControl();
-            this.unlTradingDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.unlTradingDataBindingSource = new System.Windows.Forms.BindingSource();
             this.gridViewUnLTradingData = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colAPIDataType = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colSymbol = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -102,9 +102,48 @@
             this.colMaxAbsoluteDelta = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colMargin = new DevExpress.XtraGrid.Columns.GridColumn();
             this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.grdMainSecurities = new DevExpress.XtraGrid.GridControl();
+            this.securityDataBindingSource = new System.Windows.Forms.BindingSource();
+            this.grdViewMainSecurities = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colContract = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colHighestPrice = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colLowestPrice = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colBasePrice = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colOpeningPrice = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colAskSize = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colBidSize = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colVolume = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn6 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.barDockControl1 = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControl2 = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControl3 = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControl4 = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControl5 = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControl6 = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControl7 = new DevExpress.XtraBars.BarDockControl();
+            this.barManager1 = new DevExpress.XtraBars.BarManager();
+            this.bar1 = new DevExpress.XtraBars.Bar();
+            this.bar2 = new DevExpress.XtraBars.Bar();
+            this.bar3 = new DevExpress.XtraBars.Bar();
+            this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControl8 = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControl9 = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControl10 = new DevExpress.XtraBars.BarDockControl();
+            this.iSellOption = new DevExpress.XtraBars.BarButtonItem();
+            this.iBuyOption = new DevExpress.XtraBars.BarButtonItem();
+            this.iOptionPicker = new DevExpress.XtraBars.BarButtonItem();
+            this.popupMenu1 = new DevExpress.XtraBars.PopupMenu();
             ((System.ComponentModel.ISupportInitialize)(this.grdPositionData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.optionsPositionDataBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdViewPositionData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.accountSummaryDataBindingSource)).BeginInit();
             this.grpAccountSummary.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdUnLTradingData)).BeginInit();
@@ -112,49 +151,57 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridViewUnLTradingData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
             this.splitContainerControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdMainSecurities)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.securityDataBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdViewMainSecurities)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).BeginInit();
             this.SuspendLayout();
             // 
             // grdPositionData
             // 
-            this.grdPositionData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.grdPositionData.DataSource = this.optionsPositionDataBindingSource;
-            this.grdPositionData.Location = new System.Drawing.Point(0, 1);
-            this.grdPositionData.MainView = this.gridView1;
+            this.grdPositionData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grdPositionData.Location = new System.Drawing.Point(0, 0);
+            this.grdPositionData.MainView = this.grdViewPositionData;
             this.grdPositionData.Name = "grdPositionData";
             this.grdPositionData.Padding = new System.Windows.Forms.Padding(10);
-            this.grdPositionData.Size = new System.Drawing.Size(1225, 330);
+            this.grdPositionData.Size = new System.Drawing.Size(1221, 366);
             this.grdPositionData.TabIndex = 1;
             this.grdPositionData.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView1});
+            this.grdViewPositionData});
             // 
             // optionsPositionDataBindingSource
             // 
             this.optionsPositionDataBindingSource.DataSource = typeof(TNS.API.ApiDataObjects.OptionsPositionData);
             // 
-            // gridView1
+            // grdViewPositionData
             // 
-            this.gridView1.Appearance.FooterPanel.BackColor = System.Drawing.Color.White;
-            this.gridView1.Appearance.FooterPanel.Options.UseBackColor = true;
-            this.gridView1.Appearance.GroupFooter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.gridView1.Appearance.GroupFooter.BackColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.gridView1.Appearance.GroupFooter.BorderColor = System.Drawing.Color.Red;
-            this.gridView1.Appearance.GroupFooter.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.gridView1.Appearance.GroupFooter.ForeColor = System.Drawing.Color.Red;
-            this.gridView1.Appearance.GroupFooter.Options.UseBackColor = true;
-            this.gridView1.Appearance.GroupFooter.Options.UseBorderColor = true;
-            this.gridView1.Appearance.GroupFooter.Options.UseFont = true;
-            this.gridView1.Appearance.GroupFooter.Options.UseForeColor = true;
-            this.gridView1.Appearance.GroupRow.BackColor = System.Drawing.Color.LightYellow;
-            this.gridView1.Appearance.GroupRow.Options.UseBackColor = true;
-            this.gridView1.Appearance.HeaderPanel.BackColor = System.Drawing.Color.White;
-            this.gridView1.Appearance.HeaderPanel.Options.UseBackColor = true;
-            this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.grdViewPositionData.Appearance.FooterPanel.BackColor = System.Drawing.Color.White;
+            this.grdViewPositionData.Appearance.FooterPanel.Options.UseBackColor = true;
+            this.grdViewPositionData.Appearance.GroupFooter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.grdViewPositionData.Appearance.GroupFooter.BackColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.grdViewPositionData.Appearance.GroupFooter.BorderColor = System.Drawing.Color.Red;
+            this.grdViewPositionData.Appearance.GroupFooter.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.grdViewPositionData.Appearance.GroupFooter.ForeColor = System.Drawing.Color.Red;
+            this.grdViewPositionData.Appearance.GroupFooter.Options.UseBackColor = true;
+            this.grdViewPositionData.Appearance.GroupFooter.Options.UseBorderColor = true;
+            this.grdViewPositionData.Appearance.GroupFooter.Options.UseFont = true;
+            this.grdViewPositionData.Appearance.GroupFooter.Options.UseForeColor = true;
+            this.grdViewPositionData.Appearance.GroupRow.BackColor = System.Drawing.Color.LightYellow;
+            this.grdViewPositionData.Appearance.GroupRow.Options.UseBackColor = true;
+            this.grdViewPositionData.Appearance.HeaderPanel.BackColor = System.Drawing.Color.White;
+            this.grdViewPositionData.Appearance.HeaderPanel.Options.UseBackColor = true;
+            this.grdViewPositionData.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colDescription,
             this.colExpiry,
             this.colOptionContract_OptionType,
             this.colPosition,
+            this.colOffsetUnl,
             this.colCalculatedOptionPrice,
             this.colAverageCost,
             this.colConId,
@@ -183,9 +230,9 @@
             this.colContract_Symbol,
             this.colAvgPrice,
             this.colChangeFromCost});
-            this.gridView1.GridControl = this.grdPositionData;
-            this.gridView1.GroupCount = 1;
-            this.gridView1.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            this.grdViewPositionData.GridControl = this.grdPositionData;
+            this.grdViewPositionData.GroupCount = 1;
+            this.grdViewPositionData.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "PnL", this.colPNL, "{0:#,##0}"),
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalCost", this.colTotalCost, "{0:#,##0}"),
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "MarketValue", this.colMarketValue, "{0:#,##0}"),
@@ -194,18 +241,24 @@
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ThetaTotal", this.colThetaTotal, "{0:#,##0.0}"),
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "VegaTotal", this.colVegaTotal, "{0:#,##0.0}"),
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Position", this.colPosition, "{0:#,##0}")});
-            this.gridView1.Name = "gridView1";
-            this.gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
-            this.gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
-            this.gridView1.OptionsBehavior.AllowFixedGroups = DevExpress.Utils.DefaultBoolean.False;
-            this.gridView1.OptionsBehavior.AutoExpandAllGroups = true;
-            this.gridView1.OptionsBehavior.Editable = false;
-            this.gridView1.OptionsView.ShowFooter = true;
-            this.gridView1.RowHeight = 22;
-            this.gridView1.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
+            this.grdViewPositionData.Name = "grdViewPositionData";
+            this.grdViewPositionData.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
+            this.grdViewPositionData.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
+            this.grdViewPositionData.OptionsBehavior.AllowFixedGroups = DevExpress.Utils.DefaultBoolean.True;
+            this.grdViewPositionData.OptionsBehavior.AutoExpandAllGroups = true;
+            this.grdViewPositionData.OptionsBehavior.Editable = false;
+            this.grdViewPositionData.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.grdViewPositionData.OptionsSelection.EnableAppearanceFocusedRow = false;
+            this.grdViewPositionData.OptionsView.ShowFooter = true;
+            this.grdViewPositionData.RowHeight = 23;
+            this.grdViewPositionData.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colDescription, DevExpress.Data.ColumnSortOrder.Ascending),
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colOptionContract_OptionType, DevExpress.Data.ColumnSortOrder.Ascending),
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colStrike, DevExpress.Data.ColumnSortOrder.Descending)});
+            this.grdViewPositionData.ViewCaption = "Shalom";
+            this.grdViewPositionData.CustomDrawGroupRow += new DevExpress.XtraGrid.Views.Base.RowObjectCustomDrawEventHandler(this.grdViewPositionData_CustomDrawGroupRow);
+            this.grdViewPositionData.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.grdPositionData_RowCellStyle);
+            this.grdViewPositionData.PopupMenuShowing += new DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventHandler(this.grdViewPositionData_PopupMenuShowing);
             // 
             // colDescription
             // 
@@ -239,7 +292,7 @@
             this.colOptionContract_OptionType.Name = "colOptionContract_OptionType";
             this.colOptionContract_OptionType.Visible = true;
             this.colOptionContract_OptionType.VisibleIndex = 1;
-            this.colOptionContract_OptionType.Width = 40;
+            this.colOptionContract_OptionType.Width = 47;
             // 
             // colPosition
             // 
@@ -255,8 +308,23 @@
             this.colPosition.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Position", "{0:#,##0}")});
             this.colPosition.Visible = true;
-            this.colPosition.VisibleIndex = 3;
+            this.colPosition.VisibleIndex = 4;
             this.colPosition.Width = 36;
+            // 
+            // colOffsetUnl
+            // 
+            this.colOffsetUnl.Caption = "Diff";
+            this.colOffsetUnl.DisplayFormat.FormatString = "#0.0";
+            this.colOffsetUnl.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colOffsetUnl.FieldName = "OffsetUnl";
+            this.colOffsetUnl.MaxWidth = 50;
+            this.colOffsetUnl.MinWidth = 30;
+            this.colOffsetUnl.Name = "colOffsetUnl";
+            this.colOffsetUnl.UnboundExpression = "[OptionContract.Strike] - [OptionData.UnderlinePrice]";
+            this.colOffsetUnl.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
+            this.colOffsetUnl.Visible = true;
+            this.colOffsetUnl.VisibleIndex = 3;
+            this.colOffsetUnl.Width = 46;
             // 
             // colCalculatedOptionPrice
             // 
@@ -266,7 +334,8 @@
             this.colCalculatedOptionPrice.FieldName = "CalculatedOptionPrice";
             this.colCalculatedOptionPrice.Name = "colCalculatedOptionPrice";
             this.colCalculatedOptionPrice.Visible = true;
-            this.colCalculatedOptionPrice.VisibleIndex = 8;
+            this.colCalculatedOptionPrice.VisibleIndex = 9;
+            this.colCalculatedOptionPrice.Width = 71;
             // 
             // colAverageCost
             // 
@@ -293,7 +362,7 @@
             this.colStrike.Name = "colStrike";
             this.colStrike.Visible = true;
             this.colStrike.VisibleIndex = 2;
-            this.colStrike.Width = 54;
+            this.colStrike.Width = 50;
             // 
             // colMultiplier
             // 
@@ -337,7 +406,7 @@
             this.colBidPrice.MinWidth = 50;
             this.colBidPrice.Name = "colBidPrice";
             this.colBidPrice.Visible = true;
-            this.colBidPrice.VisibleIndex = 10;
+            this.colBidPrice.VisibleIndex = 11;
             this.colBidPrice.Width = 51;
             // 
             // colAskPrice
@@ -358,7 +427,7 @@
             this.colAskPrice.MinWidth = 50;
             this.colAskPrice.Name = "colAskPrice";
             this.colAskPrice.Visible = true;
-            this.colAskPrice.VisibleIndex = 11;
+            this.colAskPrice.VisibleIndex = 12;
             this.colAskPrice.Width = 51;
             // 
             // colOptionDelta
@@ -380,8 +449,8 @@
             this.colOptionDelta.MaxWidth = 70;
             this.colOptionDelta.Name = "colOptionDelta";
             this.colOptionDelta.Visible = true;
-            this.colOptionDelta.VisibleIndex = 19;
-            this.colOptionDelta.Width = 33;
+            this.colOptionDelta.VisibleIndex = 20;
+            this.colOptionDelta.Width = 20;
             // 
             // colContract_ExpiryDate
             // 
@@ -420,8 +489,8 @@
             this.colDeltaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "DeltaTotal", "{0:#,##0}")});
             this.colDeltaTotal.Visible = true;
-            this.colDeltaTotal.VisibleIndex = 15;
-            this.colDeltaTotal.Width = 45;
+            this.colDeltaTotal.VisibleIndex = 16;
+            this.colDeltaTotal.Width = 46;
             // 
             // colTotalCost
             // 
@@ -443,7 +512,7 @@
             this.colTotalCost.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalCost", "{0:#,##0}")});
             this.colTotalCost.Visible = true;
-            this.colTotalCost.VisibleIndex = 4;
+            this.colTotalCost.VisibleIndex = 5;
             this.colTotalCost.Width = 71;
             // 
             // colLastPrice
@@ -460,7 +529,7 @@
             this.colLastPrice.MinWidth = 50;
             this.colLastPrice.Name = "colLastPrice";
             this.colLastPrice.Visible = true;
-            this.colLastPrice.VisibleIndex = 13;
+            this.colLastPrice.VisibleIndex = 14;
             this.colLastPrice.Width = 51;
             // 
             // colMarketValue
@@ -483,7 +552,7 @@
             this.colMarketValue.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "MarketValue", "{0:#,##0}")});
             this.colMarketValue.Visible = true;
-            this.colMarketValue.VisibleIndex = 5;
+            this.colMarketValue.VisibleIndex = 6;
             this.colMarketValue.Width = 71;
             // 
             // colPNL
@@ -506,7 +575,7 @@
             this.colPNL.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "PnL", "{0:#,##0}")});
             this.colPNL.Visible = true;
-            this.colPNL.VisibleIndex = 6;
+            this.colPNL.VisibleIndex = 7;
             this.colPNL.Width = 71;
             // 
             // colGammaTotal
@@ -533,8 +602,8 @@
             this.colGammaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "GammaTotal", "{0:#,##0}")});
             this.colGammaTotal.Visible = true;
-            this.colGammaTotal.VisibleIndex = 16;
-            this.colGammaTotal.Width = 45;
+            this.colGammaTotal.VisibleIndex = 17;
+            this.colGammaTotal.Width = 46;
             // 
             // colOptionData_ModelPrice
             // 
@@ -552,7 +621,7 @@
             this.colOptionData_ModelPrice.MinWidth = 50;
             this.colOptionData_ModelPrice.Name = "colOptionData_ModelPrice";
             this.colOptionData_ModelPrice.Visible = true;
-            this.colOptionData_ModelPrice.VisibleIndex = 12;
+            this.colOptionData_ModelPrice.VisibleIndex = 13;
             this.colOptionData_ModelPrice.Width = 51;
             // 
             // colOptionData_UnderlinePrice
@@ -585,8 +654,8 @@
             this.colThetaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ThetaTotal", "{0:#,##0}")});
             this.colThetaTotal.Visible = true;
-            this.colThetaTotal.VisibleIndex = 17;
-            this.colThetaTotal.Width = 45;
+            this.colThetaTotal.VisibleIndex = 18;
+            this.colThetaTotal.Width = 46;
             // 
             // colVegaTotal
             // 
@@ -613,8 +682,8 @@
             this.colVegaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "VegaTotal", "{0:#,##0}")});
             this.colVegaTotal.Visible = true;
-            this.colVegaTotal.VisibleIndex = 18;
-            this.colVegaTotal.Width = 45;
+            this.colVegaTotal.VisibleIndex = 19;
+            this.colVegaTotal.Width = 46;
             // 
             // colOptionData_Gamma
             // 
@@ -636,8 +705,8 @@
             this.colOptionData_Gamma.MinWidth = 45;
             this.colOptionData_Gamma.Name = "colOptionData_Gamma";
             this.colOptionData_Gamma.Visible = true;
-            this.colOptionData_Gamma.VisibleIndex = 20;
-            this.colOptionData_Gamma.Width = 70;
+            this.colOptionData_Gamma.VisibleIndex = 21;
+            this.colOptionData_Gamma.Width = 54;
             // 
             // colOptionData_ImpliedVolatility
             // 
@@ -659,7 +728,7 @@
             this.colOptionData_ImpliedVolatility.MinWidth = 50;
             this.colOptionData_ImpliedVolatility.Name = "colOptionData_ImpliedVolatility";
             this.colOptionData_ImpliedVolatility.Visible = true;
-            this.colOptionData_ImpliedVolatility.VisibleIndex = 14;
+            this.colOptionData_ImpliedVolatility.VisibleIndex = 15;
             this.colOptionData_ImpliedVolatility.Width = 51;
             // 
             // colContract_Symbol
@@ -678,7 +747,7 @@
             this.colAvgPrice.UnboundExpression = "[TotalCostUSD] / [Position]";
             this.colAvgPrice.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
             this.colAvgPrice.Visible = true;
-            this.colAvgPrice.VisibleIndex = 7;
+            this.colAvgPrice.VisibleIndex = 8;
             this.colAvgPrice.Width = 71;
             // 
             // colChangeFromCost
@@ -690,16 +759,17 @@
             this.colChangeFromCost.Caption = "% Cost";
             this.colChangeFromCost.DisplayFormat.FormatString = "#0.00%";
             this.colChangeFromCost.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colChangeFromCost.FieldName = "gridColumn1";
+            this.colChangeFromCost.FieldName = "ChangeFromCost";
             this.colChangeFromCost.Name = "colChangeFromCost";
             this.colChangeFromCost.UnboundExpression = "(100 * [CalculatedOptionPrice] - [AverageCost]) / [AverageCost]";
             this.colChangeFromCost.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
             this.colChangeFromCost.Visible = true;
-            this.colChangeFromCost.VisibleIndex = 9;
+            this.colChangeFromCost.VisibleIndex = 10;
+            this.colChangeFromCost.Width = 65;
             // 
             // btnLoadData
             // 
-            this.btnLoadData.Location = new System.Drawing.Point(90, 12);
+            this.btnLoadData.Location = new System.Drawing.Point(20, 101);
             this.btnLoadData.Name = "btnLoadData";
             this.btnLoadData.Size = new System.Drawing.Size(94, 25);
             this.btnLoadData.TabIndex = 2;
@@ -1169,18 +1239,342 @@
             // 
             this.splitContainerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerControl1.Horizontal = false;
-            this.splitContainerControl1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerControl1.Location = new System.Drawing.Point(0, 49);
             this.splitContainerControl1.Name = "splitContainerControl1";
+            this.splitContainerControl1.Panel1.Controls.Add(this.btnLoadData);
             this.splitContainerControl1.Panel1.Controls.Add(this.grdUnLTradingData);
             this.splitContainerControl1.Panel1.Controls.Add(this.grpAccountSummary);
             this.splitContainerControl1.Panel1.Text = "Panel1";
-            this.splitContainerControl1.Panel2.Controls.Add(this.btnLoadData);
-            this.splitContainerControl1.Panel2.Controls.Add(this.grdPositionData);
+            this.splitContainerControl1.Panel2.Controls.Add(this.splitContainer1);
             this.splitContainerControl1.Panel2.Text = "Panel2";
-            this.splitContainerControl1.Size = new System.Drawing.Size(1231, 657);
+            this.splitContainerControl1.Size = new System.Drawing.Size(1231, 663);
             this.splitContainerControl1.SplitterPosition = 132;
             this.splitContainerControl1.TabIndex = 6;
             this.splitContainerControl1.Text = "splitContainerControl1";
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Location = new System.Drawing.Point(3, -1);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.grdMainSecurities);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.grdPositionData);
+            this.splitContainer1.Size = new System.Drawing.Size(1221, 524);
+            this.splitContainer1.SplitterDistance = 154;
+            this.splitContainer1.TabIndex = 2;
+            // 
+            // grdMainSecurities
+            // 
+            this.grdMainSecurities.DataSource = this.securityDataBindingSource;
+            this.grdMainSecurities.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grdMainSecurities.Location = new System.Drawing.Point(0, 0);
+            this.grdMainSecurities.MainView = this.grdViewMainSecurities;
+            this.grdMainSecurities.Name = "grdMainSecurities";
+            this.grdMainSecurities.Size = new System.Drawing.Size(1221, 154);
+            this.grdMainSecurities.TabIndex = 1;
+            this.grdMainSecurities.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.grdViewMainSecurities});
+            // 
+            // securityDataBindingSource
+            // 
+            this.securityDataBindingSource.DataSource = typeof(TNS.API.ApiDataObjects.BaseSecurityData);
+            // 
+            // grdViewMainSecurities
+            // 
+            this.grdViewMainSecurities.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumn1,
+            this.colContract,
+            this.gridColumn2,
+            this.colHighestPrice,
+            this.colLowestPrice,
+            this.colBasePrice,
+            this.colOpeningPrice,
+            this.gridColumn3,
+            this.gridColumn4,
+            this.colAskSize,
+            this.colBidSize,
+            this.colVolume,
+            this.gridColumn6});
+            this.grdViewMainSecurities.GridControl = this.grdMainSecurities;
+            this.grdViewMainSecurities.Name = "grdViewMainSecurities";
+            // 
+            // gridColumn1
+            // 
+            this.gridColumn1.FieldName = "APIDataType";
+            this.gridColumn1.Name = "gridColumn1";
+            this.gridColumn1.OptionsColumn.ReadOnly = true;
+            // 
+            // colContract
+            // 
+            this.colContract.FieldName = "Contract";
+            this.colContract.Name = "colContract";
+            // 
+            // gridColumn2
+            // 
+            this.gridColumn2.FieldName = "LastPrice";
+            this.gridColumn2.Name = "gridColumn2";
+            this.gridColumn2.Visible = true;
+            this.gridColumn2.VisibleIndex = 3;
+            // 
+            // colHighestPrice
+            // 
+            this.colHighestPrice.FieldName = "HighestPrice";
+            this.colHighestPrice.Name = "colHighestPrice";
+            this.colHighestPrice.Visible = true;
+            this.colHighestPrice.VisibleIndex = 4;
+            // 
+            // colLowestPrice
+            // 
+            this.colLowestPrice.FieldName = "LowestPrice";
+            this.colLowestPrice.Name = "colLowestPrice";
+            this.colLowestPrice.Visible = true;
+            this.colLowestPrice.VisibleIndex = 5;
+            // 
+            // colBasePrice
+            // 
+            this.colBasePrice.FieldName = "BasePrice";
+            this.colBasePrice.Name = "colBasePrice";
+            this.colBasePrice.Visible = true;
+            this.colBasePrice.VisibleIndex = 1;
+            // 
+            // colOpeningPrice
+            // 
+            this.colOpeningPrice.FieldName = "OpeningPrice";
+            this.colOpeningPrice.Name = "colOpeningPrice";
+            this.colOpeningPrice.Visible = true;
+            this.colOpeningPrice.VisibleIndex = 2;
+            // 
+            // gridColumn3
+            // 
+            this.gridColumn3.FieldName = "AskPrice";
+            this.gridColumn3.Name = "gridColumn3";
+            this.gridColumn3.Visible = true;
+            this.gridColumn3.VisibleIndex = 6;
+            // 
+            // gridColumn4
+            // 
+            this.gridColumn4.FieldName = "BidPrice";
+            this.gridColumn4.Name = "gridColumn4";
+            this.gridColumn4.Visible = true;
+            this.gridColumn4.VisibleIndex = 7;
+            // 
+            // colAskSize
+            // 
+            this.colAskSize.FieldName = "AskSize";
+            this.colAskSize.Name = "colAskSize";
+            this.colAskSize.Visible = true;
+            this.colAskSize.VisibleIndex = 8;
+            // 
+            // colBidSize
+            // 
+            this.colBidSize.FieldName = "BidSize";
+            this.colBidSize.Name = "colBidSize";
+            this.colBidSize.Visible = true;
+            this.colBidSize.VisibleIndex = 9;
+            // 
+            // colVolume
+            // 
+            this.colVolume.FieldName = "Volume";
+            this.colVolume.Name = "colVolume";
+            this.colVolume.Visible = true;
+            this.colVolume.VisibleIndex = 10;
+            // 
+            // gridColumn6
+            // 
+            this.gridColumn6.FieldName = "Symbol";
+            this.gridColumn6.Name = "gridColumn6";
+            this.gridColumn6.OptionsColumn.ReadOnly = true;
+            this.gridColumn6.Visible = true;
+            this.gridColumn6.VisibleIndex = 0;
+            // 
+            // barDockControl1
+            // 
+            this.barDockControl1.CausesValidation = false;
+            this.barDockControl1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.barDockControl1.Location = new System.Drawing.Point(0, 0);
+            this.barDockControl1.Size = new System.Drawing.Size(0, 0);
+            // 
+            // barDockControl2
+            // 
+            this.barDockControl2.CausesValidation = false;
+            this.barDockControl2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.barDockControl2.Location = new System.Drawing.Point(0, 0);
+            this.barDockControl2.Size = new System.Drawing.Size(0, 0);
+            // 
+            // barDockControlRight
+            // 
+            this.barDockControlRight.CausesValidation = false;
+            this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
+            this.barDockControlRight.Location = new System.Drawing.Point(0, 0);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 0);
+            // 
+            // barDockControl3
+            // 
+            this.barDockControl3.CausesValidation = false;
+            this.barDockControl3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.barDockControl3.Location = new System.Drawing.Point(0, 0);
+            this.barDockControl3.Size = new System.Drawing.Size(0, 0);
+            // 
+            // barDockControlLeft
+            // 
+            this.barDockControlLeft.CausesValidation = false;
+            this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
+            this.barDockControlLeft.Location = new System.Drawing.Point(0, 0);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 0);
+            // 
+            // barDockControl4
+            // 
+            this.barDockControl4.CausesValidation = false;
+            this.barDockControl4.Dock = System.Windows.Forms.DockStyle.Right;
+            this.barDockControl4.Location = new System.Drawing.Point(0, 0);
+            this.barDockControl4.Size = new System.Drawing.Size(0, 0);
+            // 
+            // barDockControl5
+            // 
+            this.barDockControl5.CausesValidation = false;
+            this.barDockControl5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.barDockControl5.Location = new System.Drawing.Point(0, 0);
+            this.barDockControl5.Size = new System.Drawing.Size(0, 0);
+            // 
+            // barDockControlBottom
+            // 
+            this.barDockControlBottom.CausesValidation = false;
+            this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 0);
+            this.barDockControlBottom.Size = new System.Drawing.Size(0, 0);
+            // 
+            // barDockControl6
+            // 
+            this.barDockControl6.CausesValidation = false;
+            this.barDockControl6.Dock = System.Windows.Forms.DockStyle.Left;
+            this.barDockControl6.Location = new System.Drawing.Point(0, 0);
+            this.barDockControl6.Size = new System.Drawing.Size(0, 0);
+            // 
+            // barDockControl7
+            // 
+            this.barDockControl7.CausesValidation = false;
+            this.barDockControl7.Dock = System.Windows.Forms.DockStyle.Right;
+            this.barDockControl7.Location = new System.Drawing.Point(0, 0);
+            this.barDockControl7.Size = new System.Drawing.Size(0, 0);
+            // 
+            // barManager1
+            // 
+            this.barManager1.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
+            this.bar1,
+            this.bar2,
+            this.bar3});
+            this.barManager1.DockControls.Add(this.barDockControlTop);
+            this.barManager1.DockControls.Add(this.barDockControl8);
+            this.barManager1.DockControls.Add(this.barDockControl9);
+            this.barManager1.DockControls.Add(this.barDockControl10);
+            this.barManager1.Form = this;
+            this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.iSellOption,
+            this.iBuyOption,
+            this.iOptionPicker});
+            this.barManager1.MainMenu = this.bar2;
+            this.barManager1.MaxItemId = 8;
+            this.barManager1.StatusBar = this.bar3;
+            // 
+            // bar1
+            // 
+            this.bar1.BarName = "Tools";
+            this.bar1.DockCol = 0;
+            this.bar1.DockRow = 1;
+            this.bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
+            this.bar1.Text = "Tools";
+            // 
+            // bar2
+            // 
+            this.bar2.BarName = "Main menu";
+            this.bar2.DockCol = 0;
+            this.bar2.DockRow = 0;
+            this.bar2.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
+            this.bar2.OptionsBar.MultiLine = true;
+            this.bar2.OptionsBar.UseWholeRow = true;
+            this.bar2.Text = "Main menu";
+            // 
+            // bar3
+            // 
+            this.bar3.BarName = "Status bar";
+            this.bar3.CanDockStyle = DevExpress.XtraBars.BarCanDockStyle.Bottom;
+            this.bar3.DockCol = 0;
+            this.bar3.DockRow = 0;
+            this.bar3.DockStyle = DevExpress.XtraBars.BarDockStyle.Bottom;
+            this.bar3.OptionsBar.AllowQuickCustomization = false;
+            this.bar3.OptionsBar.DrawDragBorder = false;
+            this.bar3.OptionsBar.UseWholeRow = true;
+            this.bar3.Text = "Status bar";
+            // 
+            // barDockControlTop
+            // 
+            this.barDockControlTop.CausesValidation = false;
+            this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
+            this.barDockControlTop.Size = new System.Drawing.Size(1231, 49);
+            // 
+            // barDockControl8
+            // 
+            this.barDockControl8.CausesValidation = false;
+            this.barDockControl8.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.barDockControl8.Location = new System.Drawing.Point(0, 712);
+            this.barDockControl8.Size = new System.Drawing.Size(1231, 23);
+            // 
+            // barDockControl9
+            // 
+            this.barDockControl9.CausesValidation = false;
+            this.barDockControl9.Dock = System.Windows.Forms.DockStyle.Left;
+            this.barDockControl9.Location = new System.Drawing.Point(0, 49);
+            this.barDockControl9.Size = new System.Drawing.Size(0, 663);
+            // 
+            // barDockControl10
+            // 
+            this.barDockControl10.CausesValidation = false;
+            this.barDockControl10.Dock = System.Windows.Forms.DockStyle.Right;
+            this.barDockControl10.Location = new System.Drawing.Point(1231, 49);
+            this.barDockControl10.Size = new System.Drawing.Size(0, 663);
+            // 
+            // iSellOption
+            // 
+            this.iSellOption.Caption = "Sell  Option";
+            this.iSellOption.Glyph = global::TNS.Controls.Properties.Resources.Basket_Add1;
+            this.iSellOption.Id = 5;
+            this.iSellOption.Name = "iSellOption";
+            this.iSellOption.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iSellOption_ItemClick);
+            // 
+            // iBuyOption
+            // 
+            this.iBuyOption.Caption = "Buy Option";
+            this.iBuyOption.Glyph = global::TNS.Controls.Properties.Resources.Basket_delete;
+            this.iBuyOption.Id = 6;
+            this.iBuyOption.Name = "iBuyOption";
+            this.iBuyOption.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iBuyOption_ItemClick);
+            // 
+            // iOptionPicker
+            // 
+            this.iOptionPicker.Caption = "Option Picker";
+            this.iOptionPicker.Glyph = global::TNS.Controls.Properties.Resources.analysis;
+            this.iOptionPicker.Id = 7;
+            this.iOptionPicker.Name = "iOptionPicker";
+            this.iOptionPicker.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iOptionPicker_ItemClick);
+            // 
+            // popupMenu1
+            // 
+            this.popupMenu1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.iSellOption),
+            new DevExpress.XtraBars.LinkPersistInfo(this.iBuyOption),
+            new DevExpress.XtraBars.LinkPersistInfo(this.iOptionPicker)});
+            this.popupMenu1.Manager = this.barManager1;
+            this.popupMenu1.Name = "popupMenu1";
             // 
             // PositionsView
             // 
@@ -1188,12 +1582,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.Controls.Add(this.splitContainerControl1);
+            this.Controls.Add(this.barDockControl9);
+            this.Controls.Add(this.barDockControl10);
+            this.Controls.Add(this.barDockControl8);
+            this.Controls.Add(this.barDockControlTop);
             this.Name = "PositionsView";
-            this.Size = new System.Drawing.Size(1231, 657);
+            this.Size = new System.Drawing.Size(1231, 735);
             this.Resize += new System.EventHandler(this.PositionsView_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.grdPositionData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.optionsPositionDataBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdViewPositionData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.accountSummaryDataBindingSource)).EndInit();
             this.grpAccountSummary.ResumeLayout(false);
             this.grpAccountSummary.PerformLayout();
@@ -1202,7 +1600,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridViewUnLTradingData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).EndInit();
             this.splitContainerControl1.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grdMainSecurities)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.securityDataBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdViewMainSecurities)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -1210,7 +1618,7 @@
 
         private DevExpress.XtraGrid.GridControl grdPositionData;
         private System.Windows.Forms.BindingSource optionsPositionDataBindingSource;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private DevExpress.XtraGrid.Views.Grid.GridView grdViewPositionData;
         private DevExpress.XtraGrid.Columns.GridColumn colDescription;
         private DevExpress.XtraGrid.Columns.GridColumn colOptionContract_OptionType;
         private DevExpress.XtraGrid.Columns.GridColumn colPosition;
@@ -1281,5 +1689,45 @@
         private DevExpress.XtraGrid.Columns.GridColumn colUnlAsk;
         private DevExpress.XtraGrid.Columns.GridColumn colUnlChange;
         private DevExpress.XtraGrid.Columns.GridColumn colUnlOpen;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private DevExpress.XtraGrid.GridControl grdMainSecurities;
+        private DevExpress.XtraGrid.Views.Grid.GridView grdViewMainSecurities;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
+        private DevExpress.XtraGrid.Columns.GridColumn colContract;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
+        private DevExpress.XtraGrid.Columns.GridColumn colHighestPrice;
+        private DevExpress.XtraGrid.Columns.GridColumn colLowestPrice;
+        private DevExpress.XtraGrid.Columns.GridColumn colBasePrice;
+        private DevExpress.XtraGrid.Columns.GridColumn colOpeningPrice;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn4;
+        private DevExpress.XtraGrid.Columns.GridColumn colAskSize;
+        private DevExpress.XtraGrid.Columns.GridColumn colBidSize;
+        private DevExpress.XtraGrid.Columns.GridColumn colVolume;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn6;
+        private System.Windows.Forms.BindingSource securityDataBindingSource;
+        private DevExpress.XtraGrid.Columns.GridColumn colOffsetUnl;
+        private DevExpress.XtraBars.BarDockControl barDockControl1;
+        private DevExpress.XtraBars.BarDockControl barDockControl2;
+        private DevExpress.XtraBars.BarDockControl barDockControlRight;
+        private DevExpress.XtraBars.BarDockControl barDockControl3;
+        private DevExpress.XtraBars.BarDockControl barDockControlLeft;
+        private DevExpress.XtraBars.BarDockControl barDockControl4;
+        private DevExpress.XtraBars.BarDockControl barDockControl5;
+        private DevExpress.XtraBars.BarDockControl barDockControlBottom;
+        private DevExpress.XtraBars.BarDockControl barDockControl6;
+        private DevExpress.XtraBars.BarDockControl barDockControl7;
+        private DevExpress.XtraBars.BarManager barManager1;
+        private DevExpress.XtraBars.Bar bar1;
+        private DevExpress.XtraBars.Bar bar2;
+        private DevExpress.XtraBars.Bar bar3;
+        private DevExpress.XtraBars.BarDockControl barDockControlTop;
+        private DevExpress.XtraBars.BarDockControl barDockControl8;
+        private DevExpress.XtraBars.BarDockControl barDockControl9;
+        private DevExpress.XtraBars.BarDockControl barDockControl10;
+        private DevExpress.XtraBars.BarButtonItem iSellOption;
+        private DevExpress.XtraBars.BarButtonItem iBuyOption;
+        private DevExpress.XtraBars.PopupMenu popupMenu1;
+        private DevExpress.XtraBars.BarButtonItem iOptionPicker;
     }
 }

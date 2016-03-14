@@ -97,6 +97,14 @@
       <Project>{c50ba368-93c1-45ad-8779-683189b0ba34}</Project>
       <Name>TNS.API</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TNS.Controls\TNS.Controls.csproj">
+      <Project>{60c9bf13-7546-40a8-9fc4-814e565782c5}</Project>
+      <Name>TNS.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Trading\Trading.csproj">
+      <Project>{2507c82a-c312-4fc3-b8f2-fb0696c9b7a1}</Project>
+      <Name>Trading</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UILogic\UILogic.csproj">
       <Project>{70470A7B-5474-4EDC-8443-BA2E165BD147}</Project>
       <Name>UILogic</Name>

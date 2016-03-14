@@ -114,7 +114,10 @@ namespace Infra
                 get { return (EAlgorithmType)AlgorithmType; }
                 set { AlgorithmType = (int)value; }
             }
-
+            /// <summary>
+            /// The minimum step in Dolar for trading price.
+            /// </summary>
+            public double MinPriceStep { get; set; }
             /// <summary>
             /// Gets or sets the initialize net liquidation.
             /// </summary>
@@ -122,6 +125,12 @@ namespace Infra
             /// The initialize net liquidation.
             /// </value>
             public double InitNetLiquidation { get; set; }
+            /// <summary>
+            /// The interval between 2 successive orders
+            /// </summary>
+            public int OrderInterval { get; set; }
+
+            public TimeSpan OrderIntervalTimeSpan => TimeSpan.FromMilliseconds(OrderInterval);
             /// <summary>
             /// Gets or sets the USA interest rate percentage = 0.25;
             /// </summary>

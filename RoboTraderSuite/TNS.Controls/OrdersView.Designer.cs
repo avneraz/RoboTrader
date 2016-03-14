@@ -31,13 +31,15 @@
             this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.grdOrders = new DevExpress.XtraGrid.GridControl();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.iCancelOrder = new System.Windows.Forms.ToolStripMenuItem();
             this.orderStatusDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.grdViewOrders = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colOrder = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colAPIDataType = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOrderStatus = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOrderId = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colMaintMargin = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colMargin = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colLastUpdateTime = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCommission = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colSymbol = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -45,15 +47,13 @@
             this.colOrder_Quantity = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOptionKey = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colStrike = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.iCancelOrder = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdOrders)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.orderStatusDataBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdViewOrders)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -87,6 +87,20 @@
             this.grdOrders.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grdViewOrders});
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.iCancelOrder});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(144, 26);
+            // 
+            // iCancelOrder
+            // 
+            this.iCancelOrder.Name = "iCancelOrder";
+            this.iCancelOrder.Size = new System.Drawing.Size(143, 22);
+            this.iCancelOrder.Text = "Cancel Order";
+            this.iCancelOrder.Click += new System.EventHandler(this.iCancelOrder_Click);
+            // 
             // orderStatusDataBindingSource
             // 
             this.orderStatusDataBindingSource.DataSource = typeof(TNS.API.ApiDataObjects.OrderStatusData);
@@ -98,7 +112,7 @@
             this.colAPIDataType,
             this.colOrderStatus,
             this.colOrderId,
-            this.colMaintMargin,
+            this.colMargin,
             this.colLastUpdateTime,
             this.colCommission,
             this.colSymbol,
@@ -128,7 +142,7 @@
             this.colOrderStatus.Name = "colOrderStatus";
             this.colOrderStatus.Visible = true;
             this.colOrderStatus.VisibleIndex = 3;
-            this.colOrderStatus.Width = 111;
+            this.colOrderStatus.Width = 93;
             // 
             // colOrderId
             // 
@@ -137,18 +151,18 @@
             this.colOrderId.OptionsColumn.ReadOnly = true;
             this.colOrderId.Visible = true;
             this.colOrderId.VisibleIndex = 0;
-            this.colOrderId.Width = 80;
+            this.colOrderId.Width = 66;
             // 
-            // colMaintMargin
+            // colMargin
             // 
-            this.colMaintMargin.Caption = "Margin";
-            this.colMaintMargin.DisplayFormat.FormatString = "#,##0";
-            this.colMaintMargin.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colMaintMargin.FieldName = "MaintMargin";
-            this.colMaintMargin.Name = "colMaintMargin";
-            this.colMaintMargin.Visible = true;
-            this.colMaintMargin.VisibleIndex = 4;
-            this.colMaintMargin.Width = 98;
+            this.colMargin.Caption = "Margin";
+            this.colMargin.DisplayFormat.FormatString = "#,##0";
+            this.colMargin.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colMargin.FieldName = "Margin";
+            this.colMargin.Name = "colMargin";
+            this.colMargin.Visible = true;
+            this.colMargin.VisibleIndex = 4;
+            this.colMargin.Width = 82;
             // 
             // colLastUpdateTime
             // 
@@ -158,7 +172,7 @@
             this.colLastUpdateTime.Name = "colLastUpdateTime";
             this.colLastUpdateTime.Visible = true;
             this.colLastUpdateTime.VisibleIndex = 5;
-            this.colLastUpdateTime.Width = 160;
+            this.colLastUpdateTime.Width = 135;
             // 
             // colCommission
             // 
@@ -168,7 +182,7 @@
             this.colCommission.Name = "colCommission";
             this.colCommission.Visible = true;
             this.colCommission.VisibleIndex = 6;
-            this.colCommission.Width = 168;
+            this.colCommission.Width = 142;
             // 
             // colSymbol
             // 
@@ -177,6 +191,7 @@
             this.colSymbol.Name = "colSymbol";
             this.colSymbol.Visible = true;
             this.colSymbol.VisibleIndex = 7;
+            this.colSymbol.Width = 62;
             // 
             // colOrder_LimitPrice
             // 
@@ -187,6 +202,7 @@
             this.colOrder_LimitPrice.Name = "colOrder_LimitPrice";
             this.colOrder_LimitPrice.Visible = true;
             this.colOrder_LimitPrice.VisibleIndex = 8;
+            this.colOrder_LimitPrice.Width = 62;
             // 
             // colOrder_Quantity
             // 
@@ -195,6 +211,7 @@
             this.colOrder_Quantity.Name = "colOrder_Quantity";
             this.colOrder_Quantity.Visible = true;
             this.colOrder_Quantity.VisibleIndex = 9;
+            this.colOrder_Quantity.Width = 72;
             // 
             // colOptionKey
             // 
@@ -203,6 +220,7 @@
             this.colOptionKey.Name = "colOptionKey";
             this.colOptionKey.Visible = true;
             this.colOptionKey.VisibleIndex = 1;
+            this.colOptionKey.Width = 62;
             // 
             // colStrike
             // 
@@ -211,20 +229,7 @@
             this.colStrike.Name = "colStrike";
             this.colStrike.Visible = true;
             this.colStrike.VisibleIndex = 2;
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.iCancelOrder});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 48);
-            // 
-            // iCancelOrder
-            // 
-            this.iCancelOrder.Name = "iCancelOrder";
-            this.iCancelOrder.Size = new System.Drawing.Size(152, 22);
-            this.iCancelOrder.Text = "Cancel Order";
-            this.iCancelOrder.Click += new System.EventHandler(this.iCancelOrder_Click);
+            this.colStrike.Width = 52;
             // 
             // OrdersView
             // 
@@ -238,9 +243,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdOrders)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.orderStatusDataBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdViewOrders)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -255,7 +260,7 @@
         private DevExpress.XtraGrid.Columns.GridColumn colAPIDataType;
         private DevExpress.XtraGrid.Columns.GridColumn colOrderStatus;
         private DevExpress.XtraGrid.Columns.GridColumn colOrderId;
-        private DevExpress.XtraGrid.Columns.GridColumn colMaintMargin;
+        private DevExpress.XtraGrid.Columns.GridColumn colMargin;
         private DevExpress.XtraGrid.Columns.GridColumn colLastUpdateTime;
         private DevExpress.XtraGrid.Columns.GridColumn colCommission;
         private DevExpress.XtraGrid.Columns.GridColumn colSymbol;

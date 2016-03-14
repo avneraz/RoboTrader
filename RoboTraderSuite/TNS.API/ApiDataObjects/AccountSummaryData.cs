@@ -12,16 +12,42 @@ namespace TNS.API.ApiDataObjects
     {
 
         //tags = NetLiquidation,EquityWithLoanValue,BuyingPower,ExcessLiquidity,FullMaintMarginReq,FullInitMarginReq"
+      
+
         public double BuyingPower { get; set; }
         public double EquityWithLoanValue { get; set; }
         public double ExcessLiquidity { get; set; }
         public double FullInitMarginReq { get; set; }
         public double FullMaintMarginReq { get; set; }
         public double NetLiquidation { get; set; }
+        public double FullExcessLiquidity { get; set; }
 
         public double PnL => NetLiquidation - AllConfigurations.AllConfigurationsObject.Trading.InitNetLiquidation;
 
         public EapiDataTypes APIDataType => EapiDataTypes.AccountSummaryData;
+
+        public List<string> ManagedAccounts { get; set; }
+
+        /// <summary>
+        /// Gets the main account. The first one
+        /// </summary>
+        /// <value>
+        /// The main account.
+        /// </value>
+        public string MainAccount
+        {
+            get
+            {
+                if (ManagedAccounts != null && ManagedAccounts.Count > 0)
+                    return ManagedAccounts[0];
+                return null;
+            }
+        }
+        /// <summary>
+        /// Get indication if this account is the real account or simulator.
+        /// </summary>
+        public bool SimulatorAccount => AllConfigurations.AllConfigurationsObject.Application.MainAccount != MainAccount;
+            
 
         public override string ToString()
         {

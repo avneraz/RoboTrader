@@ -61,8 +61,11 @@ namespace TNS.API.ApiDataObjects
         public DateTime LastUpdateTime { get; set; }
 
         public double Commission { get; set; }
-
-
+        /// <summary>
+        /// The additional margin required to sell or buy this options quantity.
+        /// </summary>
+        public double Margin { get; set; }
+        public bool WhatIf => Order.WhatIf;
         public override string ToString()
         {
             return $"OrderStatusData: [Order: {Order}, OrderId: {OrderId}, MaintMargin: {MaintMargin}, " +

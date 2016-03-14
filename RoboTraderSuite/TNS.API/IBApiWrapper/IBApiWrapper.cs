@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using IBApi;
@@ -62,9 +63,19 @@ namespace TNS.API.IBApiWrapper
             _curReqId = 0;
             _contractToRequestIds = new Dictionary<ContractBase, int>();
             _handler.ContractDetailsMessageReceived += HandlerOnContractDetailsMessage;
+            _handler.ConnectivityIbTwsRestored += ResetAfterReconnection;
+
         }
 
-        
+        /// <summary>
+        /// If the connection restored, reset the requests for continuous data like account and position.
+        /// </summary>
+        private void ResetAfterReconnection()
+        {
+            ResetAccountSummaryRequest();
+            Debug.Print(" ResetAfterReconnection() called!!!");
+            _clientSocket.reqPositions();
+        }
 
         public bool IsConnected
         {
@@ -115,11 +126,20 @@ namespace TNS.API.IBApiWrapper
         public void RequestAccountData()
         {
             Logger.DebugFormat(nameof(RequestAccountData) , " called");
-            string tags = "NetLiquidation,EquityWithLoanValue,BuyingPower,ExcessLiquidity,FullMaintMarginReq,FullInitMarginReq";
+            string tags = "NetLiquidation,EquityWithLoanValue,BuyingPower,ExcessLiquidity,FullMaintMarginReq,FullInitMarginReq,FullExcessLiquidity";
             _clientSocket.reqAccountSummary(0, "All", tags);
             _clientSocket.reqAccountUpdates(true, _mainAccount);
         }
 
+        /// <summary>
+        /// Called when Connectivity between IB and TWS has been restored(Code 1102), 
+        /// <para> Or when A market data farm is connected(Code 2104).Usually occurred after disconnection.</para>
+        ///  </summary>
+        public void ResetAccountSummaryRequest()
+        {
+            _clientSocket.cancelAccountSummary(0);
+            RequestAccountData();
+        }
         /// <summary>
         ///  Request Options chain for specific UNL, the request applies for several months ahead!
         /// </summary>
@@ -147,7 +167,8 @@ namespace TNS.API.IBApiWrapper
         {
             lock (OptionToLoadParametersDic)
             {
-                OptionToLoadParametersDic[symbol].AddOutOfBoundaryOptionContract(optionContractList);
+                if(OptionToLoadParametersDic.ContainsKey(symbol))
+                    OptionToLoadParametersDic[symbol].AddOutOfBoundaryOptionContract(optionContractList);
             }
         }
       
@@ -274,7 +295,7 @@ namespace TNS.API.IBApiWrapper
             string orderIdStr = orderId.ToString();
 
             var ibOrder = orderData.ToIbOrder(_mainAccount, orderIdStr);
-
+            ibOrder.Transmit = true;
             _clientSocket.placeOrder(orderId, orderData.Contract.ToIbContract(), ibOrder);
             return orderIdStr;
         }

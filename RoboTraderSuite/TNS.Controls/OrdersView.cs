@@ -65,15 +65,37 @@ namespace TNS.Controls
 
         private Dictionary<string, OrderStatusData> OrderStatusDataDic { get; set; }
 
-        public void SetOrderStatusDataDic(Dictionary<string, OrderStatusData> orderStatusDataDic)
-        {
-            OrderStatusDataDic = orderStatusDataDic;
-            //OptionsPositionDataList = positionDataDic.Values.ToList();
-            GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(30), () => grdOrders.InvokeIfRequired(SetAndUpdate), false);
-        }
+        //public void SetOrderStatusDataDic(Dictionary<string, OrderStatusData> orderStatusDataDic)
+        //{
+        //    OrderStatusDataDic = orderStatusDataDic;
+        //    //OptionsPositionDataList = positionDataDic.Values.ToList();
+        //    GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(30), () => grdOrders.InvokeIfRequired(SetAndUpdate), false);
+        //}
 
         private void iCancelOrder_Click(object sender, EventArgs e)
         {
+
+        }
+
+        public void SetOrderStatusDataList(List<OrderStatusData> orderStatusDataList)
+        {
+            grdOrders.InvokeIfRequired(() =>
+            {
+                orderStatusDataBindingSource.DataSource = orderStatusDataList;
+                orderStatusDataBindingSource.ResetBindings(false);
+
+            });
+
+            GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(1),
+               () =>
+               {
+                   grdOrders.InvokeIfRequired(() =>
+                   {
+                       orderStatusDataBindingSource.ResetBindings(false);
+
+                   });
+               },
+               true);
 
         }
     }

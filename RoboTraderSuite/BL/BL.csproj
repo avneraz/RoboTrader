@@ -64,6 +64,7 @@
     <Compile Include="Interfaces\IUnlBaseMemberManager.cs" />
     <Compile Include="ManagedSecuritiesManager.cs" />
     <Compile Include="MarginManager.cs" />
+    <Compile Include="UnlManagers\OptionNegotiator.cs" />
     <Compile Include="UnlManagers\OptionsManager.cs" />
     <Compile Include="UnlManagers\OrdersManager.cs" />
     <Compile Include="UnlManagers\PositionsDataBuilder.cs" />

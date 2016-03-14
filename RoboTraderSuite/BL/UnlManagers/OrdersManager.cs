@@ -15,6 +15,7 @@ namespace TNS.BL.UnlManagers
         public OrdersManager(ITradingApi apiWrapper, ManagedSecurity managedSecurity, UNLManager unlManager) : base(apiWrapper, managedSecurity, unlManager)
         {
             OrderStatusDataDic = new Dictionary<string, OrderStatusData>();
+            OptionNegotiatorDic = new Dictionary<string, OptionNegotiator>();
         }
         /// <summary>
         ///  = OrderType.LMT, used for testing
@@ -30,70 +31,87 @@ namespace TNS.BL.UnlManagers
 
             switch (message.APIDataType)
             {
+                case EapiDataTypes.AccountSummaryData:
+                    AccountSummaryData = message as AccountSummaryData;
+                    return true;
                 case EapiDataTypes.OrderStatus:
-                var order = (OrderStatusData) message;
-                OrderStatusDataDic[order.OrderId] = order;
-                    //OrderStatusDataUpdated?.Invoke(order);
-                        result = true;
+                    var orderStatusData = (OrderStatusData) message;
+                    
+                    OrderStatusDataDic[orderStatusData.OrderId] = orderStatusData;
+                    
+                    if ((orderStatusData.OrderStatus == OrderStatus.Filled) && (orderStatusData.WhatIf))
+                    {
+                        orderStatusData.Margin = orderStatusData.MaintMargin - this.AccountSummaryData.FullMaintMarginReq;
+
+                        if (OptionNegotiatorDic.ContainsKey(orderStatusData.OrderId) == false)
+                        {
+                            var associatedNegotioator =
+                            OptionNegotiatorDic.Values.FirstOrDefault(
+                                neg => neg.WhatIfOrderId == orderStatusData.OrderId);
+                            if (associatedNegotioator != null) associatedNegotioator.Margin = orderStatusData.Margin;
+                        }
+                        else//If it's true==> now isn't working time!==> terminate
+                        {
+                            SendOrderTaskAccomplished(orderStatusData.OrderId);
+                        }
+                        return true;
+                    } 
+                    if (OptionNegotiatorDic.ContainsKey(orderStatusData.OrderId))
+                        OptionNegotiatorDic[orderStatusData.OrderId].SetOrderStatusData(orderStatusData);
+                       
+                    result = true;
                     break;
                 case EapiDataTypes.OrderData:
-
-                    //OrderStatusDataUpdated?.Invoke(order);
                     result = true;
                     break;
             }
             //SellOption(UNLManager.OptionsManager.OptionDataDic.Values.ToList()[0], 1, 1);
             return result;
         }
-
+        public AccountSummaryData AccountSummaryData { get; set; }
         public override void DoWorkAfterConnection()
         {
             //_doSellOneOrderTesting = false;
         }
         public Dictionary<string, OrderStatusData> OrderStatusDataDic { get; }
-        public OrderData SellOption(OptionData optionData, double limitPrice, int quantity)
+
+        public Dictionary<string, OptionNegotiator> OptionNegotiatorDic { get; set; }
+        public OrderData SellOption(OptionData optionData, int quantity)
         {
-
-            OrderData orderData = new OrderData()
-            {
-                OrderType = DefaultOrderType,
-                OrderAction = OrderAction.SELL,
-                LimitPrice = limitPrice,
-                Quantity = quantity,
-                Contract = optionData.OptionContract
-            };
-
-            orderData.OrderId = APIWrapper.CreateOrder(orderData);
-
+            return SendOrder(optionData,quantity);
+        }
+        public OrderData BuyOption(OptionData optionData, int quantity)
+        {
+            return SendOrder(optionData, quantity, false);
+        }
+        private OrderData SendOrder(OptionData optionData, int quantity, bool sell = true)
+        {
+            OptionNegotiator optionNegotiator = new OptionNegotiator(APIWrapper, UNLManager, AccountSummaryData.SimulatorAccount);
+            var orderData = optionNegotiator.TradeOption(optionData, sell, quantity);
+            OptionNegotiatorDic[orderData.OrderId] = optionNegotiator;
             return orderData;
         }
 
-        public OrderData BuyOption(OptionData optionData, double limitPrice, int quantity)
+        /// <summary>
+        /// The method used by the OptionNegotiator when the order task accomplished.
+        /// </summary>
+        public void SendOrderTaskAccomplished(string orderId)
         {
-            OrderData orderData = new OrderData()
-            {
-                OrderType = DefaultOrderType,
-                OrderAction = OrderAction.BUY,
-                LimitPrice = limitPrice,
-                Quantity = quantity,
-                Contract = optionData.OptionContract
-            };
-            orderData.OrderId = APIWrapper.CreateOrder(orderData);
-
-            return orderData;
+            OptionNegotiatorDic.Remove(orderId);
+            //TODO....
         }
-
         public void CancelOrder(string orderId)
         {
-            APIWrapper.CancelOrder(orderId);
+            OptionNegotiatorDic[orderId].CancelOrder(orderId);
         }
         public OrderData TestTrading(bool sell)
         {
-            string optionKey = GetOptionKey(new DateTime(2016, 2, 26), EOptionType.Call, 100);
-            DefaultOrderType = OrderType.MKT;
+            string optionKey = GetOptionKey(new DateTime(2016, 3, 04), EOptionType.Put, 111);
+            //string optionKey = GetOptionKey(new DateTime(2016, 3, 04), EOptionType.Call, 119);
+            //DefaultOrderType = OrderType.MKT;
             OrderData orderData = sell ? 
-                SellOption(UNLManager.OptionsManager.GetOptionData(optionKey), 1, 2) : 
-                BuyOption(UNLManager.OptionsManager.GetOptionData(optionKey), 1, 1);
+                SellOption(UNLManager.OptionsManager.GetOptionData(optionKey), 1) : 
+                BuyOption(UNLManager.OptionsManager.GetOptionData(optionKey), 1);
             DefaultOrderType = OrderType.LMT;
             return orderData;
 
