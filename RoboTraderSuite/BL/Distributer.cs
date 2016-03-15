@@ -47,6 +47,8 @@ namespace TNS.BL
         private IBaseLogic UIDataBroker { get; set; }
         private MarginManager _marginManager;
 
+        protected override string ThreadName => "Distributer";
+
         protected override void HandleMessage(IMessage message)
         {
             //For evaluation only:

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -53,6 +54,8 @@ namespace Infra.Bus
                     }
                     else
                     {
+                        if (_queue.Count > 10 && _queue.Count % 20 == 0)
+                            Debug.Print($"Items in queue for {ThreadName} are : {_queue.Count}");
                         HandleMessage(message);
                     }
 

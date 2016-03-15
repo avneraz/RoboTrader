@@ -17,7 +17,9 @@ namespace DAL
         private ISession _session;
 
         private readonly TimeSpan WriteTimeOut = TimeSpan.FromSeconds(10);
-        private readonly Dictionary<string, object> _aggregator; 
+        private readonly Dictionary<string, object> _aggregator;
+
+        protected override string ThreadName => "DBWriter";
 
         public DBWriter(TimeSpan? writeTimeOut = null)
         {
