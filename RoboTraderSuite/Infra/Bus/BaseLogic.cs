@@ -29,7 +29,7 @@ namespace Infra.Bus
     public abstract class SimpleBaseLogic : IBaseLogic
     {
         private readonly ConcurrentQueue<IMessage> _queue;
-        private const int WORK_INTERVAL_MS = 100;
+        private const int WORK_INTERVAL_MS = 40;
 
         protected SimpleBaseLogic()
         {
@@ -54,7 +54,7 @@ namespace Infra.Bus
                     }
                     else
                     {
-                        if (_queue.Count > 10 && _queue.Count % 20 == 0)
+                        if (_queue.Count > 100 && _queue.Count % 100 == 0)
                             Debug.Print($"Items in queue for {ThreadName} are : {_queue.Count}");
                         HandleMessage(message);
                     }

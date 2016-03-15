@@ -189,7 +189,7 @@ namespace TNS.API.IBApiWrapper
 
             msg = string.Format("Today is workingDay! StartTradingTime={0}, EndTradingTime:{1}. ",
                 securityContract.StartTradingTimeLocal, securityContract.EndTradingTimeLocal);
-            Logger.Info(msg);
+            Logger.Debug(msg);
            
         }
     }

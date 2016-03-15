@@ -68,7 +68,7 @@ namespace TNS.BL.UnlManagers
             {
                 msg = $"{Symbol}.PDB update PositionData:";
             }
-            Logger.Notice($"{msg} {optionsPositionData.Description}. Total positions={PositionDataDic.Count}");
+            Logger.Debug($"{msg} {optionsPositionData.Description}. Total positions={PositionDataDic.Count}");
             return true;
            
         }
