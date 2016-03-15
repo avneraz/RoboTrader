@@ -539,7 +539,7 @@ namespace TNS.API.IBApiWrapper
                 }
             }
         }
-        public void RegisterContract(int requestId, ContractBase contract)
+        public void RegisterContract(int requestId, ContractBase contract, ContractDetails IbContract)
         {
             lock (SecurityDataDic)
             {
@@ -550,6 +550,7 @@ namespace TNS.API.IBApiWrapper
                 else
                     securityData = new SecurityData();
                 securityData.SetContract(contract);
+                IbContract.UpdateSecurityData(contract);
                 SecurityDataDic.Add(requestId, securityData);
             }
         }

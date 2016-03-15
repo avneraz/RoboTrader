@@ -18,28 +18,7 @@ namespace TNS.API.ApiDataObjects
             string exchange = "SMART", string currency = "USD") : base(symbol, securityType, exchange, currency)
         {
         }
-
-        /// <summary>
-        /// Check if the time on local is working time for AAPL trading
-        /// </summary>
-        public bool IsNowWorkingTime
-        {
-            get
-            {
-                DateTime now = DateTime.Now;
-
-                return IsWorkingDay && now >= StartTradingTimeLocal && now < EndTradingTimeLocal;
-            }
-        }
-        /// <summary>
-        /// Get indication if today is working day for AAPL security.
-        /// </summary>
-        public bool IsWorkingDay { get; set; }
-        public DateTime NextWorkingTime { get; set; }
-        public DateTime StartTradingTime { get; set; }
-        public DateTime StartTradingTimeLocal { get; set; }
-        public DateTime EndTradingTime { get; set; }
-        public DateTime EndTradingTimeLocal { get; set; }
+     
 
         public override string GetUniqueIdentifier()
         {

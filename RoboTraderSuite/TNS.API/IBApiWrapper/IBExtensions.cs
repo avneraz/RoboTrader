@@ -126,7 +126,7 @@ namespace TNS.API.IBApiWrapper
             };
         }
 
-        public static void UpdateSecurityData(this ContractDetails contractDetails, SecurityContract securityContract)
+        public static void UpdateSecurityData(this ContractDetails contractDetails, ContractBase securityContract)
         {
         
             //LiquidHours="20150427:0930-1600;20150428:0930-1600" 

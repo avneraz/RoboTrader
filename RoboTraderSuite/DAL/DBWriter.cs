@@ -94,8 +94,11 @@ namespace DAL
         }
         protected void HandleSymbolData<T>(ISymbolMessage data)
         {
-            SaveContractDetailsIfNeeded<T>(data.GetContract());
-            _aggregator[data.GetContract().GetUniqueIdentifier()] = data;
+            if (data.GetContract().IsNowWorkingTime)
+            {
+                SaveContractDetailsIfNeeded<T>(data.GetContract());
+                _aggregator[data.GetContract().GetUniqueIdentifier()] = data;
+            }
         }
         private void WriteBulk()
         {

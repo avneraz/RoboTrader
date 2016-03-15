@@ -224,7 +224,7 @@ namespace TNS.API.IBApiWrapper
         private void RequestMarketData(ContractDetails contractDetails)
         {
             int reqId = GenerateRequestId();
-            _handler.RegisterContract(reqId, contractDetails.Summary.ToContract());
+            _handler.RegisterContract(reqId, contractDetails.Summary.ToContract(), contractDetails);
             _clientSocket.reqMktData(reqId, contractDetails.Summary, "100,225,233",
                                     false, new List<TagValue>());
         }
