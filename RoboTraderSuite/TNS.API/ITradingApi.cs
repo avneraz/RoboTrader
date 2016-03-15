@@ -31,6 +31,5 @@ namespace TNS.API
         void CancelOrder(string orderId);
         bool IsConnected { get; }
 
-        void UpdateOutOfBoundaryOption(string symbol, List<OptionContract> optionContractList);
     }
 }

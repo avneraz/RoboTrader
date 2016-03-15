@@ -91,10 +91,7 @@ namespace TNS.BL.UnlManagers
       
         private OptionToLoadParameters _optionToLoadParameters;
 
-        public void UpdateOutOfBoundaryOption(List<OptionContract> optionContractList)
-        {
-            APIWrapper.UpdateOutOfBoundaryOption(Symbol,optionContractList);
-        }
+      
         /// <summary>
         /// Loads the options chain of all active session of the active underlines.
         /// It send Request Contract details to load the option chain of the specified UNL.

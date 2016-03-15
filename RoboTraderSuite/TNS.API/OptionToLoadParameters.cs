@@ -41,18 +41,7 @@ namespace TNS.API
         {
             RequestOptionMarketDataCount++;
         }
-        public double AtTheMoneyStrike
-        {
-            get
-            {
-                if (_atTheMoneyStrike != null) return _atTheMoneyStrike.Value;
-
-                _atTheMoneyStrike = (int)Math.Round(BaseSecurityData.LastPrice / 10, 0, MidpointRounding.AwayFromZero) * 10;
-                return _atTheMoneyStrike.Value;
-            }
-        }
-        private double? _atTheMoneyStrike;
-        private Dictionary<string, OptionContract> _outOfBoundaryOptionContractDic;
+     
 
         public OptionContract OptionContractPivotToLoad
         {
@@ -71,27 +60,8 @@ namespace TNS.API
                 return optionContract;
             }
         }
+        
 
-        /// <summary>
-        /// contains OptionContract that requested separately by PositionDataBuilder.
-        /// </summary>
-        public Dictionary<string, OptionContract> OutOfBoundaryOptionContractDic =>
-            _outOfBoundaryOptionContractDic ?? (_outOfBoundaryOptionContractDic = new Dictionary<string, OptionContract>());
-
-        public void AddOutOfBoundaryOptionContract(OptionContract optionContract)
-        {
-            if (IsOptionWithinLoadBoundaries(optionContract)) return;
-
-            OutOfBoundaryOptionContractDic[optionContract.OptionKey] = optionContract;
-        }
-
-        public void AddOutOfBoundaryOptionContract(List<OptionContract> optionContractList)
-        {
-            foreach (var optionContract in optionContractList)
-            {
-                AddOutOfBoundaryOptionContract(optionContract);
-            }
-        }
 
         /// <summary>
         /// Check if the option is between the time boundary.
@@ -101,8 +71,6 @@ namespace TNS.API
         /// <returns></returns>
         public bool IsOptionWithinLoadBoundaries(OptionContract optionContract)
         {
-            if(OutOfBoundaryOptionContractDic.ContainsKey(optionContract.OptionKey))
-                return true;
 
             //Check expiration boundaries:
             if (DateTime.Now.AddDays(MinDaysToExpiration) > optionContract.Expiry)
