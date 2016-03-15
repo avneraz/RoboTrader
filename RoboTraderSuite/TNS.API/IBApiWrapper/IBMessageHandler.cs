@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using IBApi;
 using log4net;
 using TNS.API.ApiDataObjects;
@@ -12,7 +14,7 @@ using Infra.Extensions.ArrayExtensions;
 
 namespace TNS.API.IBApiWrapper
 {
-
+   
     
     class IBMessageHandler : EWrapper
     {
@@ -27,13 +29,14 @@ namespace TNS.API.IBApiWrapper
         /// </summary>
         private readonly TimeSpan ORDER_MAX_TIME_SPAN = TimeSpan.FromMinutes(5);
         private ConnectionStatus _connectionStatus = ConnectionStatus.Connected;
+        private readonly Dictionary<int, ContractDetailsWaiter> _contractWaiters;
+
         /// <summary>
         /// Invoked when: Connectivity between IB and TWS has been restored- data maintained. <para></para>
         /// Or when A market data farm is connected.
         /// </summary>
         public event Action ConnectivityIbTwsRestored;
 
-        public event Action<int, ContractDetails> ContractDetailsMessageReceived;
         public IBMessageHandler(IBaseLogic consumer)
         {
             SecurityDataDic = new Dictionary<int, BaseSecurityData>();
@@ -42,6 +45,7 @@ namespace TNS.API.IBApiWrapper
             Consumer = consumer;
             ManagedSecurityList = new List<Contract>();
             GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(1), PublishSecurities, true);
+            _contractWaiters = new Dictionary<int, ContractDetailsWaiter>();
         }
 
         private Dictionary<int, IBOrderStatusWrapper> OrderStatusDic { get; }
@@ -115,9 +119,14 @@ namespace TNS.API.IBApiWrapper
 
         #endregion
         
+        
         public void contractDetails(int reqId, ContractDetails contractDetails)
         {
-            ContractDetailsMessageReceived?.Invoke(reqId, contractDetails);
+            if (_contractWaiters.ContainsKey(reqId))
+            {
+                _contractWaiters[reqId].OnContractReceived(contractDetails);
+                return;
+            }
 
             if (!ManagedSecurityList.Any(cb => cb.SecType == contractDetails.Summary.SecType
                                                && cb.Symbol == contractDetails.Summary.Symbol))
@@ -130,8 +139,16 @@ namespace TNS.API.IBApiWrapper
                 Consumer.Enqueue(securityData.SecurityContract);
             }
         }
-       
-        public void contractDetailsEnd(int reqId){}
+
+        public void contractDetailsEnd(int reqId)
+        {
+            if (_contractWaiters.ContainsKey(reqId))
+            {
+                _contractWaiters[reqId].OnContractReceiveEnd();
+                _contractWaiters.Remove(reqId);
+            }
+            
+        }
         public void commissionReport(CommissionReport commissionReport)
         {
             //find order by execId
@@ -500,6 +517,14 @@ namespace TNS.API.IBApiWrapper
         public int NextOrderId { get; set; }
         #endregion
         #endregion
+
+        public Task<List<ContractDetails>> WaitForContractDetails(int requestId)
+        {
+            var waiter = new ContractDetailsWaiter();
+            _contractWaiters[requestId] = waiter;
+            return waiter.GetContracts();
+        }
+		
         internal void AddManagedSecurity(Contract ibContract)
         {
             ManagedSecurityList.Add(ibContract);

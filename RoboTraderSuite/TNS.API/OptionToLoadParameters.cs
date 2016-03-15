@@ -65,8 +65,8 @@ namespace TNS.API
                     Multiplier = Multiplier,
                     Symbol = contractBase.Symbol,
                     SecurityType = SecurityType.Option,
-                    Strike = AtTheMoneyStrike,
-                    OptionType = EOptionType.Call
+                    Strike = 0,
+                    OptionType = EOptionType.None
                 };
                 return optionContract;
             }

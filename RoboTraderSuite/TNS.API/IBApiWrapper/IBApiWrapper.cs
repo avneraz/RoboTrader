@@ -23,7 +23,6 @@ namespace TNS.API.IBApiWrapper
         private readonly int _port;
         private readonly EClientSocket _clientSocket;
         private readonly IBMessageHandler _handler;
-        private readonly Dictionary<ContractBase, int> _contractToRequestIds;
         private int? _currentOrderId;
         // ReSharper disable once InconsistentNaming
         private readonly TimeSpan RECONNECTION_TIMEOUT = TimeSpan.FromSeconds(30);
@@ -32,9 +31,12 @@ namespace TNS.API.IBApiWrapper
         private readonly string _mainAccount;
         private readonly IBaseLogic _consumer;
 
+        
 
-        public int RequestId => ++_curReqId;
-
+        private int GenerateRequestId()
+        {
+            return ++_curReqId;
+        }
         /// <summary>
         /// Get the current updated OrderId.
         /// On the very first time it's taken from the TWS
@@ -61,8 +63,6 @@ namespace TNS.API.IBApiWrapper
             _handler = new IBMessageHandler(consumer);
             _clientSocket = new EClientSocket(_handler);
             _curReqId = 0;
-            _contractToRequestIds = new Dictionary<ContractBase, int>();
-            _handler.ContractDetailsMessageReceived += HandlerOnContractDetailsMessage;
             _handler.ConnectivityIbTwsRestored += ResetAfterReconnection;
 
         }
@@ -144,7 +144,7 @@ namespace TNS.API.IBApiWrapper
         ///  Request Options chain for specific UNL, the request applies for several months ahead!
         /// </summary>
         /// <param name="optionToLoadParameters"></param>
-        public void RequestOptionChain(OptionToLoadParameters optionToLoadParameters)
+        public async void RequestOptionChain(OptionToLoadParameters optionToLoadParameters)
         {
             Logger.Info($"{nameof(RequestOptionChain)} was called, loading {optionToLoadParameters}");
 
@@ -158,9 +158,14 @@ namespace TNS.API.IBApiWrapper
             //First: Load pivot option
             OptionContract optionContract = optionToLoadParameters.OptionContractPivotToLoad;
            
-            var requestId = RequestId;
+            var requestId = GenerateRequestId();
             var ibContract = optionContract.ToIbContract();
+            var task = _handler.WaitForContractDetails(requestId);
             _clientSocket.reqContractDetails(requestId, ibContract);
+            var contractDetailsList = await task;
+            contractDetailsList.Where(c =>
+                optionToLoadParameters.IsOptionWithinLoadBoundaries((OptionContract) c.Summary.ToContract())
+            ).ForEach(RequestMarketData);
         }
 
         public void UpdateOutOfBoundaryOption(string symbol, List<OptionContract> optionContractList)
@@ -177,7 +182,7 @@ namespace TNS.API.IBApiWrapper
         /// Request detail data for one security that is not option.
         /// The same like "RequestContinousContractData" but for 1 security.
         /// </summary>
-        public void RequestSecurityContractDetails(SecurityData securityData)
+        public async void RequestSecurityContractDetails(SecurityData securityData)
         {
             ContractBase contractBase = securityData.GetContract();
 
@@ -188,9 +193,10 @@ namespace TNS.API.IBApiWrapper
             _handler.AddManagedSecurity(ibContract);
             Logger.Info($"{nameof(RequestSecurityContractDetails)} " +
                             $"called, requesting {ibContract}");
-            int reqId = RequestId;
-            _handler.RegisterContract(reqId, contractBase);
+            int reqId = GenerateRequestId();
             _clientSocket.reqContractDetails(reqId, ibContract);
+            var contracts = await _handler.WaitForContractDetails(reqId);
+            contracts.ForEach(RequestMarketData);
         }
         /// <summary>
         /// Request detail data for several securities taking place in trading.
@@ -201,76 +207,85 @@ namespace TNS.API.IBApiWrapper
             
             Logger.Info($"{nameof(RequestContinousContractData)} " + 
                             $"called, requesting {contracts.Count} contracts");
-            contracts.ForEach(contract =>
+            contracts.ForEach(async contract =>
             {
                 if (contract.SecurityType != SecurityType.Option)
                     throw new Exception("This method is for option request only!!!");
-                var requestId = RequestId;
+                var requestId = GenerateRequestId();
                 var ibContract = contract.ToIbContract();
-               
+                var contractTask = _handler.WaitForContractDetails(requestId);
                 _clientSocket.reqContractDetails(requestId, ibContract);
-            
+                var contractDetailsList = await contractTask;
+                contractDetailsList.ForEach(RequestMarketData);
             });
             
         }
-        /// <summary>
-        /// handle all received ContractDetails and make decision to request the entire options.
-        /// </summary>
-        /// <param name="requestId"></param>
-        /// <param name="contractDetails"></param>
-        private void HandlerOnContractDetailsMessage(int requestId, ContractDetails contractDetails)
+
+        private void RequestMarketData(ContractDetails contractDetails)
         {
-            var contractBase = contractDetails.Summary.ToContract();
-
-            //if (_contractToRequestIds.ContainsKey(contractBase))
-            //    return;
-
-            _contractToRequestIds[contractBase] = requestId;
-            int reqId = RequestId;
-            if (contractBase.SecurityType != SecurityType.Option)
-            {//Get market data for main securities:
-                _clientSocket.reqMktData(reqId, contractDetails.Summary,
-                    "100,225,233", false, new List<TagValue>());
-                _handler.RegisterContract(reqId, contractBase);
-                return;
-            }
-            if(OptionToLoadParametersDic == null)
-                return;
-
-            OptionToLoadParameters optionToLoadParameters;
-            lock (OptionToLoadParametersDic)
-            {
-                optionToLoadParameters = OptionToLoadParametersDic[contractBase.Symbol]; 
-            }
-
-            var optionContractOrginal = (OptionContract)contractBase;
-
-            if (optionToLoadParameters.IsOptionWithinLoadBoundaries(optionContractOrginal) == false)
-                return;
-            //request market data for the current option:
+            int reqId = GenerateRequestId();
+            _handler.RegisterContract(reqId, contractDetails.Summary.ToContract());
             _clientSocket.reqMktData(reqId, contractDetails.Summary, "100,225,233",
-                false, new List<TagValue>());
-
-            optionToLoadParameters.IncreamentRequestOptionMarketDataCounter();
-            _handler.RegisterContract(reqId, contractBase);
-
-            Logger.DebugFormat("##Request Market Data#{0}:{1}==>{2}", optionToLoadParameters.RequestOptionMarketDataCount, 
-                optionContractOrginal.Symbol, optionContractOrginal.OptionKey);
-            //If it's option, request all session option chain:
-            //First: check if already exist, register it if needed:
-            OptionContract optionContract = optionContractOrginal.Copy();
-            optionContract.OptionType = EOptionType.None;
-            optionContract.Strike = 0;//Use zero to get all existing options contract.
-            if (_contractToRequestIds.ContainsKey(optionContract))
-            {//don't request option chain that already exist
-                return;
-            }
-            int reqId2 = RequestId;
-            _contractToRequestIds[optionContract] = reqId2;
-            _clientSocket.reqContractDetails(reqId2, optionContract.ToIbContract());
-            
+                                    false, new List<TagValue>());
         }
-      
+        ///// <summary>
+        ///// handle all received ContractDetails and make decision to request the entire options.
+        ///// </summary>
+        ///// <param name="requestId"></param>
+        ///// <param name="contractDetails"></param>
+        //private void HandlerOnContractDetailsMessage(int requestId, ContractDetails contractDetails)
+        //{
+        //    var contractBase = contractDetails.Summary.ToContract();
+
+        //    //if (_contractToRequestIds.ContainsKey(contractBase))
+        //    //    return;
+
+        //    _contractToRequestIds[contractBase] = requestId;
+        //    int reqId = RequestId;
+        //    if (contractBase.SecurityType != SecurityType.Option)
+        //    {//Get market data for main securities:
+        //        _clientSocket.reqMktData(reqId, contractDetails.Summary,
+        //            "100,225,233", false, new List<TagValue>());
+        //        _handler.RegisterContract(reqId, contractBase);
+        //        return;
+        //    }
+        //    if (OptionToLoadParametersDic == null)
+        //        return;
+
+        //    OptionToLoadParameters optionToLoadParameters;
+        //    lock (OptionToLoadParametersDic)
+        //    {
+        //        optionToLoadParameters = OptionToLoadParametersDic[contractBase.Symbol];
+        //    }
+
+        //    var optionContractOrginal = (OptionContract)contractBase;
+
+        //    if (optionToLoadParameters.IsOptionWithinLoadBoundaries(optionContractOrginal) == false)
+        //        return;
+        //    //request market data for the current option:
+        //    _clientSocket.reqMktData(reqId, contractDetails.Summary, "100,225,233",
+        //        false, new List<TagValue>());
+
+        //    optionToLoadParameters.IncreamentRequestOptionMarketDataCounter();
+        //    _handler.RegisterContract(reqId, contractBase);
+
+        //    Logger.DebugFormat("##Request Market Data#{0}:{1}==>{2}", optionToLoadParameters.RequestOptionMarketDataCount,
+        //        optionContractOrginal.Symbol, optionContractOrginal.OptionKey);
+        //    //If it's option, request all session option chain:
+        //    //First: check if already exist, register it if needed:
+        //    OptionContract optionContract = optionContractOrginal.Copy();
+        //    optionContract.OptionType = EOptionType.None;
+        //    optionContract.Strike = 0;//Use zero to get all existing options contract.
+        //    if (_contractToRequestIds.ContainsKey(optionContract))
+        //    {//don't request option chain that already exist
+        //        return;
+        //    }
+        //    int reqId2 = RequestId;
+        //    _contractToRequestIds[optionContract] = reqId2;
+        //    _clientSocket.reqContractDetails(reqId2, optionContract.ToIbContract());
+
+        //}
+
         /// <summary>
         /// IB Broker return all positions with this request it has to be only one request!
         /// </summary>
