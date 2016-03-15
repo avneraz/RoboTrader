@@ -108,7 +108,6 @@ namespace TNS.BL.UnlManagers
                 return;
 
             //Request option data
-            OptionsManager.UpdateOutOfBoundaryOption(contractList);
             APIWrapper.RequestContinousContractData(contractList.Select(oc => (ContractBase) oc).ToList());
             Logger.InfoFormat("{0}.PDB send {1} contracts for not found options.", Symbol, contractList.Count);
 

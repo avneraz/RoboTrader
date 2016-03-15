@@ -22,7 +22,7 @@ namespace TNS.BL.UnlManagers
             bool result = base.HandleMessage(message);
             if (result)
                 return true;
-
+              
             switch (message.APIDataType)
             {
                 case EapiDataTypes.AccountSummaryData:
