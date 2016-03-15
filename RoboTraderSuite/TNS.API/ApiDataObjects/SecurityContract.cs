@@ -8,7 +8,7 @@ using Infra.Enum;
 
 namespace TNS.API.ApiDataObjects
 {
-    public class SecurityContract : ContractBase, ISymbolMessage
+    public class SecurityContract : ContractBase
     {
         public SecurityContract()
         {
@@ -25,7 +25,7 @@ namespace TNS.API.ApiDataObjects
             return $"{Exchange}.{Symbol}"; 
         }
 
-        public EapiDataTypes APIDataType => EapiDataTypes.SecurityContract;
+        public override EapiDataTypes APIDataType => EapiDataTypes.SecurityContract;
 
         public string GetSymbolName()
         {

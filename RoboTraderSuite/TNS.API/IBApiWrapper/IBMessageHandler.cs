@@ -125,19 +125,7 @@ namespace TNS.API.IBApiWrapper
             if (_contractWaiters.ContainsKey(reqId))
             {
                 _contractWaiters[reqId].OnContractReceived(contractDetails);
-                return;
-            }
-
-            if (!ManagedSecurityList.Any(cb => cb.SecType == contractDetails.Summary.SecType
-                                               && cb.Symbol == contractDetails.Summary.Symbol))
-                return;
-
-            lock (SecurityDataDic)
-            {
-                var securityData = (SecurityData) SecurityDataDic[reqId];
-                contractDetails.UpdateSecurityData(securityData.SecurityContract);
-                Consumer.Enqueue(securityData.SecurityContract);
-            }
+            }            
         }
 
         public void contractDetailsEnd(int reqId)
@@ -539,7 +527,7 @@ namespace TNS.API.IBApiWrapper
                 }
             }
         }
-        public void RegisterContract(int requestId, ContractBase contract, ContractDetails IbContract)
+        public ContractBase RegisterContract(int requestId, ContractBase contract, ContractDetails IbContract)
         {
             lock (SecurityDataDic)
             {
@@ -552,6 +540,7 @@ namespace TNS.API.IBApiWrapper
                 securityData.SetContract(contract);
                 IbContract.UpdateSecurityData(contract);
                 SecurityDataDic.Add(requestId, securityData);
+                return contract;
             }
         }
         public IEnumerable<int> GetCurrentOptionsRequestIds()

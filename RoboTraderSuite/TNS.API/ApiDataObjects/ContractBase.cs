@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.Authentication;
 using IBApi;
+using Infra.Enum;
 using TNS.API.IBApiWrapper;
 
 namespace TNS.API.ApiDataObjects
@@ -17,7 +18,7 @@ namespace TNS.API.ApiDataObjects
     /// <summary>
     /// Contains data about: ## Symbol, SecurityType, Currency and Exchange. ##
     /// </summary>
-    public abstract class ContractBase
+    public abstract class ContractBase : ISymbolMessage
     {
         protected ContractBase()
         {
@@ -104,6 +105,16 @@ namespace TNS.API.ApiDataObjects
         public DateTime StartTradingTimeLocal { get; set; }
         public DateTime EndTradingTime { get; set; }
         public DateTime EndTradingTimeLocal { get; set; }
+        public abstract EapiDataTypes APIDataType { get; }
+        public string GetSymbolName()
+        {
+            return Symbol;
+        }
+
+        public ContractBase GetContract()
+        {
+            return this;
+        }
     }
 
  

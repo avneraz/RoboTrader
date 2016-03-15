@@ -94,5 +94,7 @@ namespace TNS.API.ApiDataObjects
 			return base.GetHashCode() + Expiry.GetHashCode() + OptionType.GetHashCode()
 				   + Strike.GetHashCode();
 		}
-	}
+
+        public override EapiDataTypes APIDataType => EapiDataTypes.OptionContract;
+    }
 }
