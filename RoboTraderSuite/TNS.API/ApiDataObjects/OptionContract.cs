@@ -36,9 +36,21 @@ namespace TNS.API.ApiDataObjects
 		public EOptionType OptionType { get; set; }
 		public int Multiplier { get; set; }
 
-       
+	    private string _optionKey;
 
-		public string OptionKey => $"{Expiry}.{OptionType}.{Strike}";
+	    public string OptionKey
+	    {
+            //this performance tweak is actually important, or else
+            //the UIDataBroker don't work well
+	        get
+	        {
+	            if (_optionKey == null)
+	            {
+	                _optionKey = $"{Expiry}.{OptionType}.{Strike}";
+	            }
+                return _optionKey;
+            }
+	    }
 		public override string GetUniqueIdentifier()
 		{
 			return $"{Exchange}.{Symbol}.{Expiry}.{OptionType}.{Strike}"; ;

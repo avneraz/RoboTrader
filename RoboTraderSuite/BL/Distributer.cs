@@ -170,7 +170,7 @@ namespace TNS.BL
                 case EapiDataTypes.OptionData:
                 case EapiDataTypes.AccountSummaryData:
                 case EapiDataTypes.SecurityData:
-                    UIDataBroker.Enqueue(message);
+                    UIDataBroker.Enqueue(message, false);
                     break;
 
             }
