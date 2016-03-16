@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="AccountManager.cs" />
     <Compile Include="Analysis\BnSCalcHelpper.cs" />
+    <Compile Include="Analysis\OptionsRanker.cs" />
     <Compile Include="AppManager.cs" />
     <Compile Include="DataObjects\BnSCalculationData.cs" />
     <Compile Include="DataObjects\TradingTimeEvent.cs" />
