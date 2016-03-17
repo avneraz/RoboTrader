@@ -54,7 +54,7 @@ namespace Infra.Bus
                     }
                     else
                     {
-                        if (_queue.Count > 100 && _queue.Count % 100 == 0)
+                        if (_queue.Count > 300 && _queue.Count % 300 == 0)
                             Debug.Print($"Items in queue for {ThreadName} are : {_queue.Count}");
                         HandleMessage(message);
                     }
