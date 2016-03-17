@@ -100,6 +100,7 @@ namespace DAL
             Id(x => x.Id).Column("Id").GeneratedBy.GuidComb();
             Map(c => c.AverageCost);
             Map(c => c.Position);
+            Map(c => c.LastUpdate);
         }
     }
     public class OptionPositionDataMapping : SubclassMap<OptionsPositionData>
