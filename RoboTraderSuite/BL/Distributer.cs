@@ -90,6 +90,14 @@ namespace TNS.BL
                     _dbWriter.Enqueue(message, false);
                     break;
                 case EapiDataTypes.PositionData:
+                    var posData = (OptionsPositionData) message;
+                    //in case that it was handled already, dont handle it agian, it can happen
+                    //becasue the PositionDataBuilder send the position data again
+                    if (posData != null && posData.HandledByPositionDataBuilder)
+                        break;
+                    PropagateMessageToAdequateUnlManager(message);
+                    _dbWriter.Enqueue(message, false);
+                    break;
                 case EapiDataTypes.OrderStatus:
                 case EapiDataTypes.OrderData:
                 case EapiDataTypes.SecurityContract:
