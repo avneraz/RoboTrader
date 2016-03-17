@@ -4,6 +4,7 @@ using System.Diagnostics;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using Infra.Bus;
+using Infra.Enum;
 using log4net;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
@@ -54,7 +55,7 @@ namespace DAL
         [MessageHandler]
         protected void HandleOptionsPositionData(OptionsPositionData data)
         {
-            HandleSymbolData<OptionContract>(data);
+            HandleSymbolData<OptionContract>(data, false);
         }
 
         [MessageHandler]
@@ -94,9 +95,10 @@ namespace DAL
                 }
             }
         }
-        protected void HandleSymbolData<T>(ISymbolMessage data)
+        protected void HandleSymbolData<T>(ISymbolMessage data, bool checkWorkingTime=true)
         {
-            if (data.GetContract().IsNowWorkingTime)
+            //ATM position don't have working time data
+            if (data.GetContract().IsNowWorkingTime || !checkWorkingTime)
             {
                 SaveContractDetailsIfNeeded<T>(data.GetContract());
                 _aggregator[data.GetContract().GetUniqueIdentifier()] = data;
