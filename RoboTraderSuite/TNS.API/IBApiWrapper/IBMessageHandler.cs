@@ -14,8 +14,19 @@ using Infra.Extensions.ArrayExtensions;
 
 namespace TNS.API.IBApiWrapper
 {
-   
-    
+
+    class SecuirtyDataWrapper
+    {
+        public BaseSecurityData Data { get; set; }
+        public bool UpdatedSinceLastPubish { get; set; }
+
+        public SecuirtyDataWrapper(BaseSecurityData data)
+        {
+            Data = data;
+            UpdatedSinceLastPubish = true;
+        }
+
+    }
     class IBMessageHandler : EWrapper
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(IBMessageHandler));
@@ -39,17 +50,17 @@ namespace TNS.API.IBApiWrapper
 
         public IBMessageHandler(IBaseLogic consumer)
         {
-            SecurityDataDic = new Dictionary<int, BaseSecurityData>();
+            SecurityDataDic = new Dictionary<int, SecuirtyDataWrapper>();
             OrderStatusDic = new Dictionary<int, IBOrderStatusWrapper>();
             AccountSummary = new AccountSummaryData();
             Consumer = consumer;
             ManagedSecurityList = new List<Contract>();
-            GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(1), PublishSecurities, true);
+            GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(3), PublishSecurities, true);
             _contractWaiters = new Dictionary<int, ContractDetailsWaiter>();
         }
 
         private Dictionary<int, IBOrderStatusWrapper> OrderStatusDic { get; }
-        private Dictionary<int, BaseSecurityData> SecurityDataDic { get; }
+        private Dictionary<int, SecuirtyDataWrapper> SecurityDataDic { get; }
         private IBaseLogic Consumer { get; }
         private AccountSummaryData AccountSummary { get; }
         /// <summary>
@@ -182,7 +193,7 @@ namespace TNS.API.IBApiWrapper
                         if (SecurityDataDic.ContainsKey(requestId))
                         {
                             Logger.Alert($"Request Id({requestId}) Not found. " + 
-                                        $" {SecurityDataDic[requestId].GetContract()}");
+                                        $" {SecurityDataDic[requestId].Data.GetContract()}");
                             
                         } 
                     }
@@ -241,7 +252,8 @@ namespace TNS.API.IBApiWrapper
         {
             lock (SecurityDataDic)
             {
-                var securityData = SecurityDataDic[requestId];
+                var wrapper = SecurityDataDic[requestId];
+                var securityData = wrapper.Data;
                 switch (field)
                 {
                     case TickType.BID: //1
@@ -271,7 +283,7 @@ namespace TNS.API.IBApiWrapper
                         return;
                 }
                 securityData.LastUpdate = DateTime.Now;
-
+                wrapper.UpdatedSinceLastPubish = true;
                 //SetValueForTesting(securityData);
             }
         }
@@ -290,7 +302,8 @@ namespace TNS.API.IBApiWrapper
         {
             lock (SecurityDataDic)
             {
-                var securityData = SecurityDataDic[tickerId];
+                var wrapper = SecurityDataDic[tickerId];
+                var securityData = wrapper.Data;
                 switch (field)
                 {
                     case TickType.ASK_SIZE:
@@ -308,6 +321,7 @@ namespace TNS.API.IBApiWrapper
                         return;
                 }
                 securityData.LastUpdate = DateTime.Now;
+                wrapper.UpdatedSinceLastPubish = true;
             }
         }
         public void tickOptionComputation(int tickerId, int field, 
@@ -317,7 +331,8 @@ namespace TNS.API.IBApiWrapper
             lock (SecurityDataDic)
 
             {
-                var optionData = SecurityDataDic[tickerId] as OptionData;
+                var wrapper = SecurityDataDic[tickerId]; 
+                var optionData = wrapper.Data as OptionData;
                 if (impliedVolatility < LARGE_NUBMER)//Filter big long number
                 {
                     optionData.ImpliedVolatility = impliedVolatility;
@@ -354,6 +369,7 @@ namespace TNS.API.IBApiWrapper
                         return;
                 }
                 optionData.LastUpdate = DateTime.Now;
+                wrapper.UpdatedSinceLastPubish = true;
                 //filter defected values coming from IB
                 if (Math.Abs(delta) < 10)
                     optionData.Delta = delta;
@@ -494,6 +510,7 @@ namespace TNS.API.IBApiWrapper
         public void position(string account, Contract contract, int pos, double avgCost)
         {
             var posData = PositionDataFactory.CreatePoisitionData(contract.ToContract(), pos, avgCost);
+            posData.LastUpdate = DateTime.Now;
             Consumer.Enqueue(posData);
         }
 
@@ -521,10 +538,12 @@ namespace TNS.API.IBApiWrapper
         {
             lock (SecurityDataDic)
             {
-                foreach (var securityData in SecurityDataDic.Values)
-                {
-                    Consumer.Enqueue(securityData);
-                }
+                SecurityDataDic.Where(a=> a.Value.UpdatedSinceLastPubish).
+                    ForEach(a =>
+                    {
+                        Consumer.Enqueue(a.Value.Data);
+                        a.Value.UpdatedSinceLastPubish = false;
+                    });
             }
         }
         public ContractBase RegisterContract(int requestId, ContractBase contract, ContractDetails IbContract)
@@ -539,7 +558,7 @@ namespace TNS.API.IBApiWrapper
                     securityData = new SecurityData();
                 securityData.SetContract(contract);
                 IbContract.UpdateSecurityData(contract);
-                SecurityDataDic.Add(requestId, securityData);
+                SecurityDataDic.Add(requestId, new SecuirtyDataWrapper(securityData));
                 return contract;
             }
         }
