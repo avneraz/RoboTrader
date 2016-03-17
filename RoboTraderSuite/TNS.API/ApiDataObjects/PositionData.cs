@@ -26,6 +26,7 @@ namespace TNS.API.ApiDataObjects
         public abstract void SetContract(ContractBase contract);
         public int Position { get; set; }
         public double AverageCost { get; set; }
+        public DateTime LastUpdate { get; set; }
         /// <summary>
         /// Contains the associate OptionData object reside on OptionManager
         /// </summary>
