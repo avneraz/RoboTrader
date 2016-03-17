@@ -17,21 +17,31 @@ namespace DAL
         #region Singleton stuff
         static DBSessionFactory() { }
         private static DBSessionFactory _instance = new DBSessionFactory();
+        private readonly FluentConfiguration _configuration;
         public static DBSessionFactory Instance { get { return _instance; } }
         #endregion
 
         private DBSessionFactory()
         {
             var conString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
-            var configuration = Fluently.Configure()
+            _configuration = Fluently.Configure()
                 .Database(PostgreSQLConfiguration.PostgreSQL82.ConnectionString(conString))
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<OptionDataMapping>()
                     .Conventions.Add(FluentNHibernate.Conventions.Helpers.DefaultLazy.Never()))
                 .ExposeConfiguration(TreatConfiguration);
+           
+            _sessionFactory = _configuration.BuildSessionFactory();
+        }
 
-            //var exporter = new SchemaExport(_configuration);
-            //exporter.Execute(true, true, false);
-            _sessionFactory = configuration.BuildSessionFactory();
+        /// <summary>
+        /// This method deletes all the data and create the scheme again!
+        /// </summary>
+        public void DeleteDataAndCreateSchemeAgain()
+        {
+            
+            var exporter = new SchemaExport(_configuration.BuildConfiguration());
+            exporter.Execute(true, true, false);
+
         }
 
         protected virtual void TreatConfiguration(NHibernate.Cfg.Configuration configuration)
