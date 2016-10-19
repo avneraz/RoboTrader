@@ -25,9 +25,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UILogic", "UILogic\UILogic.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazboTrader", "RazboTrader\RazboTrader.csproj", "{FA4D7C7D-7735-4C64-AD52-2C3D4389E87C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLTests", "BLTests\BLTests.csproj", "{F50EEB06-A300-4215-AB2C-6552214FFA16}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FB376766-E08D-4F9F-8D7A-4EFB2D8C304B}"
+	ProjectSection(SolutionItems) = preProject
+		Performance1.psess = Performance1.psess
+	EndProjectSection
 EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
@@ -215,22 +221,6 @@ Global
 		{FA4D7C7D-7735-4C64-AD52-2C3D4389E87C}.Release|x64.Build.0 = Release|Any CPU
 		{FA4D7C7D-7735-4C64-AD52-2C3D4389E87C}.Release|x86.ActiveCfg = Release|Any CPU
 		{FA4D7C7D-7735-4C64-AD52-2C3D4389E87C}.Release|x86.Build.0 = Release|Any CPU
-		{F50EEB06-A300-4215-AB2C-6552214FFA16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F50EEB06-A300-4215-AB2C-6552214FFA16}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F50EEB06-A300-4215-AB2C-6552214FFA16}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{F50EEB06-A300-4215-AB2C-6552214FFA16}.Debug|ARM.Build.0 = Debug|Any CPU
-		{F50EEB06-A300-4215-AB2C-6552214FFA16}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{F50EEB06-A300-4215-AB2C-6552214FFA16}.Debug|x64.Build.0 = Debug|Any CPU
-		{F50EEB06-A300-4215-AB2C-6552214FFA16}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F50EEB06-A300-4215-AB2C-6552214FFA16}.Debug|x86.Build.0 = Debug|Any CPU
-		{F50EEB06-A300-4215-AB2C-6552214FFA16}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F50EEB06-A300-4215-AB2C-6552214FFA16}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F50EEB06-A300-4215-AB2C-6552214FFA16}.Release|ARM.ActiveCfg = Release|Any CPU
-		{F50EEB06-A300-4215-AB2C-6552214FFA16}.Release|ARM.Build.0 = Release|Any CPU
-		{F50EEB06-A300-4215-AB2C-6552214FFA16}.Release|x64.ActiveCfg = Release|Any CPU
-		{F50EEB06-A300-4215-AB2C-6552214FFA16}.Release|x64.Build.0 = Release|Any CPU
-		{F50EEB06-A300-4215-AB2C-6552214FFA16}.Release|x86.ActiveCfg = Release|Any CPU
-		{F50EEB06-A300-4215-AB2C-6552214FFA16}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
