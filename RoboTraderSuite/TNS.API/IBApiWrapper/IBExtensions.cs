@@ -128,6 +128,65 @@ namespace TNS.API.IBApiWrapper
 
         public static void UpdateSecurityData(this ContractDetails contractDetails, ContractBase securityContract)
         {
+            //LiquidHours="20150427:0930-1600;20150428:0930-1600" 
+            //"20090507:0700-1830,1830-2330;20090508:CLOSED." "20150503:CLOSED;20150504:0930-1600"
+            //TimeZoneId="EST5EDT"
+
+            string liquidHoursStr = contractDetails.LiquidHours;
+            if (string.IsNullOrEmpty(liquidHoursStr))
+            {
+                Debug.Assert(false, "Problem with AAPLContractDetailsData " +
+                                    "liquidHoursStr is null or empty!");
+            }
+            //For testing only:
+            //liquidHoursStr = "20150624:0141-0600;20150600:0930-1600";//For Testing only
+            string[] workingDays = liquidHoursStr.Split(';');
+
+            //Eastern Standard Time
+            TimeZoneInfo ist = TimeZoneInfo.FindSystemTimeZoneById("Israel Standard Time");
+            //Israel Standard Time
+            TimeZoneInfo est = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+            //Find next working day/time:
+            var nextWorkingDayItem = -1;
+            string closedStr = "CLOSED";
+            while (closedStr == "CLOSED")
+            {
+                nextWorkingDayItem++;
+                closedStr = workingDays[nextWorkingDayItem].Substring(9, 6);
+            }
+            string stringToParse = workingDays[nextWorkingDayItem];
+
+            securityContract.NextWorkingTime = DateTime.ParseExact(stringToParse.Substring(0, 13),//Update securityContract object
+                "yyyyMMdd:HHmm", CultureInfo.CurrentCulture, DateTimeStyles.None);
+
+            securityContract.StartTradingTime = securityContract.NextWorkingTime;
+
+            securityContract.StartTradingTimeLocal = TimeZoneInfo.ConvertTime //Update securityContract object
+                (securityContract.StartTradingTime, est, ist);
+
+            securityContract.NextWorkingTime = TimeZoneInfo.ConvertTime//Update securityContract object
+                (securityContract.NextWorkingTime, est, ist);
+
+            //handle the different time between local time and exchange time:
+            securityContract.IsWorkingDay = securityContract.NextWorkingTime.Date == DateTime.Today;//Update securityContract object
+
+            // Else today is working day:
+            
+            var endTimeStr = stringToParse.Substring(0, 8) + " " + stringToParse.Substring(14, 4);
+            securityContract.EndTradingTime = DateTime.ParseExact(endTimeStr, "yyyyMMdd HHmm",//Update securityContract object
+                CultureInfo.CurrentCulture, DateTimeStyles.None);
+            securityContract.EndTradingTimeLocal = TimeZoneInfo.ConvertTime//Update securityContract object
+                (securityContract.EndTradingTime, est, ist);
+            
+            var msg = securityContract.IsWorkingDay == false ? 
+                $"Today is not workingDay. NextWorkingTime={securityContract.NextWorkingTime}" : 
+                $"Today is workingDay! StartTradingTime={securityContract.StartTradingTimeLocal}, EndTradingTime:{securityContract.EndTradingTimeLocal}. ";
+
+            Logger.Info(msg);
+        }
+
+        public static void UpdateSecurityDataOld(this ContractDetails contractDetails, ContractBase securityContract)
+        {
         
             //LiquidHours="20150427:0930-1600;20150428:0930-1600" 
             //"20090507:0700-1830,1830-2330;20090508:CLOSED." "20150503:CLOSED;20150504:0930-1600"
@@ -150,16 +209,22 @@ namespace TNS.API.IBApiWrapper
 
             string closedStr = workingDays[0].Substring(9, 6);
 
-            
+            //Check for the case tommorow is holiday:
+            string tommorowClosed = workingDays[1].Substring(9, 6);
 
-            securityContract.NextWorkingTime = DateTime.ParseExact(workingDays[1].Substring(0, 13),
+            bool isTommorowHoliday = tommorowClosed.Equals("CLOSED");
+
+            var nextDayItem = 1;
+            if (isTommorowHoliday) nextDayItem = 3;//To be changed it's bug
+
+            securityContract.NextWorkingTime = DateTime.ParseExact(workingDays[nextDayItem].Substring(0, 13),//Update securityContract object
                 "yyyyMMdd:HHmm", CultureInfo.CurrentCulture, DateTimeStyles.None);
 
-            securityContract.NextWorkingTime = TimeZoneInfo.ConvertTime
+            securityContract.NextWorkingTime = TimeZoneInfo.ConvertTime//Update securityContract object
                 (securityContract.NextWorkingTime, est, ist);
             //handle the different time between local time and exchange time:
             bool nextDayIsToday = securityContract.NextWorkingTime.Date == DateTime.Today;
-            securityContract.IsWorkingDay = ((closedStr.Equals("CLOSED") == false) || (nextDayIsToday));
+            securityContract.IsWorkingDay = ((closedStr.Equals("CLOSED") == false) || (nextDayIsToday));//Update securityContract object
 
             string msg;
             if (securityContract.IsWorkingDay == false)
@@ -172,23 +237,24 @@ namespace TNS.API.IBApiWrapper
 
             var stringToParse = nextDayIsToday ? workingDays[1] : workingDays[0];
 
-            securityContract.StartTradingTime = DateTime.ParseExact(stringToParse.Substring(0, 13),
+            securityContract.StartTradingTime = DateTime.ParseExact(stringToParse.Substring(0, 13),//Update securityContract object
                 "yyyyMMdd:HHmm",CultureInfo.CurrentCulture, DateTimeStyles.None);
 
-            securityContract.StartTradingTimeLocal = TimeZoneInfo.ConvertTime
+            securityContract.StartTradingTimeLocal = TimeZoneInfo.ConvertTime //Update securityContract object
                 (securityContract.StartTradingTime, est, ist);
             //For Test:  StartTradingTimeLocal = DateTime.Now.AddMinutes(1);
             string endTimeStr = stringToParse.Substring(0, 8) + " " + stringToParse.Substring(14, 4);
-            securityContract.EndTradingTime = DateTime.ParseExact(endTimeStr, "yyyyMMdd HHmm",
+            securityContract.EndTradingTime = DateTime.ParseExact(endTimeStr, "yyyyMMdd HHmm",//Update securityContract object
                 CultureInfo.CurrentCulture, DateTimeStyles.None);
-            securityContract.EndTradingTimeLocal = TimeZoneInfo.ConvertTime
+            securityContract.EndTradingTimeLocal = TimeZoneInfo.ConvertTime//Update securityContract object
                 (securityContract.EndTradingTime, est, ist);
 
             //For Testing: securityContract.StartTradingTimeLocal = DateTime.Now.AddMinutes(1);
             //For Testing: securityContract.EndTradingTimeLocal = DateTime.Now.AddMinutes(3);
 
-            msg = string.Format("Today is workingDay! StartTradingTime={0}, EndTradingTime:{1}. ",
-                securityContract.StartTradingTimeLocal, securityContract.EndTradingTimeLocal);
+            msg =
+                $"Today is workingDay! StartTradingTime={securityContract.StartTradingTimeLocal}, EndTradingTime:{securityContract.EndTradingTimeLocal}. ";
+            
             Logger.Debug(msg);
            
         }

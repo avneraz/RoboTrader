@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.grdPositionData = new DevExpress.XtraGrid.GridControl();
-            this.optionsPositionDataBindingSource = new System.Windows.Forms.BindingSource();
+            this.optionsPositionDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.grdViewPositionData = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colDescription = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colExpiry = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -68,13 +69,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lblNetLiquidation = new System.Windows.Forms.Label();
-            this.accountSummaryDataBindingSource = new System.Windows.Forms.BindingSource();
+            this.accountSummaryDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.lblMargin = new System.Windows.Forms.Label();
             this.grpAccountSummary = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.lblExcessLiq = new System.Windows.Forms.Label();
             this.lblPnL = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.grdUnLTradingData = new DevExpress.XtraGrid.GridControl();
-            this.unlTradingDataBindingSource = new System.Windows.Forms.BindingSource();
+            this.unlTradingDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.gridViewUnLTradingData = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colAPIDataType = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colSymbol = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -104,7 +107,7 @@
             this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.grdMainSecurities = new DevExpress.XtraGrid.GridControl();
-            this.securityDataBindingSource = new System.Windows.Forms.BindingSource();
+            this.securityDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.grdViewMainSecurities = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colContract = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -129,7 +132,7 @@
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControl6 = new DevExpress.XtraBars.BarDockControl();
             this.barDockControl7 = new DevExpress.XtraBars.BarDockControl();
-            this.barManager1 = new DevExpress.XtraBars.BarManager();
+            this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.bar1 = new DevExpress.XtraBars.Bar();
             this.bar2 = new DevExpress.XtraBars.Bar();
             this.bar3 = new DevExpress.XtraBars.Bar();
@@ -140,7 +143,7 @@
             this.iSellOption = new DevExpress.XtraBars.BarButtonItem();
             this.iBuyOption = new DevExpress.XtraBars.BarButtonItem();
             this.iOptionPicker = new DevExpress.XtraBars.BarButtonItem();
-            this.popupMenu1 = new DevExpress.XtraBars.PopupMenu();
+            this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.grdPositionData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.optionsPositionDataBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdViewPositionData)).BeginInit();
@@ -769,7 +772,7 @@
             // 
             // btnLoadData
             // 
-            this.btnLoadData.Location = new System.Drawing.Point(20, 101);
+            this.btnLoadData.Location = new System.Drawing.Point(72, 21);
             this.btnLoadData.Name = "btnLoadData";
             this.btnLoadData.Size = new System.Drawing.Size(94, 25);
             this.btnLoadData.TabIndex = 2;
@@ -793,7 +796,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Green;
-            this.label2.Location = new System.Drawing.Point(6, 51);
+            this.label2.Location = new System.Drawing.Point(6, 42);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(56, 15);
             this.label2.TabIndex = 3;
@@ -823,7 +826,7 @@
             this.lblMargin.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.accountSummaryDataBindingSource, "FullMaintMarginReq", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "N0"));
             this.lblMargin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMargin.ForeColor = System.Drawing.Color.Green;
-            this.lblMargin.Location = new System.Drawing.Point(120, 51);
+            this.lblMargin.Location = new System.Drawing.Point(120, 42);
             this.lblMargin.Name = "lblMargin";
             this.lblMargin.Size = new System.Drawing.Size(59, 15);
             this.lblMargin.TabIndex = 3;
@@ -834,9 +837,11 @@
             this.grpAccountSummary.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.grpAccountSummary.Controls.Add(this.label4);
             this.grpAccountSummary.Controls.Add(this.label1);
+            this.grpAccountSummary.Controls.Add(this.lblExcessLiq);
             this.grpAccountSummary.Controls.Add(this.lblMargin);
             this.grpAccountSummary.Controls.Add(this.lblPnL);
             this.grpAccountSummary.Controls.Add(this.lblNetLiquidation);
+            this.grpAccountSummary.Controls.Add(this.label3);
             this.grpAccountSummary.Controls.Add(this.label2);
             this.grpAccountSummary.Location = new System.Drawing.Point(1015, 0);
             this.grpAccountSummary.Name = "grpAccountSummary";
@@ -850,11 +855,24 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Green;
-            this.label4.Location = new System.Drawing.Point(6, 84);
+            this.label4.Location = new System.Drawing.Point(6, 90);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(36, 15);
             this.label4.TabIndex = 3;
             this.label4.Text = "PnL:";
+            // 
+            // lblExcessLiq
+            // 
+            this.lblExcessLiq.AutoSize = true;
+            this.lblExcessLiq.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.lblExcessLiq.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.accountSummaryDataBindingSource, "ExcessLiquidity", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "N0"));
+            this.lblExcessLiq.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblExcessLiq.ForeColor = System.Drawing.Color.Green;
+            this.lblExcessLiq.Location = new System.Drawing.Point(120, 67);
+            this.lblExcessLiq.Name = "lblExcessLiq";
+            this.lblExcessLiq.Size = new System.Drawing.Size(51, 15);
+            this.lblExcessLiq.TabIndex = 3;
+            this.lblExcessLiq.Text = "30,000";
             // 
             // lblPnL
             // 
@@ -863,11 +881,22 @@
             this.lblPnL.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.accountSummaryDataBindingSource, "PnL", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "N0"));
             this.lblPnL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPnL.ForeColor = System.Drawing.Color.Green;
-            this.lblPnL.Location = new System.Drawing.Point(120, 84);
+            this.lblPnL.Location = new System.Drawing.Point(120, 90);
             this.lblPnL.Name = "lblPnL";
             this.lblPnL.Size = new System.Drawing.Size(39, 15);
             this.lblPnL.TabIndex = 3;
             this.lblPnL.Text = "9999";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.Green;
+            this.label3.Location = new System.Drawing.Point(6, 67);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(80, 15);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Excess Liq:";
             // 
             // grdUnLTradingData
             // 
@@ -1241,7 +1270,6 @@
             this.splitContainerControl1.Horizontal = false;
             this.splitContainerControl1.Location = new System.Drawing.Point(0, 49);
             this.splitContainerControl1.Name = "splitContainerControl1";
-            this.splitContainerControl1.Panel1.Controls.Add(this.btnLoadData);
             this.splitContainerControl1.Panel1.Controls.Add(this.grdUnLTradingData);
             this.splitContainerControl1.Panel1.Controls.Add(this.grpAccountSummary);
             this.splitContainerControl1.Panel1.Text = "Panel1";
@@ -1581,6 +1609,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.Controls.Add(this.btnLoadData);
             this.Controls.Add(this.splitContainerControl1);
             this.Controls.Add(this.barDockControl9);
             this.Controls.Add(this.barDockControl10);
@@ -1729,5 +1758,7 @@
         private DevExpress.XtraBars.BarButtonItem iBuyOption;
         private DevExpress.XtraBars.PopupMenu popupMenu1;
         private DevExpress.XtraBars.BarButtonItem iOptionPicker;
+        private System.Windows.Forms.Label lblExcessLiq;
+        private System.Windows.Forms.Label label3;
     }
 }

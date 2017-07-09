@@ -22,7 +22,15 @@ namespace TNS.Controls
 
         private void btnLoadData_Click(object sender, EventArgs e)
         {
-            SetAndUpdate();
+            try
+            {
+                SetAndUpdate ();
+
+    }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void SetAndUpdate()

@@ -147,11 +147,11 @@ namespace TNS.BL
                 {
                     AAPLHighLoadingStrike = 100,
                     AAPLLowLoadingStrike = 200,
-                    AAPLSessionsToLoad = "20150821;20151016;20160115",
+                    AAPLSessionsToLoad = "20170817;20151016;20160115",
                     HighStrikePercentage = 12,
                     LowStrikePercentage = 12,
-                    MinimumDaysToExpiration = 1,
-                    MaxmumDaysToExpiration = 45,
+                    MinimumDaysToExpiration = 20,
+                    MaxmumDaysToExpiration = 82,
                 },
                 Trading =
                 {
@@ -164,7 +164,7 @@ namespace TNS.BL
                     OTMOffsetCall = 10,
                     UNLSymbolsList = "AAPL;MSFT",
                     RiskFreeInterestRate = 0.01,
-                    InitNetLiquidation = 159282,
+                    InitNetLiquidation = 210300,
                     OrderInterval = 1000,
                     MinPriceStep = 0.01,
 

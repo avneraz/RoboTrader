@@ -6,7 +6,6 @@ using Infra.Enum;
 using log4net;
 using TNS.API;
 using TNS.API.ApiDataObjects;
-using TNS.BL.Analysis;
 using TNS.BL.Interfaces;
 
 namespace TNS.BL.UnlManagers
@@ -40,7 +39,8 @@ namespace TNS.BL.UnlManagers
             if ((RequestOptionChainDone == false) && (message.APIDataType == EapiDataTypes.SecurityData))
             {
                 //Request detail contract only on the first time:
-                if ((MainSecurityData != null) && MainSecurityData.LastPrice > 0)
+                //if ((MainSecurityData != null) && MainSecurityData.LastPrice > 0)
+                if ((MainSecurityData != null) && !RequestOptionChainDone)
                 {
                     RequestOptionChainDone = true;
                     _optionToLoadParameters = new OptionToLoadParameters(MainSecurityData);
@@ -78,10 +78,8 @@ namespace TNS.BL.UnlManagers
 
             _lastoptionCount = OptionDataDic.Count;
             var elapsedMS = StopwatchT.ElapsedMilliseconds;
-            var msg = string.Format(
-                "OptionManager({0}), Elapsed time from connection: {1:N} ms, " +
-                "OptionDataDic.Count:{2}", Symbol, elapsedMS,
-                OptionDataDic.Count);
+            var msg = $"OptionManager({Symbol}), Elapsed time from connection: {elapsedMS:N} ms, " +
+                      $"OptionDataDic.Count:{OptionDataDic.Count}";
             Debug.WriteLine(msg);
             _logger.Warn(msg);
         }

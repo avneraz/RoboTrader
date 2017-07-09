@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Authentication;
 using IBApi;
 using Infra.Enum;
 using TNS.API.IBApiWrapper;
@@ -34,7 +33,7 @@ namespace TNS.API.ApiDataObjects
         }
         public string Symbol { get; set; }
         public SecurityType SecurityType { get; set; }
-        public string Currency { get; set; }
+        public string Currency { get; }
 
         public string Exchange { get; set; }
 
@@ -44,8 +43,8 @@ namespace TNS.API.ApiDataObjects
 
         public string Id
         {
-            get { return _id ?? (_id = GetUniqueIdentifier()); }
-            set { _id = value; }
+            get => _id ?? (_id = GetUniqueIdentifier());
+            set => _id = value;
         }
 
        
@@ -82,8 +81,11 @@ namespace TNS.API.ApiDataObjects
         {
             return Currency.GetHashCode() + SecurityType.GetHashCode()+
                 Exchange.GetHashCode() + Symbol.GetHashCode();
-        }
 
+        }
+        /* return Currency.GetHashCode() + SecurityType.GetHashCode()+
+                Exchange.GetHashCode() + Symbol.GetHashCode();
+        }*/
         /// <summary>
         /// Check if the time on local is working time for AAPL trading
         /// </summary>

@@ -27,14 +27,14 @@ namespace TNS.API.ApiDataObjects
 
         public override EapiDataTypes APIDataType => EapiDataTypes.SecurityContract;
 
-        public string GetSymbolName()
-        {
-            return base.Symbol;
-        }
+        //public string GetSymbolName()
+        //{
+        //    return base.Symbol;
+        //}
 
-        public ContractBase GetContract()
-        {
-            return this;
-        }
+        //public ContractBase GetContract()
+        //{
+        //    return this;
+        //}
     }
 }

@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using DevExpress.XtraGrid.Views.BandedGrid.Drawing;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using Infra;
 using Infra.Enum;
 using Infra.Extensions;
 using log4net;
-using log4net.Repository.Hierarchy;
 using TNS.API.ApiDataObjects;
 using TNS.BL;
 using TNS.BL.Interfaces;
 using TNS.BL.UnlManagers;
-using Infra.Extensions;
 
 namespace TNS.Controls
 {
