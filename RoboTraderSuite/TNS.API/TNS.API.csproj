@@ -60,6 +60,7 @@
     <Compile Include="ApiDataObjects\ContractBase.cs" />
     <Compile Include="ApiDataObjects\SecurityData.cs" />
     <Compile Include="ApiDataObjects\StocksPositionData.cs" />
+    <Compile Include="ApiDataObjects\TransactionData.cs" />
     <Compile Include="ApiDataObjects\UnlTradingData.cs" />
     <Compile Include="IBApiWrapper\ContractDetailsWaiter.cs" />
     <Compile Include="IBApiWrapper\IBOrderStatusWrapper.cs" />

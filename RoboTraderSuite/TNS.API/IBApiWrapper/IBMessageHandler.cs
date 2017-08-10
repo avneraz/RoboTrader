@@ -146,7 +146,7 @@ namespace TNS.API.IBApiWrapper
                 _contractWaiters[reqId].OnContractReceiveEnd();
                 _contractWaiters.Remove(reqId);
             }
-            
+
         }
         public void commissionReport(CommissionReport commissionReport)
         {
@@ -342,7 +342,7 @@ namespace TNS.API.IBApiWrapper
                 //TODO - reason for this switch case?
                 switch (field)
                 {
-                    case TickType.BID_OPTION:
+                    case TickType.BID_OPTION://10
                         price = optPrice > int.MaxValue ? -1 : optPrice;
                         if (optionData.BidPrice < 0)
                             optionData.BidPrice = price;
@@ -350,7 +350,7 @@ namespace TNS.API.IBApiWrapper
                             optionData.BidPrice = price;
 
                         break;
-                    case TickType.ASK_OPTION:
+                    case TickType.ASK_OPTION://11
                         price = optPrice > int.MaxValue ? -1 : optPrice;
                         if (optionData.AskPrice < 0)
                             optionData.AskPrice = price;
@@ -359,10 +359,10 @@ namespace TNS.API.IBApiWrapper
 
                         optionData.AskPrice = optPrice > int.MaxValue ? -1 : optPrice;
                         break;
-                    case TickType.LAST_OPTION:
+                    case TickType.LAST_OPTION://12
                         optionData.LastPrice = optPrice > int.MaxValue ? -1 : optPrice;
                         break;
-                    case TickType.MODEL_OPTION:
+                    case TickType.MODEL_OPTION://13
                         optionData.ModelPrice = optPrice > int.MaxValue ? -1 : optPrice;
                         break;
                     default:

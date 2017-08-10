@@ -39,13 +39,21 @@
             this.xtraPageOrders = new DevExpress.XtraTab.XtraTabPage();
             this.ordersView1 = new TNS.Controls.OrdersView();
             this.btnRegisterForData = new System.Windows.Forms.Button();
+            this.btnCancelOrder = new System.Windows.Forms.Button();
             this.btnSendOrder = new System.Windows.Forms.Button();
             this.xtraPageOptions = new DevExpress.XtraTab.XtraTabPage();
             this.optionsView1 = new TNS.Controls.OptionsView();
             this.xtraPageUnlDataTrading = new DevExpress.XtraTab.XtraTabPage();
             this.unlTradingView1 = new TNS.Controls.UnlTradingView();
             this.btnBnsLocal = new System.Windows.Forms.Button();
-            this.btnCancelOrder = new System.Windows.Forms.Button();
+            this.txtSymbol = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtStrike = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.txtType = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cbxSell = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.xPageAPIMessages.SuspendLayout();
@@ -109,10 +117,12 @@
             // 
             // positionsView1
             // 
+            this.positionsView1.AccountSummaryDataList = null;
             this.positionsView1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.positionsView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.positionsView1.Location = new System.Drawing.Point(0, 0);
             this.positionsView1.Name = "positionsView1";
+            this.positionsView1.OptionsDataList = null;
             this.positionsView1.Size = new System.Drawing.Size(1061, 492);
             this.positionsView1.TabIndex = 1;
             // 
@@ -134,6 +144,14 @@
             // 
             // xtraPageOrders
             // 
+            this.xtraPageOrders.Controls.Add(this.cbxSell);
+            this.xtraPageOrders.Controls.Add(this.dateTimePicker1);
+            this.xtraPageOrders.Controls.Add(this.label4);
+            this.xtraPageOrders.Controls.Add(this.label3);
+            this.xtraPageOrders.Controls.Add(this.txtType);
+            this.xtraPageOrders.Controls.Add(this.txtStrike);
+            this.xtraPageOrders.Controls.Add(this.label1);
+            this.xtraPageOrders.Controls.Add(this.txtSymbol);
             this.xtraPageOrders.Controls.Add(this.ordersView1);
             this.xtraPageOrders.Controls.Add(this.btnRegisterForData);
             this.xtraPageOrders.Controls.Add(this.btnCancelOrder);
@@ -163,9 +181,19 @@
             this.btnRegisterForData.UseVisualStyleBackColor = true;
             this.btnRegisterForData.Click += new System.EventHandler(this.btnRegisterForData_Click);
             // 
+            // btnCancelOrder
+            // 
+            this.btnCancelOrder.Location = new System.Drawing.Point(918, 14);
+            this.btnCancelOrder.Name = "btnCancelOrder";
+            this.btnCancelOrder.Size = new System.Drawing.Size(136, 23);
+            this.btnCancelOrder.TabIndex = 0;
+            this.btnCancelOrder.Text = "Cancel Selected Order";
+            this.btnCancelOrder.UseVisualStyleBackColor = true;
+            this.btnCancelOrder.Click += new System.EventHandler(this.btnCancelOrder_Click);
+            // 
             // btnSendOrder
             // 
-            this.btnSendOrder.Location = new System.Drawing.Point(217, 14);
+            this.btnSendOrder.Location = new System.Drawing.Point(119, 14);
             this.btnSendOrder.Name = "btnSendOrder";
             this.btnSendOrder.Size = new System.Drawing.Size(75, 23);
             this.btnSendOrder.TabIndex = 0;
@@ -215,15 +243,75 @@
             this.btnBnsLocal.UseVisualStyleBackColor = true;
             this.btnBnsLocal.Click += new System.EventHandler(this.btnBnsLocal_Click);
             // 
-            // btnCancelOrder
+            // txtSymbol
             // 
-            this.btnCancelOrder.Location = new System.Drawing.Point(361, 14);
-            this.btnCancelOrder.Name = "btnCancelOrder";
-            this.btnCancelOrder.Size = new System.Drawing.Size(136, 23);
-            this.btnCancelOrder.TabIndex = 0;
-            this.btnCancelOrder.Text = "Cancel Selected Order";
-            this.btnCancelOrder.UseVisualStyleBackColor = true;
-            this.btnCancelOrder.Click += new System.EventHandler(this.btnCancelOrder_Click);
+            this.txtSymbol.Location = new System.Drawing.Point(271, 15);
+            this.txtSymbol.Name = "txtSymbol";
+            this.txtSymbol.Size = new System.Drawing.Size(100, 21);
+            this.txtSymbol.TabIndex = 2;
+            this.txtSymbol.Text = "AAPL";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(220, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(45, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Symbol:";
+            // 
+            // txtStrike
+            // 
+            this.txtStrike.Location = new System.Drawing.Point(425, 16);
+            this.txtStrike.Name = "txtStrike";
+            this.txtStrike.Size = new System.Drawing.Size(100, 21);
+            this.txtStrike.TabIndex = 2;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(390, 19);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(38, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Strike:";
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(712, 15);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 21);
+            this.dateTimePicker1.TabIndex = 4;
+            this.dateTimePicker1.Value = new System.DateTime(2017, 8, 18, 0, 0, 0, 0);
+            // 
+            // txtType
+            // 
+            this.txtType.Location = new System.Drawing.Point(578, 14);
+            this.txtType.Name = "txtType";
+            this.txtType.Size = new System.Drawing.Size(35, 21);
+            this.txtType.TabIndex = 2;
+            this.txtType.Text = "CALL";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(534, 18);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 13);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Type:";
+            // 
+            // cbxSell
+            // 
+            this.cbxSell.AutoSize = true;
+            this.cbxSell.Checked = true;
+            this.cbxSell.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbxSell.Location = new System.Drawing.Point(629, 18);
+            this.cbxSell.Name = "cbxSell";
+            this.cbxSell.Size = new System.Drawing.Size(42, 17);
+            this.cbxSell.TabIndex = 5;
+            this.cbxSell.Text = "Sell";
+            this.cbxSell.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -243,6 +331,7 @@
             this.xPagePositions.PerformLayout();
             this.xtraPageMainSecurities.ResumeLayout(false);
             this.xtraPageOrders.ResumeLayout(false);
+            this.xtraPageOrders.PerformLayout();
             this.xtraPageOptions.ResumeLayout(false);
             this.xtraPageUnlDataTrading.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -269,6 +358,14 @@
         private TNS.Controls.PositionsView positionsView1;
         private System.Windows.Forms.Button btnBnsLocal;
         private System.Windows.Forms.Button btnCancelOrder;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtType;
+        private System.Windows.Forms.TextBox txtStrike;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtSymbol;
+        private System.Windows.Forms.CheckBox cbxSell;
     }
 }
 

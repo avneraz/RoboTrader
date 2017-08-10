@@ -5,6 +5,7 @@ using Infra.Bus;
 using Infra.Enum;
 using TNS.API;
 using TNS.API.ApiDataObjects;
+using TNS.BL.DataObjects;
 using TNS.BL.Interfaces;
 
 namespace TNS.BL.UnlManagers
@@ -104,18 +105,34 @@ namespace TNS.BL.UnlManagers
         {
             OptionNegotiatorDic[orderId].CancelOrder(orderId);
         }
-        public OrderData TestTrading(bool sell)
+        public OrderData TestTrading(TradeOrderData tradeOrderData)
         {
-            string optionKey = GetOptionKey(new DateTime(2016, 3, 04), EOptionType.Put, 111);
-            //string optionKey = GetOptionKey(new DateTime(2016, 3, 04), EOptionType.Call, 119);
-            //DefaultOrderType = OrderType.MKT;
-            OrderData orderData = sell ? 
-                SellOption(UNLManager.OptionsManager.GetOptionData(optionKey), 1) : 
-                BuyOption(UNLManager.OptionsManager.GetOptionData(optionKey), 1);
-            DefaultOrderType = OrderType.LMT;
+            string optionKey = GetOptionKey(tradeOrderData.ExpiryDate, tradeOrderData.OptionType, tradeOrderData.Strike);
+            OptionData optionData = UNLManager.OptionsManager.GetOptionData(optionKey);
+            if(optionData == null)
+                throw new Exception("The Option doesn't exist in the Option list!!!");
+
+            OrderData orderData = tradeOrderData.OrderAction == OrderAction.SELL ? 
+                SellOption(optionData, 1) : 
+                BuyOption(optionData, 1);
+
+            DefaultOrderType = tradeOrderData.OrderType;
             return orderData;
 
         }
+        //public OrderData TestTrading(bool sell)
+        //{
+        //    string optionKey = GetOptionKey(new DateTime(2017, 08, 18), EOptionType.Put, 152.5);
+        //    //string optionKey = GetOptionKey(new DateTime(2017, 08, 18), EOptionType.Call, 150);
+        //    //string optionKey = GetOptionKey(new DateTime(2016, 3, 04), EOptionType.Call, 119);
+        //    //DefaultOrderType = OrderType.MKT;
+        //    OrderData orderData = sell ?
+        //        SellOption(UNLManager.OptionsManager.GetOptionData(optionKey), 1) :
+        //        BuyOption(UNLManager.OptionsManager.GetOptionData(optionKey), 1);
+        //    DefaultOrderType = OrderType.LMT;
+        //    return orderData;
+
+        //}
         public string GetOptionKey(DateTime expiry, EOptionType optionType, double strike)
         {
             return $"{expiry}.{optionType}.{strike}";

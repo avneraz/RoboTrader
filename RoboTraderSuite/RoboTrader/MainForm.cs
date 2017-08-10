@@ -98,6 +98,7 @@ namespace TNS.RoboTrader
             //ordersView1.SetOrderStatusDataDic(UIDataBroker.OrderStatusDataDic);
             ordersView1.SetOrderStatusDataList(UIDataBroker.OrderStatusDataList);
             optionsView1.SetOptionDataList(UIDataBroker.OptionsDataList);
+            mainSecuritiesView1.SetManagedSecuritiesData(UIDataBroker.SecurityDataList);
         }
 
         private bool _startApplicationMethodDone;

@@ -49,6 +49,13 @@ namespace IBApi
                     ProcessIncomingMessage(incomingMessage);
                 }
             }
+            catch (System.IO.EndOfStreamException eosEx)
+            {
+                if (parent.IsConnected())
+                {
+                    parent.Wrapper.error(eosEx);
+                }
+            }
             catch (Exception e)
             {
                 // For when TWS is closed when the trading program open

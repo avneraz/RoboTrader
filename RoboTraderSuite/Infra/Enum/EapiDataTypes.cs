@@ -28,6 +28,7 @@ namespace Infra.Enum
         TradingTimeEvent,
         MarginData,
         UnlTradingData,
-        OptionContract
+        OptionContract,
+        TransactionData,
     }
 }

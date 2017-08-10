@@ -77,6 +77,34 @@ namespace DAL
             }
         }
 
+
+        [MessageHandler]
+        protected void HandleTransactionData(TransactionData data)
+        {
+            SaveContractDetailsIfNeeded<OptionContract>(data.GetContract());
+
+            using (ITransaction transaction = _session.BeginTransaction())
+            {
+                //_session.SaveOrMerge(data, data.Id);
+                if (_session.Get<TransactionData>(data.Id) == null)
+                {
+                    _session.Save(data);
+                }
+                else
+                {
+                    _session.Merge(data);
+                }
+                try
+                {
+                    transaction.Commit();
+                }
+                catch (Exception exception)
+                {
+                    Logger.Error("Could not write to DB", exception);
+                }
+            }
+        }
+
         private void SaveContractDetailsIfNeeded<T>(ContractBase contract)
         {
             if (_session.Get<T>(contract.Id) == null)

@@ -124,7 +124,9 @@ namespace TNS.BL
                     if (_unlManagersDic.ContainsKey(marginData.Symbol))
                         _unlManagersDic[marginData.Symbol].Enqueue(marginData,false);
                     break;
-                
+                case EapiDataTypes.TransactionData:
+                    _dbWriter.Enqueue(message, false);
+                    break;
             }
         }
 

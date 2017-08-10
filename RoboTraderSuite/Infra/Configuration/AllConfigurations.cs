@@ -48,6 +48,11 @@ namespace Infra
         public class TradingConfiguration
         {
             /// <summary>
+            /// The max offset of the retrieving options from the "On The Money - 50" Delta.
+            /// Only options between will be loaded.(If offset = 20,the only options with delta betwee 30 to 70 will be loaded!)
+            /// </summary>
+            public int AllowedDeltaOffset { get; set; }
+            /// <summary>
             /// Contains all the UNL symbols that taking part in trading.e.g: "AAPL;MSFT"
             /// </summary>
             /// <value>

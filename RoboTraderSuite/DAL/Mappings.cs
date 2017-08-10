@@ -107,7 +107,7 @@ namespace DAL
     {
         public OptionPositionDataMapping()
         {
-            //References(x => x.OptionContract);
+            //References(x => x.OptionContract);C:\DevGit\robotrader\RoboTraderSuite\Infra\Configuration\
             //Table("OptionsPositions");
 
             References(x => x.OptionContract);
@@ -162,6 +162,49 @@ namespace DAL
             Map(c => c.OptionChain);
             Map(c => c.MarginMaxAllowed);
 
+        }
+    }
+
+    public class OptionDataMapper : ComponentMap<OptionData>
+    {
+        public OptionDataMapper()
+        {
+            Map(c => c.Delta);
+            Map(c => c.Gamma);
+            Map(c => c.Vega);
+            Map(c => c.Theta);
+            Map(c => c.ImpliedVolatility);
+            Map(c => c.ModelPrice);
+            Map(c => c.AskPrice);
+            Map(c => c.BidPrice);
+            Map(c => c.UnderlinePrice);
+            //Map(c => c.OptionKey);
+
+        }
+    }
+    public class OrderStatusComponent : ComponentMap<OrderStatusData>
+    {
+        public OrderStatusComponent()
+        {
+            Map(x => x.OrderStatus);
+            Map(x => x.Commission);
+            Map(x => x.MaintMargin);
+            
+        }
+    }
+    class TransactionDataMapper : ClassMap<TransactionData>
+    {
+        public TransactionDataMapper()
+        {
+            Table("TransactionData");
+            Id(x => x.Id);
+            Map(c => c.OptionKey);
+            Map(c => c.TransactionTime);
+            //Map(c => c.OptionData);
+            //References(x => x.OptionData).Cascade.None();
+            Component(x => x.OptionData);
+            Component(x => x.OrderStatus);
+            Component(x => x.Order);
         }
     }
 }

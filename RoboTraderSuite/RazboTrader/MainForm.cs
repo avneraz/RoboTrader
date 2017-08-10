@@ -9,6 +9,7 @@ using Infra.PopUpMessages;
 using log4net;
 using TNS.API.ApiDataObjects;
 using TNS.BL;
+using TNS.BL.DataObjects;
 using TNS.RoboTrader;
 using UILogic;
 
@@ -98,6 +99,7 @@ namespace RazboTrader
             positionsView1.SetOptionDataList(UIDataBroker.OptionsDataList);
             ordersView1.SetOrderStatusDataList(UIDataBroker.OrderStatusDataList);
             optionsView1.SetOptionDataList(UIDataBroker.OptionsDataList);
+            mainSecuritiesView1.SetManagedSecuritiesData(UIDataBroker.SecurityDataList);
         }
 
         public List<OptionData> OptionsDataList { get; set; }
@@ -126,8 +128,18 @@ namespace RazboTrader
         {
             try
             {
-                _appManager.SendOneOrderTest("UNH", true);
-                //_appManager.SendOneOrderTest("AAPL", false);
+                //Create the object:
+                TradeOrderData tradeOrderData = new TradeOrderData()
+                {
+                    OrderType = OrderType.MKT,
+                    OptionTypeText = txtType.Text,
+                    ExpiryDate = dateTimePicker1.Value,
+                    OrderAction = cbxSell.Checked ? OrderAction.SELL : OrderAction.BUY,
+                    Strike = Convert.ToDouble(txtStrike.Text),
+                    Symbol = txtSymbol.Text
+                };
+                
+                _appManager.SendOneOrderTest(tradeOrderData);
             }
             catch (Exception ex)
             {

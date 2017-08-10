@@ -1,0 +1,970 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph DataVirtualized="True" Layout="Sugiyama" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="(@14 @15 @16 Member=(Name=SendWhatIfOrder OverloadingParameters=[@25]))" Category="CodeSchema_Method" Bounds="3333.45166666667,532.5425,128.366666666667,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="SendWhatIfOrder" Icon="CodeSchema_Method" Label="SendWhatIfOrder" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/OptionNegotiator.cs StartLineNumber=273 StartCharacterOffset=0 EndLineNumber=273 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@14 @15 @16 Member=(Name=SetCurrentLimitPrice OverloadingParameters=[@25]))" Category="CodeSchema_Method" Bounds="3158.68333333333,532.542500000001,143.903333333333,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="SetCurrentLimitPrice" Icon="CodeSchema_Method" Label="SetCurrentLimitPrice" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/OptionNegotiator.cs StartLineNumber=262 StartCharacterOffset=0 EndLineNumber=262 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@14 @15 @16 Member=(Name=SetSimulatorAccountParameters OverloadingParameters=[@18]))" Category="CodeSchema_Method" Bounds="3492.515,532.5425,206.24,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="SetSimulatorAccountParameters" Icon="CodeSchema_Method" Label="SetSimulatorAccountParameters" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/OptionNegotiator.cs StartLineNumber=43 StartCharacterOffset=0 EndLineNumber=43 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@14 @15 @16 Member=UpdateFirstAskAndBid)" Category="CodeSchema_Method" Bounds="2994.555,590.190000000001,154.16,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="UpdateFirstAskAndBid" Icon="CodeSchema_Method" Label="UpdateFirstAskAndBid" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/OptionNegotiator.cs StartLineNumber=267 StartCharacterOffset=0 EndLineNumber=267 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@14 @15 @16 Member=get_LastPriceLimit)" Category="CodeSchema_Method" Bounds="1453.23833333333,259.135,130.793333333333,25.96" CodeSchemaProperty_IsPrivate="True" CodeSchemaProperty_IsPropertyGet="True" CommonLabel="get_LastPriceLimit" Icon="CodeSchema_Method" Label="get_LastPriceLimit" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/OptionNegotiator.cs StartLineNumber=165 StartCharacterOffset=0 EndLineNumber=165 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@14 @15 @19 Member=(Name=GetOptionKey OverloadingParameters=[(@5 @17 Type=DateTime),(@28 Namespace=Infra.Enum Type=EOptionType),@25]))" Category="CodeSchema_Method" Bounds="3248.37833333333,331.055,110.513333333333,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="GetOptionKey" Icon="CodeSchema_Method" Label="GetOptionKey" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/OrdersManager.cs StartLineNumber=132 StartCharacterOffset=0 EndLineNumber=132 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@14 @15 @19 Member=(Name=SendOrderTaskAccomplished OverloadingParameters=[@55]))" Category="CodeSchema_Method" Bounds="1645.145,259.135000000001,190.98,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="SendOrderTaskAccomplished" Icon="CodeSchema_Method" Label="SendOrderTaskAccomplished" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/OrdersManager.cs StartLineNumber=98 StartCharacterOffset=0 EndLineNumber=98 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@14 @15 Type=OptionsManager Member=(@12 OverloadingParameters=[(@2 @10 Type=ITradingApi),(@2 @7 Type=ManagedSecurity),(@14 @15 @40)]))" Category="CodeSchema_Method" Bounds="2327.99333333333,331.055000000001,125.283333333333,25.96" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsPublic="True" CommonLabel="OptionsManager" Icon="CodeSchema_Method" Label="OptionsManager" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/OptionsManager.cs StartLineNumber=17 StartCharacterOffset=0 EndLineNumber=17 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@14 @27 Type=Distributer Member=(Name=HandleException @30))" Category="CodeSchema_Method" Bounds="998.18,201.487500000001,124.91,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="HandleException" Icon="CodeSchema_Method" Label="HandleException" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/Distributer.cs StartLineNumber=157 StartCharacterOffset=0 EndLineNumber=157 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@2 @3 @4 Member=DisconnectFromBroker)" Category="CodeSchema_Method" Bounds="3067.46,259.135,156.35,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="DisconnectFromBroker" Icon="CodeSchema_Method" Label="DisconnectFromBroker" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/IBApiWrapper/IBApiWrapper.cs StartLineNumber=116 StartCharacterOffset=0 EndLineNumber=116 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@2 @3 @9 Member=(Name=HandleSpecialApiMessages OverloadingParameters=[(@2 @7 Type=APIMessageData)]))" Category="CodeSchema_Method" Bounds="282.476666666667,331.055000000001,180.316666666667,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="HandleSpecialApiMessages" Icon="CodeSchema_Method" Label="HandleSpecialApiMessages" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/IBApiWrapper/IBMessageHandler.cs StartLineNumber=186 StartCharacterOffset=0 EndLineNumber=186 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@2 @3 @9 Member=(Name=contractDetailsEnd OverloadingParameters=[@44]))" Category="CodeSchema_Method" Bounds="152.126666666667,259.135000000001,135.016666666667,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="contractDetailsEnd" Icon="CodeSchema_Method" Label="contractDetailsEnd" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/IBApiWrapper/IBMessageHandler.cs StartLineNumber=143 StartCharacterOffset=0 EndLineNumber=143 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@2 @3 @9 Member=(Name=tickOptionComputation OverloadingParameters=[@44,@44,@25,@25,@25,@25,@25,@25,@25,@25]))" Category="CodeSchema_Method" Bounds="464.145,259.135000000001,160.98,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="tickOptionComputation" Icon="CodeSchema_Method" Label="tickOptionComputation" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/IBApiWrapper/IBMessageHandler.cs StartLineNumber=329 StartCharacterOffset=0 EndLineNumber=329 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@2 @3 @9 Member=(Name=tickPrice OverloadingParameters=[@44,@44,@25,@44]))" Category="CodeSchema_Method" Bounds="15.585,259.135000000001,80.0999999999999,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="tickPrice" Icon="CodeSchema_Method" Label="tickPrice" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/IBApiWrapper/IBMessageHandler.cs StartLineNumber=264 StartCharacterOffset=0 EndLineNumber=264 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@2 @3 Type=ContractDetailsWaiter Member=(Name=OnContractReceived OverloadingParameters=[@23]))" Category="CodeSchema_Method" Bounds="666.478333333333,331.055000000001,144.313333333334,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="OnContractReceived" Icon="CodeSchema_Method" Label="OnContractReceived" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/IBApiWrapper/ContractDetailsWaiter.cs StartLineNumber=31 StartCharacterOffset=0 EndLineNumber=31 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@2 @3 Type=IBExtensions Member=(Name=UpdateSecurityData OverloadingParameters=[@23,(@2 @7 Type=ContractBase)]))" Category="CodeSchema_Method" Bounds="1387.91333333333,590.190000000001,141.443333333333,25.96" CodeSchemaProperty_IsExtension="True" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsStatic="True" CommonLabel="UpdateSecurityData" Icon="CodeSchema_Method" Label="UpdateSecurityData" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/IBApiWrapper/IBExtensions.cs StartLineNumber=134 StartCharacterOffset=0 EndLineNumber=134 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@2 @7 Type=PositionData Member=(Name=set_OptionData OverloadingParameters=[@49]))" Category="CodeSchema_Method" Bounds="2924.63333333333,331.055,118.003333333334,25.96" CodeSchemaProperty_IsPropertySet="True" CodeSchemaProperty_IsPublic="True" CommonLabel="set_OptionData" Icon="CodeSchema_Method" Label="set_OptionData" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/ApiDataObjects/PositionData.cs StartLineNumber=32 StartCharacterOffset=0 EndLineNumber=32 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@2 @7 Type=PositionData Member=get_OptionData)" Category="CodeSchema_Method" Bounds="2746.64666666667,474.895000000001,119.976666666667,25.96" CodeSchemaProperty_IsPropertyGet="True" CodeSchemaProperty_IsPublic="True" CommonLabel="get_OptionData" Icon="CodeSchema_Method" Label="get_OptionData" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/ApiDataObjects/PositionData.cs StartLineNumber=32 StartCharacterOffset=0 EndLineNumber=32 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@21 @22 @62 Member=(Name=eConnect OverloadingParameters=[@55,@44,@44,@18]))" Category="CodeSchema_Method" Bounds="3538.53333333333,331.055,86.2033333333329,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="eConnect" Icon="CodeSchema_Method" Label="eConnect" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/IBApi/EClientSocket.cs StartLineNumber=118 StartCharacterOffset=0 EndLineNumber=118 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@21 @22 @62 Member=eDisconnect)" Category="CodeSchema_Method" Bounds="836.27,201.487500000001,100.73,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="eDisconnect" Icon="CodeSchema_Method" Label="eDisconnect" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/IBApi/EClientSocket.cs StartLineNumber=205 StartCharacterOffset=0 EndLineNumber=205 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@28 @29 Type=SimpleBaseLogic Member=.ctor)" Category="CodeSchema_Method" Bounds="3655.43166666667,331.055,124.406666666667,25.96" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsProtected="True" CommonLabel="SimpleBaseLogic" Icon="CodeSchema_Method" Label="SimpleBaseLogic" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/Infra/Bus/BaseLogic.cs StartLineNumber=33 StartCharacterOffset=0 EndLineNumber=33 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@50 @51 Type=DBWriter Member=(Name=HandleSymbolData @6 OverloadingParameters=[(@2 @7 Type=ISymbolMessage),@18]))" Category="CodeSchema_Method" Bounds="2321.70166666667,259.135,137.866666666667,25.96" CodeSchemaProperty_IsProtected="True" CommonLabel="HandleSymbolData" Icon="CodeSchema_Method" Label="HandleSymbolData" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/DAL/DBWriter.cs StartLineNumber=103 StartCharacterOffset=0 EndLineNumber=103 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(@50 @51 Type=OptionDataMapping Member=.ctor)" Category="CodeSchema_Method" Bounds="3815.965,474.895,145.34,25.96" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsPublic="True" CommonLabel="OptionDataMapping" Icon="CodeSchema_Method" Label="OptionDataMapping" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/DAL/Mappings.cs StartLineNumber=71 StartCharacterOffset=0 EndLineNumber=71 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="(Name=TNS.BL.UnlManagers.OptionNegotiator.OptionNegotiator @1 Type=void IsUnresolved=True)" Category="CodeSchema_CallStackUnresolvedMethod" Bounds="3369.33833333333,474.895,130.593333333333,25.96" Label="OptionNegotiator" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/OptionNegotiator.cs StartLineNumber=25 StartCharacterOffset=0 EndLineNumber=25 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@100" Category="CodeSchema_Method" Bounds="1560.05833333333,590.190000000001,109.153333333333,25.96" CodeSchemaProperty_IsPropertyGet="True" CodeSchemaProperty_IsPublic="True" CommonLabel="get_Multiplier" Icon="CodeSchema_Method" Label="get_Multiplier" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/OptionToLoadParameters.cs StartLineNumber=35 StartCharacterOffset=0 EndLineNumber=35 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@101" Category="CodeSchema_Method" Bounds="1643.57,532.542500000001,206.13,25.96" CodeSchemaProperty_IsPropertyGet="True" CodeSchemaProperty_IsPublic="True" CommonLabel="get_OptionContractPivotToLoad" Icon="CodeSchema_Method" Label="get_OptionContractPivotToLoad" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/OptionToLoadParameters.cs StartLineNumber=52 StartCharacterOffset=0 EndLineNumber=52 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@102" Category="CodeSchema_Method" Bounds="1856.57666666667,590.190000000001,128.116666666667,25.96" CodeSchemaProperty_IsPropertyGet="True" CodeSchemaProperty_IsPublic="True" CommonLabel="get_PutMaxStrike" Icon="CodeSchema_Method" Label="get_PutMaxStrike" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/OptionToLoadParameters.cs StartLineNumber=33 StartCharacterOffset=0 EndLineNumber=33 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@103" Category="CodeSchema_Method" Bounds="1699.535,590.190000000001,126.2,25.96" CodeSchemaProperty_IsPropertyGet="True" CodeSchemaProperty_IsPublic="True" CommonLabel="get_PutMinStrike" Icon="CodeSchema_Method" Label="get_PutMinStrike" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/OptionToLoadParameters.cs StartLineNumber=34 StartCharacterOffset=0 EndLineNumber=34 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@104" Category="CodeSchema_Method" Bounds="2028.66,647.837500000001,101.95,25.96" CodeSchemaProperty_IsPropertyGet="True" CodeSchemaProperty_IsPublic="True" CommonLabel="get_UnlPrice" Icon="CodeSchema_Method" Label="get_UnlPrice" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/OptionToLoadParameters.cs StartLineNumber=27 StartCharacterOffset=0 EndLineNumber=27 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@105" Category="CodeSchema_Method" Bounds="3015.18,532.5425,112.91,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="InializeTrading" Icon="CodeSchema_Method" Label="InializeTrading" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/OptionNegotiator.cs StartLineNumber=78 StartCharacterOffset=0 EndLineNumber=78 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@106" Category="CodeSchema_Method" Bounds="3810.39833333333,331.055,156.473333333333,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="InitializeMainSecurities" Icon="CodeSchema_Method" Label="InitializeMainSecurities" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/ManagedSecuritiesManager.cs StartLineNumber=42 StartCharacterOffset=0 EndLineNumber=42 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@107" Category="CodeSchema_Method" Bounds="3051.345,57.6475,62.5799999999999,25.96" CodeSchemaProperty_IsPrivate="True" CodeSchemaProperty_IsStatic="True" CommonLabel="Main" Icon="CodeSchema_Method" Label="Main" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/RazboTrader/Program.cs StartLineNumber=23 StartCharacterOffset=0 EndLineNumber=23 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@108" Category="CodeSchema_Method" Bounds="892.666666666667,57.6475000000005,175.936666666666,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="ReadAndProcessMessages" Icon="CodeSchema_Method" Label="ReadAndProcessMessages" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/IBApi/EReader.cs StartLineNumber=48 StartCharacterOffset=0 EndLineNumber=48 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@109" Category="CodeSchema_Method" Bounds="2081.965,402.975000000001,125.34,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="SetMinMaxStrike" Icon="CodeSchema_Method" Label="SetMinMaxStrike" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/OptionToLoadParameters.cs StartLineNumber=70 StartCharacterOffset=0 EndLineNumber=70 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@110" Category="CodeSchema_Method" Bounds="2171.19,474.895000000001,134.89,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="SetStrikeThreshold" Icon="CodeSchema_Method" Label="SetStrikeThreshold" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/OptionToLoadParameters.cs StartLineNumber=39 StartCharacterOffset=0 EndLineNumber=39 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@111" Category="CodeSchema_Method" Bounds="3014.12,201.4875,151.03,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="ShutDownApplication" Icon="CodeSchema_Method" Label="ShutDownApplication" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/AppManager.cs StartLineNumber=91 StartCharacterOffset=0 EndLineNumber=91 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@112" Category="CodeSchema_Method" Bounds="3144.19,57.6475,120.89,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="StartApplication" Icon="CodeSchema_Method" Label="StartApplication" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/RazboTrader/MainForm.cs StartLineNumber=69 StartCharacterOffset=0 EndLineNumber=69 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@113" Category="CodeSchema_Method" Bounds="448.56,201.487500000001,192.15,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="TickOptionComputationEvent" Icon="CodeSchema_Method" Label="TickOptionComputationEvent" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/IBApi/EReader.cs StartLineNumber=535 StartCharacterOffset=0 EndLineNumber=535 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@114" Category="CodeSchema_Method" Bounds="0,201.487500000001,111.27,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="TickPriceEvent" Icon="CodeSchema_Method" Label="TickPriceEvent" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/IBApi/EReader.cs StartLineNumber=352 StartCharacterOffset=0 EndLineNumber=352 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@115" Category="CodeSchema_Method" Bounds="1880.28833333333,532.542500000001,80.6933333333336,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="ToString" Icon="CodeSchema_Method" IsOverloaded="True" Label="ToString" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/OptionToLoadParameters.cs StartLineNumber=148 StartCharacterOffset=0 EndLineNumber=148 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@116" Category="CodeSchema_Method" Bounds="1932.44666666667,57.6475000000003,64.3766666666668,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="Work" Icon="CodeSchema_Method" Label="Work" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/Infra/Bus/BaseLogic.cs StartLineNumber=58 StartCharacterOffset=0 EndLineNumber=58 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@13" Category="CodeSchema_Method" Bounds="2125.93833333333,331.055000000001,171.393333333333,25.96" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsPublic="True" CommonLabel="OptionToLoadParameters" Icon="CodeSchema_Method" Label="OptionToLoadParameters" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/OptionToLoadParameters.cs StartLineNumber=24 StartCharacterOffset=0 EndLineNumber=24 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@20" Category="CodeSchema_Method" Bounds="3383.575,259.135,98.1199999999999,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="TestTrading" Icon="CodeSchema_Method" Label="TestTrading" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/OrdersManager.cs StartLineNumber=107 StartCharacterOffset=0 EndLineNumber=107 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@24" Category="CodeSchema_Method" Bounds="1544.23333333333,474.895000000001,140.803333333333,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="RequestMarketData" Icon="CodeSchema_Method" Label="RequestMarketData" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/IBApiWrapper/IBApiWrapper.cs StartLineNumber=210 StartCharacterOffset=0 EndLineNumber=210 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@26" Category="CodeSchema_Method" Bounds="949.721666666667,129.567500000001,61.8266666666668,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="error" Icon="CodeSchema_Method" Label="error" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/IBApiWrapper/IBMessageHandler.cs StartLineNumber=248 StartCharacterOffset=0 EndLineNumber=248 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@32" Category="CodeSchema_Method" Bounds="1210.45666666667,129.5675,120.356666666667,25.96" CodeSchemaProperty_IsProtected="True" CommonLabel="HandleMessage" Icon="CodeSchema_Method" IsOverloaded="True" Label="HandleMessage" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/Distributer.cs StartLineNumber=111 StartCharacterOffset=0 EndLineNumber=111 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@34" Category="CodeSchema_Method" Bounds="1753.45666666667,129.5675,120.356666666667,25.96" CodeSchemaProperty_IsProtected="True" CommonLabel="HandleMessage" Icon="CodeSchema_Method" IsOverloaded="True" Label="HandleMessage" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/ManagedSecuritiesManager.cs StartLineNumber=46 StartCharacterOffset=0 EndLineNumber=46 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@35" Category="CodeSchema_Method" Bounds="2017.45666666667,259.135,120.356666666667,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="HandleMessage" Icon="CodeSchema_Method" IsOverloaded="True" Label="HandleMessage" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/OptionsManager.cs StartLineNumber=46 StartCharacterOffset=0 EndLineNumber=46 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@36" Category="CodeSchema_Method" Bounds="1680.45666666667,201.487500000001,120.356666666667,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="HandleMessage" Icon="CodeSchema_Method" IsOverloaded="True" Label="HandleMessage" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/OrdersManager.cs StartLineNumber=36 StartCharacterOffset=0 EndLineNumber=36 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@38" Category="CodeSchema_Method" Bounds="1866.45666666667,259.135,120.356666666667,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="HandleMessage" Icon="CodeSchema_Method" IsOverloaded="True" Label="HandleMessage" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/PositionsDataBuilder.cs StartLineNumber=63 StartCharacterOffset=0 EndLineNumber=63 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@39" Category="CodeSchema_Method" Bounds="2356.45666666667,129.5675,120.356666666667,25.96" CodeSchemaProperty_IsProtected="True" CommonLabel="HandleMessage" Icon="CodeSchema_Method" IsOverloaded="True" Label="HandleMessage" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/Infra/Bus/BaseLogic.cs StartLineNumber=125 StartCharacterOffset=0 EndLineNumber=125 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@41" Category="CodeSchema_Method" Bounds="1904.45666666667,129.5675,120.356666666667,25.96" CodeSchemaProperty_IsProtected="True" CommonLabel="HandleMessage" Icon="CodeSchema_Method" IsOverloaded="True" Label="HandleMessage" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/UNLManager.cs StartLineNumber=55 StartCharacterOffset=0 EndLineNumber=55 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@42" Category="CodeSchema_Method" Bounds="1153.39,201.487500000001,234.49,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="PropagateMessageToAllUnlManagers" Icon="CodeSchema_Method" Label="PropagateMessageToAllUnlManagers" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/Distributer.cs StartLineNumber=151 StartCharacterOffset=0 EndLineNumber=151 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@43" Category="CodeSchema_Method" Bounds="1862.65333333333,201.4875,203.963333333333,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="SendMessageToAllComponents" Icon="CodeSchema_Method" Label="SendMessageToAllComponents" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/UNLManager.cs StartLineNumber=122 StartCharacterOffset=0 EndLineNumber=122 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@46" Category="CodeSchema_Method" Bounds="458.496666666667,129.567500000001,172.276666666667,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="ProcessIncomingMessage" Icon="CodeSchema_Method" Label="ProcessIncomingMessage" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/IBApi/EReader.cs StartLineNumber=141 StartCharacterOffset=0 EndLineNumber=141 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@47" Category="CodeSchema_Method" Bounds="3655.68833333333,259.135,183.893333333333,25.96" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsPublic="True" CommonLabel="ManagedSecuritiesManager" Icon="CodeSchema_Method" Label="ManagedSecuritiesManager" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/ManagedSecuritiesManager.cs StartLineNumber=23 StartCharacterOffset=0 EndLineNumber=23 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@48" Category="CodeSchema_Method" Bounds="1991.22666666667,532.542500000001,200.816666666667,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="IsOptionWithinLoadBoundaries" Icon="CodeSchema_Method" Label="IsOptionWithinLoadBoundaries" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/OptionToLoadParameters.cs StartLineNumber=180 StartCharacterOffset=0 EndLineNumber=180 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@52" Category="CodeSchema_Method" Bounds="2325.19,201.4875,182.89,25.96" CodeSchemaProperty_IsProtected="True" CommonLabel="HandleOptionsPositionData" Icon="CodeSchema_Method" Label="HandleOptionsPositionData" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/DAL/DBWriter.cs StartLineNumber=57 StartCharacterOffset=0 EndLineNumber=57 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@53" Category="CodeSchema_Method" Bounds="1743.80333333333,331.055000000001,145.663333333333,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="RequestOptionChain" Icon="CodeSchema_Method" Label="RequestOptionChain" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/IBApiWrapper/IBApiWrapper.cs StartLineNumber=148 StartCharacterOffset=0 EndLineNumber=148 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@54" Category="CodeSchema_Method" Bounds="1513.805,402.975000000001,201.66,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="RequestSecurityContractDetails" Icon="CodeSchema_Method" Label="RequestSecurityContractDetails" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/IBApiWrapper/IBApiWrapper.cs StartLineNumber=182 StartCharacterOffset=0 EndLineNumber=182 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@56" Category="CodeSchema_Method" Bounds="3101.55333333333,331.055,116.163333333333,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="GetOptionData" Icon="CodeSchema_Method" Label="GetOptionData" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/OptionsManager.cs StartLineNumber=30 StartCharacterOffset=0 EndLineNumber=30 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@58" Category="CodeSchema_Method" Bounds="3196.095,201.4875,137.08,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="SendOneOrderTest" Icon="CodeSchema_Method" Label="SendOneOrderTest" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/AppManager.cs StartLineNumber=187 StartCharacterOffset=0 EndLineNumber=187 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@59" Category="CodeSchema_Method" Bounds="3254.575,259.135,98.1199999999999,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="TestTrading" Icon="CodeSchema_Method" Label="TestTrading" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/OrdersManager.cs StartLineNumber=113 StartCharacterOffset=0 EndLineNumber=113 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@60" Category="CodeSchema_Method" Bounds="1229.605,259.135,82.0599999999999,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="Enqueue" Icon="CodeSchema_Method" Label="Enqueue" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/Infra/Bus/BaseLogic.cs StartLineNumber=70 StartCharacterOffset=0 EndLineNumber=70 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@61" Category="CodeSchema_Method" Bounds="3364.095,201.4875,137.08,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="SendOneOrderTest" Icon="CodeSchema_Method" Label="SendOneOrderTest" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/AppManager.cs StartLineNumber=181 StartCharacterOffset=0 EndLineNumber=181 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@63" Category="CodeSchema_Method" Bounds="1917.38833333333,402.975000000001,134.493333333334,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="reqContractDetails" Icon="CodeSchema_Method" Label="reqContractDetails" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/IBApi/EClientSocket.cs StartLineNumber=1181 StartCharacterOffset=0 EndLineNumber=1181 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@64" Category="CodeSchema_Method" Bounds="681.09,259.135000000001,115.09,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="contractDetails" Icon="CodeSchema_Method" Label="contractDetails" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/IBApiWrapper/IBMessageHandler.cs StartLineNumber=137 StartCharacterOffset=0 EndLineNumber=137 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@67" Category="CodeSchema_Method" Bounds="3194.19333333333,129.5675,140.883333333333,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="btnSendOrder_Click" Icon="CodeSchema_Method" Label="btnSendOrder_Click" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/RazboTrader/MainForm.cs StartLineNumber=139 StartCharacterOffset=0 EndLineNumber=139 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@69" Category="CodeSchema_Method" Bounds="3001.84333333333,129.5675,161.583333333333,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="MainForm_FormClosing" Icon="CodeSchema_Method" Label="MainForm_FormClosing" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/RazboTrader/MainForm.cs StartLineNumber=121 StartCharacterOffset=0 EndLineNumber=121 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@70" Category="CodeSchema_Method" Bounds="3388.95666666667,331.055,91.3566666666666,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="SellOption" Icon="CodeSchema_Method" Label="SellOption" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/OrdersManager.cs StartLineNumber=81 StartCharacterOffset=0 EndLineNumber=81 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@71" Category="CodeSchema_Method" Bounds="2920.55333333333,259.135,116.163333333334,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="GetOptionData" Icon="CodeSchema_Method" Label="GetOptionData" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/PositionsDataBuilder.cs StartLineNumber=140 StartCharacterOffset=0 EndLineNumber=140 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@72" Category="CodeSchema_Method" Bounds="3388.01333333333,402.975,93.2433333333333,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="SendOrder" Icon="CodeSchema_Method" Label="SendOrder" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/OrdersManager.cs StartLineNumber=89 StartCharacterOffset=0 EndLineNumber=89 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@73" Category="CodeSchema_Method" Bounds="3530.33833333333,474.895,130.593333333333,25.96" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsPublic="True" CommonLabel="OptionNegotiator" Icon="CodeSchema_Method" Label="OptionNegotiator" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/OptionNegotiator.cs StartLineNumber=39 StartCharacterOffset=0 EndLineNumber=39 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@74" Category="CodeSchema_Method" Bounds="1488.51333333333,532.542500000001,124.243333333333,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="RegisterContract" Icon="CodeSchema_Method" Label="RegisterContract" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/IBApiWrapper/IBMessageHandler.cs StartLineNumber=559 StartCharacterOffset=0 EndLineNumber=559 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@75" Category="CodeSchema_Method" Bounds="3236.23333333333,474.895000000001,102.803333333333,25.9599999999999" CodeSchemaProperty_IsPublic="True" CommonLabel="TradeOption" Icon="CodeSchema_Method" Label="TradeOption" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/OptionNegotiator.cs StartLineNumber=54 StartCharacterOffset=0 EndLineNumber=54 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@76" Category="CodeSchema_Method" Bounds="3538.53333333333,259.135,86.2033333333329,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="eConnect" Icon="CodeSchema_Method" Label="eConnect" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/IBApi/EClientSocket.cs StartLineNumber=68 StartCharacterOffset=0 EndLineNumber=68 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@77" Category="CodeSchema_Method" Bounds="341.721666666667,259.135000000001,61.8266666666668,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="error" Icon="CodeSchema_Method" Label="error" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/IBApiWrapper/IBMessageHandler.cs StartLineNumber=175 StartCharacterOffset=0 EndLineNumber=175 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@78" Category="CodeSchema_Method" Bounds="1777.84833333333,402.975000000001,77.5733333333333,25.96" CodeSchemaProperty_IsExtension="True" CodeSchemaProperty_IsPublic="True" CodeSchemaProperty_IsStatic="True" CommonLabel="ForEach" Icon="CodeSchema_Method" Label="ForEach" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/Infra/Extensions/ObjectExtensions.cs StartLineNumber=134 StartCharacterOffset=0 EndLineNumber=134 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@79" Category="CodeSchema_Method" Bounds="3823.91333333333,402.975,129.443333333334,25.96" CodeSchemaProperty_IsConstructor="True" CodeSchemaProperty_IsPrivate="True" CommonLabel="DBSessionFactory" Icon="CodeSchema_Method" Label="DBSessionFactory" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/DAL/DBSessionFactory.cs StartLineNumber=31 StartCharacterOffset=0 EndLineNumber=31 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@8" Category="CodeSchema_Method" Bounds="2490.34833333333,259.135,202.573333333334,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="RequestContinousContractData" Icon="CodeSchema_Method" Label="RequestContinousContractData" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/IBApiWrapper/IBApiWrapper.cs StartLineNumber=189 StartCharacterOffset=0 EndLineNumber=189 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@80" Category="CodeSchema_Method" Bounds="2711.405,201.4875,190.46,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="AddOrUpdateDataToPosition" Icon="CodeSchema_Method" Label="AddOrUpdateDataToPosition" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/PositionsDataBuilder.cs StartLineNumber=108 StartCharacterOffset=0 EndLineNumber=108 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@81" Category="CodeSchema_Method" Bounds="1918.71333333333,474.895000000001,157.843333333333,25.9599999999999" CodeSchemaProperty_IsAnonymous="True" Label="AnonymousMethod__0" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/IBApiWrapper/IBApiWrapper.cs StartLineNumber=159 StartCharacterOffset=0 EndLineNumber=159 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@82" Category="CodeSchema_Method" Bounds="2718.75333333333,331.055000000001,175.763333333333,25.96" CodeSchemaProperty_IsAnonymous="True" Label="AnonymousMethod__12_1" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/PositionsDataBuilder.cs StartLineNumber=118 StartCharacterOffset=0 EndLineNumber=118 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@83" Category="CodeSchema_Method" Bounds="1919.75333333333,331.055000000001,175.763333333333,25.96" CodeSchemaProperty_IsAnonymous="True" Label="AnonymousMethod__24_0" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/IBApiWrapper/IBApiWrapper.cs StartLineNumber=200 StartCharacterOffset=0 EndLineNumber=200 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@84" Category="CodeSchema_Method" Bounds="3690.165,201.4875,114.94,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="BuildManagers" Icon="CodeSchema_Method" Label="BuildManagers" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/AppManager.cs StartLineNumber=99 StartCharacterOffset=0 EndLineNumber=99 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@85" Category="CodeSchema_Method" Bounds="1418.56166666667,201.4875,200.146666666667,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="CalculateNextCurrentLimitPrice" Icon="CodeSchema_Method" Label="CalculateNextCurrentLimitPrice" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/OptionNegotiator.cs StartLineNumber=239 StartCharacterOffset=0 EndLineNumber=239 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@86" Category="CodeSchema_Method" Bounds="2723.05333333333,259.135,167.163333333334,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="CalculateUnlTradingData" Icon="CodeSchema_Method" Label="CalculateUnlTradingData" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/PositionsDataBuilder.cs StartLineNumber=118 StartCharacterOffset=0 EndLineNumber=118 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@87" Category="CodeSchema_Method" Bounds="854.266666666667,129.567500000001,64.7366666666667,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="Close" Icon="CodeSchema_Method" Label="Close" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/IBApi/EClientSocket.cs StartLineNumber=169 StartCharacterOffset=0 EndLineNumber=169 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@88" Category="CodeSchema_Method" Bounds="3531.765,129.5675,127.74,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="ConnectToBroker" Icon="CodeSchema_Method" Label="ConnectToBroker" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/AppManager.cs StartLineNumber=75 StartCharacterOffset=0 EndLineNumber=75 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@89" Category="CodeSchema_Method" Bounds="3531.765,201.4875,127.74,25.96" CodeSchemaProperty_IsPublic="True" CommonLabel="ConnectToBroker" Icon="CodeSchema_Method" Label="ConnectToBroker" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/IBApiWrapper/IBApiWrapper.cs StartLineNumber=96 StartCharacterOffset=0 EndLineNumber=96 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@90" Category="CodeSchema_Method" Bounds="142.246666666667,201.487500000001,154.776666666667,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="ContractDataEndEvent" Icon="CodeSchema_Method" Label="ContractDataEndEvent" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/IBApi/EReader.cs StartLineNumber=1179 StartCharacterOffset=0 EndLineNumber=1179 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@91" Category="CodeSchema_Method" Bounds="671.21,201.4875,134.85,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="ContractDataEvent" Icon="CodeSchema_Method" Label="ContractDataEvent" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/IBApi/EReader.cs StartLineNumber=1170 StartCharacterOffset=0 EndLineNumber=1170 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@92" Category="CodeSchema_Method" Bounds="2168.275,259.135000000001,122.72,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="CreateManagers" Icon="CodeSchema_Method" Label="CreateManagers" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/UNLManager.cs StartLineNumber=152 StartCharacterOffset=0 EndLineNumber=152 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@93" Category="CodeSchema_Method" Bounds="1630.715,129.5675,91.8399999999999,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="DoTrading" Icon="CodeSchema_Method" Label="DoTrading" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/OptionNegotiator.cs StartLineNumber=213 StartCharacterOffset=0 EndLineNumber=213 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@94" Category="CodeSchema_Method" Bounds="1531.39166666667,331.055000000001,166.486666666667,25.96" CodeSchemaProperty_IsProtected="True" CommonLabel="DoWorkAfterConnection" Icon="CodeSchema_Method" Label="DoWorkAfterConnection" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/ManagedSecuritiesManager.cs StartLineNumber=69 StartCharacterOffset=0 EndLineNumber=69 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@95" Category="CodeSchema_Method" Bounds="2128.39166666667,201.4875,166.486666666667,25.96" CodeSchemaProperty_IsProtected="True" CommonLabel="DoWorkAfterConnection" Icon="CodeSchema_Method" Label="DoWorkAfterConnection" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/BL/UnlManagers/UNLManager.cs StartLineNumber=125 StartCharacterOffset=0 EndLineNumber=125 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@96" Category="CodeSchema_Method" Bounds="327.35,201.487500000001,90.5700000000002,25.96" CodeSchemaProperty_IsPrivate="True" CommonLabel="ErrorEvent" Icon="CodeSchema_Method" Label="ErrorEvent" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/IBApi/EReader.cs StartLineNumber=439 StartCharacterOffset=0 EndLineNumber=439 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@97" Category="CodeSchema_Method" Bounds="2173.69,590.190000000001,129.89,25.96" CodeSchemaProperty_IsPropertyGet="True" CodeSchemaProperty_IsPublic="True" CommonLabel="get_CallMaxStrike" Icon="CodeSchema_Method" Label="get_CallMaxStrike" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/OptionToLoadParameters.cs StartLineNumber=32 StartCharacterOffset=0 EndLineNumber=32 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@98" Category="CodeSchema_Method" Bounds="2015.64833333333,590.190000000001,127.973333333333,25.96" CodeSchemaProperty_IsPropertyGet="True" CodeSchemaProperty_IsPublic="True" CommonLabel="get_CallMinStrike" Icon="CodeSchema_Method" Label="get_CallMinStrike" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/OptionToLoadParameters.cs StartLineNumber=68 StartCharacterOffset=0 EndLineNumber=68 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="@99" Category="CodeSchema_Method" Bounds="2750.35666666667,402.975000000001,112.556666666667,25.96" CodeSchemaProperty_IsPropertyGet="True" CodeSchemaProperty_IsPublic="True" CommonLabel="get_DeltaTotal" Icon="CodeSchema_Method" Label="get_DeltaTotal" SourceLocation="(Assembly=file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/ApiDataObjects/OptionsPositionData.cs StartLineNumber=61 StartCharacterOffset=0 EndLineNumber=61 EndCharacterOffset=0)">
+      <Category Ref="CallStackEntry" />
+      <Category Ref="CodeSchema_SourceLocation" />
+    </Node>
+    <Node Id="ExternalCodeRootNode" Category="ExternalCallStackEntry" Bounds="3036.14166666667,1.4210854715202E-14,92.9866666666667,25.96" Label="External Code">
+      <Category Ref="CallStackEntry" />
+    </Node>
+  </Nodes>
+  <Links>
+    <Link Source="@101" Target="@100" Category="CallStackDirectCall" Bounds="1652.60412597656,558.502502441406,64.3095703125,28.0855102539063" />
+    <Link Source="@102" Target="@104" Category="CallStackDirectCall" Bounds="1956.43566894531,616.150024414063,78.9376220703125,28.6198120117188" />
+    <Link Source="@103" Target="@104" Category="CallStackDirectCall" Bounds="1825.37280273438,614.579040527344,194.432373046875,35.3582153320313" />
+    <Link Source="@105" Target="(@14 @15 @16 Member=UpdateFirstAskAndBid)" Category="CallStackDirectCall" Bounds="3071.63500976563,558.502502441406,0,22.6875" />
+    <Link Source="@106" Target="@79" Category="CallStackIndirectCall" Bounds="3888.63500976563,357.015014648438,0,36.9599914550781" Label="External Code" LabelBounds="3815.64833333333,372.015,72.9866666666667,15.96" />
+    <Link Source="@107" Target="@67" Category="CallStackIndirectCall" Bounds="3113.9208984375,80.7630233764648,117.057373046875,44.7379913330078" Label="External Code" LabelBounds="3120.64833333333,98.6075000000001,72.9866666666667,15.96" />
+    <Link Source="@107" Target="@69" Category="CallStackIndirectCall" Bounds="3082.63500976563,83.6074981689453,0,36.9599990844727" Label="External Code" LabelBounds="3009.64833333333,98.6075000000001,72.9866666666667,15.96" />
+    <Link Source="@108" Target="@26" Category="CallStackDirectCall" Bounds="980.635009765625,83.6074981689453,0,36.9599990844727" />
+    <Link Source="@108" Target="@46" Category="CallStackDirectCall" Bounds="632.203552246094,83.6074981689453,269.742919921875,44.4952087402344" />
+    <Link Source="@108" Target="@87" Category="CallStackDirectCall" Bounds="910.747802734375,83.6074981689453,52.9222412109375,40.4911422729492" />
+    <Link Source="@109" Target="@110" Category="CallStackDirectCall" Bounds="2161.59985351563,428.934997558594,52.92236328125,40.4911499023438" />
+    <Link Source="@111" Target="(@2 @3 @4 Member=DisconnectFromBroker)" Category="CallStackDirectCall" Bounds="3102.244140625,227.447494506836,24.5107421875,25.2319641113281" />
+    <Link Source="@112" Target="@88" Category="CallStackDirectCall" Bounds="3264.87109375,81.7072525024414,258.552978515625,47.5578842163086" />
+    <Link Source="@113" Target="(@2 @3 @9 Member=(Name=tickOptionComputation OverloadingParameters=[@44,@44,@25,@25,@25,@25,@25,@25,@25,@25]))" Category="CallStackDirectCall" Bounds="544.635009765625,227.447494506836,0,22.6875" />
+    <Link Source="@114" Target="(@2 @3 @9 Member=(Name=tickPrice OverloadingParameters=[@44,@44,@25,@44]))" Category="CallStackDirectCall" Bounds="55.6349983215332,227.447494506836,0,22.6875" />
+    <Link Source="@115" Target="@100" Category="CallStackDirectCall" Bounds="1678.0654296875,553.90576171875,202.222900390625,37.6885375976563" />
+    <Link Source="@115" Target="@102" Category="CallStackDirectCall" Bounds="1920.63500976563,558.502502441406,0,22.6875" />
+    <Link Source="@115" Target="@103" Category="CallStackDirectCall" Bounds="1806.66528320313,558.502502441406,78.3941650390625,28.6027221679688" />
+    <Link Source="@115" Target="@97" Category="CallStackDirectCall" Bounds="1960.98168945313,554.259460449219,204.045654296875,36.3135375976563" />
+    <Link Source="@115" Target="@98" Category="CallStackDirectCall" Bounds="1956.43566894531,558.502502441406,78.9376220703125,28.6198120117188" />
+    <Link Source="@116" Target="@32" Category="CallStackDirectCall" Bounds="1339.76538085938,73.9632110595703,592.681274414063,61.4202270507813" />
+    <Link Source="@116" Target="@34" Category="CallStackDirectCall" Bounds="1849.0126953125,83.6074981689453,88.3701171875,42.0899276733398" />
+    <Link Source="@116" Target="@39" Category="CallStackDirectCall" Bounds="1996.82336425781,75.7491455078125,350.744995117188,55.808837890625" />
+    <Link Source="@116" Target="@41" Category="CallStackDirectCall" Bounds="1964.63500976563,83.6074981689453,0,36.9599990844727" />
+    <Link Source="@116" Target="@80" Category="CallStackDirectCall" Bounds="1996.82336425781,72.002197265625,809.811645507813,120.485305786133" />
+    <Link Source="@116" Target="@93" Category="CallStackDirectCall" Bounds="1730.93981933594,78.665641784668,201.5068359375,50.3207321166992" />
+    <Link Source="@13" Target="@109" Category="CallStackDirectCall" Bounds="2162.86181640625,357.015014648438,36.68115234375,39.374755859375" />
+    <Link Source="@13" Target="@110" Category="CallStackDirectCall" Bounds="2221.380859375,357.015014648438,17.254150390625,108.879974365234" />
+    <Link Source="@20" Target="@56" Category="CallStackDirectCall" Bounds="3225.95727539063,285.095001220703,171.6650390625,45.38916015625" />
+    <Link Source="@20" Target="@70" Category="CallStackDirectCall" Bounds="3433.35693359375,285.095001220703,1.265625,36.9600219726563" />
+    <Link Source="@24" Target="@74" Category="CallStackDirectCall" Bounds="1571.73254394531,500.855010986328,28.4920654296875,25.6640930175781" />
+    <Link Source="@26" Target="@60" Category="CallStackDirectCall" Bounds="967.635009765625,155.527496337891,253.010498046875,111.832092285156" />
+    <Link Source="@32" Target="(@14 @27 Type=Distributer Member=(Name=HandleException @30))" Category="CallStackDirectCall" Bounds="1107.04992675781,155.527496337891,125.6845703125,43.0439910888672" />
+    <Link Source="@32" Target="@42" Category="CallStackDirectCall" Bounds="1270.63500976563,155.527496337891,0,36.9600067138672" />
+    <Link Source="@34" Target="@94" Category="CallStackDirectCall" Bounds="1619.24145507813,155.323379516602,136.127563476563,166.926315307617" />
+    <Link Source="@35" Target="@13" Category="CallStackDirectCall" Bounds="2101.81909179688,285.095001220703,77.701904296875,41.7038269042969" />
+    <Link Source="@35" Target="@53" Category="CallStackDirectCall" Bounds="1872.41650390625,285.095001220703,158.113647460938,43.5691223144531" />
+    <Link Source="@36" Target="(@14 @15 @19 Member=(Name=SendOrderTaskAccomplished OverloadingParameters=[@55]))" Category="CallStackDirectCall" Bounds="1740.63500976563,227.447494506836,0,22.6875" />
+    <Link Source="@39" Target="@52" Category="CallStackIndirectCall" Bounds="2416.63500976563,155.527496337891,0,36.9600067138672" Label="External Code" LabelBounds="2343.64833333333,170.5275,72.9866666666667,15.96" />
+    <Link Source="@41" Target="@35" Category="CallStackDirectCall" Bounds="2012.64221191406,155.527496337891,84.9927978515625,95.8313751220703" />
+    <Link Source="@41" Target="@36" Category="CallStackDirectCall" Bounds="1769.61645507813,155.27262878418,136.630126953125,41.5308837890625" />
+    <Link Source="@41" Target="@38" Category="CallStackDirectCall" Bounds="1831.63500976563,155.527496337891,84.9927978515625,100.942962646484" />
+    <Link Source="@41" Target="@43" Category="CallStackDirectCall" Bounds="1964.63500976563,155.527496337891,0,36.9600067138672" />
+    <Link Source="@41" Target="@95" Category="CallStackDirectCall" Bounds="2022.90100097656,155.323379516602,150.516235351563,42.5862121582031" />
+    <Link Source="@42" Target="@60" Category="CallStackDirectCall" Bounds="1270.63500976563,227.447494506836,0,22.6875" />
+    <Link Source="@43" Target="@35" Category="CallStackDirectCall" Bounds="1990.07824707031,227.447494506836,54.096435546875,27.5975799560547" />
+    <Link Source="@43" Target="@38" Category="CallStackDirectCall" Bounds="1940.14440917969,227.447494506836,15.9344482421875,24.1731872558594" />
+    <Link Source="@46" Target="@113" Category="CallStackDirectCall" Bounds="544.635009765625,155.527496337891,0,36.9600067138672" />
+    <Link Source="@46" Target="@114" Category="CallStackDirectCall" Bounds="120.151809692383,155.020553588867,339.676132202148,48.1968994140625" />
+    <Link Source="@46" Target="@90" Category="CallStackDirectCall" Bounds="287.077850341797,155.527496337891,198.901702880859,44.0154113769531" />
+    <Link Source="@46" Target="@91" Category="CallStackDirectCall" Bounds="579.647766113281,155.527496337891,115.53564453125,42.8315734863281" />
+    <Link Source="@46" Target="@96" Category="CallStackDirectCall" Bounds="411.980621337891,155.527496337891,101.612091064453,42.4880523681641" />
+    <Link Source="@47" Target="(@28 @29 Type=SimpleBaseLogic Member=.ctor)" Category="CallStackDirectCall" Bounds="3726.51416015625,285.095001220703,15.70654296875,37.6536865234375" />
+    <Link Source="@47" Target="@106" Category="CallStackDirectCall" Bounds="3773.08251953125,285.095001220703,82.087646484375,41.87060546875" />
+    <Link Source="@48" Target="@97" Category="CallStackDirectCall" Bounds="2124.73364257813,558.502502441406,72.423828125,28.4016723632813" />
+    <Link Source="@52" Target="(@50 @51 Type=DBWriter Member=(Name=HandleSymbolData @6 OverloadingParameters=[(@2 @7 Type=ISymbolMessage),@18]))" Category="CallStackDirectCall" Bounds="2400.189453125,227.447494506836,10.59130859375,23.4833374023438" />
+    <Link Source="@53" Target="@101" Category="CallStackDirectCall" Bounds="1746.63500976563,357.015014648438,44.7330322265625,166.527465820313" />
+    <Link Source="@53" Target="@115" Category="CallStackIndirectCall" Bounds="1841.90197753906,357.015014648438,74.256103515625,166.711547851563" Label="External Code" LabelBounds="1825.034677358,440.916553987391,72.9866666666667,15.96" />
+    <Link Source="@53" Target="@63" Category="CallStackDirectCall" Bounds="1853.09167480469,357.015014648438,99.42919921875,41.7038269042969" />
+    <Link Source="@53" Target="@78" Category="CallStackDirectCall" Bounds="1816.63500976563,357.015014648438,0,36.9599914550781" />
+    <Link Source="@54" Target="@24" Category="CallStackIndirectCall" Bounds="1614.63500976563,428.934997558594,0,36.9599914550781" Label="External Code" LabelBounds="1541.64833333333,443.935000000001,72.9866666666667,15.96" />
+    <Link Source="@58" Target="@59" Category="CallStackDirectCall" Bounds="3273.41625976563,227.447494506836,16.394287109375,24.2331390380859" />
+    <Link Source="@59" Target="(@14 @15 @19 Member=(Name=GetOptionKey OverloadingParameters=[(@5 @17 Type=DateTime),(@28 Namespace=Infra.Enum Type=EOptionType),@25]))" Category="CallStackDirectCall" Bounds="3303.63500976563,285.095001220703,0,36.9599914550781" />
+    <Link Source="@59" Target="@56" Category="CallStackDirectCall" Bounds="3193.67553710938,285.095001220703,83.970703125,41.9386596679688" />
+    <Link Source="@59" Target="@70" Category="CallStackDirectCall" Bounds="3327.27758789063,285.095001220703,75.825439453125,41.6287536621094" />
+    <Link Source="@61" Target="@20" Category="CallStackDirectCall" Bounds="3432.63500976563,227.447494506836,0,22.6875" />
+    <Link Source="@64" Target="(@2 @3 Type=ContractDetailsWaiter Member=(Name=OnContractReceived OverloadingParameters=[@23]))" Category="CallStackDirectCall" Bounds="738.635009765625,285.095001220703,0,36.9599914550781" />
+    <Link Source="@67" Target="@58" Category="CallStackDirectCall" Bounds="3264.63500976563,155.527496337891,0,36.9600067138672" />
+    <Link Source="@67" Target="@61" Category="CallStackDirectCall" Bounds="3294.95532226563,155.527496337891,99.085693359375,42.4180603027344" />
+    <Link Source="@69" Target="@111" Category="CallStackDirectCall" Bounds="3083.8984375,155.527496337891,3.601318359375,37.0023345947266" />
+    <Link Source="@70" Target="@72" Category="CallStackDirectCall" Bounds="3434.63500976563,357.015014648438,0,36.9599914550781" />
+    <Link Source="@71" Target="(@2 @7 Type=PositionData Member=(Name=set_OptionData OverloadingParameters=[@49]))" Category="CallStackDirectCall" Bounds="2979.53735351563,285.095001220703,2.571044921875,36.9816589355469" />
+    <Link Source="@71" Target="@56" Category="CallStackDirectCall" Bounds="3011.30151367188,285.095001220703,107.302978515625,42.6366271972656" />
+    <Link Source="@72" Target="(Name=TNS.BL.UnlManagers.OptionNegotiator.OptionNegotiator @1 Type=void IsUnresolved=True)" Category="CallStackIndirectCall" Bounds="3434.63500976563,428.934997558594,0,36.9599914550781" Label="External Code" LabelBounds="3361.64833333333,443.935,72.9866666666667,15.96" />
+    <Link Source="@72" Target="@73" Category="CallStackDirectCall" Bounds="3463.69189453125,428.934997558594,94.668701171875,42.2892150878906" />
+    <Link Source="@72" Target="@75" Category="CallStackDirectCall" Bounds="3310.06591796875,428.934997558594,87.029541015625,40.1931762695313" />
+    <Link Source="@73" Target="(@14 @15 @16 Member=(Name=SetSimulatorAccountParameters OverloadingParameters=[@18]))" Category="CallStackDirectCall" Bounds="3595.63500976563,500.855010986328,0,22.6874694824219" />
+    <Link Source="@74" Target="(@2 @3 Type=IBExtensions Member=(Name=UpdateSecurityData OverloadingParameters=[@23,(@2 @7 Type=ContractBase)]))" Category="CallStackDirectCall" Bounds="1486.97631835938,558.502502441406,42.94384765625,26.90869140625" />
+    <Link Source="@75" Target="(@14 @15 @16 Member=(Name=SendWhatIfOrder OverloadingParameters=[@25]))" Category="CallStackDirectCall" Bounds="3312.40283203125,500.855010986328,52.49267578125,27.5097961425781" />
+    <Link Source="@75" Target="(@14 @15 @16 Member=(Name=SetCurrentLimitPrice OverloadingParameters=[@25]))" Category="CallStackDirectCall" Bounds="3249.79711914063,500.855010986328,25.003662109375,25.2876892089844" />
+    <Link Source="@75" Target="@105" Category="CallStackDirectCall" Bounds="3128.96557617188,500.847869873047,110.061279296875,29.3738708496094" />
+    <Link Source="@76" Target="(@21 @22 @62 Member=(Name=eConnect OverloadingParameters=[@55,@44,@44,@18]))" Category="CallStackDirectCall" Bounds="3581.63500976563,285.095001220703,0,36.9599914550781" />
+    <Link Source="@77" Target="(@2 @3 @9 Member=(Name=HandleSpecialApiMessages OverloadingParameters=[(@2 @7 Type=APIMessageData)]))" Category="CallStackDirectCall" Bounds="372.635009765625,285.095001220703,0,36.9599914550781" />
+    <Link Source="@78" Target="@24" Category="CallStackDirectCall" Bounds="1682.25964355469,428.934997558594,120.298095703125,44.0211181640625" />
+    <Link Source="@78" Target="@81" Category="CallStackIndirectCall" Bounds="1854.78674316406,427.780670166016,111.51611328125,42.7568664550781" Label="External Code" LabelBounds="1932.64833333333,443.935000000001,72.9866666666667,15.96" />
+    <Link Source="@79" Target="(@50 @51 Type=OptionDataMapping Member=.ctor)" Category="CallStackIndirectCall" Bounds="3888.63500976563,428.934997558594,0,36.9599914550781" Label="External Code" LabelBounds="3815.64833333333,443.935,72.9866666666667,15.96" />
+    <Link Source="@79" Target="@79" Category="CallStackDirectCall" Bounds="3780.41333007813,409.534362792969,43.5,12.6471557617188" />
+    <Link Source="@8" Target="@83" Category="CallStackIndirectCall" Bounds="2104.33251953125,284.448211669922,387.155029296875,47.6784057617188" Label="External Code" LabelBounds="2299.635,300.095,72.9866666666667,15.96" />
+    <Link Source="@80" Target="@71" Category="CallStackDirectCall" Bounds="2845.36279296875,227.447494506836,86.010986328125,28.8274383544922" />
+    <Link Source="@80" Target="@8" Category="CallStackDirectCall" Bounds="2648.73779296875,227.447494506836,109.487548828125,29.3566741943359" />
+    <Link Source="@80" Target="@86" Category="CallStackDirectCall" Bounds="2806.63500976563,227.447494506836,0,22.6875" />
+    <Link Source="@81" Target="@48" Category="CallStackDirectCall" Bounds="2018.80017089844,500.855010986328,43.9974365234375,26.9823913574219" />
+    <Link Source="@82" Target="@99" Category="CallStackDirectCall" Bounds="2806.63500976563,357.015014648438,0,36.9599914550781" />
+    <Link Source="@83" Target="@63" Category="CallStackDirectCall" Bounds="1991.52746582031,357.015014648438,11.95654296875,37.3876647949219" />
+    <Link Source="@84" Target="@47" Category="CallStackDirectCall" Bounds="3747.63500976563,227.447494506836,0,22.6875" />
+    <Link Source="@85" Target="(@14 @15 @16 Member=get_LastPriceLimit)" Category="CallStackDirectCall" Bounds="1518.63500976563,227.447494506836,0,22.6875" />
+    <Link Source="@86" Target="@82" Category="CallStackIndirectCall" Bounds="2806.63500976563,285.095001220703,0,36.9599914550781" Label="External Code" LabelBounds="2733.64833333333,300.095,72.9866666666667,15.96" />
+    <Link Source="@87" Target="(@21 @22 @62 Member=eDisconnect)" Category="CallStackDirectCall" Bounds="886.635009765625,155.527496337891,0,36.9600067138672" />
+    <Link Source="@88" Target="@84" Category="CallStackDirectCall" Bounds="3623.06762695313,155.527496337891,88.999267578125,42.1107177734375" />
+    <Link Source="@88" Target="@89" Category="CallStackDirectCall" Bounds="3595.63500976563,155.527496337891,0,36.9600067138672" />
+    <Link Source="@89" Target="@76" Category="CallStackDirectCall" Bounds="3586.9111328125,227.447494506836,5.571533203125,22.9417114257813" />
+    <Link Source="@90" Target="(@2 @3 @9 Member=(Name=contractDetailsEnd OverloadingParameters=[@44]))" Category="CallStackDirectCall" Bounds="219.634994506836,227.447494506836,0,22.6875" />
+    <Link Source="@91" Target="@64" Category="CallStackDirectCall" Bounds="738.635009765625,227.447494506836,0,22.6875" />
+    <Link Source="@92" Target="(@14 @15 Type=OptionsManager Member=(@12 OverloadingParameters=[(@2 @10 Type=ITradingApi),(@2 @7 Type=ManagedSecurity),(@14 @15 @40)]))" Category="CallStackDirectCall" Bounds="2241.00512695313,285.095001220703,94.214111328125,43.5519714355469" />
+    <Link Source="@93" Target="@85" Category="CallStackDirectCall" Bounds="1555.34191894531,155.527496337891,92.7774658203125,42.2313995361328" />
+    <Link Source="@94" Target="@54" Category="CallStackDirectCall" Bounds="1614.63500976563,357.015014648438,0,36.9599914550781" />
+    <Link Source="@95" Target="@92" Category="CallStackDirectCall" Bounds="2215.68798828125,227.447494506836,7.211669921875,23.0965576171875" />
+    <Link Source="@96" Target="@77" Category="CallStackDirectCall" Bounds="372.635009765625,227.447494506836,0,22.6875" />
+    <Link Source="@97" Target="@104" Category="CallStackDirectCall" Bounds="2123.89672851563,616.150024414063,78.9375,28.6198120117188" />
+    <Link Source="@98" Target="@104" Category="CallStackDirectCall" Bounds="2079.63500976563,616.150024414063,0,22.6875" />
+    <Link Source="@99" Target="(@2 @7 Type=PositionData Member=get_OptionData)" Category="CallStackDirectCall" Bounds="2806.63500976563,428.934997558594,0,36.9599914550781" />
+    <Link Source="ExternalCodeRootNode" Target="@107" Category="CallStackIndirectCall" Bounds="3082.63500976563,25.9599990844727,0,22.6875" />
+    <Link Source="ExternalCodeRootNode" Target="@108" Category="CallStackIndirectCall" Bounds="1077.59997558594,14.2550830841064,1958.54162597656,53.7131481170654" />
+    <Link Source="ExternalCodeRootNode" Target="@112" Category="CallStackIndirectCall" Bounds="3110.10473632813,25.9599990844727,58.92333984375,27.8424606323242" />
+    <Link Source="ExternalCodeRootNode" Target="@116" Category="CallStackIndirectCall" Bounds="2005.81140136719,15.3773384094238,1030.33020019531,53.1269798278809" />
+  </Links>
+  <Categories>
+    <Category Id="CallStackDirectCall" Label="Call Stack direct call" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Call Stack direct call" OutgoingActionLabel="Call Stack direct call" />
+    <Category Id="CallStackEntry" Label="Call Stack Entry" CanBeDataDriven="True" IsProviderRoot="False" NavigationActionLabel="Call Stack Entry" />
+    <Category Id="CallStackIndirectCall" Label="Call Stack indirect call" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Call Stack indirect call" OutgoingActionLabel="Call Stack indirect call" />
+    <Category Id="CodeSchema_CallStackUnresolvedMethod" Label="Unresolved Method" CanBeDataDriven="True" DefaultAction="Microsoft.AllOutBoundLinks" IsProviderRoot="False" NavigationActionLabel="Unresolved Method" />
+    <Category Id="CodeSchema_Member" Label="Member" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" Icon="CodeSchema_Field" NavigationActionLabel="Members" />
+    <Category Id="CodeSchema_Method" Label="Method" BasedOn="CodeSchema_Member" CanBeDataDriven="True" DefaultAction="Link:Forward:CodeSchema_Calls" Icon="CodeSchema_Method" NavigationActionLabel="Methods" />
+    <Category Id="CodeSchema_SourceLocation" Label="Source Location" Icon="File" />
+    <Category Id="ExternalCallStackEntry" Label="External Call Stack Entry" CanBeDataDriven="True" IsProviderRoot="False" NavigationActionLabel="External Call Stack Entry" />
+  </Categories>
+  <Properties>
+    <Property Id="Bounds" DataType="System.Windows.Rect" />
+    <Property Id="CanBeDataDriven" Label="CanBeDataDriven" Description="CanBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CanLinkedNodesBeDataDriven" Label="CanLinkedNodesBeDataDriven" Description="CanLinkedNodesBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsAnonymous" Label="Is Anonymous" Description="Flag indicating if this delegate, type, or method is anonymous" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsConstructor" Label="Is Constructor" Description="Flag to indicate the method is a constructor" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsExtension" Label="Is Extension" Description="Flag indicating if the method is an extension method" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsPrivate" Label="Is Private" Description="Flag to indicate the scope is Private" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsPropertyGet" Label="Is Property Get" Description="Flag to indicate the frame is a Property Get" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsPropertySet" Label="Is Property Set" Description="Flag to indicate the frame is a Property Set" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsProtected" Label="Is Protected" Description="Flag to indicate the scope is Protected" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsPublic" Label="Is Public" Description="Flag to indicate the scope is Public" DataType="System.Boolean" />
+    <Property Id="CodeSchemaProperty_IsStatic" Label="Is Static" Description="Flag to indicate the member is a static member" DataType="System.Boolean" />
+    <Property Id="CommonLabel" DataType="System.String" />
+    <Property Id="DataVirtualized" Label="Data Virtualized" Description="If true, the graph can contain nodes and links that represent data for virtualized nodes/links (i.e. not actually created in the graph)." DataType="System.Boolean" />
+    <Property Id="DefaultAction" Label="DefaultAction" Description="DefaultAction" DataType="System.String" />
+    <Property Id="Expression" DataType="System.String" />
+    <Property Id="GroupLabel" DataType="System.String" />
+    <Property Id="Icon" Label="Icon" DataType="System.String" />
+    <Property Id="IncomingActionLabel" Label="IncomingActionLabel" Description="IncomingActionLabel" DataType="System.String" />
+    <Property Id="IsEnabled" DataType="System.Boolean" />
+    <Property Id="IsOverloaded" Label="IsOverloaded" Description="IsOverloaded" DataType="System.Boolean" />
+    <Property Id="IsProviderRoot" Label="IsProviderRoot" Description="IsProviderRoot" DataType="System.Boolean" />
+    <Property Id="Label" Label="Label" Description="Displayable label of an Annotatable object" DataType="System.String" />
+    <Property Id="LabelBounds" DataType="System.Windows.Rect" />
+    <Property Id="Layout" DataType="System.String" />
+    <Property Id="NavigationActionLabel" Label="NavigationActionLabel" Description="NavigationActionLabel" DataType="System.String" />
+    <Property Id="OutgoingActionLabel" Label="OutgoingActionLabel" Description="OutgoingActionLabel" DataType="System.String" />
+    <Property Id="SourceLocation" Label="Start Line Number" DataType="Microsoft.VisualStudio.GraphModel.CodeSchema.SourceLocation" />
+    <Property Id="TargetType" DataType="System.Type" />
+    <Property Id="Value" DataType="System.String" />
+    <Property Id="ValueLabel" DataType="System.String" />
+    <Property Id="Visibility" Label="Visibility" Description="Defines whether a node in the graph is visible or not" DataType="System.Windows.Visibility" />
+  </Properties>
+  <QualifiedNames>
+    <Name Id="Assembly" Label="Assembly" ValueType="Uri" />
+    <Name Id="GenericArguments" Label="Generic Arguments" ValueType="Microsoft.VisualStudio.GraphModel.GraphNodeIdCollection" />
+    <Name Id="GenericParameterCount" Label="Generic Parameter Count" ValueType="System.String" />
+    <Name Id="IsUnresolved" Label="Is Unresolved" ValueType="System.String" />
+    <Name Id="Member" Label="Member" ValueType="System.Object" />
+    <Name Id="Name" Label="Name" ValueType="System.String" />
+    <Name Id="Namespace" Label="Namespace" ValueType="System.String" />
+    <Name Id="OverloadingParameters" Label="Parameter" ValueType="Microsoft.VisualStudio.GraphModel.GraphNodeIdCollection" Formatter="NameValueNoEscape" />
+    <Name Id="ParameterIdentifier" Label="Parameter Identifier" ValueType="System.String" />
+    <Name Id="Type" Label="Type" ValueType="System.Object" />
+  </QualifiedNames>
+  <IdentifierAliases>
+    <Alias n="1" Uri="Assembly=TNS.BL.dll" />
+    <Alias n="2" Uri="Assembly=$(c50ba368-93c1-45ad-8779-683189b0ba34.OutputPathUri)" />
+    <Alias n="3" Id="Namespace=TNS.API.IBApiWrapper" />
+    <Alias n="4" Id="Type=IBApiWrapper" />
+    <Alias n="5" Uri="Assembly=$(FxReferenceAssembliesUri)/.NETFramework/v4.6/mscorlib.dll" />
+    <Alias n="6" Id="GenericParameterCount=1" />
+    <Alias n="7" Id="Namespace=TNS.API.ApiDataObjects" />
+    <Alias n="8" Id="(@2 @3 @4 Member=(Name=RequestContinousContractData OverloadingParameters=[(@5 Namespace=System.Collections.Generic Type=(Name=List @6 GenericArguments=[(@2 @7 Type=ContractBase)]))]))" />
+    <Alias n="9" Id="Type=IBMessageHandler" />
+    <Alias n="10" Id="Namespace=TNS.API" />
+    <Alias n="11" Id="Type=OptionToLoadParameters" />
+    <Alias n="12" Id="Name=.ctor" />
+    <Alias n="13" Id="(@2 @10 @11 Member=(@12 OverloadingParameters=[(@2 @7 Type=BaseSecurityData)]))" />
+    <Alias n="14" Uri="Assembly=$(399b0096-559a-4541-b9e7-81f19a164826.OutputPathUri)" />
+    <Alias n="15" Id="Namespace=TNS.BL.UnlManagers" />
+    <Alias n="16" Id="Type=OptionNegotiator" />
+    <Alias n="17" Id="Namespace=System" />
+    <Alias n="18" Id="(@5 @17 Type=Boolean)" />
+    <Alias n="19" Id="Type=OrdersManager" />
+    <Alias n="20" Id="(@14 @15 @19 Member=(Name=TestTrading OverloadingParameters=[@18]))" />
+    <Alias n="21" Uri="Assembly=$(b121a8ec-d7cb-49ee-bb46-8e932ec79999.OutputPathUri)" />
+    <Alias n="22" Id="Namespace=IBApi" />
+    <Alias n="23" Id="(@21 @22 Type=ContractDetails)" />
+    <Alias n="24" Id="(@2 @3 @4 Member=(Name=RequestMarketData OverloadingParameters=[@23]))" />
+    <Alias n="25" Id="(@5 @17 Type=Double)" />
+    <Alias n="26" Id="(@2 @3 @9 Member=(Name=error OverloadingParameters=[(@5 @17 Type=Exception)]))" />
+    <Alias n="27" Id="Namespace=TNS.BL" />
+    <Alias n="28" Uri="Assembly=$(bcb4c6f8-73e1-48d8-a410-0bcc0295ee61.OutputPathUri)" />
+    <Alias n="29" Id="Namespace=Infra.Bus" />
+    <Alias n="30" Id="OverloadingParameters=[(@28 @29 Type=IMessage)]" />
+    <Alias n="31" Id="Member=(Name=HandleMessage @30)" />
+    <Alias n="32" Id="(@14 @27 Type=Distributer @31)" />
+    <Alias n="33" Id="Type=ManagedSecuritiesManager" />
+    <Alias n="34" Id="(@14 @27 @33 @31)" />
+    <Alias n="35" Id="(@14 @15 Type=OptionsManager @31)" />
+    <Alias n="36" Id="(@14 @15 @19 @31)" />
+    <Alias n="37" Id="Type=PositionsDataBuilder" />
+    <Alias n="38" Id="(@14 @15 @37 @31)" />
+    <Alias n="39" Id="(@28 @29 Type=SmartBaseLogic @31)" />
+    <Alias n="40" Id="Type=UNLManager" />
+    <Alias n="41" Id="(@14 @15 @40 @31)" />
+    <Alias n="42" Id="(@14 @27 Type=Distributer Member=(Name=PropagateMessageToAllUnlManagers @30))" />
+    <Alias n="43" Id="(@14 @15 @40 Member=(Name=SendMessageToAllComponents @30))" />
+    <Alias n="44" Id="(@5 @17 Type=Int32)" />
+    <Alias n="45" Id="Type=EReader" />
+    <Alias n="46" Id="(@21 @22 @45 Member=(Name=ProcessIncomingMessage OverloadingParameters=[@44]))" />
+    <Alias n="47" Id="(@14 @27 @33 Member=(@12 OverloadingParameters=[(@2 @10 Type=ITradingApi)]))" />
+    <Alias n="48" Id="(@2 @10 @11 Member=(Name=IsOptionWithinLoadBoundaries OverloadingParameters=[(@2 @7 Type=OptionContract)]))" />
+    <Alias n="49" Id="(@2 @7 Type=OptionData)" />
+    <Alias n="50" Uri="Assembly=$(b3c26503-8185-421c-920e-09a738d5bf29.OutputPathUri)" />
+    <Alias n="51" Id="Namespace=DAL" />
+    <Alias n="52" Id="(@50 @51 Type=DBWriter Member=(Name=HandleOptionsPositionData OverloadingParameters=[(@2 @7 Type=OptionsPositionData)]))" />
+    <Alias n="53" Id="(@2 @3 @4 Member=(Name=RequestOptionChain OverloadingParameters=[(@2 @10 @11)]))" />
+    <Alias n="54" Id="(@2 @3 @4 Member=(Name=RequestSecurityContractDetails OverloadingParameters=[(@2 @7 Type=SecurityData)]))" />
+    <Alias n="55" Id="(@5 @17 Type=String)" />
+    <Alias n="56" Id="(@14 @15 Type=OptionsManager Member=(Name=GetOptionData OverloadingParameters=[@55]))" />
+    <Alias n="57" Id="Type=AppManager" />
+    <Alias n="58" Id="(@14 @27 @57 Member=(Name=SendOneOrderTest OverloadingParameters=[(@14 Namespace=TNS.BL.DataObjects Type=TradeOrderData)]))" />
+    <Alias n="59" Id="(@14 @15 @19 Member=(Name=TestTrading OverloadingParameters=[(@14 Namespace=TNS.BL.DataObjects Type=TradeOrderData)]))" />
+    <Alias n="60" Id="(@28 @29 Type=SimpleBaseLogic Member=(Name=Enqueue OverloadingParameters=[(@28 @29 Type=IMessage),@18]))" />
+    <Alias n="61" Id="(@14 @27 @57 Member=(Name=SendOneOrderTest OverloadingParameters=[@55,@18]))" />
+    <Alias n="62" Id="Type=EClientSocket" />
+    <Alias n="63" Id="(@21 @22 @62 Member=(Name=reqContractDetails OverloadingParameters=[@44,(@21 @22 Type=Contract)]))" />
+    <Alias n="64" Id="(@2 @3 @9 Member=(Name=contractDetails OverloadingParameters=[@44,@23]))" />
+    <Alias n="65" Uri="Assembly=$(fa4d7c7d-7735-4c64-ad52-2c3d4389e87c.OutputPathUri)" />
+    <Alias n="66" Id="Namespace=RazboTrader" />
+    <Alias n="67" Id="(@65 @66 Type=MainForm Member=(Name=btnSendOrder_Click OverloadingParameters=[(@5 @17 Type=Object),(@5 @17 Type=EventArgs)]))" />
+    <Alias n="68" Uri="Assembly=$(FxReferenceAssembliesUri)/.NETFramework/v4.6/System.Windows.Forms.dll" />
+    <Alias n="69" Id="(@65 @66 Type=MainForm Member=(Name=MainForm_FormClosing OverloadingParameters=[(@5 @17 Type=Object),(@68 Namespace=System.Windows.Forms Type=FormClosingEventArgs)]))" />
+    <Alias n="70" Id="(@14 @15 @19 Member=(Name=SellOption OverloadingParameters=[@49,@44]))" />
+    <Alias n="71" Id="(@14 @15 @37 Member=(Name=GetOptionData OverloadingParameters=[(@2 @7 Type=PositionData),@55]))" />
+    <Alias n="72" Id="(@14 @15 @19 Member=(Name=SendOrder OverloadingParameters=[@49,@44,@18]))" />
+    <Alias n="73" Id="(@14 @15 @16 Member=(@12 OverloadingParameters=[(@2 @10 Type=ITradingApi),(@14 @15 @40),@18]))" />
+    <Alias n="74" Id="(@2 @3 @9 Member=(Name=RegisterContract OverloadingParameters=[@44,(@2 @7 Type=ContractBase),@23]))" />
+    <Alias n="75" Id="(@14 @15 @16 Member=(Name=TradeOption OverloadingParameters=[@49,@18,@44]))" />
+    <Alias n="76" Id="(@21 @22 @62 Member=(Name=eConnect OverloadingParameters=[@55,@44,@44]))" />
+    <Alias n="77" Id="(@2 @3 @9 Member=(Name=error OverloadingParameters=[@44,@44,@55]))" />
+    <Alias n="78" Id="(@28 Namespace=Infra.Extensions.ArrayExtensions Type=IEnumerableExtensions Member=(Name=ForEach @6 OverloadingParameters=[(@5 Namespace=System.Collections.Generic Type=(Name=IEnumerable @6 GenericArguments=[(ParameterIdentifier=0)])),(@5 @17 Type=(Name=Action @6 GenericArguments=[(ParameterIdentifier=0)]))]))" />
+    <Alias n="79" Id="(@50 @51 Type=DBSessionFactory Member=.ctor)" />
+    <Alias n="80" Id="(@14 @15 @37 Member=AddOrUpdateDataToPosition)" />
+    <Alias n="81" Id="(@2 @3 @4 Member=AnonymousMethod__0)" />
+    <Alias n="82" Id="(@14 @15 @37 Member=AnonymousMethod__12_1)" />
+    <Alias n="83" Id="(@2 @3 @4 Member=AnonymousMethod__24_0)" />
+    <Alias n="84" Id="(@14 @27 @57 Member=BuildManagers)" />
+    <Alias n="85" Id="(@14 @15 @16 Member=CalculateNextCurrentLimitPrice)" />
+    <Alias n="86" Id="(@14 @15 @37 Member=CalculateUnlTradingData)" />
+    <Alias n="87" Id="(@21 @22 @62 Member=Close)" />
+    <Alias n="88" Id="(@14 @27 @57 Member=ConnectToBroker)" />
+    <Alias n="89" Id="(@2 @3 @4 Member=ConnectToBroker)" />
+    <Alias n="90" Id="(@21 @22 @45 Member=ContractDataEndEvent)" />
+    <Alias n="91" Id="(@21 @22 @45 Member=ContractDataEvent)" />
+    <Alias n="92" Id="(@14 @15 @40 Member=CreateManagers)" />
+    <Alias n="93" Id="(@14 @15 @16 Member=DoTrading)" />
+    <Alias n="94" Id="(@14 @27 @33 Member=DoWorkAfterConnection)" />
+    <Alias n="95" Id="(@14 @15 @40 Member=DoWorkAfterConnection)" />
+    <Alias n="96" Id="(@21 @22 @45 Member=ErrorEvent)" />
+    <Alias n="97" Id="(@2 @10 @11 Member=get_CallMaxStrike)" />
+    <Alias n="98" Id="(@2 @10 @11 Member=get_CallMinStrike)" />
+    <Alias n="99" Id="(@2 @7 Type=OptionsPositionData Member=get_DeltaTotal)" />
+    <Alias n="100" Id="(@2 @10 @11 Member=get_Multiplier)" />
+    <Alias n="101" Id="(@2 @10 @11 Member=get_OptionContractPivotToLoad)" />
+    <Alias n="102" Id="(@2 @10 @11 Member=get_PutMaxStrike)" />
+    <Alias n="103" Id="(@2 @10 @11 Member=get_PutMinStrike)" />
+    <Alias n="104" Id="(@2 @10 @11 Member=get_UnlPrice)" />
+    <Alias n="105" Id="(@14 @15 @16 Member=InializeTrading)" />
+    <Alias n="106" Id="(@14 @27 @33 Member=InitializeMainSecurities)" />
+    <Alias n="107" Id="(@65 @66 Type=Program Member=Main)" />
+    <Alias n="108" Id="(@21 @22 @45 Member=ReadAndProcessMessages)" />
+    <Alias n="109" Id="(@2 @10 @11 Member=SetMinMaxStrike)" />
+    <Alias n="110" Id="(@2 @10 @11 Member=SetStrikeThreshold)" />
+    <Alias n="111" Id="(@14 @27 @57 Member=ShutDownApplication)" />
+    <Alias n="112" Id="(@65 @66 Type=MainForm Member=StartApplication)" />
+    <Alias n="113" Id="(@21 @22 @45 Member=TickOptionComputationEvent)" />
+    <Alias n="114" Id="(@21 @22 @45 Member=TickPriceEvent)" />
+    <Alias n="115" Id="(@2 @10 @11 Member=ToString)" />
+    <Alias n="116" Id="(@28 @29 Type=SimpleBaseLogic Member=Work)" />
+  </IdentifierAliases>
+  <Styles>
+    <Style TargetType="Link" GroupLabel="Current Call Stack Link" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="HasCategory('CurrentCallStackCall')" />
+      <Setter Property="Stroke" Value="#FFD93701" />
+      <Setter Property="Weight" Value="1" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Call Stack Indirect Link" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="HasCategory('CallStackIndirectCall')" />
+      <Setter Property="Stroke" Value="#FFB8B8B8" />
+      <Setter Property="StrokeDashArray" Value="4 1" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Call Stack Direct Link" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="HasCategory('CallStackDirectCall')" />
+      <Setter Property="Stroke" Value="#FFB8B8B8" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Current Call Stack (no source)" ValueLabel="True">
+      <Condition Expression="HasCategory('CurrentCallStackEntry') And !HasCategory('CodeSchema_SourceLocation')" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="#FFA5A5A5" />
+      <Setter Property="Stroke" Value="#FF0072C6" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="External And Current" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="HasCategory('ExternalCallStackEntry') And HasCategory('CurrentCallStackEntry')" />
+      <Setter Property="Background" Value="#FFFFF8F0" />
+      <Setter Property="Stroke" Value="#FFCE5100" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Current Call Stack (source)" ValueLabel="True">
+      <Condition Expression="HasCategory('CurrentCallStackEntry') And !HasCategory('QueryResult')" />
+      <Setter Property="Background" Value="#FFFFE3C6" />
+      <Setter Property="Stroke" Value="#FFD93701" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="External Call Stack" ValueLabel="True">
+      <Condition Expression="HasCategory('ExternalCallStackEntry')" />
+      <Setter Property="Background" Value="#FFF7F7F7" />
+      <Setter Property="StrokeDashArray" Value="1 3" />
+      <Setter Property="Foreground" Value="#FFA5A5A5" />
+      <Setter Property="Stroke" Value="#FFA5A5A5" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Results" ValueLabel="True">
+      <Condition Expression="HasCategory('QueryResult')" />
+      <Setter Property="Background" Value="#FFBCFFBE" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Test Project" ValueLabel="Test Project">
+      <Condition Expression="HasCategory('CodeMap_TestProject')" />
+      <Setter Property="Icon" Value="CodeMap_TestProject" />
+      <Setter Property="Background" Value="#FF307A69" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Web Project" ValueLabel="Web Project">
+      <Condition Expression="HasCategory('CodeMap_WebProject')" />
+      <Setter Property="Icon" Value="CodeMap_WebProject" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Windows Store Project" ValueLabel="Windows Store Project">
+      <Condition Expression="HasCategory('CodeMap_WindowsStoreProject')" />
+      <Setter Property="Icon" Value="CodeMap_WindowsStoreProject" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Phone Project" ValueLabel="Phone Project">
+      <Condition Expression="HasCategory('CodeMap_PhoneProject')" />
+      <Setter Property="Icon" Value="CodeMap_PhoneProject" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Portable Library" ValueLabel="Portable Library">
+      <Condition Expression="HasCategory('CodeMap_PortableLibraryProject')" />
+      <Setter Property="Icon" Value="CodeMap_PortableLibraryProject" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="WPF Project" ValueLabel="WPF Project">
+      <Condition Expression="HasCategory('CodeMap_WpfProject')" />
+      <Setter Property="Icon" Value="CodeMap_WpfProject" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="VSIX Project" ValueLabel="VSIX Project">
+      <Condition Expression="HasCategory('CodeMap_VsixProject')" />
+      <Setter Property="Icon" Value="CodeMap_VsixProject" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Modeling Project" ValueLabel="Modeling Project">
+      <Condition Expression="HasCategory('CodeMap_ModelingProject')" />
+      <Setter Property="Icon" Value="CodeMap_ModelingProject" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Assembly" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Assembly')" />
+      <Setter Property="Background" Value="#FF094167" />
+      <Setter Property="Stroke" Value="#FF094167" />
+      <Setter Property="Icon" Value="CodeSchema_Assembly" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Namespace" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Namespace')" />
+      <Setter Property="Background" Value="#FF0E619A" />
+      <Setter Property="Stroke" Value="#FF0E619A" />
+      <Setter Property="Icon" Value="CodeSchema_Namespace" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Interface" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Interface')" />
+      <Setter Property="Background" Value="#FF1382CE" />
+      <Setter Property="Stroke" Value="#FF1382CE" />
+      <Setter Property="Icon" Value="CodeSchema_Interface" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Struct" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Struct')" />
+      <Setter Property="Background" Value="#FF1382CE" />
+      <Setter Property="Stroke" Value="#FF1382CE" />
+      <Setter Property="Icon" Value="CodeSchema_Struct" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Enumeration" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Enum')" />
+      <Setter Property="Background" Value="#FF1382CE" />
+      <Setter Property="Stroke" Value="#FF1382CE" />
+      <Setter Property="Icon" Value="CodeSchema_Enum" />
+      <Setter Property="LayoutSettings" Value="List" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Delegate" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Delegate')" />
+      <Setter Property="Background" Value="#FF1382CE" />
+      <Setter Property="Stroke" Value="#FF1382CE" />
+      <Setter Property="Icon" Value="CodeSchema_Delegate" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Class" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Type')" />
+      <Setter Property="Background" Value="#FF1382CE" />
+      <Setter Property="Stroke" Value="#FF1382CE" />
+      <Setter Property="Icon" Value="CodeSchema_Class" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Property" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Property')" />
+      <Setter Property="Background" Value="#FFE0E0E0" />
+      <Setter Property="Stroke" Value="#FFE0E0E0" />
+      <Setter Property="Icon" Value="CodeSchema_Property" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Method" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Method') Or HasCategory('CodeSchema_CallStackUnresolvedMethod')" />
+      <Setter Property="Background" Value="#FFE0E0E0" />
+      <Setter Property="Stroke" Value="#FFE0E0E0" />
+      <Setter Property="Icon" Value="CodeSchema_Method" />
+      <Setter Property="LayoutSettings" Value="List" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Event" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Event')" />
+      <Setter Property="Background" Value="#FFE0E0E0" />
+      <Setter Property="Stroke" Value="#FFE0E0E0" />
+      <Setter Property="Icon" Value="CodeSchema_Event" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Field" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Field')" />
+      <Setter Property="Background" Value="#FFE0E0E0" />
+      <Setter Property="Stroke" Value="#FFE0E0E0" />
+      <Setter Property="Icon" Value="CodeSchema_Field" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Out Parameter" ValueLabel="Has category">
+      <Condition Expression="CodeSchemaProperty_IsOut = 'True'" />
+      <Setter Property="Icon" Value="CodeSchema_OutParameter" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Parameter" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_Parameter')" />
+      <Setter Property="Icon" Value="CodeSchema_Parameter" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Local Variable" ValueLabel="Has category">
+      <Condition Expression="HasCategory('CodeSchema_LocalExpression')" />
+      <Setter Property="Icon" Value="CodeSchema_LocalExpression" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Externals" ValueLabel="Has category">
+      <Condition Expression="HasCategory('Externals')" />
+      <Setter Property="Background" Value="#FF424242" />
+      <Setter Property="Stroke" Value="#FF424242" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Inherits From" ValueLabel="True">
+      <Condition Expression="HasCategory('InheritsFrom')" />
+      <Setter Property="Stroke" Value="#FF00A600" />
+      <Setter Property="StrokeDashArray" Value="2 0" />
+      <Setter Property="DrawArrow" Value="true" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Implements" ValueLabel="True">
+      <Condition Expression="HasCategory('Implements')" />
+      <Setter Property="Stroke" Value="#8000A600" />
+      <Setter Property="StrokeDashArray" Value="2 2" />
+      <Setter Property="DrawArrow" Value="true" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Calls" ValueLabel="True">
+      <Condition Expression="HasCategory('CodeSchema_Calls')" />
+      <Setter Property="Stroke" Value="#FFFF00FF" />
+      <Setter Property="StrokeDashArray" Value="2 0" />
+      <Setter Property="DrawArrow" Value="true" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Function Pointer" ValueLabel="True">
+      <Condition Expression="HasCategory('CodeSchema_FunctionPointer')" />
+      <Setter Property="Stroke" Value="#FFFF00FF" />
+      <Setter Property="StrokeDashArray" Value="2 2" />
+      <Setter Property="DrawArrow" Value="true" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Field Read" ValueLabel="True">
+      <Condition Expression="HasCategory('CodeSchema_FieldRead')" />
+      <Setter Property="Stroke" Value="#FF00AEEF" />
+      <Setter Property="StrokeDashArray" Value="2 2" />
+      <Setter Property="DrawArrow" Value="true" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Field Write" ValueLabel="True">
+      <Condition Expression="HasCategory('CodeSchema_FieldWrite')" />
+      <Setter Property="Stroke" Value="#FF00AEEF" />
+      <Setter Property="DrawArrow" Value="true" />
+      <Setter Property="IsHidden" Value="false" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Inherits From" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="HasCategory('InheritsFrom') And Target.HasCategory('CodeSchema_Class')" />
+      <Setter Property="TargetDecorator" Value="OpenArrow" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Implements" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="HasCategory('Implements') And Target.HasCategory('CodeSchema_Interface')" />
+      <Setter Property="TargetDecorator" Value="OpenArrow" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Comment Link" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="Source.HasCategory('Comment')" />
+      <Setter Property="Stroke" Value="#FFE5C365" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Cursor Location Changed" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="IsCursorLocation" />
+      <Setter Property="IndicatorWest" Value="WestIndicator" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Disabled Breakpoint Location Changed" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="DisabledBreakpointCount" />
+      <Setter Property="IndicatorWest" Value="WestIndicator" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Enabled Breakpoint Location Changed" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="EnabledBreakpointCount" />
+      <Setter Property="IndicatorWest" Value="WestIndicator" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Instruction Pointer Location Changed" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="IsInstructionPointerLocation" />
+      <Setter Property="IndicatorWest" Value="WestIndicator" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Current Callstack Changed" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="IsCurrentCallstackFrame" />
+      <Setter Property="IndicatorWest" Value="WestIndicator" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Return" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="HasCategory('CodeSchema_ReturnTypeLink')" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="References" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="HasCategory('References')" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Uses Attribute" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="HasCategory('CodeSchema_AttributeUse')" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Solution Folder" ValueLabel="True" Visibility="Hidden">
+      <Condition Expression="HasCategory('CodeMap_SolutionFolder')" />
+      <Setter Property="Background" Value="#FFDEBA83" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Project Reference" ValueLabel="Project Reference">
+      <Condition Expression="HasCategory('CodeMap_ProjectReference')" />
+      <Setter Property="Stroke" Value="#9A9A9A" />
+      <Setter Property="StrokeDashArray" Value="2 2" />
+      <Setter Property="DrawArrow" Value="true" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="External Reference" ValueLabel="External Reference">
+      <Condition Expression="HasCategory('CodeMap_ExternalReference')" />
+      <Setter Property="Stroke" Value="#9A9A9A" />
+      <Setter Property="StrokeDashArray" Value="2 2" />
+      <Setter Property="DrawArrow" Value="true" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Comment" ValueLabel="Has comment">
+      <Condition Expression="HasCategory('Comment')" />
+      <Setter Property="Background" Value="#FFFFFACD" />
+      <Setter Property="Stroke" Value="#FFE5C365" />
+      <Setter Property="StrokeThickness" Value="1" />
+      <Setter Property="NodeRadius" Value="2" />
+      <Setter Property="MaxWidth" Value="250" />
+    </Style>
+  </Styles>
+  <Paths>
+    <Path Id="399b0096-559a-4541-b9e7-81f19a164826.OutputPathUri" Value="file:///C:/DevGit/robotrader/RoboTraderSuite/BL/bin/Debug/TNS.BL.dll" />
+    <Path Id="b121a8ec-d7cb-49ee-bb46-8e932ec79999.OutputPathUri" Value="file:///C:/DevGit/robotrader/RoboTraderSuite/IBApi/bin/Debug/IBApi.dll" />
+    <Path Id="b3c26503-8185-421c-920e-09a738d5bf29.OutputPathUri" Value="file:///C:/DevGit/robotrader/RoboTraderSuite/DAL/bin/Debug/DAL.dll" />
+    <Path Id="bcb4c6f8-73e1-48d8-a410-0bcc0295ee61.OutputPathUri" Value="file:///C:/DevGit/robotrader/RoboTraderSuite/Infra/bin/Debug/Infra.dll" />
+    <Path Id="c50ba368-93c1-45ad-8779-683189b0ba34.OutputPathUri" Value="file:///C:/DevGit/robotrader/RoboTraderSuite/TNS.API/bin/Debug/TNS.API.dll" />
+    <Path Id="fa4d7c7d-7735-4c64-ad52-2c3d4389e87c.OutputPathUri" Value="file:///C:/DevGit/robotrader/RoboTraderSuite/RazboTrader/bin/Debug/RazboTrader.exe" />
+    <Path Id="FxReferenceAssembliesUri" Value="file:///C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework" />
+  </Paths>
+</DirectedGraph>

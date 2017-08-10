@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TNS.API.ApiDataObjects;
+using TNS.BL.DataObjects;
 
 namespace TNS.BL.Interfaces
 {
@@ -9,7 +10,7 @@ namespace TNS.BL.Interfaces
         Dictionary<string, OrderStatusData> OrderStatusDataDic { get; }
         OrderData BuyOption(OptionData optionData, int quantity);
         OrderData SellOption(OptionData optionData,  int quantity);
-        OrderData TestTrading(bool sell);
+        OrderData TestTrading(TradeOrderData tradeOrderData);
         void CancelOrder(string orderId);
 
         /// <summary>

@@ -108,6 +108,9 @@ namespace TNS.BL.UnlManagers
                     UnlTradingData.MaxAllowedMargin = marginData.MarginMaxAllowed;
                     UnlTradingData.SetLastUpdate();
                     break;
+                case EapiDataTypes.ExceptionData:
+                    
+                    break;
             }
         }
 

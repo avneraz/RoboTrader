@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Infra;
 using Infra.Extensions;
 using TNS.API.ApiDataObjects;
 using TNS.BL;
@@ -21,7 +22,33 @@ namespace TNS.Controls
             InitializeComponent();
         }
 
-        //public MainSecuritiesView(UIDataManager uiDataManager):this()
+
+        public void SetManagedSecuritiesData(List<SecurityData> securitiesDataList)
+        {
+            gridControl1.InvokeIfRequired(() =>
+            {
+                securityDataBindingSource.DataSource = securitiesDataList;
+                securityDataBindingSource.ResetBindings(false);
+
+            });
+
+            GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(1),
+                () =>
+                {
+                    gridControl1.InvokeIfRequired(() =>
+                    {
+                        securityDataBindingSource.ResetBindings(false);
+
+                    });
+                },
+                true);
+
+        }
+
+
+
+
+        //public MainSecuritiesView(UIDataManager uiDataManager) : this()
         //{
         //    UIDataManager = uiDataManager;
         //}
@@ -29,16 +56,18 @@ namespace TNS.Controls
         //public void SetUIDataManager(UIDataManager uiDataManager)
         //{
         //    UIDataManager = uiDataManager;
-        //    this.InvokeIfRequired(() => {
+        //    this.InvokeIfRequired(() =>
+        //    {
         //        securityDataBindingSource.DataSource = UIDataManager.GetSecurityDataList();
         //        securityDataBindingSource.ResetBindings(false);
         //    });
-        //    UIDataManager.SecuritiesUpdated+= UIDataManagerOnSecuritiesUpdated;
+        //    UIDataManager.SecuritiesUpdated += UIDataManagerOnSecuritiesUpdated;
         //}
 
         //private void UIDataManagerOnSecuritiesUpdated(BaseSecurityData securityData)
         //{
-        //    this.InvokeIfRequired(() => {
+        //    this.InvokeIfRequired(() =>
+        //    {
         //        securityDataBindingSource.DataSource = UIDataManager.GetSecurityDataList();
         //        securityDataBindingSource.ResetBindings(false);
         //    });

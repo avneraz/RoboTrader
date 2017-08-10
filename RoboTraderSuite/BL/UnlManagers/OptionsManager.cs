@@ -18,7 +18,8 @@ namespace TNS.BL.UnlManagers
             OptionDataDic = new Dictionary<string, OptionData>();
         }
        
-        private  readonly ILog _logger = LogManager.GetLogger(typeof(OptionsManager));
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(OptionsManager));
+        //private static readonly ILog Logger = LogManager.GetLogger(typeof(UNLManager));
 
         //public event Action<OptionData> OptionDataReceivd;
 
@@ -58,7 +59,7 @@ namespace TNS.BL.UnlManagers
             {
                
                 OptionDataDic.Add(optionData.GetOptionKey(), optionData);
-                _logger.DebugFormat("OptionManager({0}, add OptionData: {1})", Symbol, optionData);
+                Logger.InfoFormat($"OptionManager({Symbol}), add OptionData: {optionData}). OptionDataDic.Contains {OptionDataDic.Count} members.");
               
             }
             else
@@ -81,7 +82,7 @@ namespace TNS.BL.UnlManagers
             var msg = $"OptionManager({Symbol}), Elapsed time from connection: {elapsedMS:N} ms, " +
                       $"OptionDataDic.Count:{OptionDataDic.Count}";
             Debug.WriteLine(msg);
-            _logger.Warn(msg);
+            Logger.Warn(msg);
         }
        
         private Stopwatch StopwatchT { get; } = new Stopwatch();

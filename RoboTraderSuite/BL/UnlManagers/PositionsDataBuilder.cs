@@ -61,7 +61,7 @@ namespace TNS.BL.UnlManagers
             var optionsPositionData = (OptionsPositionData)message;
             optionsPositionData.HandledByPositionDataBuilder = true;
             var newPosition = PositionDataDic.ContainsKey(key) == false;
-            PositionDataDic[key] = optionsPositionData;
+                PositionDataDic[key] = optionsPositionData;
             //Log:
             var msg = $"{Symbol}.PDB +++ add PositionData:";
             if (newPosition == false)

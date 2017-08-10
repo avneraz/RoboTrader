@@ -56,6 +56,7 @@
     <Compile Include="Analysis\OptionsRanker.cs" />
     <Compile Include="AppManager.cs" />
     <Compile Include="DataObjects\BnSCalculationData.cs" />
+    <Compile Include="DataObjects\TradeOrderData.cs" />
     <Compile Include="DataObjects\TradingTimeEvent.cs" />
     <Compile Include="Distributer.cs" />
     <Compile Include="Interfaces\IOptionsManager.cs" />

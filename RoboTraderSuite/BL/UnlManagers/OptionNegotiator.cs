@@ -54,7 +54,9 @@ namespace TNS.BL.UnlManagers
         {
             if(OptionData != null)
                 throw new ArgumentException("The OptionNegotiator already has open order!!!");
-            OptionData = optionData;
+
+            OptionData = optionData ?? throw new Exception("The option data not exist!!!");
+
             OrderAction = sell ? OrderAction.SELL : OrderAction.BUY;
             Quantity = quantity;
             InializeTrading();
@@ -62,11 +64,11 @@ namespace TNS.BL.UnlManagers
             StarTime = DateTime.Now;
             SetCurrentLimitPrice(FirstLimitPrice);
             var whatIfOrderData = SendWhatIfOrder(CurrentLimitPrice);
-            if (UnlManager.IsNowWorkingTime == false)
-            {
-                //TerminateNegotiation();
-                return whatIfOrderData;
-            }
+            //if (UnlManager.IsNowWorkingTime == false)
+            //{
+            //    //TerminateNegotiation();
+            //    return whatIfOrderData;
+            //}
             CreateOrder(CurrentLimitPrice);
             ScheduledTaskId = UnlManager.AddScheduledTaskOnUnl(OrderIntervalTimeSpan, DoTrading, true);
             return OrderData;
@@ -189,6 +191,19 @@ namespace TNS.BL.UnlManagers
             switch (OrderStatusData.OrderStatus)
             {
                 case OrderStatus.Filled:
+                    //Create Transuction Data object and send it:
+                    var transaction = new TransactionData()
+                    {
+                        TransactionTime = DateTime.Now,
+                        OrderStatus = OrderStatusData,
+                        Order = OrderStatusData.Order,
+                        OptionData = OptionData,
+                        OptionKey = OptionData.OptionKey,
+                    };
+                    UnlManager.Distributer.Enqueue(transaction);
+
+                    TerminateNegotiation();
+                    break;
                 case OrderStatus.Cancelled:
                 case OrderStatus.Inactive:
                     TerminateNegotiation();
@@ -213,6 +228,12 @@ namespace TNS.BL.UnlManagers
                     break;
 
                 case OrderStatus.PreSubmitted:
+                    //TradingCycleCounter++;
+                    if (UnlManager.IsNowWorkingTime == false)
+                    {
+                        TerminateNegotiation();
+                        CancelOrder(OrderData.OrderId);
+                    }
                     break;
                 case OrderStatus.PendingCancel:
                     break;
@@ -237,7 +258,7 @@ namespace TNS.BL.UnlManagers
                     SetCurrentLimitPrice(CurrentLimitPrice - MinPriceStep);
                 else
                     SetCurrentLimitPrice(FirstAskPrice - MinPriceStep);
-                if (LastPriceLimit > CurrentLimitPrice)
+                if (LastPriceLimit < CurrentLimitPrice)
                 {
                     LastLimitOccurred = true;
                 }

@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Drawing;
 using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using DAL;
 using TNS.API.ApiDataObjects;
 using TNS.API.IBApiWrapper;
@@ -14,14 +8,13 @@ using Infra;
 using Infra.Bus;
 using Infra.Configuration;
 using Infra.Extensions.ArrayExtensions;
-using Infra.PopUpMessages;
 using log4net;
 using NHibernate;
 using NHibernate.Linq;
 using TNS.API;
+using TNS.BL.DataObjects;
 using TNS.BL.Interfaces;
 using TNS.BL.UnlManagers;
-using UILogic;
 
 namespace TNS.BL
 {
@@ -148,13 +141,14 @@ namespace TNS.BL
                     AAPLHighLoadingStrike = 100,
                     AAPLLowLoadingStrike = 200,
                     AAPLSessionsToLoad = "20170817;20151016;20160115",
-                    HighStrikePercentage = 12,
-                    LowStrikePercentage = 12,
-                    MinimumDaysToExpiration = 20,
-                    MaxmumDaysToExpiration = 82,
+                    HighStrikePercentage = 8,
+                    LowStrikePercentage = 8,
+                    MinimumDaysToExpiration = 100,
+                    MaxmumDaysToExpiration = 130,
                 },
                 Trading =
                 {
+                    AllowedDeltaOffset = 20,
                     USAInterestPercentage = 0.25,
                     StatisticsSaveIntervalSec = 300,
                     DeltaLossThreshold = 0.25,
@@ -165,7 +159,7 @@ namespace TNS.BL
                     UNLSymbolsList = "AAPL;MSFT",
                     RiskFreeInterestRate = 0.01,
                     InitNetLiquidation = 210300,
-                    OrderInterval = 1000,
+                    OrderInterval = 1500,
                     MinPriceStep = 0.01,
 
                 }
@@ -175,11 +169,16 @@ namespace TNS.BL
             configHandler.SaveConfig(allConfigurations);
 
         }
-       
-        public void SendOneOrderTest(string symbol,bool sell)
+
+        //public void SendOneOrderTest(string symbol,bool sell)
+        //{
+        //    IOrdersManager ordersManager = ((UNLManager) UNLManagerDic[symbol]).OrdersManager;
+        //    ordersManager.TestTrading(true);
+        //}
+        public void SendOneOrderTest(TradeOrderData tradeOrderData)
         {
-            IOrdersManager ordersManager = ((UNLManager) UNLManagerDic[symbol]).OrdersManager;
-            ordersManager.TestTrading(true);
+            IOrdersManager ordersManager = ((UNLManager)UNLManagerDic[tradeOrderData.Symbol]).OrdersManager;
+            ordersManager.TestTrading(tradeOrderData);
         }
         public void CancelOrderTest(string symbol, string orderId)
         {

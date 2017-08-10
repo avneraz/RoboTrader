@@ -90,6 +90,17 @@ namespace Infra.Extensions
             }
         }
 
+        public static DateTime GetThirdFridayOfMonth(this DateTime theMonth)
+        {
+            DateTime tempDate = new DateTime(theMonth.Year, theMonth.Month, 1);
+            // find first friday
+            while (tempDate.DayOfWeek != DayOfWeek.Friday)
+                tempDate = tempDate.AddDays(1);
+
+            // add two weeks
+            tempDate = tempDate.AddDays(14);
+            return tempDate;
+        }
         /// <summary>
         /// Gets the days to expired. 
         /// calculates the number of days from the date to the last Friday of the month minus 1.
