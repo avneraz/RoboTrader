@@ -21,13 +21,11 @@ namespace TNS.API
         public OptionToLoadParameters(BaseSecurityData baseSecurityData)
         {
             BaseSecurityData = baseSecurityData;
-            _unlLastPrice = baseSecurityData.LastPrice;
-            //SetStrikeThreshold();
             SetMinMaxStrike();
         }
 
+        /*
         private double _unlLastPrice;
-
         private double _strikeThreshold;
 
         private void SetStrikeThreshold()
@@ -56,6 +54,7 @@ namespace TNS.API
             //_strikeThreshold = highStrikeRatio * .5;
 
         }
+        //*/
 
         private void SetMinMaxStrike()
         {
@@ -68,79 +67,20 @@ namespace TNS.API
 
             MinStrike = UnlPrice * (1 - strikeThreshold);
             MaxStrike = UnlPrice * (1 + strikeThreshold);
-            //var minStrike = (UnlPrice * (1 - (double)(
-            //                                     AllConfigurations.AllConfigurationsObject.Session.HighStrikePercentage) / 100));
-            //MinStrike = minStrike;
-
-            //var maxStrike = (UnlPrice * (1 + (double)(
-            //                                 AllConfigurations.AllConfigurationsObject.Session.HighStrikePercentage) / 100));
-
-            //MaxStrike = maxStrike;
         }
         public BaseSecurityData BaseSecurityData { get; set; }
 
         public string Symbol => BaseSecurityData.GetContract().Symbol;
 
-        //public double UnlPrice => BaseSecurityData.LastPrice;
         public double UnlPrice => BaseSecurityData.LastPrice <= 0 ? 150 : BaseSecurityData.LastPrice;
 
         public int MinDaysToExpiration => AllConfigurations.AllConfigurationsObject.Session.MinimumDaysToExpiration;
         public int MaxDaysToExpiration => AllConfigurations.AllConfigurationsObject.Session.MaxmumDaysToExpiration;
 
-        //private double CallMinStrike
-        //{
-        //    get;
-        //    set;
-        //    //{
-        //    //    var callMinStrike = (UnlPrice * (1 - (double)(
-        //    //                      AllConfigurations.AllConfigurationsObject.Session.HighStrikePercentage) / 100));
 
-        //    //    callMinStrike = Math.Max(_unlLastPrice * (1 - _strikeThreshold), callMinStrike);
-        //    //    return callMinStrike;
-        //    //}
-        //}
-
-        private double MaxStrike
-        {
-            get;
-            set;
-            //{
-            //    var callMaxStrike =
-            //    (UnlPrice * (1 + (double) (AllConfigurations.AllConfigurationsObject.Session.LowStrikePercentage) /
-            //                 100));
-
-            //    callMaxStrike = Math.Min(_unlLastPrice * (1 - _strikeThreshold), callMaxStrike);
-            //    return callMaxStrike;
-            //}
-        }
-
-        //private double MaxStrike
-        //{
-        //    get; set;
-        //    //{
-        //    //    var putMaxStrike =
-        //    //        (UnlPrice * (1 + (double)(AllConfigurations.AllConfigurationsObject.Session.HighStrikePercentage) / 100));
-
-        //    //    putMaxStrike = Math.Min(_unlLastPrice * (1 - _strikeThreshold), putMaxStrike);
-        //    //    return putMaxStrike;
-        //    //}
-        //}
-
-        private double MinStrike
-        {
-            get;
-            set;
-            //{
-            //    var putMinStrike = (UnlPrice * (1 - (double)(AllConfigurations.AllConfigurationsObject.Session.LowStrikePercentage) / 100));
-
-            //    putMinStrike = Math.Max(_unlLastPrice * (1 - _strikeThreshold), putMinStrike);
-            //    return putMinStrike;
-            //}
-        }
-        //public double CallMinStrike => (UnlPrice * (1 - (double)(AllConfigurations.AllConfigurationsObject.Session.HighStrikePercentage) / 100));
-        //public double CallMaxStrike => (UnlPrice * (1 + (double)(AllConfigurations.AllConfigurationsObject.Session.LowStrikePercentage) / 100));
-        //public double PutMaxStrike =>  (UnlPrice * (1 + (double)(AllConfigurations.AllConfigurationsObject.Session.HighStrikePercentage) / 100));
-        //public double PutMinStrike =>  (UnlPrice * (1 - (double)(AllConfigurations.AllConfigurationsObject.Session.LowStrikePercentage) / 100));
+        private double MaxStrike { get; set; }
+        
+        private double MinStrike { get; set; }
 
         public int Multiplier => BaseSecurityData.Multiplier;
         /// <summary>
@@ -171,7 +111,6 @@ namespace TNS.API
                 return optionContract;
             }
         }
-        
 
 
         /// <summary>
@@ -182,7 +121,7 @@ namespace TNS.API
         /// <returns></returns>
         public bool IsOptionWithinLoadBoundaries(OptionContract optionContract)
         {
-            //Get only Monthly option chain, not weekly!
+            //Get only Monthly option chain, not weekly!, Every monthly expires at the 3'd friday of the month/
             if (optionContract.Expiry.Equals(optionContract.Expiry.GetThirdFridayOfMonth()) == false)
                 return false;
             //Check expiration boundaries:
@@ -194,24 +133,6 @@ namespace TNS.API
             if ((optionContract.Strike > MaxStrike) || (optionContract.Strike < MinStrike))
                 return false;
 
-
-            ////Check if the Delta within the allowed offset:
-            ////if(optionContract.)
-            ////Check strike boundaries:
-            //switch (optionContract.OptionType)
-            //{
-            //    case EOptionType.Call:
-            //        if ((optionContract.Strike > MaxStrike) || (optionContract.Strike < MinStrike))
-            //            return false;
-            //        break;
-            //    case EOptionType.Put:
-            //        if ((optionContract.Strike > MaxStrike) || (optionContract.Strike < MinStrike))
-            //            return false;
-            //        break;
-            //    default:
-            //        return false;
-            //}
-            //IncreamentRequestOptionMarketDataCounter();
             return true;
         }
 

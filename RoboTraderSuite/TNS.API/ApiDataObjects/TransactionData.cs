@@ -28,5 +28,9 @@ namespace TNS.API.ApiDataObjects
 
         public DateTime TransactionTime { get; set; }
 
+        public string Symbol { get; set; }
+
+        public double RequieredMargin { get; set; }
+
     }
 }

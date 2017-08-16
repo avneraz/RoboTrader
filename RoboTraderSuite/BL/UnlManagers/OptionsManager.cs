@@ -40,7 +40,6 @@ namespace TNS.BL.UnlManagers
             if ((RequestOptionChainDone == false) && (message.APIDataType == EapiDataTypes.SecurityData))
             {
                 //Request detail contract only on the first time:
-                //if ((MainSecurityData != null) && MainSecurityData.LastPrice > 0)
                 if ((MainSecurityData != null) && !RequestOptionChainDone)
                 {
                     RequestOptionChainDone = true;
@@ -69,8 +68,9 @@ namespace TNS.BL.UnlManagers
             if ((OptionDataDic.Count > _lastoptionCount) && 
                     (OptionDataDic.Count == _optionToLoadParameters.RequestOptionMarketDataCount))
                     LogEvent();
-            
+            ForTest: if (Symbol == "MCD") { }
             return true;
+
         }
 
         private int  _lastoptionCount;

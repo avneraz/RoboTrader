@@ -37,6 +37,14 @@
             this.xtraPageMainSecurities = new DevExpress.XtraTab.XtraTabPage();
             this.mainSecuritiesView1 = new TNS.Controls.MainSecuritiesView();
             this.xtraPageOrders = new DevExpress.XtraTab.XtraTabPage();
+            this.cbxSell = new System.Windows.Forms.CheckBox();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtType = new System.Windows.Forms.TextBox();
+            this.txtStrike = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtSymbol = new System.Windows.Forms.TextBox();
             this.ordersView1 = new TNS.Controls.OrdersView();
             this.btnRegisterForData = new System.Windows.Forms.Button();
             this.btnCancelOrder = new System.Windows.Forms.Button();
@@ -46,14 +54,6 @@
             this.xtraPageUnlDataTrading = new DevExpress.XtraTab.XtraTabPage();
             this.unlTradingView1 = new TNS.Controls.UnlTradingView();
             this.btnBnsLocal = new System.Windows.Forms.Button();
-            this.txtSymbol = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtStrike = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.txtType = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.cbxSell = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.xPageAPIMessages.SuspendLayout();
@@ -160,6 +160,77 @@
             this.xtraPageOrders.Size = new System.Drawing.Size(1061, 492);
             this.xtraPageOrders.Text = "Orders";
             // 
+            // cbxSell
+            // 
+            this.cbxSell.AutoSize = true;
+            this.cbxSell.Checked = true;
+            this.cbxSell.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbxSell.Location = new System.Drawing.Point(629, 18);
+            this.cbxSell.Name = "cbxSell";
+            this.cbxSell.Size = new System.Drawing.Size(42, 17);
+            this.cbxSell.TabIndex = 5;
+            this.cbxSell.Text = "Sell";
+            this.cbxSell.UseVisualStyleBackColor = true;
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(712, 15);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 21);
+            this.dateTimePicker1.TabIndex = 4;
+            this.dateTimePicker1.Value = new System.DateTime(2017, 12, 15, 0, 0, 0, 0);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(534, 18);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 13);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Type:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(390, 19);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(38, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Strike:";
+            // 
+            // txtType
+            // 
+            this.txtType.Location = new System.Drawing.Point(578, 14);
+            this.txtType.Name = "txtType";
+            this.txtType.Size = new System.Drawing.Size(35, 21);
+            this.txtType.TabIndex = 2;
+            this.txtType.Text = "CALL";
+            // 
+            // txtStrike
+            // 
+            this.txtStrike.Location = new System.Drawing.Point(425, 16);
+            this.txtStrike.Name = "txtStrike";
+            this.txtStrike.Size = new System.Drawing.Size(100, 21);
+            this.txtStrike.TabIndex = 2;
+            this.txtStrike.Text = "160";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(220, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(45, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Symbol:";
+            // 
+            // txtSymbol
+            // 
+            this.txtSymbol.Location = new System.Drawing.Point(271, 15);
+            this.txtSymbol.Name = "txtSymbol";
+            this.txtSymbol.Size = new System.Drawing.Size(100, 21);
+            this.txtSymbol.TabIndex = 2;
+            this.txtSymbol.Text = "AAPL";
+            // 
             // ordersView1
             // 
             this.ordersView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -242,76 +313,6 @@
             this.btnBnsLocal.Text = "B n S Local ";
             this.btnBnsLocal.UseVisualStyleBackColor = true;
             this.btnBnsLocal.Click += new System.EventHandler(this.btnBnsLocal_Click);
-            // 
-            // txtSymbol
-            // 
-            this.txtSymbol.Location = new System.Drawing.Point(271, 15);
-            this.txtSymbol.Name = "txtSymbol";
-            this.txtSymbol.Size = new System.Drawing.Size(100, 21);
-            this.txtSymbol.TabIndex = 2;
-            this.txtSymbol.Text = "AAPL";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(220, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(45, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Symbol:";
-            // 
-            // txtStrike
-            // 
-            this.txtStrike.Location = new System.Drawing.Point(425, 16);
-            this.txtStrike.Name = "txtStrike";
-            this.txtStrike.Size = new System.Drawing.Size(100, 21);
-            this.txtStrike.TabIndex = 2;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(390, 19);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(38, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Strike:";
-            // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(712, 15);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 21);
-            this.dateTimePicker1.TabIndex = 4;
-            this.dateTimePicker1.Value = new System.DateTime(2017, 8, 18, 0, 0, 0, 0);
-            // 
-            // txtType
-            // 
-            this.txtType.Location = new System.Drawing.Point(578, 14);
-            this.txtType.Name = "txtType";
-            this.txtType.Size = new System.Drawing.Size(35, 21);
-            this.txtType.TabIndex = 2;
-            this.txtType.Text = "CALL";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(534, 18);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Type:";
-            // 
-            // cbxSell
-            // 
-            this.cbxSell.AutoSize = true;
-            this.cbxSell.Checked = true;
-            this.cbxSell.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbxSell.Location = new System.Drawing.Point(629, 18);
-            this.cbxSell.Name = "cbxSell";
-            this.cbxSell.Size = new System.Drawing.Size(42, 17);
-            this.cbxSell.TabIndex = 5;
-            this.cbxSell.Text = "Sell";
-            this.cbxSell.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 

@@ -29,6 +29,10 @@ namespace UILogic
         
         protected override void HandleMessage(IMessage message)
         {
+            //if (Symbol.Equals("MCD"))
+            //{
+
+            //}
             int index;
             switch (message.APIDataType)
             {

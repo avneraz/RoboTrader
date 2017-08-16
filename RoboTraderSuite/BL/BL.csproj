@@ -74,6 +74,7 @@
     <Compile Include="UnlManagers\TradingManager.cs" />
     <Compile Include="UnlManagers\UNLManager.cs" />
     <Compile Include="UnlManagers\UnlMemberBaseManager.cs" />
+    <Compile Include="UNLTradingOptimizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BLClassDiagram.cd" />

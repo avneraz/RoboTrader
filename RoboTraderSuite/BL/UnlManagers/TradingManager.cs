@@ -1,6 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using DAL;
 using Infra.Bus;
 using Infra.Enum;
+using log4net;
+using NHibernate;
+using NHibernate.Linq;
 using TNS.API;
 using TNS.API.ApiDataObjects;
 using TNS.BL.DataObjects;
@@ -14,6 +20,9 @@ namespace TNS.BL.UnlManagers
         {
             OrderManager = unlManager.OrdersManager;
         }
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(TradingManager));
+
+        private List<UnlOptions> UnlOptionsList { get; set; }
 
         private const int TRADING_CYCLE_TYME = 10;
         private string _taskId;
@@ -24,8 +33,7 @@ namespace TNS.BL.UnlManagers
         {
             //ForTest:if(UnlTradingData.Margin > 0){ }
 
-            bool result = base.HandleMessage(message);
-            if (result)
+            if( base.HandleMessage(message))
                 return true;
               
             switch (message.APIDataType)
@@ -50,10 +58,68 @@ namespace TNS.BL.UnlManagers
                             break;
                     }
                     return true;
+                case EapiDataTypes.BrokerConnectionStatus:
+                    var connectionStatusMessage = (BrokerConnectionStatusMessage)message;
+                    //ConnectionStatus = connectionStatusMessage.Status;
+                    if (connectionStatusMessage.AfterConnectionToApiWrapper)
+                        DoWorkAfterConnection();
+                    return true;
+                case EapiDataTypes.TransactionData:
+                    //Create the adequate UnlOptins object and save it in db:
+                    CreateOrUpdateUnlOption(message as TransactionData);
+                    break;
             }
             return false;
 
         }
+
+        private void CreateOrUpdateUnlOption(TransactionData transactionData)
+        {
+            UnlOptions unlOptions;
+            //Reload the list to refresh the IDs:
+            LoadUnlOptionsList();
+            if (transactionData.Order.OrderAction == OrderAction.BUY)
+            {
+                //Update an exsisting one with the max IV (Maximum profit) and remove it from the list
+                
+                unlOptions = UnlOptionsList.Where(uo => uo.OptionKey.Equals(transactionData.OptionKey))
+                    .OrderByDescending(uo => uo.OptionData.ImpliedVolatility).First();
+                if (unlOptions != null)
+                {
+                    
+                    unlOptions.CloseTransaction = transactionData;
+                    UnlOptionsList.Remove(unlOptions);
+                }
+            }
+            else
+            {
+                //Create new one
+                unlOptions = new UnlOptions {OpenTransaction = transactionData, Symbol = Symbol, OptionKey = transactionData.OptionKey};
+                UnlOptionsList.Add(unlOptions);
+            }
+            //Save
+            UNLManager.Distributer.Enqueue(unlOptions);
+           
+        }
+
+        private void LoadUnlOptionsList()
+        {
+            ISession session = DBSessionFactory.Instance.OpenSession();
+
+            try
+            {
+                UnlOptionsList = session.Query<UnlOptions>().ToList();
+              
+                UnlOptionsList = session.Query<UnlOptions>()
+                         .Where(uo => (uo.Symbol.Equals(Symbol) && uo.Status == EStatus.Open))// && uo.Status == EStatus.Open
+                         .ToList();
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+            }
+        }
+
         /// <summary>
         /// Do trading work initiated from scheduler task
         /// </summary>
@@ -65,10 +131,28 @@ namespace TNS.BL.UnlManagers
         }
         public override void DoWorkAfterConnection()
         {
-
-
+            //Load UnlOptionList
+            LoadUnlOptionsList();
         }
 
-      
+        public void TestTrading(TradeOrderData tradeOrderData)
+        {
+            string optionKey = GetOptionKey(tradeOrderData.ExpiryDate, tradeOrderData.OptionType, tradeOrderData.Strike);
+            OptionData optionData = UNLManager.OptionsManager.GetOptionData(optionKey);
+            if (optionData == null)
+                throw new Exception("The Option doesn't exist in the Option list!!!");
+
+            OrderData orderData = tradeOrderData.OrderAction == OrderAction.SELL ?
+                OrderManager.SellOption(optionData, 1) :
+                OrderManager.BuyOption(optionData, 1);
+
+            //OrderManager.D = tradeOrderData.OrderType;
+            //return orderData;
+
+        }
+        public string GetOptionKey(DateTime expiry, EOptionType optionType, double strike)
+        {
+            return $"{expiry}.{optionType}.{strike}";
+        }
     }
 }

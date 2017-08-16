@@ -30,5 +30,6 @@ namespace Infra.Enum
         UnlTradingData,
         OptionContract,
         TransactionData,
+        UnlOption,
     }
 }

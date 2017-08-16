@@ -21,7 +21,7 @@ namespace TNS.BL.UnlManagers
         /// <summary>
         ///  = OrderType.LMT, used for testing
         /// </summary>
-        private OrderType DefaultOrderType { get; set; } = OrderType.LMT;
+        public OrderType DefaultOrderType { get; set; } = OrderType.LMT;
 
         public override bool HandleMessage(IMessage message)
         {
@@ -87,8 +87,8 @@ namespace TNS.BL.UnlManagers
         }
         private OrderData SendOrder(OptionData optionData, int quantity, bool sell = true)
         {
-            OptionNegotiator optionNegotiator = new OptionNegotiator(APIWrapper, UNLManager, AccountSummaryData.SimulatorAccount);
-            var orderData = optionNegotiator.TradeOption(optionData, sell, quantity);
+            OptionNegotiator optionNegotiator = new OptionNegotiator(APIWrapper, UNLManager);
+            var orderData = optionNegotiator.StartTradingOption(optionData, sell, quantity);
             OptionNegotiatorDic[orderData.OrderId] = optionNegotiator;
             return orderData;
         }

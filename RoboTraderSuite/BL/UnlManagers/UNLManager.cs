@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Infra.Bus;
 using Infra.Enum;
+using Infra.Extensions;
 using log4net;
 using TNS.API;
 using TNS.API.ApiDataObjects;
@@ -54,6 +56,10 @@ namespace TNS.BL.UnlManagers
         }
         protected override void HandleMessage(IMessage message)
         {
+            if (Symbol.Equals("MCD"))
+            {
+                
+            }
             switch (message.APIDataType)
             {
                 case EapiDataTypes.AccountSummaryData:
@@ -108,6 +114,18 @@ namespace TNS.BL.UnlManagers
                     UnlTradingData.MaxAllowedMargin = marginData.MarginMaxAllowed;
                     UnlTradingData.SetLastUpdate();
                     break;
+                case EapiDataTypes.TransactionData:
+                    //Filter other unl messages:
+                    var transactionData = message as TransactionData;
+                    if (transactionData == null) break;
+
+                    if (transactionData.OptionData.OptionContract.Symbol.Equals(Symbol)==false)
+                        break;
+
+                    var tradingManager = _memberManagersList.First(m => m is ITradingManager) as ITradingManager;
+                    tradingManager?.HandleMessage(message);
+
+                    break;
                 case EapiDataTypes.ExceptionData:
                     
                     break;
@@ -148,11 +166,11 @@ namespace TNS.BL.UnlManagers
             PositionsDataBuilder = new PositionsDataBuilder(APIWrapper, ManagedSecurity, this);
             _memberManagersList.Add(PositionsDataBuilder);
 
-            TradingManager = new TradingManager(APIWrapper, ManagedSecurity, this);
-            _memberManagersList.Add(TradingManager);
-
             OrdersManager = new OrdersManager(APIWrapper, ManagedSecurity, this);
             _memberManagersList.Add(OrdersManager);
+
+            TradingManager = new TradingManager(APIWrapper, ManagedSecurity, this);
+            _memberManagersList.Add(TradingManager);
         }
 
         public IOptionsManager OptionsManager { get; set; }

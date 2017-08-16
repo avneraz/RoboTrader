@@ -62,9 +62,10 @@ namespace DAL
         protected void HandleOrderStatusData(OrderStatusData data)
         {
             SaveContractDetailsIfNeeded<OptionContract>(data.GetContract());
-
+            
             using (ITransaction transaction = _session.BeginTransaction())
             {
+                _session.Evict(data);
                 _session.SaveOrMerge(data, data.Id);
                 try
                 {
@@ -81,18 +82,86 @@ namespace DAL
         [MessageHandler]
         protected void HandleTransactionData(TransactionData data)
         {
-            SaveContractDetailsIfNeeded<OptionContract>(data.GetContract());
+            //SaveContractDetailsIfNeeded<OptionContract>(data.GetContract());
+            //_session.Evict(data);
+            using (ITransaction transaction = _session.BeginTransaction())
+            {
+                var nmsg = $"Write Transaction {data.OptionKey}";
+                int tdId = 0;
+                try
+                {
+                    if (_session.Get<TransactionData>(data.Id) == null)
+                    {
+                        Logger.InfoFormat($"!@#$%^&* - Try to save new transaction:(Id={tdId}) '{data.OptionKey}'.");
+                        tdId  =(int)_session.Save(data);
+                    }
+                    else
+                    {
+                        tdId = data.Id;
+                        Logger.InfoFormat($"!@#$%^&* - Try to Merge to existing transaction:(Id={tdId}) ==>'{data.OptionKey}'.");
+                        _session.Merge(data);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error($"!@#$%^&* - Trying save transaction:(Id={data.Id}) ==> '{data.OptionKey}'. was failed: {ex.Message}.", ex);
+                }
+
+                try
+                {
+                    transaction.Commit();
+                    _transactionDataCommited = transaction.WasCommitted;
+                    //var obj = _session.Load<TransactionData>(tdId);
+                    //_session.Evict(obj);
+                }
+                catch (Exception exception)
+                {
+                    Logger.Error("!@#$%^&* - Could not write to DB (Id={tdId})", exception);
+                }
+            }
+        }
+
+        private bool _transactionDataCommited;
+        [MessageHandler]
+        protected void HandleUnlOptions(UnlOptions unlOptions)
+        {
 
             using (ITransaction transaction = _session.BeginTransaction())
             {
-                //_session.SaveOrMerge(data, data.Id);
-                if (_session.Get<TransactionData>(data.Id) == null)
+                var transactionData = unlOptions.Status == EStatus.Open ? unlOptions.OpenTransaction : unlOptions.CloseTransaction;
+                int tdId = 0;
+                //Save transaction first:
+                //if (_session.Get<TransactionData>(transactionData.Id) == null)
+                //{
+                //    Logger.InfoFormat($"!@#$%^&* - Try to save new transaction:(Id=0) '{transactionData.OptionKey}'.");
+                //    _session.Save(transactionData);
+                //}
+                //else
+                //{
+                //    tdId = transactionData.Id;
+                //    Logger.InfoFormat($"!@#$%^&* - Try to Merge to existing transaction:(Id={tdId}) ==>'{transactionData.OptionKey}'.");
+                //    _session.Merge(transactionData);
+                //}
+
+                string action = string.Empty;
+                try
                 {
-                    _session.Save(data);
+                    if (_session.Get<UnlOptions>(unlOptions.Id) == null)
+                    {
+                        action = "!@#$%^&* - Try save new UnlOptions (Id=0) ==>'{data.OptionKey}'.";
+                        _session.Save(unlOptions);
+                    }
+                    else
+                    {
+                        action = "!@#$%^&* - Merge UnlOptions (Id={tdId}) ==>'{data.OptionKey}'.";
+                        _session.Merge(unlOptions);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    _session.Merge(data);
+                    Logger.Error($"!@#$%^&* - Could not {action} {unlOptions.OptionKey}", ex);
+                    //transaction.Rollback();
+                    return;
                 }
                 try
                 {
@@ -100,7 +169,7 @@ namespace DAL
                 }
                 catch (Exception exception)
                 {
-                    Logger.Error("Could not write to DB", exception);
+                    Logger.Error($"!@#$%^&* - Could not write (commit) id:{unlOptions.Id} {unlOptions.OptionKey} to DB", exception);
                 }
             }
         }
@@ -157,7 +226,7 @@ namespace DAL
 
             stopwatch.Stop();
             var time = stopwatch.Elapsed;
-            Logger.Debug($"Bulk insertion of {_aggregator.Values.Count} took {time}");
+            Logger.Debug($"Bulk insertion of {_aggregator.Values.Count} took {time.TotalMilliseconds} mSec");
             _aggregator.Clear();
 
         }

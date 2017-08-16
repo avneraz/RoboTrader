@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentNHibernate.Mapping;
+using Infra.Enum;
 using TNS.API.ApiDataObjects;
 
 namespace DAL
@@ -178,6 +179,7 @@ namespace DAL
             Map(c => c.AskPrice);
             Map(c => c.BidPrice);
             Map(c => c.UnderlinePrice);
+            //Map(c => c.OptionContract);
             //Map(c => c.OptionKey);
 
         }
@@ -198,13 +200,34 @@ namespace DAL
         {
             Table("TransactionData");
             Id(x => x.Id);
+            Map(c => c.Symbol);
             Map(c => c.OptionKey);
             Map(c => c.TransactionTime);
+            Map(c => c.RequieredMargin);
+            
             //Map(c => c.OptionData);
             //References(x => x.OptionData).Cascade.None();
             Component(x => x.OptionData);
             Component(x => x.OrderStatus);
             Component(x => x.Order);
+        }
+    }
+
+    class UnlOptionsMapper : ClassMap<UnlOptions>
+    {
+        public UnlOptionsMapper()
+        {
+            Table("UnlOptions");
+            Id(x => x.Id);
+            Map(c => c.OptionKey);
+            Map(c => c.LastUpdate);
+            Map(c => c.Status).CustomType<int>();
+            Map(c => c.Symbol);
+            References(x => x.OpenTransaction).Cascade.All().Column("OpenTransaction");//.Cascade.All();
+            References(x => x.CloseTransaction).Cascade.All().Column("CloseTransaction");//.Cascade.All();
+            //Map(c => c.OptionData);
+            //References(x => x.OptionData).Cascade.None();
+            Component(x => x.OptionData);
         }
     }
 }

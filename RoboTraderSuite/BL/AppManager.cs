@@ -143,7 +143,7 @@ namespace TNS.BL
                     AAPLSessionsToLoad = "20170817;20151016;20160115",
                     HighStrikePercentage = 8,
                     LowStrikePercentage = 8,
-                    MinimumDaysToExpiration = 100,
+                    MinimumDaysToExpiration = 60,
                     MaxmumDaysToExpiration = 130,
                 },
                 Trading =
@@ -177,8 +177,10 @@ namespace TNS.BL
         //}
         public void SendOneOrderTest(TradeOrderData tradeOrderData)
         {
-            IOrdersManager ordersManager = ((UNLManager)UNLManagerDic[tradeOrderData.Symbol]).OrdersManager;
-            ordersManager.TestTrading(tradeOrderData);
+            //IOrdersManager ordersManager = ((UNLManager)UNLManagerDic[tradeOrderData.Symbol]).OrdersManager;
+            //ordersManager.TestTrading(tradeOrderData);
+            ITradingManager tradeManager = ((UNLManager)UNLManagerDic[tradeOrderData.Symbol]).TradingManager;
+            tradeManager.TestTrading(tradeOrderData);
         }
         public void CancelOrderTest(string symbol, string orderId)
         {

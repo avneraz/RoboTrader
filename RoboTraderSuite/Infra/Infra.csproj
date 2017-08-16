@@ -67,6 +67,7 @@
     <Compile Include="Enum\EapiDataTypes.cs" />
     <Compile Include="Enum\EConfigurationCategory.cs" />
     <Compile Include="Enum\EOptionType.cs" />
+    <Compile Include="Enum\EStatus.cs" />
     <Compile Include="Enum\ETradingStartMode.cs" />
     <Compile Include="Enum\ETradingState.cs" />
     <Compile Include="Enum\ETradingTimeEventType.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using DAL;
 using log4net;
 using TNS.API.ApiDataObjects;
@@ -124,7 +125,12 @@ namespace TNS.BL
                     if (_unlManagersDic.ContainsKey(marginData.Symbol))
                         _unlManagersDic[marginData.Symbol].Enqueue(marginData,false);
                     break;
-                case EapiDataTypes.TransactionData:
+                //case EapiDataTypes.TransactionData:
+                //    Debug.WriteLine(message.ToString());
+                //    _dbWriter.Enqueue(message, false);
+                //    PropagateMessageToAllUnlManagers(message);
+                //    break;
+                case EapiDataTypes.UnlOption:
                     _dbWriter.Enqueue(message, false);
                     break;
             }
