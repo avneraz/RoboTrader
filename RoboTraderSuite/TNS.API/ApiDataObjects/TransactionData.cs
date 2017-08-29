@@ -16,7 +16,7 @@ namespace TNS.API.ApiDataObjects
             OptionData.OptionContract = (OptionContract)contract;
         }
 
-        public virtual int Id { get; protected set; }
+        public new virtual int Id { get; protected set; }
 
         public OptionData OptionData { get; set; }
 
@@ -30,7 +30,7 @@ namespace TNS.API.ApiDataObjects
 
         public string Symbol { get; set; }
 
-        public double RequieredMargin { get; set; }
+        public double RequierdMargin { get; set; }
 
     }
 }

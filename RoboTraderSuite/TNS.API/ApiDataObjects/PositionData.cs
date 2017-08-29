@@ -6,6 +6,8 @@ namespace TNS.API.ApiDataObjects
 {
     public abstract class PositionData : ISymbolMessage
     {
+        private string _account;
+
         public PositionData()
         {
             
@@ -31,6 +33,22 @@ namespace TNS.API.ApiDataObjects
         /// Contains the associate OptionData object reside on OptionManager
         /// </summary>
         public OptionData OptionData { get; set; }
+
+        public string Account
+
+        {
+            get
+            {
+                _account = OptionData == null ? string.Empty : OptionData.Account;
+                return _account;
+            }
+            set => _account = value;
+        }
+
+        //public string Account {
+        //    get { return OptionData == null ? string.Empty : OptionData.Account; }
+        //    set { }
+        //};
 
         public override string ToString()
         {

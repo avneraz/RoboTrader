@@ -6,6 +6,7 @@ using log4net;
 using TNS.API.ApiDataObjects;
 using Infra.Bus;
 using Infra.Enum;
+using log4net.Repository.Hierarchy;
 using TNS.BL.Analysis;
 using TNS.BL.UnlManagers;
 
@@ -89,6 +90,7 @@ namespace TNS.BL
                     }
                     PropagateMessageToAdequateUnlManager(optionData);
                     _dbWriter.Enqueue(message, false);
+                   
                     break;
                 case EapiDataTypes.PositionData:
                     var posData = (OptionsPositionData) message;
@@ -172,6 +174,7 @@ namespace TNS.BL
           
         }
 
+        private int _optionDataHandledCount;
         private void SendMessageToUIDataBroker(IMessage message)
         {
             switch (message.APIDataType)
@@ -183,12 +186,15 @@ namespace TNS.BL
                     break;
                 case EapiDataTypes.UnlTradingData:
                 case EapiDataTypes.OrderStatus:
-                case EapiDataTypes.OptionData:
+                
                 case EapiDataTypes.AccountSummaryData:
                 case EapiDataTypes.SecurityData:
                     UIDataBroker.Enqueue(message, false);
                     break;
-
+                case EapiDataTypes.OptionData:
+                    UIDataBroker.Enqueue(message, false);
+                    Logger.Debug($"Distributer has sent to UIDataBroker {++_optionDataHandledCount} option data messages.@@@@"); 
+                    break;
             }
         }
 
@@ -199,6 +205,8 @@ namespace TNS.BL
         public void AddUIDataBroker(IBaseLogic uiDataBroker)
         {
             UIDataBroker = uiDataBroker;
+            _optionDataHandledCount = 0;
+
         }
     }
 }

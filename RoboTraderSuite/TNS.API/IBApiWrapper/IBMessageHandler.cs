@@ -480,7 +480,8 @@ namespace TNS.API.IBApiWrapper
             {
                 OrderStatusData orderStatus = OrderStatusDic[orderId].Data;
                 orderStatus.OrderStatus = (OrderStatus)Enum.Parse(typeof(OrderStatus), status);
-                orderStatus.LastUpdateTime = DateTime.Now; ;
+                orderStatus.LastUpdateTime = DateTime.Now;
+                orderStatus.LastFillPrice = lastFillPrice;
                 Consumer.Enqueue(orderStatus);
             }
             else
@@ -553,9 +554,11 @@ namespace TNS.API.IBApiWrapper
                 var optionContract = contract as OptionContract;
                 BaseSecurityData securityData;
                 if (optionContract != null)
-                    securityData = new OptionData();
+                {
+                    securityData = new OptionData {Account = AccountSummary.MainAccount};
+                }
                 else
-                    securityData = new SecurityData();
+                    securityData = new SecurityData{ Account = AccountSummary.MainAccount };
                 securityData.SetContract(contract);
                 IbContract.UpdateSecurityData(contract);
                 SecurityDataDic.Add(requestId, new SecuirtyDataWrapper(securityData));

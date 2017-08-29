@@ -1,4 +1,5 @@
-﻿using TNS.API.ApiDataObjects;
+﻿using System;
+using TNS.API.ApiDataObjects;
 using TNS.BL.DataObjects;
 
 namespace TNS.BL.Interfaces
@@ -7,5 +8,7 @@ namespace TNS.BL.Interfaces
     {
         AccountSummaryData AccountSummaryData { get; set; }
         void TestTrading(TradeOrderData tradeOrderData);
+
+        event Action<TradingTimeEvent> SendTradingTimeEvent;
     }
 }

@@ -15,6 +15,14 @@ namespace TNS.BL.UnlManagers
 {
     public class UNLManager : SimpleBaseLogic
     {
+        public event Action<TradingTimeEvent> SendTradingTimeEvent;
+
+        public virtual void OnSendTradingTimeEvent(TradingTimeEvent tradingTimeEvent)
+        {
+            Action<TradingTimeEvent> handler = SendTradingTimeEvent;
+            handler?.Invoke(tradingTimeEvent);
+        }
+
         private static readonly ILog Logger = LogManager.GetLogger(typeof(UNLManager));
         public UNLManager(ManagedSecurity managedSecurity, ITradingApi apiWrapper, SimpleBaseLogic distributer)
         {
@@ -56,7 +64,7 @@ namespace TNS.BL.UnlManagers
         }
         protected override void HandleMessage(IMessage message)
         {
-            if (Symbol.Equals("MCD"))
+            if (Symbol.Equals("MCD"))//For test
             {
                 
             }
@@ -171,6 +179,12 @@ namespace TNS.BL.UnlManagers
 
             TradingManager = new TradingManager(APIWrapper, ManagedSecurity, this);
             _memberManagersList.Add(TradingManager);
+            TradingManager.SendTradingTimeEvent += TradingManager_SendTradingTimeEvent;
+        }
+
+        private void TradingManager_SendTradingTimeEvent(TradingTimeEvent tradingTimeEvent)
+        {
+           OnSendTradingTimeEvent(tradingTimeEvent);
         }
 
         public IOptionsManager OptionsManager { get; set; }

@@ -16,16 +16,23 @@ namespace TNS.BL.UnlManagers
 {
     public class TradingManager : UnlMemberBaseManager, ITradingManager
     {
+
+        public event Action<TradingTimeEvent> SendTradingTimeEvent;
+
+        public virtual void OnSendTradingTimeEvent(TradingTimeEvent tradingTimeEvent)
+        {
+            Action<TradingTimeEvent> handler = SendTradingTimeEvent;
+            handler?.Invoke(tradingTimeEvent);
+        }
         public TradingManager(ITradingApi apiWrapper, ManagedSecurity managedSecurity, UNLManager unlManager) : base(apiWrapper, managedSecurity, unlManager)
         {
             OrderManager = unlManager.OrdersManager;
         }
         private static readonly ILog Logger = LogManager.GetLogger(typeof(TradingManager));
-
-        private List<UnlOptions> UnlOptionsList { get; set; }
-
         private const int TRADING_CYCLE_TYME = 10;
         private string _taskId;
+
+        private List<UnlOptions> UnlOptionsList { get; set; }
         private IOrdersManager OrderManager { get;  }
         public AccountSummaryData AccountSummaryData { get; set; }
 
@@ -43,24 +50,32 @@ namespace TNS.BL.UnlManagers
                     return true;
                 case EapiDataTypes.TradingTimeEvent:
                     var tradingTimeEvent = (TradingTimeEvent) message;
-                    var eventType = tradingTimeEvent.TradingTimeEventType;
-                    switch (eventType)
+                    try
                     {
-                        case ETradingTimeEventType.StartTrading:
-                            _taskId = UNLManager.AddScheduledTaskOnUnl(TimeSpan.FromSeconds(TRADING_CYCLE_TYME), TradingWork, true);
-                            break;
-                        case ETradingTimeEventType.EndTradingIn30Seconds:
-                            break;
-                        case ETradingTimeEventType.EndTradingIn60Seconds:
-                            break;
-                        case ETradingTimeEventType.EndTrading:
-                            UNLManager.RemoveScheduledTaskOnUnl(_taskId);
-                            break;
+                        var eventType = tradingTimeEvent.TradingTimeEventType;
+                        switch (eventType)
+                        {
+                            case ETradingTimeEventType.StartTrading:
+                                _taskId = UNLManager.AddScheduledTaskOnUnl(TimeSpan.FromSeconds(TRADING_CYCLE_TYME), TradingWork, true);
+                                break;
+                            case ETradingTimeEventType.EndTradingIn30Seconds:
+                                break;
+                            case ETradingTimeEventType.EndTradingIn60Seconds:
+                                break;
+                            case ETradingTimeEventType.EndTrading:
+                                UNLManager.RemoveScheduledTaskOnUnl(_taskId);
+                                break;
+                        }
                     }
+                    finally
+                    {
+                        //Propagate by event:
+                        OnSendTradingTimeEvent(tradingTimeEvent);
+                    }
+                   
                     return true;
                 case EapiDataTypes.BrokerConnectionStatus:
                     var connectionStatusMessage = (BrokerConnectionStatusMessage)message;
-                    //ConnectionStatus = connectionStatusMessage.Status;
                     if (connectionStatusMessage.AfterConnectionToApiWrapper)
                         DoWorkAfterConnection();
                     return true;
@@ -76,30 +91,33 @@ namespace TNS.BL.UnlManagers
         private void CreateOrUpdateUnlOption(TransactionData transactionData)
         {
             UnlOptions unlOptions;
-            //Reload the list to refresh the IDs:
-            LoadUnlOptionsList();
+            //If the list was not load yet, load it.
+            if (UnlOptionsList == null)
+                LoadUnlOptionsList();
             if (transactionData.Order.OrderAction == OrderAction.BUY)
             {
+                if (UnlOptionsList.Any(uo => uo.Id == 0))
+                    //Reload the list to refresh the IDs:
+                    LoadUnlOptionsList();
+
                 //Update an exsisting one with the max IV (Maximum profit) and remove it from the list
-                
                 unlOptions = UnlOptionsList.Where(uo => uo.OptionKey.Equals(transactionData.OptionKey))
                     .OrderByDescending(uo => uo.OptionData.ImpliedVolatility).First();
                 if (unlOptions != null)
                 {
-                    
                     unlOptions.CloseTransaction = transactionData;
+                    unlOptions.LastUpdate = DateTime.Now;
                     UnlOptionsList.Remove(unlOptions);
                 }
             }
             else
             {
                 //Create new one
-                unlOptions = new UnlOptions {OpenTransaction = transactionData, Symbol = Symbol, OptionKey = transactionData.OptionKey};
+                unlOptions = new UnlOptions {OpenTransaction = transactionData, Symbol = Symbol, OptionKey = transactionData.OptionKey, Account = AccountSummaryData.MainAccount};
                 UnlOptionsList.Add(unlOptions);
             }
             //Save
             UNLManager.Distributer.Enqueue(unlOptions);
-           
         }
 
         private void LoadUnlOptionsList()
@@ -108,15 +126,16 @@ namespace TNS.BL.UnlManagers
 
             try
             {
-                UnlOptionsList = session.Query<UnlOptions>().ToList();
-              
                 UnlOptionsList = session.Query<UnlOptions>()
-                         .Where(uo => (uo.Symbol.Equals(Symbol) && uo.Status == EStatus.Open))// && uo.Status == EStatus.Open
-                         .ToList();
+                    .Where(uo => (uo.Account.Equals(AccountSummaryData.MainAccount) && 
+                                  uo.Symbol.Equals(Symbol) &&
+                                  uo.Status == EStatus.Open))
+                    .ToList();
             }
             catch (Exception ex)
             {
                 Logger.Error(ex.Message, ex);
+                throw;
             }
         }
 
@@ -131,8 +150,8 @@ namespace TNS.BL.UnlManagers
         }
         public override void DoWorkAfterConnection()
         {
-            //Load UnlOptionList
-            LoadUnlOptionsList();
+            //Don't load the list now because the AccountSummaryData is not yet loaded!! Avner 18/8/2017
+            //LoadUnlOptionsList();
         }
 
         public void TestTrading(TradeOrderData tradeOrderData)
@@ -145,10 +164,6 @@ namespace TNS.BL.UnlManagers
             OrderData orderData = tradeOrderData.OrderAction == OrderAction.SELL ?
                 OrderManager.SellOption(optionData, 1) :
                 OrderManager.BuyOption(optionData, 1);
-
-            //OrderManager.D = tradeOrderData.OrderType;
-            //return orderData;
-
         }
         public string GetOptionKey(DateTime expiry, EOptionType optionType, double strike)
         {

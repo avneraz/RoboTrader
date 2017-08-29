@@ -45,13 +45,12 @@ namespace TNS.BL.UnlManagers
         /// The actual sent price limit.
         /// </summary>
         private double CurrentLimitPrice { get; set; }
-        public double RequieredMargin { get; set; }
         /// <summary>
         /// The minimum step for price = 1 sent, (for option it will be 1$ if multiplier = 100) = 0.01.
         /// </summary>
         public double PriceStep { get; private set; }
         private bool TransactionAlreadySaved { get; set; }
-        public bool SimulatorAccount { get; private set; }
+        public bool SimulatorAccount { get;  set; }
         public string WhatIfOrderId { get; set; }
         private string ScheduledTaskId { get; set; }
         protected UNLManager UnlManager { get; set; }
@@ -63,7 +62,7 @@ namespace TNS.BL.UnlManagers
         public OptionData OptionData { get; set; }
         public OrderData OrderData { get; set; }
         private OrderStatusData OrderStatusData { get; set; }
-        public double Margin { get; set; }
+        public double RequierdMargin { get; set; }
         private OrderAction OrderAction { get; set; } //OrderStatusData.Order.OrderAction;
         private int Quantity { get; set; }
         private int TradingCycleIndex { get; set; }
@@ -82,6 +81,23 @@ namespace TNS.BL.UnlManagers
         }
       
 
+        public OrderData StartTradingOptionNew(OptionData optionData, bool sell, int quantity)
+        {
+            if (OptionData != null)
+                throw new ArgumentException("The OptionNegotiator already has open order!!!");
+
+            OptionData = optionData ?? throw new Exception("The option data not exist!!!");
+
+            OrderAction = sell ? OrderAction.SELL : OrderAction.BUY;
+            Quantity = quantity;
+            //InializeTrading:
+            InitializeNegotiationsTradingParameters();
+            //Start negotiation proccess:
+            ScheduledTaskId = UnlManager.AddScheduledTaskOnUnl(SuccesiveIntervalTimeSpan, DoTrading, true);
+            SendWhatIfOrder(CurrentLimitPrice);
+            CreateOrder(CurrentLimitPrice);
+            return OrderData;
+        }
         public OrderData StartTradingOption(OptionData optionData, bool sell, int quantity)
         {
             if (OptionData != null)
@@ -93,7 +109,7 @@ namespace TNS.BL.UnlManagers
             Quantity = quantity;
             //InializeTrading:
             InitializeNegotiationsTradingParameters();
-
+            SendWhatIfOrder(CurrentLimitPrice);
             CreateOrder(CurrentLimitPrice);
             //Start negotiation proccess:
             ScheduledTaskId = UnlManager.AddScheduledTaskOnUnl(SuccesiveIntervalTimeSpan, DoTrading, true);
@@ -104,25 +120,29 @@ namespace TNS.BL.UnlManagers
         {
             StarTime = DateTime.Now;
             var optionPrice = OptionData.CalculatedOptionPrice;
-            
+
             FirstAskPrice = OptionData.AskPrice;
             FirstBidPrice = OptionData.BidPrice;
             var askBidDif = FirstAskPrice - FirstBidPrice;
-            CurrentLimitPrice = OrderAction == OrderAction.BUY ? FirstBidPrice : FirstAskPrice  ;
+            CurrentLimitPrice = OrderAction == OrderAction.BUY ? FirstBidPrice : FirstAskPrice;
             TradingCycleCount = 10;
             PriceStep = askBidDif / TradingCycleCount;
-            
-            var  minPriceStep = AllConfigurations.AllConfigurationsObject.Trading.MinPriceStep;
+
+            var minPriceStep = AllConfigurations.AllConfigurationsObject.Trading.MinPriceStep;
             if (PriceStep < minPriceStep) //Less than 0.01
             {
                 PriceStep = minPriceStep;
-                TradingCycleCount = (int)Math.Ceiling(askBidDif / PriceStep);
+                TradingCycleCount = (int) Math.Ceiling(askBidDif / PriceStep);
             }
-
-            PriceStep = RoundPrice( Math.Max(minPriceStep, PriceStep));
+            //Add an extra 3 cycles when it's simulation.
+            TradingCycleCount = SimulatorAccount ? TradingCycleCount + 3 : TradingCycleCount;
+            PriceStep = RoundPrice(Math.Max(minPriceStep, PriceStep));
             TradingCycleIndex = 0;
-
         }
+
+
+     
+
         private void CalculateNextCurrentLimitPrice()
         {
             
@@ -146,31 +166,27 @@ namespace TNS.BL.UnlManagers
             switch (OrderStatusData.OrderStatus)
             {
                 case OrderStatus.Filled:
-                    SaveTransaction();
                     TerminateNegotiation();
+                    SaveTransaction();
                     break;
                 case OrderStatus.Cancelled:
                     TerminateNegotiation();
                     break;
-                case OrderStatus.WhatIf:
-                    RequieredMargin = OrderStatusData.Margin;
-                    break;
                 case OrderStatus.Submitted:
-                    if (UnlManager.IsNowWorkingTime == false)
-                    {
-                        TerminateNegotiation();
-                        SaveTransaction();
-                        CancelOrder(OrderData.OrderId);
-                        break;
-                    }
                     TradingCycleIndex++;
-                    if (TradingCycleIndex > (TradingCycleCount + 1))
+                    if (TradingCycleIndex > TradingCycleCount )
                     {
+                        if (SimulatorAccount)
+                        {
+                            TradingCycleIndex = 3;
+                            OrderData.OrderType = OrderType.MKT;
+                            UpdateOrder(CurrentLimitPrice);
+                            break;
+                        }
                         TerminateNegotiation();
                         CancelOrder(OrderData.OrderId);
                         break;
                     }
-                    //UpdateFirstAskAndBid();
                     CalculateNextCurrentLimitPrice();
                     UpdateOrder(CurrentLimitPrice);
                     break;
@@ -179,6 +195,11 @@ namespace TNS.BL.UnlManagers
                     CancelOrder(OrderData.OrderId);
                     break;
                 case OrderStatus.PreSubmitted:
+                    if (UnlManager.IsNowWorkingTime == false)
+                    {
+                        TerminateNegotiation();
+                        CancelOrder(OrderData.OrderId);
+                    }
                     break;
                 case OrderStatus.PendingCancel:
                     break;
@@ -201,20 +222,24 @@ namespace TNS.BL.UnlManagers
         private void SaveTransaction()
         {
             if(TransactionAlreadySaved) return;
-            //Create Transuction Data object and send it:
-            var transaction = new TransactionData()
-            {
-                TransactionTime = DateTime.Now,
-                OrderStatus = OrderStatusData,
-                Order = OrderStatusData.Order,
-                OptionData = OptionData,
-                OptionKey = OptionData.OptionKey,
-                Symbol = UnlManager.Symbol,
-                RequieredMargin = RequieredMargin,
-            };
-            //Update about the new transaction
-            UnlManager.TradingManager.HandleMessage(transaction);
             TransactionAlreadySaved = true;
+            for (int i = 0; i < OrderData.Quantity; i++)
+            {
+                //Create Transuction Data object and send it:
+                var transaction = new TransactionData()
+                {
+                    TransactionTime = DateTime.Now,
+                    OrderStatus = OrderStatusData,
+                    Order = OrderStatusData.Order,
+                    OptionData = OptionData,
+                    OptionKey = OptionData.OptionKey,
+                    Symbol = UnlManager.Symbol,
+                    RequierdMargin = RequierdMargin,
+                };
+                //Update about the new transaction
+                UnlManager.TradingManager.HandleMessage(transaction);
+            }
+            
         }
 
         private void TerminateNegotiation()
@@ -244,7 +269,11 @@ namespace TNS.BL.UnlManagers
         {
             OrderData = new OrderData()
             {
-                OrderType = DefaultOrderType, OrderAction = OrderAction, LimitPrice = limitPrice, Quantity = Quantity, Contract = OptionData.OptionContract
+                OrderType = DefaultOrderType,
+                OrderAction = OrderAction,
+                LimitPrice = RoundPrice(limitPrice),
+                Quantity = Quantity,
+                Contract = OptionData.OptionContract
             };
 
             OrderData.OrderId = APIWrapper.CreateOrder(OrderData);
@@ -252,7 +281,7 @@ namespace TNS.BL.UnlManagers
 
         private void UpdateOrder(double limitPrice)
         {
-            OrderData.LimitPrice = limitPrice;
+            OrderData.LimitPrice = RoundPrice(limitPrice);
             APIWrapper.UpdateOrder(OrderData.OrderId, OrderData);
         }
 

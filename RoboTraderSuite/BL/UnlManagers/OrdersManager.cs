@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
+using DAL;
+using Infra;
 using Infra.Bus;
 using Infra.Enum;
 using TNS.API;
 using TNS.API.ApiDataObjects;
 using TNS.BL.DataObjects;
 using TNS.BL.Interfaces;
+using OrderStatus = TNS.API.ApiDataObjects.OrderStatus;
 
 namespace TNS.BL.UnlManagers
 {
@@ -18,6 +22,7 @@ namespace TNS.BL.UnlManagers
             OrderStatusDataDic = new Dictionary<string, OrderStatusData>();
             OptionNegotiatorDic = new Dictionary<string, OptionNegotiator>();
         }
+        public bool IsSimulatorAccount => !AllConfigurations.AllConfigurationsObject.Application.MainAccount.Equals(AccountSummaryData.MainAccount) ;
         /// <summary>
         ///  = OrderType.LMT, used for testing
         /// </summary>
@@ -49,7 +54,7 @@ namespace TNS.BL.UnlManagers
                             var associatedNegotioator =
                             OptionNegotiatorDic.Values.FirstOrDefault(
                                 neg => neg.WhatIfOrderId == orderStatusData.OrderId);
-                            if (associatedNegotioator != null) associatedNegotioator.Margin = orderStatusData.Margin;
+                            if (associatedNegotioator != null) associatedNegotioator.RequierdMargin = orderStatusData.Margin;
                         }
                         else//If it's true==> now isn't working time!==> terminate
                         {
@@ -65,6 +70,8 @@ namespace TNS.BL.UnlManagers
                 case EapiDataTypes.OrderData:
                     result = true;
                     break;
+               
+                   
             }
             //SellOption(UNLManager.OptionsManager.OptionDataDic.Values.ToList()[0], 1, 1);
             return result;
@@ -87,7 +94,11 @@ namespace TNS.BL.UnlManagers
         }
         private OrderData SendOrder(OptionData optionData, int quantity, bool sell = true)
         {
-            OptionNegotiator optionNegotiator = new OptionNegotiator(APIWrapper, UNLManager);
+
+
+            OptionNegotiator optionNegotiator =
+                new OptionNegotiator(APIWrapper, UNLManager) {SimulatorAccount = IsSimulatorAccount};
+
             var orderData = optionNegotiator.StartTradingOption(optionData, sell, quantity);
             OptionNegotiatorDic[orderData.OrderId] = optionNegotiator;
             return orderData;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using Infra.Bus;
@@ -43,7 +44,14 @@ namespace DAL
         [MessageHandler]
         protected void HandleOptionMessage(OptionData data)
         {
-            HandleSymbolData<OptionContract>(data);
+            //HandleSymbolData<OptionContract>(data);
+            //if (data.GetContract().IsNowWorkingTime)
+            //{
+                SaveContractDetailsIfNeeded<OptionContract>(data.GetContract());
+                //SaveOptionData(data);
+                _aggregator[data.GetContract().GetUniqueIdentifier()] = data;
+
+           // }
         }
 
         [MessageHandler]
@@ -128,28 +136,14 @@ namespace DAL
 
             using (ITransaction transaction = _session.BeginTransaction())
             {
-                var transactionData = unlOptions.Status == EStatus.Open ? unlOptions.OpenTransaction : unlOptions.CloseTransaction;
-                int tdId = 0;
-                //Save transaction first:
-                //if (_session.Get<TransactionData>(transactionData.Id) == null)
-                //{
-                //    Logger.InfoFormat($"!@#$%^&* - Try to save new transaction:(Id=0) '{transactionData.OptionKey}'.");
-                //    _session.Save(transactionData);
-                //}
-                //else
-                //{
-                //    tdId = transactionData.Id;
-                //    Logger.InfoFormat($"!@#$%^&* - Try to Merge to existing transaction:(Id={tdId}) ==>'{transactionData.OptionKey}'.");
-                //    _session.Merge(transactionData);
-                //}
-
+                int uniOpID = 0;
                 string action = string.Empty;
                 try
                 {
                     if (_session.Get<UnlOptions>(unlOptions.Id) == null)
                     {
                         action = "!@#$%^&* - Try save new UnlOptions (Id=0) ==>'{data.OptionKey}'.";
-                        _session.Save(unlOptions);
+                        uniOpID = (int)_session.Save(unlOptions);
                     }
                     else
                     {
@@ -198,20 +192,97 @@ namespace DAL
             if (data.GetContract().IsNowWorkingTime || !checkWorkingTime)
             {
                 SaveContractDetailsIfNeeded<T>(data.GetContract());
+               // SaveOptionData(data, checkWorkingTime);
                 _aggregator[data.GetContract().GetUniqueIdentifier()] = data;
+
             }
         }
+
+        private void SaveOptionData(OptionData data, bool checkWorkingTime = true)
+        {
+            using (ITransaction transaction = _session.BeginTransaction())
+            {
+               
+                object guid =  _session.Save(data);
+                try
+                {
+                    transaction.Commit();
+                }
+                catch (Exception exception)
+                {
+                    Logger.Error("Could not write to DB", exception);
+                }
+                _session.Flush();
+            }
+        }
+    
+        private void WriteBulkNew()
+        {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+            int counter = 0;
+            using (IStatelessSession statelessSession = DBSessionFactory.Instance.OpenStatelessSession())
+            {
+                using (ITransaction transaction = statelessSession.BeginTransaction())
+                {
+                    var valList = _aggregator.Values.ToList();
+                    for (var i = valList.Count - 1; i > -1; i--)
+                    {
+
+                        try
+                        {
+                            var dd = valList[i];
+                            //dd = valList[20];
+                            counter++;
+                            Debug.Write($"c:{counter}; ");
+                            //    statelessSession.Insert(valList[i]);
+                            //}
+                            statelessSession.Insert(dd);
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Error("Could not insert item: {valList[i]}", ex);
+                        }
+                    }
+
+                    try
+                    {
+                        transaction.Commit();
+                    }
+                    catch (Exception exception)
+                    {
+                        Logger.Error("Could not write to DB", exception);
+                    }
+
+                }
+            }
+            stopwatch.Stop();
+            var time = stopwatch.Elapsed;
+            Logger.Debug($"Bulk insertion of {_aggregator.Values.Count} took {time.TotalMilliseconds} mSec");
+            _aggregator.Clear();
+
+        }
+
         private void WriteBulk()
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
-
+            int counter = 0;
             using (IStatelessSession statelessSession = DBSessionFactory.Instance.OpenStatelessSession())
             using (ITransaction transaction = statelessSession.BeginTransaction())
             {
                 foreach (var item in _aggregator.Values)
                 {
-                    statelessSession.Insert(item);
+                    try
+                    {
+                        counter++;
+                        statelessSession.Insert(item);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Error("Could not insert item: {item}", ex);
+                    }
                 }
                 try
                 {
@@ -221,7 +292,7 @@ namespace DAL
                 {
                     Logger.Error("Could not write to DB", exception);
                 }
-                
+
             }
 
             stopwatch.Stop();
@@ -231,9 +302,6 @@ namespace DAL
 
         }
 
-     
-
-       
     }
 }
 

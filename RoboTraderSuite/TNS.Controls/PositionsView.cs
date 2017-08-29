@@ -324,14 +324,14 @@ namespace TNS.Controls
         }
         public void SendSellOrder(OptionData optionData, int quantity = 1)
         {
-            var unlManager = (UNLManager) (AppManager.UNLManagerDic[optionData.GetSymbolName()]);
+            var unlManager = (UNLManager) (AppManager.UNLManagerDic[optionData.Symbol]);
             IOrdersManager orderManager = unlManager.OrdersManager;
             orderManager.SellOption(optionData, quantity);
         }
 
         public void SendBuyOrder(OptionData optionData, int quantity = 1)
         {
-            var unlManager = (UNLManager)(AppManager.UNLManagerDic[optionData.GetSymbolName()]);
+            var unlManager = (UNLManager)(AppManager.UNLManagerDic[optionData.Symbol]);
             IOrdersManager orderManager = unlManager.OrdersManager;
             orderManager.BuyOption(optionData, quantity);
         }

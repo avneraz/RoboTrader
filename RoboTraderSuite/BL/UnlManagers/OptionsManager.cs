@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using DAL;
 using Infra.Bus;
 using Infra.Enum;
 using log4net;
 using TNS.API;
 using TNS.API.ApiDataObjects;
+using TNS.BL.DataObjects;
 using TNS.BL.Interfaces;
 
 namespace TNS.BL.UnlManagers
@@ -36,7 +38,7 @@ namespace TNS.BL.UnlManagers
         public override bool HandleMessage(IMessage message)
         {
             bool result = base.HandleMessage(message);
-
+            
             if ((RequestOptionChainDone == false) && (message.APIDataType == EapiDataTypes.SecurityData))
             {
                 //Request detail contract only on the first time:
@@ -45,13 +47,14 @@ namespace TNS.BL.UnlManagers
                     RequestOptionChainDone = true;
                     _optionToLoadParameters = new OptionToLoadParameters(MainSecurityData);
                     APIWrapper.RequestOptionChain(_optionToLoadParameters);
-                    //ForTest: if (Symbol == "MSFT") { }
+                    ForTest: if (Symbol == "AAPL") { }
                 }
             }
             if (result)
                 return true;
-
+            //Handle only OptionData
             if (message.APIDataType != EapiDataTypes.OptionData) return false ;
+
             var optionData = (OptionData)message;
 
             if (OptionDataDic.ContainsKey(optionData.GetOptionKey()) == false)
@@ -68,7 +71,18 @@ namespace TNS.BL.UnlManagers
             if ((OptionDataDic.Count > _lastoptionCount) && 
                     (OptionDataDic.Count == _optionToLoadParameters.RequestOptionMarketDataCount))
                     LogEvent();
-            ForTest: if (Symbol == "MCD") { }
+            Logger.Debug($"++++++ Option count = {OptionDataDic.Count} for {Symbol}");
+            switch (Symbol) //For test
+            {
+                case "AAPL":
+                    break;
+                case "AMZN":
+                    break;
+                case "FB":
+                    break;
+                case "MCD":
+                    break;
+            }
             return true;
 
         }
@@ -104,17 +118,17 @@ namespace TNS.BL.UnlManagers
      
     }
 
-    internal class LoadSessionInfo
-    {
-        public LoadSessionInfo(OptionData optionData)
-        {
-            OptionData = optionData;
-        }
+    //internal class LoadSessionInfo
+    //{
+    //    public LoadSessionInfo(OptionData optionData)
+    //    {
+    //        OptionData = optionData;
+    //    }
 
-        public OptionData OptionData { get; set; }
+    //    public OptionData OptionData { get; set; }
 
-        public DateTime ExpiryDate => OptionData?.OptionContract.Expiry ?? DateTime.MinValue;
+    //    public DateTime ExpiryDate => OptionData?.OptionContract.Expiry ?? DateTime.MinValue;
 
-        public bool OptionLoadRequestDone { get; set; }
-    }
+    //    public bool OptionLoadRequestDone { get; set; }
+    //}
 }

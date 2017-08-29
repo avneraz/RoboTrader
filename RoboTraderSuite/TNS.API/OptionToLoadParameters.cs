@@ -23,39 +23,7 @@ namespace TNS.API
             BaseSecurityData = baseSecurityData;
             SetMinMaxStrike();
         }
-
-        /*
-        private double _unlLastPrice;
-        private double _strikeThreshold;
-
-        private void SetStrikeThreshold()
-        {
-            double highStrikeRatio = (double)AllConfigurations.AllConfigurationsObject.Session.HighStrikePercentage / 100;
-
-            double factor = (UnlPrice / 2000);
-
-            _strikeThreshold = highStrikeRatio *(1 -factor);
-
-            //if (_unlLastPrice <= 200)
-            //{
-            //    _strikeThreshold = highStrikeRatio;
-            //    return;
-            //}
-            //if (_unlLastPrice > 200 && (_unlLastPrice <= 500))
-            //{
-            //    _strikeThreshold = highStrikeRatio * .9;
-            //    return;
-            //}
-            //if (_unlLastPrice > 500 && (_unlLastPrice <= 800))
-            //{
-            //    _strikeThreshold = highStrikeRatio * .7;
-            //    return;
-            //}
-            //_strikeThreshold = highStrikeRatio * .5;
-
-        }
-        //*/
-
+  
         private void SetMinMaxStrike()
         {
            

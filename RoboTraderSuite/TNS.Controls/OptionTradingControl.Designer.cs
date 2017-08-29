@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.grdOption = new DevExpress.XtraGrid.GridControl();
-            this.optionDataBindingSource = new System.Windows.Forms.BindingSource();
+            this.optionDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.grdViewOption = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colOptionContractOptionKey = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOptionContract_Symbol = new DevExpress.XtraGrid.Columns.GridColumn();

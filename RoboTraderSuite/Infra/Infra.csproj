@@ -78,6 +78,7 @@
     <Compile Include="Extensions\MyExtensionMethods.cs" />
     <Compile Include="GeneralTimer.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Global\SavedParametersData.cs" />
     <Compile Include="PopUpMessages\PopupMessageForm.cs">
       <SubType>Form</SubType>
     </Compile>

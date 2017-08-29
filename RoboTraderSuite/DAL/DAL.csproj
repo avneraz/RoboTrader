@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBDiluter.cs" />
     <Compile Include="DBExtneions.cs" />
     <Compile Include="DBSessionFactory.cs" />
     <Compile Include="DBWriter.cs" />

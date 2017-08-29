@@ -59,6 +59,7 @@ namespace TNS.API.ApiDataObjects
         public string OrderId { get;  }
         public double MaintMargin { get; set; }
         public DateTime LastUpdateTime { get; set; }
+        public double LastFillPrice { get; set; }
 
         public double Commission { get; set; }
         /// <summary>

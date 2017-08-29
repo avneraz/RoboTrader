@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentNHibernate.Mapping;
+using Infra;
 using Infra.Enum;
+using Infra.Global;
 using TNS.API.ApiDataObjects;
 
 namespace DAL
@@ -53,6 +55,7 @@ namespace DAL
         {
             UseUnionSubclassForInheritanceMapping();
             Id(x => x.Id).Column("Id").GeneratedBy.GuidComb();
+            Map(c => c.Account).Default(AllConfigurations.AllConfigurationsObject.Application.MainAccount);
             Map(c => c.AskPrice);
             Map(c => c.AskSize);
             Map(c => c.BasePrice);
@@ -67,6 +70,7 @@ namespace DAL
 
         }
     }
+
     public class OptionDataMapping : SubclassMap<OptionData>
     {
         public OptionDataMapping()
@@ -77,7 +81,8 @@ namespace DAL
             Map(c => c.Theta);
             Map(c => c.ImpliedVolatility);
             Map(c => c.ModelPrice);
-            References(x => x.OptionContract).Cascade.None() ;
+            //Map(c => c.Account).Default(AllConfigurations.AllConfigurationsObject.Application.MainAccount);
+            References(x => x.OptionContract).Cascade.None();
             Table("OptionsData");
         }
     }
@@ -102,8 +107,11 @@ namespace DAL
             Map(c => c.AverageCost);
             Map(c => c.Position);
             Map(c => c.LastUpdate);
+            //Map(c => c.Account).Default(AllConfigurations.AllConfigurationsObject.Application.MainAccount);
+            // Map(c=>c\\\)
         }
     }
+
     public class OptionPositionDataMapping : SubclassMap<OptionsPositionData>
     {
         public OptionPositionDataMapping()
@@ -127,11 +135,11 @@ namespace DAL
             Map(x => x.Quantity);
             Map(x => x.WhatIf);
             ReferencesAny(x => x.Contract)
-            .EntityIdentifierColumn("ContractId")
-            .EntityTypeColumn("ContractType")
-            .IdentityType<String>()
-            .AddMetaValue<OptionContract>("option")
-            .AddMetaValue<SecurityContract>("stock");
+                .EntityIdentifierColumn("ContractId")
+                .EntityTypeColumn("ContractType")
+                .IdentityType<String>()
+                .AddMetaValue<OptionContract>("option")
+                .AddMetaValue<SecurityContract>("stock");
         }
     }
 
@@ -184,6 +192,7 @@ namespace DAL
 
         }
     }
+
     public class OrderStatusComponent : ComponentMap<OrderStatusData>
     {
         public OrderStatusComponent()
@@ -191,9 +200,11 @@ namespace DAL
             Map(x => x.OrderStatus);
             Map(x => x.Commission);
             Map(x => x.MaintMargin);
-            
+            Map(x => x.LastFillPrice);
+
         }
     }
+
     class TransactionDataMapper : ClassMap<TransactionData>
     {
         public TransactionDataMapper()
@@ -203,8 +214,8 @@ namespace DAL
             Map(c => c.Symbol);
             Map(c => c.OptionKey);
             Map(c => c.TransactionTime);
-            Map(c => c.RequieredMargin);
-            
+            Map(c => c.RequierdMargin);
+
             //Map(c => c.OptionData);
             //References(x => x.OptionData).Cascade.None();
             Component(x => x.OptionData);
@@ -223,11 +234,24 @@ namespace DAL
             Map(c => c.LastUpdate);
             Map(c => c.Status).CustomType<int>();
             Map(c => c.Symbol);
-            References(x => x.OpenTransaction).Cascade.All().Column("OpenTransaction");//.Cascade.All();
-            References(x => x.CloseTransaction).Cascade.All().Column("CloseTransaction");//.Cascade.All();
+            Map(c => c.Account).Default(AllConfigurations.AllConfigurationsObject.Application.MainAccount);
+            References(x => x.OpenTransaction).Cascade.All().Column("OpenTransaction"); //.Cascade.All();
+            References(x => x.CloseTransaction).Cascade.All().Column("CloseTransaction"); //.Cascade.All();
             //Map(c => c.OptionData);
             //References(x => x.OptionData).Cascade.None();
             Component(x => x.OptionData);
+        }
+
+    }
+
+    class SavedParametersDataMapper : ClassMap<SavedParametersData>
+    {
+        public SavedParametersDataMapper()
+        {
+            Table("SavedParameters");
+            Id(x => x.Id);
+            Map(c => c.LastDBDillution);
+            Map(c => c.LastUpdate);
         }
     }
 }

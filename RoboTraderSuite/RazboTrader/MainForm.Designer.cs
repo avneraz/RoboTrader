@@ -54,6 +54,7 @@
             this.xtraPageUnlDataTrading = new DevExpress.XtraTab.XtraTabPage();
             this.unlTradingView1 = new TNS.Controls.UnlTradingView();
             this.btnBnsLocal = new System.Windows.Forms.Button();
+            this.btnTestDiluter = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.xPageAPIMessages.SuspendLayout();
@@ -314,11 +315,22 @@
             this.btnBnsLocal.UseVisualStyleBackColor = true;
             this.btnBnsLocal.Click += new System.EventHandler(this.btnBnsLocal_Click);
             // 
+            // btnTestDiluter
+            // 
+            this.btnTestDiluter.Location = new System.Drawing.Point(132, 12);
+            this.btnTestDiluter.Name = "btnTestDiluter";
+            this.btnTestDiluter.Size = new System.Drawing.Size(75, 23);
+            this.btnTestDiluter.TabIndex = 3;
+            this.btnTestDiluter.Text = "Test Diluter";
+            this.btnTestDiluter.UseVisualStyleBackColor = true;
+            this.btnTestDiluter.Click += new System.EventHandler(this.btnTestDiluter_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1066, 585);
+            this.Controls.Add(this.btnTestDiluter);
             this.Controls.Add(this.btnBnsLocal);
             this.Controls.Add(this.xtraTabControl1);
             this.Name = "MainForm";
@@ -367,6 +379,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtSymbol;
         private System.Windows.Forms.CheckBox cbxSell;
+        private System.Windows.Forms.Button btnTestDiluter;
     }
 }
 

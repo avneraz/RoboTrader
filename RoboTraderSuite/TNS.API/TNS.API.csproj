@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="ApiDataObjects\APIMessageData.cs" />
     <Compile Include="ApiDataObjects\BrokerConnectionStatusMessage.cs" />
+    <Compile Include="ApiDataObjects\OptionTradingData.cs" />
     <Compile Include="ApiDataObjects\UnlOptions.cs" />
     <Compile Include="ApiDataObjects\ExceptionData.cs" />
     <Compile Include="ApiDataObjects\ISymbolMessage.cs" />

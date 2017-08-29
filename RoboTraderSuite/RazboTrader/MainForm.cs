@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Net.Sockets;
 using System.Windows.Forms;
+using DAL;
 using Infra;
 using Infra.Extensions;
 using Infra.PopUpMessages;
@@ -21,6 +22,8 @@ namespace RazboTrader
     public partial class MainForm : Form
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(MainForm));
+
+       
         /// <summary>
         /// The Main GUI Form
         /// </summary>
@@ -190,6 +193,23 @@ namespace RazboTrader
             try
             {
                 CancelOrderTest(ordersView1.SelectedOrderStatusData.OrderId);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnTestDiluter_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DBDiluter dbDiluter = new DBDiluter();
+                DateTime startDate = new DateTime(2017, 8, 21);
+                DateTime endDate = new DateTime(2017, 8, 22);
+
+                var count = dbDiluter.DiluteOptionsFromAllUnLs(startDate, endDate);
+                MessageBox.Show($"{count} rows were deleted");
             }
             catch (Exception ex)
             {

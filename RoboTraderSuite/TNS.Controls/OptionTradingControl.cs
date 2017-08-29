@@ -23,12 +23,12 @@ namespace TNS.Controls
         private IPositionView PositionView { get; set; }
         public static Form ShowControlWithinForm(IPositionView positionView, OptionsPositionData positionData)
         {
-            string symbol = positionData.GetSymbolName();
+            string symbol = positionData.Symbol;
             DateTime expired = positionData.Expiry;
 
             Form containerForm = new Form();
-            OptionTradingControl control = new OptionTradingControl();
-            control.PositionView = positionView;
+            OptionTradingControl control = new OptionTradingControl {PositionView = positionView};
+
             containerForm.Size = control.Size;
             control.SetOptionDataList(positionView.OptionsDataList);
             control.SetDataSource(symbol, expired);
@@ -43,23 +43,23 @@ namespace TNS.Controls
         public void SetDataSource(string symbol, DateTime expired)
         {
 
-            var list = OptionsDataList.Where(op => op.GetSymbolName() == symbol && op.OptionContract.Expiry == expired).ToList();
+            var list = OptionsDataList.Where(op => op.Symbol == symbol && op.OptionContract.Expiry == expired).ToList();
             if(list.Count == 0)
                 throw new Exception("No option elements were found!");
-            var unlPrice = list.First().UnderlinePrice;
-            if (unlPrice < 0.01)
-                unlPrice = 100;
-            var list2 =
-                list.Where(
-                    od => od.OptionContract.Strike > (unlPrice - 10) && od.OptionContract.Strike < (unlPrice + 10));
+            //var unlPrice = list.First().UnderlinePrice;
+            //if (unlPrice < 0.01)
+            //    unlPrice = 100;
+            //var list2 =
+            //    list.Where(
+            //        od => od.OptionContract.Strike > (unlPrice - 40) && od.OptionContract.Strike < (unlPrice + 50));
 
 
             grdOption.InvokeIfRequired(() =>
             {
-                optionDataBindingSource.DataSource = list2;
+                optionDataBindingSource.DataSource = list;
                 optionDataBindingSource.ResetBindings(false);
             });
-
+            grdViewOption.ExpandGroupLevel(0);
 
             GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(1),
                 () =>

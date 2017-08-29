@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using DAL;
 using TNS.API.ApiDataObjects;
@@ -7,6 +8,7 @@ using TNS.API.IBApiWrapper;
 using Infra;
 using Infra.Bus;
 using Infra.Configuration;
+using Infra.Enum;
 using Infra.Extensions.ArrayExtensions;
 using log4net;
 using NHibernate;
@@ -20,6 +22,8 @@ namespace TNS.BL
 {
     public class AppManager
     {
+
+        public static AppManager AppManagerSingleTonObject { get; private set; }
         private static readonly ILog Logger = LogManager.GetLogger(typeof(DBWriter));
         private void InitalizeUnhandledExceptionHandler()
         {
@@ -29,10 +33,14 @@ namespace TNS.BL
                 Logger.Error("Unhandled exception caught", exception);
             };
         }
+        /// <summary>
+        /// Should be called only once from the GUI main form.
+        /// </summary>
         public AppManager()
         {
             InitalizeUnhandledExceptionHandler();
             InitializeAppManager();
+            AppManagerSingleTonObject = this;
         }
 
         /// <summary>
@@ -67,7 +75,28 @@ namespace TNS.BL
             BuildManagers();
             StartManagers();
             APIWrapper.ConnectToBroker();
+            UNLManager unlM = UNLManagerDic.Values.FirstOrDefault() as UNLManager;
+            Debug.Assert(unlM != null, "UNLManager is null");
+            unlM.SendTradingTimeEvent += TradingManager_SendTradingTimeEvent;
             Logger.InfoFormat( "AppManager up! ");
+        }
+
+        private void TradingManager_SendTradingTimeEvent(TradingTimeEvent tradingTimeEvent)
+        {
+            var eventType = tradingTimeEvent.TradingTimeEventType;
+            switch (eventType)
+            {
+                case ETradingTimeEventType.StartTrading:
+                    break;
+                case ETradingTimeEventType.EndTradingIn30Seconds:
+                    break;
+                case ETradingTimeEventType.EndTradingIn60Seconds:
+                    break;
+                case ETradingTimeEventType.EndTrading:
+                    DBDiluter dbDiluter = new DBDiluter();
+                    dbDiluter.DiluteFromAllUnLs();
+                    break;
+            }
         }
 
         private void StartManagers()
@@ -141,10 +170,10 @@ namespace TNS.BL
                     AAPLHighLoadingStrike = 100,
                     AAPLLowLoadingStrike = 200,
                     AAPLSessionsToLoad = "20170817;20151016;20160115",
-                    HighStrikePercentage = 8,
-                    LowStrikePercentage = 8,
-                    MinimumDaysToExpiration = 60,
-                    MaxmumDaysToExpiration = 130,
+                    HighStrikePercentage = 15,
+                    LowStrikePercentage = 15,
+                    MinimumDaysToExpiration = 92,
+                    MaxmumDaysToExpiration = 120,
                 },
                 Trading =
                 {
@@ -186,6 +215,11 @@ namespace TNS.BL
         {
             IOrdersManager ordersManager = ((UNLManager)UNLManagerDic[symbol]).OrdersManager;
             ordersManager.CancelOrder(orderId);
+        }
+
+        public void DiluteOptionsTest()
+        {
+            TradingManager_SendTradingTimeEvent(new TradingTimeEvent(ETradingTimeEventType.EndTrading));
         }
         #endregion
 

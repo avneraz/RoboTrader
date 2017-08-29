@@ -17,6 +17,7 @@ namespace TNS.API.ApiDataObjects
             return GetContract().Symbol;
         }
 
+        public string Account { get; set; }
         /// <summary>
         /// Index or underline data (symbol, currency, etc.)
         /// </summary>

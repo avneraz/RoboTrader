@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
 using Infra.Enum;
 
 namespace TNS.API.ApiDataObjects
@@ -12,7 +7,6 @@ namespace TNS.API.ApiDataObjects
     {
         private TransactionData _openTransaction;
         private TransactionData _closeTransaction;
-        private OptionData _optionData;
         public override EapiDataTypes APIDataType => EapiDataTypes.UnlOption;
         public override ContractBase GetContract()
         {
@@ -25,18 +19,10 @@ namespace TNS.API.ApiDataObjects
         }
 
         public new int Id { get; protected set; }
+        public OptionData OptionData { get; set; }
 
-        public OptionData OptionData
-        {
-            get { return _optionData; }
-            set
-            {
-                _optionData = value;
-            }
-        }
-
+        public double IV => OptionData.ImpliedVolatility;
         public string OptionKey { get; set; }
-
         public TransactionData OpenTransaction
         {
             get => _openTransaction;
@@ -50,10 +36,9 @@ namespace TNS.API.ApiDataObjects
                 LastUpdate = DateTime.Now;
             }
         }
-
         public TransactionData CloseTransaction
         {
-            get { return _closeTransaction; }
+            get => _closeTransaction;
             set
             {
                 _closeTransaction = value;
@@ -61,13 +46,9 @@ namespace TNS.API.ApiDataObjects
                 LastUpdate = DateTime.Now;
             }
         }
-
+        //public string Account { get; set; }
         public string Symbol { get; set; }
-
-       
-
         public EStatus Status { get; set; }
-
         /// <summary>
         /// Hold the last update profit /loss
         /// </summary>

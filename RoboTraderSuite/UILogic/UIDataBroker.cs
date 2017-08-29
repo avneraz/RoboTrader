@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Infra.Bus;
 using Infra.Enum;
+using log4net;
+using log4net.Repository.Hierarchy;
 using TNS.API.ApiDataObjects;
 
 namespace UILogic
@@ -12,7 +14,7 @@ namespace UILogic
     /// </summary>
     public class UIDataBroker:  SimpleBaseLogic
     {
-       
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(UIDataBroker));
         public UIDataBroker ()
         {
             UnlTradingDataList = new List<UnlTradingData>();
@@ -22,8 +24,9 @@ namespace UILogic
             AccountSummaryDataList = new List<AccountSummaryData>() {new AccountSummaryData()};
             SecurityDataList = new List<SecurityData>();
         }
+        private int _optionDataHandledCount = 0;
+        private int _newOptionAdedCount = 0;
 
-      
         protected override string ThreadName => "UIDataBroker";
 
         
@@ -96,11 +99,14 @@ namespace UILogic
                     break;
                 case EapiDataTypes.OptionData:
                     var optionData = (OptionData)message;
-
-                    var optionDataExist = OptionsDataList.FirstOrDefault(od => od.OptionKey == optionData.OptionKey);
+                    Logger.Debug($"UIDataBroker recieve from Distributer {++_optionDataHandledCount} option data messages.@@@@");
+                    var optionDataExist = OptionsDataList.FirstOrDefault(od => od.OptionKey == optionData.OptionKey && od.Symbol == optionData.Symbol);
 
                     if (optionDataExist == null)
+                    {
                         OptionsDataList.Add(optionData);
+                        Logger.Debug($"UIDataBroker Add new option {++_newOptionAdedCount} option data messages.@@@@");
+                    }
                     else
                     {
                         index = OptionsDataList.IndexOf(optionDataExist);
