@@ -113,7 +113,15 @@ namespace TNS.BL.UnlManagers
             else
             {
                 //Create new one
-                unlOptions = new UnlOptions {OpenTransaction = transactionData, Symbol = Symbol, OptionKey = transactionData.OptionKey, Account = AccountSummaryData.MainAccount};
+                unlOptions = new UnlOptions
+                {
+                    OpenTransaction = transactionData,
+                    Symbol = Symbol,
+                    OptionKey = transactionData.OptionKey,
+                    Account = AccountSummaryData.MainAccount, 
+                };
+
+
                 UnlOptionsList.Add(unlOptions);
             }
             //Save

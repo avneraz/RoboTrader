@@ -27,18 +27,21 @@ namespace TNS.BL
 
         private void InitializeMainSecurities()
         {
-            ISession session = DBSessionFactory.Instance.OpenSession();
-            List<ManagedSecurity> managedSecuritiesList = session.Query<ManagedSecurity>().Where(ms=>ms.IsActive).ToList();
-
-            Securities = new Dictionary<string, SecurityData>();
-
-            foreach (var security in managedSecuritiesList)
+            using (ISession session = DBSessionFactory.Instance.OpenSession())
             {
-             
-                var stockContract = new SecurityContract(security.Symbol,
-                    security.SecurityType, security.Exchange, security.Currency);
+                List<ManagedSecurity> managedSecuritiesList =
+                    session.Query<ManagedSecurity>().Where(ms => ms.IsActive).ToList();
 
-                Securities.Add(stockContract.Symbol, new SecurityData() {SecurityContract = stockContract});
+                Securities = new Dictionary<string, SecurityData>();
+
+                foreach (var security in managedSecuritiesList)
+                {
+
+                    var stockContract = new SecurityContract(security.Symbol,
+                        security.SecurityType, security.Exchange, security.Currency);
+
+                    Securities.Add(stockContract.Symbol, new SecurityData() {SecurityContract = stockContract});
+                }
             }
         }
 

@@ -236,6 +236,7 @@ namespace TNS.BL.UnlManagers
                     Symbol = UnlManager.Symbol,
                     RequierdMargin = RequierdMargin,
                 };
+                transaction.SetContract(OptionData.GetContract());
                 //Update about the new transaction
                 UnlManager.TradingManager.HandleMessage(transaction);
             }

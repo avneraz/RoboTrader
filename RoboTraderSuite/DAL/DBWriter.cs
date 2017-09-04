@@ -90,7 +90,7 @@ namespace DAL
         [MessageHandler]
         protected void HandleTransactionData(TransactionData data)
         {
-            //SaveContractDetailsIfNeeded<OptionContract>(data.GetContract());
+            SaveContractDetailsIfNeeded<OptionContract>(data.GetContract());
             //_session.Evict(data);
             using (ITransaction transaction = _session.BeginTransaction())
             {
@@ -133,7 +133,18 @@ namespace DAL
         [MessageHandler]
         protected void HandleUnlOptions(UnlOptions unlOptions)
         {
-
+            try
+            {
+                SaveContractDetailsIfNeeded<OptionContract>(unlOptions.CloseTransaction == null
+                    ? unlOptions.OpenTransaction.OptionData.OptionContract
+                    : unlOptions.CloseTransaction.OptionData.OptionContract);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Could not save OptionContract", ex);
+                //transaction.Rollback();
+               
+            }
             using (ITransaction transaction = _session.BeginTransaction())
             {
                 int uniOpID = 0;

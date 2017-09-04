@@ -375,6 +375,7 @@ namespace TNS.API.IBApiWrapper
                     optionData.Delta = delta;
                 if (gamma < 10)
                     optionData.Gamma = gamma;
+                if(optionData.Symbol.Equals("AMZN")){ }
                 if (vega < 10)
                     optionData.Vega = vega;
                 if (Math.Abs(theta) < 10)

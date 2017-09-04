@@ -47,7 +47,7 @@ namespace TNS.BL.UnlManagers
                     RequestOptionChainDone = true;
                     _optionToLoadParameters = new OptionToLoadParameters(MainSecurityData);
                     APIWrapper.RequestOptionChain(_optionToLoadParameters);
-                    ForTest: if (Symbol == "AAPL") { }
+                   
                 }
             }
             if (result)
@@ -56,7 +56,11 @@ namespace TNS.BL.UnlManagers
             if (message.APIDataType != EapiDataTypes.OptionData) return false ;
 
             var optionData = (OptionData)message;
-
+            if (Symbol == "AMZN")
+            {
+                double vega = -1111;
+                vega = optionData.Vega;
+            }
             if (OptionDataDic.ContainsKey(optionData.GetOptionKey()) == false)
             {
                

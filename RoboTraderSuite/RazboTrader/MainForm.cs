@@ -216,5 +216,21 @@ namespace RazboTrader
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string unl = "AMZN";
+                DateTime expiryDate = new DateTime(2017, 12, 15);
+               var list = OptionTradingDataFactory.GetOptionTradingDataList(unl, expiryDate);
+
+                MessageBox.Show($"The UNL: '{unl}' Expiry={expiryDate} has {list.Count} items.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

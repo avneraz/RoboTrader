@@ -24,7 +24,7 @@ namespace TNS.BL
     {
 
         public static AppManager AppManagerSingleTonObject { get; private set; }
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(DBWriter));
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(AppManager));
         private void InitalizeUnhandledExceptionHandler()
         {
             AppDomain.CurrentDomain.UnhandledException += (s, e) =>

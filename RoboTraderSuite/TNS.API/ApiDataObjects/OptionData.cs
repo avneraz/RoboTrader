@@ -39,7 +39,9 @@ namespace TNS.API.ApiDataObjects
         public string OptionKey => OptionContract.OptionKey;
         public string Symbol => OptionContract.Symbol;
 
-       
+        public DateTime Expiry => OptionContract.Expiry;
+     
+
         public double CalculatedOptionPrice
         {
             get
@@ -69,7 +71,8 @@ namespace TNS.API.ApiDataObjects
             {
                 TimeZoneInfo est = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");//Israel Standard Time
                 DateTime dateTimeInUsa = TimeZoneInfo.ConvertTime(DateTime.Now, est);
-
+                //if(OptionContract == null)
+                //    SetContract(this.GetContract());
                 return (int)OptionContract.Expiry.Subtract(dateTimeInUsa).TotalDays;
             }
         }

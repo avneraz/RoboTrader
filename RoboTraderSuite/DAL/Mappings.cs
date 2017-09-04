@@ -11,7 +11,55 @@ using TNS.API.ApiDataObjects;
 
 namespace DAL
 {
+    #region Component Map
 
+    public class OrderStatusComponent : ComponentMap<OrderStatusData>
+    {
+        public OrderStatusComponent()
+        {
+            Map(x => x.OrderStatus);
+            Map(x => x.Commission);
+            Map(x => x.MaintMargin);
+            Map(x => x.LastFillPrice);
+
+        }
+    }
+    public class OptionDataMapper : ComponentMap<OptionData>
+    {
+        public OptionDataMapper()
+        {
+            Map(c => c.Delta);
+            Map(c => c.Gamma);
+            Map(c => c.Vega);
+            Map(c => c.Theta);
+            Map(c => c.ImpliedVolatility);
+            Map(c => c.ModelPrice);
+            Map(c => c.AskPrice);
+            Map(c => c.BidPrice);
+            Map(c => c.UnderlinePrice);
+
+        }
+    }
+    public class OrderDataMapper : ComponentMap<OrderData>
+    {
+        public OrderDataMapper()
+        {
+            Map(x => x.LimitPrice);
+            Map(x => x.OrderAction);
+            Map(x => x.OrderId);
+            Map(x => x.OrderType);
+            Map(x => x.Quantity);
+            Map(x => x.WhatIf);
+            ReferencesAny(x => x.Contract)
+                .EntityIdentifierColumn("ContractId")
+                .EntityTypeColumn("ContractType")
+                .IdentityType<String>()
+                .AddMetaValue<OptionContract>("option")
+                .AddMetaValue<SecurityContract>("stock");
+        }
+    }
+
+    #endregion
 
     public class BaseContractMapper : ClassMap<ContractBase>
     {
@@ -96,8 +144,6 @@ namespace DAL
         }
     }
 
-
-
     public class PostionMapping : ClassMap<PositionData>
     {
         public PostionMapping()
@@ -124,24 +170,7 @@ namespace DAL
         }
     }
 
-    public class OrderDataMapper : ComponentMap<OrderData>
-    {
-        public OrderDataMapper()
-        {
-            Map(x => x.LimitPrice);
-            Map(x => x.OrderAction);
-            Map(x => x.OrderId);
-            Map(x => x.OrderType);
-            Map(x => x.Quantity);
-            Map(x => x.WhatIf);
-            ReferencesAny(x => x.Contract)
-                .EntityIdentifierColumn("ContractId")
-                .EntityTypeColumn("ContractType")
-                .IdentityType<String>()
-                .AddMetaValue<OptionContract>("option")
-                .AddMetaValue<SecurityContract>("stock");
-        }
-    }
+ 
 
     public class OrderStatus : ClassMap<OrderStatusData>
     {
@@ -174,36 +203,9 @@ namespace DAL
         }
     }
 
-    public class OptionDataMapper : ComponentMap<OptionData>
-    {
-        public OptionDataMapper()
-        {
-            Map(c => c.Delta);
-            Map(c => c.Gamma);
-            Map(c => c.Vega);
-            Map(c => c.Theta);
-            Map(c => c.ImpliedVolatility);
-            Map(c => c.ModelPrice);
-            Map(c => c.AskPrice);
-            Map(c => c.BidPrice);
-            Map(c => c.UnderlinePrice);
-            //Map(c => c.OptionContract);
-            //Map(c => c.OptionKey);
+ 
 
-        }
-    }
-
-    public class OrderStatusComponent : ComponentMap<OrderStatusData>
-    {
-        public OrderStatusComponent()
-        {
-            Map(x => x.OrderStatus);
-            Map(x => x.Commission);
-            Map(x => x.MaintMargin);
-            Map(x => x.LastFillPrice);
-
-        }
-    }
+  
 
     class TransactionDataMapper : ClassMap<TransactionData>
     {
@@ -240,6 +242,8 @@ namespace DAL
             //Map(c => c.OptionData);
             //References(x => x.OptionData).Cascade.None();
             Component(x => x.OptionData);
+            //Component(x => x.OptionContract);
+            References(x => x.OptionContract);
         }
 
     }

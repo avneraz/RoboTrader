@@ -340,6 +340,13 @@ namespace TNS.Controls
         {
             try
             {
+                if (grdMainSecurities.IsFocused)
+                {
+                    //var pos = grdViewMainSecurities.GetSelectedRows()[0];
+                    //var positionData = grdViewPositionData.GetRow(pos) as OptionsPositionData;
+
+                    return;
+                }
                 var positionData = GetSelectedPositionData();
                 if (positionData == null) return;
                 var parent = this.ParentForm;
@@ -351,6 +358,14 @@ namespace TNS.Controls
             {
                 Logger.Error(ex.Message, ex);
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void grdViewMainSecurities_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
+        {
+            if (e.HitInfo.InRow)
+            {
+                popupMenu1.ShowPopup(grdMainSecurities.PointToScreen(e.Point));
             }
         }
     }

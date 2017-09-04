@@ -27,7 +27,7 @@ namespace TNS.API.ApiDataObjects
         public UnlOptions UnlOptions { get; }
         public string Symbol => OptionData.Symbol;
         public double CurrentPrice => OptionData.CalculatedOptionPrice;
-        public double SellPrice => UnlOptions.OpenTransaction.LastPrice;
+        public double SellPrice => UnlOptions.OpenTransaction.OrderStatus.LastFillPrice;
         public double PNL => SellPrice - CurrentPrice;
         /// <summary>
         /// The change of the IV between sell and now, in percetage.
@@ -37,7 +37,7 @@ namespace TNS.API.ApiDataObjects
         public double ThetaChange => OptionData.Multiplier * (OptionData.Theta - UnlOptions.OptionData.Theta);
         public double GammaChange => OptionData.Multiplier * (OptionData.Gamma - UnlOptions.OptionData.Gamma);
         public double VegaChange => OptionData.Multiplier * (OptionData.Vega - UnlOptions.OptionData.Vega);
-        public int DiffDays => OptionData.DaysLeft - UnlOptions.OptionData.DaysLeft;
-
+        public int DiffDays => OptionData.DaysLeft - UnlOptions.DaysLeft;
+        
     }
 }

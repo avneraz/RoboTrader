@@ -27,7 +27,8 @@ namespace TNS.BL
             {
                 case EapiDataTypes.AccountSummaryData:
                     var accountData = (AccountSummaryData)message;
-
+                    if(MainAccount == null)
+                        MainAccount = accountData.MainAccount;
                     EquityWithLoanValue = accountData.EquityWithLoanValue;
                     FullMaintMarginReq = accountData.FullMaintMarginReq;
                     NetLiquidation = accountData.NetLiquidation;
@@ -40,7 +41,7 @@ namespace TNS.BL
             }
         }
 
-
+        public string MainAccount { get; set; }
         /// <summary>
         /// Current money plus option market value
         /// </summary>

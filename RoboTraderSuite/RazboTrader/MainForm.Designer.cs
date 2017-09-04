@@ -55,6 +55,7 @@
             this.unlTradingView1 = new TNS.Controls.UnlTradingView();
             this.btnBnsLocal = new System.Windows.Forms.Button();
             this.btnTestDiluter = new System.Windows.Forms.Button();
+            this.btnTest = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.xPageAPIMessages.SuspendLayout();
@@ -325,11 +326,22 @@
             this.btnTestDiluter.UseVisualStyleBackColor = true;
             this.btnTestDiluter.Click += new System.EventHandler(this.btnTestDiluter_Click);
             // 
+            // btnTest
+            // 
+            this.btnTest.Location = new System.Drawing.Point(244, 13);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(75, 23);
+            this.btnTest.TabIndex = 3;
+            this.btnTest.Text = "Test";
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1066, 585);
+            this.Controls.Add(this.btnTest);
             this.Controls.Add(this.btnTestDiluter);
             this.Controls.Add(this.btnBnsLocal);
             this.Controls.Add(this.xtraTabControl1);
@@ -380,6 +392,7 @@
         private System.Windows.Forms.TextBox txtSymbol;
         private System.Windows.Forms.CheckBox cbxSell;
         private System.Windows.Forms.Button btnTestDiluter;
+        private System.Windows.Forms.Button btnTest;
     }
 }
 
