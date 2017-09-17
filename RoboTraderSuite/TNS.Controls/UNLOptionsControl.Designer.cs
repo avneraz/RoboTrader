@@ -29,249 +29,190 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
             this.grdUnlOptions = new DevExpress.XtraGrid.GridControl();
+            this.optionTradingDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.gridViewUnlOptions = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.unlOptionsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.colAPIDataType = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colId = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colOptionData = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colOptionKey = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colOpenTransaction = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colCloseTransaction = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colSymbol = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colStatus = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colPnL = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colAccount = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colLastPrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colHighestPrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colLowestPrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colBasePrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colOpeningPrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colChange = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colAskPrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colBidPrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colAskSize = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colBidSize = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colVolume = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colMultiplier = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colLastUpdate = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colOptionType = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colStrike = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colCurrentPrice = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colSellPrice = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colPNL = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colIVChange = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colDeltaChange = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colThetaChange = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colGammaChange = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colVegaChange = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colDiffDays = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grdUnlOptions)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.optionTradingDataBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewUnlOptions)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.unlOptionsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // grdUnlOptions
             // 
-            this.grdUnlOptions.DataSource = this.unlOptionsBindingSource;
+            this.grdUnlOptions.DataSource = this.optionTradingDataBindingSource;
             this.grdUnlOptions.Dock = System.Windows.Forms.DockStyle.Fill;
-            gridLevelNode1.RelationName = "Level1";
-            this.grdUnlOptions.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode1});
             this.grdUnlOptions.Location = new System.Drawing.Point(0, 0);
             this.grdUnlOptions.MainView = this.gridViewUnlOptions;
             this.grdUnlOptions.Name = "grdUnlOptions";
-            this.grdUnlOptions.Size = new System.Drawing.Size(1114, 549);
+            this.grdUnlOptions.Size = new System.Drawing.Size(808, 549);
             this.grdUnlOptions.TabIndex = 0;
             this.grdUnlOptions.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewUnlOptions});
             // 
+            // optionTradingDataBindingSource
+            // 
+            this.optionTradingDataBindingSource.DataSource = typeof(TNS.API.ApiDataObjects.OptionTradingData);
+            // 
             // gridViewUnlOptions
             // 
             this.gridViewUnlOptions.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.colAPIDataType,
-            this.colId,
-            this.colOptionData,
-            this.colOptionKey,
-            this.colOpenTransaction,
-            this.colCloseTransaction,
-            this.colSymbol,
-            this.colStatus,
-            this.colPnL,
-            this.colAccount,
-            this.colLastPrice,
-            this.colHighestPrice,
-            this.colLowestPrice,
-            this.colBasePrice,
-            this.colOpeningPrice,
-            this.colChange,
-            this.colAskPrice,
-            this.colBidPrice,
-            this.colAskSize,
-            this.colBidSize,
-            this.colVolume,
-            this.colMultiplier,
-            this.colLastUpdate});
+            this.colOptionType,
+            this.colStrike,
+            this.colCurrentPrice,
+            this.colSellPrice,
+            this.colPNL,
+            this.colIVChange,
+            this.colDeltaChange,
+            this.colThetaChange,
+            this.colGammaChange,
+            this.colVegaChange,
+            this.colDiffDays});
             this.gridViewUnlOptions.GridControl = this.grdUnlOptions;
+            this.gridViewUnlOptions.GroupCount = 2;
+            this.gridViewUnlOptions.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "PNL", null, "(PNL: SUM={0:#,###.0})")});
             this.gridViewUnlOptions.Name = "gridViewUnlOptions";
+            this.gridViewUnlOptions.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
+            this.gridViewUnlOptions.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
+            this.gridViewUnlOptions.OptionsBehavior.Editable = false;
+            this.gridViewUnlOptions.OptionsBehavior.ReadOnly = true;
+            this.gridViewUnlOptions.OptionsView.ShowViewCaption = true;
+            this.gridViewUnlOptions.RowHeight = 25;
+            this.gridViewUnlOptions.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colOptionType, DevExpress.Data.ColumnSortOrder.Ascending),
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colStrike, DevExpress.Data.ColumnSortOrder.Ascending),
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colPNL, DevExpress.Data.ColumnSortOrder.Descending)});
+            this.gridViewUnlOptions.ViewCaptionHeight = 30;
             // 
-            // unlOptionsBindingSource
+            // colOptionType
             // 
-            this.unlOptionsBindingSource.DataSource = typeof(TNS.API.ApiDataObjects.UnlOptions);
+            this.colOptionType.Caption = "Type";
+            this.colOptionType.FieldName = "OptionType";
+            this.colOptionType.Name = "colOptionType";
+            this.colOptionType.Visible = true;
+            this.colOptionType.VisibleIndex = 0;
+            this.colOptionType.Width = 51;
             // 
-            // colAPIDataType
+            // colStrike
             // 
-            this.colAPIDataType.FieldName = "APIDataType";
-            this.colAPIDataType.Name = "colAPIDataType";
-            this.colAPIDataType.OptionsColumn.ReadOnly = true;
-            this.colAPIDataType.Visible = true;
-            this.colAPIDataType.VisibleIndex = 0;
+            this.colStrike.Caption = "Strike";
+            this.colStrike.DisplayFormat.FormatString = "#.0";
+            this.colStrike.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colStrike.FieldName = "Strike";
+            this.colStrike.Name = "colStrike";
+            this.colStrike.Visible = true;
+            this.colStrike.VisibleIndex = 0;
+            this.colStrike.Width = 54;
             // 
-            // colId
+            // colCurrentPrice
             // 
-            this.colId.FieldName = "Id";
-            this.colId.Name = "colId";
-            this.colId.OptionsColumn.ReadOnly = true;
-            this.colId.Visible = true;
-            this.colId.VisibleIndex = 1;
+            this.colCurrentPrice.DisplayFormat.FormatString = "#.00";
+            this.colCurrentPrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colCurrentPrice.FieldName = "CurrentPrice";
+            this.colCurrentPrice.Name = "colCurrentPrice";
+            this.colCurrentPrice.OptionsColumn.ReadOnly = true;
+            this.colCurrentPrice.Visible = true;
+            this.colCurrentPrice.VisibleIndex = 0;
+            this.colCurrentPrice.Width = 101;
             // 
-            // colOptionData
+            // colSellPrice
             // 
-            this.colOptionData.FieldName = "OptionData";
-            this.colOptionData.Name = "colOptionData";
-            this.colOptionData.Visible = true;
-            this.colOptionData.VisibleIndex = 2;
+            this.colSellPrice.DisplayFormat.FormatString = "#.00";
+            this.colSellPrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colSellPrice.FieldName = "SellPrice";
+            this.colSellPrice.Name = "colSellPrice";
+            this.colSellPrice.OptionsColumn.ReadOnly = true;
+            this.colSellPrice.Visible = true;
+            this.colSellPrice.VisibleIndex = 1;
+            this.colSellPrice.Width = 85;
             // 
-            // colOptionKey
+            // colPNL
             // 
-            this.colOptionKey.FieldName = "OptionKey";
-            this.colOptionKey.Name = "colOptionKey";
-            this.colOptionKey.Visible = true;
-            this.colOptionKey.VisibleIndex = 3;
+            this.colPNL.DisplayFormat.FormatString = "#,###.0";
+            this.colPNL.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colPNL.FieldName = "PNL";
+            this.colPNL.Name = "colPNL";
+            this.colPNL.OptionsColumn.ReadOnly = true;
+            this.colPNL.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "PNL", "SUM={0:#,###.0}")});
+            this.colPNL.Visible = true;
+            this.colPNL.VisibleIndex = 2;
+            this.colPNL.Width = 80;
             // 
-            // colOpenTransaction
+            // colIVChange
             // 
-            this.colOpenTransaction.FieldName = "OpenTransaction";
-            this.colOpenTransaction.Name = "colOpenTransaction";
-            this.colOpenTransaction.Visible = true;
-            this.colOpenTransaction.VisibleIndex = 4;
+            this.colIVChange.DisplayFormat.FormatString = "#.000";
+            this.colIVChange.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colIVChange.FieldName = "IVChange";
+            this.colIVChange.Name = "colIVChange";
+            this.colIVChange.OptionsColumn.ReadOnly = true;
+            this.colIVChange.Visible = true;
+            this.colIVChange.VisibleIndex = 3;
+            this.colIVChange.Width = 80;
             // 
-            // colCloseTransaction
+            // colDeltaChange
             // 
-            this.colCloseTransaction.FieldName = "CloseTransaction";
-            this.colCloseTransaction.Name = "colCloseTransaction";
-            this.colCloseTransaction.Visible = true;
-            this.colCloseTransaction.VisibleIndex = 5;
+            this.colDeltaChange.DisplayFormat.FormatString = "#.000";
+            this.colDeltaChange.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colDeltaChange.FieldName = "DeltaChange";
+            this.colDeltaChange.Name = "colDeltaChange";
+            this.colDeltaChange.OptionsColumn.ReadOnly = true;
+            this.colDeltaChange.Visible = true;
+            this.colDeltaChange.VisibleIndex = 4;
+            this.colDeltaChange.Width = 80;
             // 
-            // colSymbol
+            // colThetaChange
             // 
-            this.colSymbol.FieldName = "Symbol";
-            this.colSymbol.Name = "colSymbol";
-            this.colSymbol.Visible = true;
-            this.colSymbol.VisibleIndex = 6;
+            this.colThetaChange.DisplayFormat.FormatString = "#.000";
+            this.colThetaChange.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colThetaChange.FieldName = "ThetaChange";
+            this.colThetaChange.Name = "colThetaChange";
+            this.colThetaChange.OptionsColumn.ReadOnly = true;
+            this.colThetaChange.Visible = true;
+            this.colThetaChange.VisibleIndex = 5;
+            this.colThetaChange.Width = 84;
             // 
-            // colStatus
+            // colGammaChange
             // 
-            this.colStatus.FieldName = "Status";
-            this.colStatus.Name = "colStatus";
-            this.colStatus.Visible = true;
-            this.colStatus.VisibleIndex = 7;
+            this.colGammaChange.DisplayFormat.FormatString = "#.000";
+            this.colGammaChange.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colGammaChange.FieldName = "GammaChange";
+            this.colGammaChange.Name = "colGammaChange";
+            this.colGammaChange.OptionsColumn.ReadOnly = true;
+            this.colGammaChange.Visible = true;
+            this.colGammaChange.VisibleIndex = 6;
+            this.colGammaChange.Width = 89;
             // 
-            // colPnL
+            // colVegaChange
             // 
-            this.colPnL.FieldName = "PnL";
-            this.colPnL.Name = "colPnL";
-            this.colPnL.Visible = true;
-            this.colPnL.VisibleIndex = 8;
+            this.colVegaChange.DisplayFormat.FormatString = "#.000";
+            this.colVegaChange.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colVegaChange.FieldName = "VegaChange";
+            this.colVegaChange.Name = "colVegaChange";
+            this.colVegaChange.OptionsColumn.ReadOnly = true;
+            this.colVegaChange.Visible = true;
+            this.colVegaChange.VisibleIndex = 7;
+            this.colVegaChange.Width = 73;
             // 
-            // colAccount
+            // colDiffDays
             // 
-            this.colAccount.FieldName = "Account";
-            this.colAccount.Name = "colAccount";
-            this.colAccount.Visible = true;
-            this.colAccount.VisibleIndex = 9;
-            // 
-            // colLastPrice
-            // 
-            this.colLastPrice.FieldName = "LastPrice";
-            this.colLastPrice.Name = "colLastPrice";
-            this.colLastPrice.Visible = true;
-            this.colLastPrice.VisibleIndex = 10;
-            // 
-            // colHighestPrice
-            // 
-            this.colHighestPrice.FieldName = "HighestPrice";
-            this.colHighestPrice.Name = "colHighestPrice";
-            this.colHighestPrice.Visible = true;
-            this.colHighestPrice.VisibleIndex = 11;
-            // 
-            // colLowestPrice
-            // 
-            this.colLowestPrice.FieldName = "LowestPrice";
-            this.colLowestPrice.Name = "colLowestPrice";
-            this.colLowestPrice.Visible = true;
-            this.colLowestPrice.VisibleIndex = 12;
-            // 
-            // colBasePrice
-            // 
-            this.colBasePrice.FieldName = "BasePrice";
-            this.colBasePrice.Name = "colBasePrice";
-            this.colBasePrice.Visible = true;
-            this.colBasePrice.VisibleIndex = 13;
-            // 
-            // colOpeningPrice
-            // 
-            this.colOpeningPrice.FieldName = "OpeningPrice";
-            this.colOpeningPrice.Name = "colOpeningPrice";
-            this.colOpeningPrice.Visible = true;
-            this.colOpeningPrice.VisibleIndex = 14;
-            // 
-            // colChange
-            // 
-            this.colChange.FieldName = "Change";
-            this.colChange.Name = "colChange";
-            this.colChange.OptionsColumn.ReadOnly = true;
-            this.colChange.Visible = true;
-            this.colChange.VisibleIndex = 15;
-            // 
-            // colAskPrice
-            // 
-            this.colAskPrice.FieldName = "AskPrice";
-            this.colAskPrice.Name = "colAskPrice";
-            this.colAskPrice.Visible = true;
-            this.colAskPrice.VisibleIndex = 16;
-            // 
-            // colBidPrice
-            // 
-            this.colBidPrice.FieldName = "BidPrice";
-            this.colBidPrice.Name = "colBidPrice";
-            this.colBidPrice.Visible = true;
-            this.colBidPrice.VisibleIndex = 17;
-            // 
-            // colAskSize
-            // 
-            this.colAskSize.FieldName = "AskSize";
-            this.colAskSize.Name = "colAskSize";
-            this.colAskSize.Visible = true;
-            this.colAskSize.VisibleIndex = 18;
-            // 
-            // colBidSize
-            // 
-            this.colBidSize.FieldName = "BidSize";
-            this.colBidSize.Name = "colBidSize";
-            this.colBidSize.Visible = true;
-            this.colBidSize.VisibleIndex = 19;
-            // 
-            // colVolume
-            // 
-            this.colVolume.FieldName = "Volume";
-            this.colVolume.Name = "colVolume";
-            this.colVolume.Visible = true;
-            this.colVolume.VisibleIndex = 20;
-            // 
-            // colMultiplier
-            // 
-            this.colMultiplier.FieldName = "Multiplier";
-            this.colMultiplier.Name = "colMultiplier";
-            this.colMultiplier.Visible = true;
-            this.colMultiplier.VisibleIndex = 21;
-            // 
-            // colLastUpdate
-            // 
-            this.colLastUpdate.FieldName = "LastUpdate";
-            this.colLastUpdate.Name = "colLastUpdate";
-            this.colLastUpdate.Visible = true;
-            this.colLastUpdate.VisibleIndex = 22;
+            this.colDiffDays.FieldName = "DiffDays";
+            this.colDiffDays.Name = "colDiffDays";
+            this.colDiffDays.OptionsColumn.ReadOnly = true;
+            this.colDiffDays.Visible = true;
+            this.colDiffDays.VisibleIndex = 8;
+            this.colDiffDays.Width = 118;
             // 
             // UNLOptionsControl
             // 
@@ -279,10 +220,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.grdUnlOptions);
             this.Name = "UNLOptionsControl";
-            this.Size = new System.Drawing.Size(1114, 549);
+            this.Size = new System.Drawing.Size(808, 549);
+            this.Load += new System.EventHandler(this.UNLOptionsControl_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grdUnlOptions)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.optionTradingDataBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewUnlOptions)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.unlOptionsBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -291,29 +233,17 @@
 
         private DevExpress.XtraGrid.GridControl grdUnlOptions;
         private DevExpress.XtraGrid.Views.Grid.GridView gridViewUnlOptions;
-        private System.Windows.Forms.BindingSource unlOptionsBindingSource;
-        private DevExpress.XtraGrid.Columns.GridColumn colAPIDataType;
-        private DevExpress.XtraGrid.Columns.GridColumn colId;
-        private DevExpress.XtraGrid.Columns.GridColumn colOptionData;
-        private DevExpress.XtraGrid.Columns.GridColumn colOptionKey;
-        private DevExpress.XtraGrid.Columns.GridColumn colOpenTransaction;
-        private DevExpress.XtraGrid.Columns.GridColumn colCloseTransaction;
-        private DevExpress.XtraGrid.Columns.GridColumn colSymbol;
-        private DevExpress.XtraGrid.Columns.GridColumn colStatus;
-        private DevExpress.XtraGrid.Columns.GridColumn colPnL;
-        private DevExpress.XtraGrid.Columns.GridColumn colAccount;
-        private DevExpress.XtraGrid.Columns.GridColumn colLastPrice;
-        private DevExpress.XtraGrid.Columns.GridColumn colHighestPrice;
-        private DevExpress.XtraGrid.Columns.GridColumn colLowestPrice;
-        private DevExpress.XtraGrid.Columns.GridColumn colBasePrice;
-        private DevExpress.XtraGrid.Columns.GridColumn colOpeningPrice;
-        private DevExpress.XtraGrid.Columns.GridColumn colChange;
-        private DevExpress.XtraGrid.Columns.GridColumn colAskPrice;
-        private DevExpress.XtraGrid.Columns.GridColumn colBidPrice;
-        private DevExpress.XtraGrid.Columns.GridColumn colAskSize;
-        private DevExpress.XtraGrid.Columns.GridColumn colBidSize;
-        private DevExpress.XtraGrid.Columns.GridColumn colVolume;
-        private DevExpress.XtraGrid.Columns.GridColumn colMultiplier;
-        private DevExpress.XtraGrid.Columns.GridColumn colLastUpdate;
+        private System.Windows.Forms.BindingSource optionTradingDataBindingSource;
+        private DevExpress.XtraGrid.Columns.GridColumn colCurrentPrice;
+        private DevExpress.XtraGrid.Columns.GridColumn colSellPrice;
+        private DevExpress.XtraGrid.Columns.GridColumn colPNL;
+        private DevExpress.XtraGrid.Columns.GridColumn colIVChange;
+        private DevExpress.XtraGrid.Columns.GridColumn colDeltaChange;
+        private DevExpress.XtraGrid.Columns.GridColumn colThetaChange;
+        private DevExpress.XtraGrid.Columns.GridColumn colGammaChange;
+        private DevExpress.XtraGrid.Columns.GridColumn colVegaChange;
+        private DevExpress.XtraGrid.Columns.GridColumn colDiffDays;
+        private DevExpress.XtraGrid.Columns.GridColumn colOptionType;
+        private DevExpress.XtraGrid.Columns.GridColumn colStrike;
     }
 }

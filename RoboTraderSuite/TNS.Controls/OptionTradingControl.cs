@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Infra;
 using Infra.Extensions;
@@ -19,40 +14,40 @@ namespace TNS.Controls
         {
             InitializeComponent();
         }
+        private string _taskId;
 
-        private IPositionView PositionView { get; set; }
-        public static Form ShowControlWithinForm(IPositionView positionView, OptionsPositionData positionData)
+        private OptionsPositionData _positionData;
+        private IPositionView _positionView;
+
+        public IPositionView PositionView
         {
-            string symbol = positionData.Symbol;
-            DateTime expired = positionData.Expiry;
-
-            Form containerForm = new Form();
-            OptionTradingControl control = new OptionTradingControl {PositionView = positionView};
-
-            containerForm.Size = control.Size;
-            control.SetOptionDataList(positionView.OptionsDataList);
-            control.SetDataSource(symbol, expired);
-            control.Dock = DockStyle.Fill;
-            containerForm.Controls.Add(control);
-            return containerForm;
-
+            get => _positionView;
+            set
+            {
+                _positionView = value ?? throw new ArgumentNullException(nameof(value));
+                OptionsDataList = PositionView.OptionsDataList;
+            }
         }
 
+       public OptionsPositionData PositionData
+        {
+            get => _positionData;
+            set
+            {
+                _positionData = value;
+                SetDataSource();
+            }
+        }
         private List<OptionData> OptionsDataList { get; set; }
 
-        public void SetDataSource(string symbol, DateTime expired)
+        private void SetDataSource()
         {
+            var symbol = PositionData.Symbol;
+            var expired = PositionData.Expiry;
 
             var list = OptionsDataList.Where(op => op.Symbol == symbol && op.OptionContract.Expiry == expired).ToList();
-            if(list.Count == 0)
+            if (list.Count == 0)
                 throw new Exception("No option elements were found!");
-            //var unlPrice = list.First().UnderlinePrice;
-            //if (unlPrice < 0.01)
-            //    unlPrice = 100;
-            //var list2 =
-            //    list.Where(
-            //        od => od.OptionContract.Strike > (unlPrice - 40) && od.OptionContract.Strike < (unlPrice + 50));
-
 
             grdOption.InvokeIfRequired(() =>
             {
@@ -61,7 +56,7 @@ namespace TNS.Controls
             });
             grdViewOption.ExpandGroupLevel(0);
 
-            GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(1),
+            _taskId = GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(1),
                 () =>
                 {
                     grdOption.InvokeIfRequired(() =>
@@ -69,15 +64,9 @@ namespace TNS.Controls
                         optionDataBindingSource.ResetBindings(false);
                     });
                 }, true);
-
-
-
         }
 
-        public void SetOptionDataList(List<OptionData> optionsDataList)
-        {
-            OptionsDataList = optionsDataList;
-        }
+      
 
         private void btnSendOrder_Click(object sender, EventArgs e)
         {
@@ -95,7 +84,8 @@ namespace TNS.Controls
             }
             
         }
-        public OptionData GetSelectedOptionData()
+
+        private OptionData GetSelectedOptionData()
         {
             if ((optionDataBindingSource == null) || optionDataBindingSource.Count == 0)
                 return null;
@@ -105,5 +95,19 @@ namespace TNS.Controls
 
             return optionData;
         }
+
+      
+           
+
+        private void ParentFormOnClosed(object sender, EventArgs eventArgs)
+        {
+            GeneralTimer.GeneralTimerInstance.RemoveTask(_taskId);
+        }
+
+        private void OptionTradingControl_Load(object sender, EventArgs e)
+        {
+            if (ParentForm != null) ParentForm.Closed += ParentFormOnClosed;
+        }
+    
     }
 }

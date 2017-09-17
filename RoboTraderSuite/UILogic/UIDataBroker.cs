@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DAL;
 using Infra.Bus;
 using Infra.Enum;
 using log4net;
 using log4net.Repository.Hierarchy;
 using TNS.API.ApiDataObjects;
+using OrderStatus = TNS.API.ApiDataObjects.OrderStatus;
 
 namespace UILogic
 {
@@ -23,10 +25,11 @@ namespace UILogic
             OptionsDataList = new List<OptionData>();
             AccountSummaryDataList = new List<AccountSummaryData>() {new AccountSummaryData()};
             SecurityDataList = new List<SecurityData>();
+            _lastNetLiquidation = SavedPatametersManager.GetLastNetLiquiditionParameter();
         }
         private int _optionDataHandledCount = 0;
         private int _newOptionAdedCount = 0;
-
+        private double _lastNetLiquidation;
         protected override string ThreadName => "UIDataBroker";
 
         
@@ -115,6 +118,7 @@ namespace UILogic
                     break;
                 case EapiDataTypes.AccountSummaryData:
                     var accountData = (AccountSummaryData)message;
+                    accountData.LastTimeNetLiquidation = _lastNetLiquidation;
                     AccountSummaryDataList[0] = accountData;
 
                     break;

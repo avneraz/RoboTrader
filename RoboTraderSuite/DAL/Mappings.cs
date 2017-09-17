@@ -255,6 +255,7 @@ namespace DAL
             Table("SavedParameters");
             Id(x => x.Id);
             Map(c => c.LastDBDillution);
+            Map(c => c.LastNetLiquidition).Column("LastNetLiquidition");
             Map(c => c.LastUpdate);
         }
     }

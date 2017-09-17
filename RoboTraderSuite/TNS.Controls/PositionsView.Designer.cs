@@ -72,8 +72,10 @@
             this.accountSummaryDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.lblMargin = new System.Windows.Forms.Label();
             this.grpAccountSummary = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.lblExcessLiq = new System.Windows.Forms.Label();
+            this.lblDailyPnL = new System.Windows.Forms.Label();
             this.lblPnL = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.grdUnLTradingData = new DevExpress.XtraGrid.GridControl();
@@ -143,6 +145,7 @@
             this.iSellOption = new DevExpress.XtraBars.BarButtonItem();
             this.iBuyOption = new DevExpress.XtraBars.BarButtonItem();
             this.iOptionPicker = new DevExpress.XtraBars.BarButtonItem();
+            this.iShowUNLOption = new DevExpress.XtraBars.BarButtonItem();
             this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.grdPositionData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.optionsPositionDataBindingSource)).BeginInit();
@@ -744,7 +747,7 @@
             this.colAvgPrice.Caption = "Avg Price";
             this.colAvgPrice.DisplayFormat.FormatString = "#,##0.00";
             this.colAvgPrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colAvgPrice.FieldName = "AverageCost";
+            this.colAvgPrice.FieldName = "AvgPrice";
             this.colAvgPrice.MinWidth = 70;
             this.colAvgPrice.Name = "colAvgPrice";
             this.colAvgPrice.UnboundExpression = "[TotalCostUSD] / [Position]";
@@ -796,7 +799,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Green;
-            this.label2.Location = new System.Drawing.Point(6, 42);
+            this.label2.Location = new System.Drawing.Point(6, 39);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(56, 15);
             this.label2.TabIndex = 3;
@@ -804,16 +807,16 @@
             // 
             // lblNetLiquidation
             // 
-            this.lblNetLiquidation.AutoSize = true;
             this.lblNetLiquidation.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.lblNetLiquidation.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.accountSummaryDataBindingSource, "NetLiquidation", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "N0"));
             this.lblNetLiquidation.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNetLiquidation.ForeColor = System.Drawing.Color.Green;
             this.lblNetLiquidation.Location = new System.Drawing.Point(120, 18);
             this.lblNetLiquidation.Name = "lblNetLiquidation";
-            this.lblNetLiquidation.Size = new System.Drawing.Size(59, 15);
+            this.lblNetLiquidation.Size = new System.Drawing.Size(64, 15);
             this.lblNetLiquidation.TabIndex = 3;
             this.lblNetLiquidation.Text = "159,300";
+            this.lblNetLiquidation.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // accountSummaryDataBindingSource
             // 
@@ -821,23 +824,25 @@
             // 
             // lblMargin
             // 
-            this.lblMargin.AutoSize = true;
             this.lblMargin.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.lblMargin.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.accountSummaryDataBindingSource, "FullMaintMarginReq", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "N0"));
             this.lblMargin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMargin.ForeColor = System.Drawing.Color.Green;
-            this.lblMargin.Location = new System.Drawing.Point(120, 42);
+            this.lblMargin.Location = new System.Drawing.Point(120, 39);
             this.lblMargin.Name = "lblMargin";
-            this.lblMargin.Size = new System.Drawing.Size(59, 15);
+            this.lblMargin.Size = new System.Drawing.Size(64, 15);
             this.lblMargin.TabIndex = 3;
             this.lblMargin.Text = "125,000";
+            this.lblMargin.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // grpAccountSummary
             // 
             this.grpAccountSummary.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpAccountSummary.Controls.Add(this.label6);
             this.grpAccountSummary.Controls.Add(this.label4);
             this.grpAccountSummary.Controls.Add(this.label1);
             this.grpAccountSummary.Controls.Add(this.lblExcessLiq);
+            this.grpAccountSummary.Controls.Add(this.lblDailyPnL);
             this.grpAccountSummary.Controls.Add(this.lblMargin);
             this.grpAccountSummary.Controls.Add(this.lblPnL);
             this.grpAccountSummary.Controls.Add(this.lblNetLiquidation);
@@ -850,12 +855,23 @@
             this.grpAccountSummary.TabStop = false;
             this.grpAccountSummary.Text = "Account Summary";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.Green;
+            this.label6.Location = new System.Drawing.Point(6, 102);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(72, 15);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Daily PnL:";
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Green;
-            this.label4.Location = new System.Drawing.Point(6, 90);
+            this.label4.Location = new System.Drawing.Point(6, 81);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(36, 15);
             this.label4.TabIndex = 3;
@@ -863,36 +879,49 @@
             // 
             // lblExcessLiq
             // 
-            this.lblExcessLiq.AutoSize = true;
             this.lblExcessLiq.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.lblExcessLiq.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.accountSummaryDataBindingSource, "ExcessLiquidity", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "N0"));
             this.lblExcessLiq.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblExcessLiq.ForeColor = System.Drawing.Color.Green;
-            this.lblExcessLiq.Location = new System.Drawing.Point(120, 67);
+            this.lblExcessLiq.Location = new System.Drawing.Point(120, 60);
             this.lblExcessLiq.Name = "lblExcessLiq";
-            this.lblExcessLiq.Size = new System.Drawing.Size(51, 15);
+            this.lblExcessLiq.Size = new System.Drawing.Size(64, 15);
             this.lblExcessLiq.TabIndex = 3;
             this.lblExcessLiq.Text = "30,000";
+            this.lblExcessLiq.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblDailyPnL
+            // 
+            this.lblDailyPnL.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.lblDailyPnL.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.accountSummaryDataBindingSource, "DailyPnL", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, "#,###", "#,###"));
+            this.lblDailyPnL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDailyPnL.ForeColor = System.Drawing.Color.Green;
+            this.lblDailyPnL.Location = new System.Drawing.Point(120, 102);
+            this.lblDailyPnL.Name = "lblDailyPnL";
+            this.lblDailyPnL.Size = new System.Drawing.Size(64, 15);
+            this.lblDailyPnL.TabIndex = 3;
+            this.lblDailyPnL.Text = "999999";
+            this.lblDailyPnL.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblPnL
             // 
-            this.lblPnL.AutoSize = true;
             this.lblPnL.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.lblPnL.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.accountSummaryDataBindingSource, "PnL", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "N0"));
+            this.lblPnL.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.accountSummaryDataBindingSource, "PnL", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "#,###"));
             this.lblPnL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPnL.ForeColor = System.Drawing.Color.Green;
-            this.lblPnL.Location = new System.Drawing.Point(120, 90);
+            this.lblPnL.Location = new System.Drawing.Point(120, 81);
             this.lblPnL.Name = "lblPnL";
-            this.lblPnL.Size = new System.Drawing.Size(39, 15);
+            this.lblPnL.Size = new System.Drawing.Size(64, 15);
             this.lblPnL.TabIndex = 3;
-            this.lblPnL.Text = "9999";
+            this.lblPnL.Text = "999999";
+            this.lblPnL.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Green;
-            this.label3.Location = new System.Drawing.Point(6, 67);
+            this.label3.Location = new System.Drawing.Point(6, 60);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(80, 15);
             this.label3.TabIndex = 3;
@@ -1519,9 +1548,10 @@
             this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.iSellOption,
             this.iBuyOption,
-            this.iOptionPicker});
+            this.iOptionPicker,
+            this.iShowUNLOption});
             this.barManager1.MainMenu = this.bar2;
-            this.barManager1.MaxItemId = 8;
+            this.barManager1.MaxItemId = 9;
             this.barManager1.StatusBar = this.bar3;
             // 
             // bar1
@@ -1610,12 +1640,21 @@
             this.iOptionPicker.Name = "iOptionPicker";
             this.iOptionPicker.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iOptionPicker_ItemClick);
             // 
+            // iShowUNLOption
+            // 
+            this.iShowUNLOption.Caption = "UNL Option";
+            this.iShowUNLOption.Id = 8;
+            this.iShowUNLOption.ImageOptions.Image = global::TNS.Controls.Properties.Resources.Calendar_16x16;
+            this.iShowUNLOption.Name = "iShowUNLOption";
+            this.iShowUNLOption.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iShowUnlOption_ItemClick);
+            // 
             // popupMenu1
             // 
             this.popupMenu1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.iSellOption),
             new DevExpress.XtraBars.LinkPersistInfo(this.iBuyOption),
-            new DevExpress.XtraBars.LinkPersistInfo(this.iOptionPicker)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.iOptionPicker),
+            new DevExpress.XtraBars.LinkPersistInfo(this.iShowUNLOption)});
             this.popupMenu1.Manager = this.barManager1;
             this.popupMenu1.Name = "popupMenu1";
             // 
@@ -1775,5 +1814,8 @@
         private DevExpress.XtraBars.BarButtonItem iOptionPicker;
         private System.Windows.Forms.Label lblExcessLiq;
         private System.Windows.Forms.Label label3;
+        private DevExpress.XtraBars.BarButtonItem iShowUNLOption;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblDailyPnL;
     }
 }

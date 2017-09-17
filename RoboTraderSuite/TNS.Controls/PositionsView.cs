@@ -8,11 +8,13 @@ using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using Infra;
 using Infra.Enum;
 using Infra.Extensions;
+using Infra.Global;
 using log4net;
 using TNS.API.ApiDataObjects;
 using TNS.BL;
 using TNS.BL.Interfaces;
 using TNS.BL.UnlManagers;
+using DAL;
 
 namespace TNS.Controls
 {
@@ -74,6 +76,11 @@ namespace TNS.Controls
                     grpAccountSummary.InvokeIfRequired(() =>
                     {
                         accountSummaryDataBindingSource.ResetBindings(false);
+                        var accountSummaryData = (accountSummaryDataBindingSource.Current) as AccountSummaryData;
+                        lblDailyPnL.ForeColor =
+                            accountSummaryData != null && accountSummaryData.DailyPnL < 0
+                                ? Color.Red
+                                : Color.ForestGreen;
                     });
                     grdUnLTradingData.InvokeIfRequired(() =>
                     {
@@ -133,9 +140,10 @@ namespace TNS.Controls
                 accountSummaryDataBindingSource.ResetBindings(false);
                 grpAccountSummary.ResetBindings();
             });
-
+           
         }
 
+        
         //private Dictionary<string, OptionsPositionData> PositionDataDic { get;  set; }
 
         private void PositionsView_Resize(object sender, EventArgs e)
@@ -340,19 +348,12 @@ namespace TNS.Controls
         {
             try
             {
-                if (grdMainSecurities.IsFocused)
-                {
-                    //var pos = grdViewMainSecurities.GetSelectedRows()[0];
-                    //var positionData = grdViewPositionData.GetRow(pos) as OptionsPositionData;
-
-                    return;
-                }
                 var positionData = GetSelectedPositionData();
-                if (positionData == null) return;
-                var parent = this.ParentForm;
-                Form form = OptionTradingControl.ShowControlWithinForm(this, positionData);
-                form.SetFormOnSameScreen(parent);
-                form.Show();
+                if (positionData == null) throw new Exception("There is no Position Data!!!");
+
+                var control = new OptionTradingControl {PositionView = this, PositionData = positionData};
+
+                control.ShowControl(this.ParentForm, true);
             }
             catch (Exception ex)
             {
@@ -361,11 +362,37 @@ namespace TNS.Controls
             }
         }
 
+      
         private void grdViewMainSecurities_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
         {
             if (e.HitInfo.InRow)
             {
                 popupMenu1.ShowPopup(grdMainSecurities.PointToScreen(e.Point));
+            }
+        }
+
+        private void iShowUnlOption_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            try
+            {
+                var positionData = GetSelectedPositionData();
+                if (positionData == null) throw new Exception("There is no Position Data!!!");
+                
+                string unl = positionData.Symbol;
+                DateTime expiryDate = positionData.Expiry;
+
+                var list = OptionTradingDataFactory.GetOptionTradingDataList(unl, expiryDate);
+
+                var control = new UNLOptionsControl();
+
+                control.SetDataSource(list);
+                control.ShowControl(this.ParentForm, true);
+
+                //MessageBox.Show($"The UNL: '{unl}' Expiry={expiryDate} has {list.Count} items.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

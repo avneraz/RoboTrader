@@ -82,7 +82,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.xtraTabControl1.Location = new System.Drawing.Point(-1, 65);
             this.xtraTabControl1.Name = "xtraTabControl1";
-            this.xtraTabControl1.SelectedTabPage = this.xPageAPIMessages;
+            this.xtraTabControl1.SelectedTabPage = this.xPagePositions;
             this.xtraTabControl1.Size = new System.Drawing.Size(1067, 520);
             this.xtraTabControl1.TabIndex = 1;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {

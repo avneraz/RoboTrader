@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Infra.Enum;
 
 namespace TNS.API.ApiDataObjects
 {
@@ -28,7 +29,7 @@ namespace TNS.API.ApiDataObjects
         public string Symbol => OptionData.Symbol;
         public double CurrentPrice => OptionData.CalculatedOptionPrice;
         public double SellPrice => UnlOptions.OpenTransaction.OrderStatus.LastFillPrice;
-        public double PNL => SellPrice - CurrentPrice;
+        public double PNL => OptionData.Multiplier * (SellPrice - CurrentPrice);
         /// <summary>
         /// The change of the IV between sell and now, in percetage.
         /// </summary>
@@ -37,7 +38,11 @@ namespace TNS.API.ApiDataObjects
         public double ThetaChange => OptionData.Multiplier * (OptionData.Theta - UnlOptions.OptionData.Theta);
         public double GammaChange => OptionData.Multiplier * (OptionData.Gamma - UnlOptions.OptionData.Gamma);
         public double VegaChange => OptionData.Multiplier * (OptionData.Vega - UnlOptions.OptionData.Vega);
-        public int DiffDays => OptionData.DaysLeft - UnlOptions.DaysLeft;
-        
+        public int DiffDays => UnlOptions.DaysLeft - OptionData.DaysLeft;
+
+        public double Strike => OptionData.OptionContract.Strike;
+
+        public EOptionType OptionType => OptionData.OptionContract.OptionType;
+
     }
 }

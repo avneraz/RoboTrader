@@ -497,6 +497,7 @@
             this.Controls.Add(this.panel1);
             this.Name = "OptionTradingControl";
             this.Size = new System.Drawing.Size(1100, 650);
+            this.Load += new System.EventHandler(this.OptionTradingControl_Load);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdOption)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.optionDataBindingSource)).EndInit();

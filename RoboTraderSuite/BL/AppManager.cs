@@ -95,6 +95,7 @@ namespace TNS.BL
                 case ETradingTimeEventType.EndTrading:
                     DBDiluter dbDiluter = new DBDiluter();
                     dbDiluter.DiluteFromAllUnLs();
+                    SavedPatametersManager.SaveLastNetLiquiditionParameter(AccountManager.NetLiquidation);
                     break;
             }
         }

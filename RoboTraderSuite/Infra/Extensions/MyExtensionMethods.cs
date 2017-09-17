@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using DevExpress.XtraGrid.Columns;
+using Infra.Custom;
 
 namespace Infra.Extensions
 {
@@ -137,6 +138,24 @@ namespace Infra.Extensions
                            (theForm.Size.Width/2);
             theForm.Top = hostingScreen.WorkingArea.Top + (hostingScreen.Bounds.Size.Height/2) -
                           (theForm.Size.Height/2);
+        }
+        /// <summary>
+        /// Create and show given control within form
+        /// </summary>
+        /// <param name="control">The control being shown.</param>
+        /// <param name="parentForm">The Parent form that this control should be display within parent form borders.</param>
+        /// <param name="floating">indicate if the control has no caption and can be floating. </param>
+        /// <returns></returns>
+        public static Form ShowControl(this Control control, Form parentForm, bool floating = false)
+        {
+            var containerForm = floating ? new FloatingForm() : new Form();
+            containerForm.Size = control.Size;
+
+            control.Dock = DockStyle.Fill;
+            containerForm.Controls.Add(control);
+            containerForm.Show();
+            containerForm.SetFormOnSameScreen(parentForm);
+            return containerForm;
         }
 
     }

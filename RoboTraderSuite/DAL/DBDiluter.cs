@@ -19,21 +19,28 @@ namespace DAL
         /// </summary>
         public void DiluteFromAllUnLs()
         {
-            _session = DBSessionFactory.Instance.OpenSession();
-            _savedParametersData = _session.Query<SavedParametersData>().FirstOrDefault();
-            if(_savedParametersData == null)
-                throw new Exception("There are no record for SavedParametersData");
-            DateTime startDate = _savedParametersData.LastDBDillution;
-            DateTime endDate = DateTime.Today;
-            DiluteOptionsFromAllUnLs(startDate, endDate);
+           using (_session = DBSessionFactory.Instance.OpenSession())
+            {
+                _savedParametersData = _session.Query<SavedParametersData>().FirstOrDefault();
+                if (_savedParametersData == null)
+                    throw new Exception("There are no record for SavedParametersData");
+                DateTime startDate = _savedParametersData.LastDBDillution;
 
-            DiluteSecuritiesFromAllUnLs(startDate, endDate);
+                DateTime endDate = DateTime.Today;
 
-            _savedParametersData.LastDBDillution = DateTime.Now;
-            _savedParametersData.LastUpdate = DateTime.Now;
-            _session.Update(_savedParametersData);
-            _session.Flush();
+                DiluteOptionsFromAllUnLs(startDate, endDate);
+                DiluteSecuritiesFromAllUnLs(startDate, endDate);
+
+                //Update DB
+                _savedParametersData.LastDBDillution = DateTime.Now;
+                _savedParametersData.LastUpdate = DateTime.Now;
+                _session.Update(_savedParametersData);
+                _session.Flush();
+
+            }
+           
         }
+       
 
         private SavedParametersData _savedParametersData;
         private ISession _session;

@@ -10,7 +10,7 @@ namespace Infra.Global
     {
         public DateTime LastDBDillution { get; set; }
         public DateTime LastUpdate { get; set; }
-
+        public double LastNetLiquidition { get; set; }
         public int Id { get; protected set; }
     }
 }

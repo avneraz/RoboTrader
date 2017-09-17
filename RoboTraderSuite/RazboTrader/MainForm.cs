@@ -40,6 +40,8 @@ namespace RazboTrader
         private void MainForm_Load(object sender, System.EventArgs e)
         {
             Logger.Info("Start RoboTrader - Main Form");
+            this.Size = new Size(1600, 1000);
+            this.SetLocationAtExtendScreen();
             GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromMilliseconds(1), StartApplication, false);
             GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(30),
                 () =>

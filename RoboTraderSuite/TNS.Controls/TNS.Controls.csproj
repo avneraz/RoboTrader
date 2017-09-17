@@ -155,6 +155,10 @@
       <Project>{399b0096-559a-4541-b9e7-81f19a164826}</Project>
       <Name>BL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{b3c26503-8185-421c-920e-09a738d5bf29}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Infra\Infra.csproj">
       <Project>{bcb4c6f8-73e1-48d8-a410-0bcc0295ee61}</Project>
       <Name>Infra</Name>
@@ -174,6 +178,7 @@
     <None Include="Properties\DataSources\TNS.API.ApiDataObjects.APIMessageData.datasource" />
     <None Include="Properties\DataSources\TNS.API.ApiDataObjects.OptionData.datasource" />
     <None Include="Properties\DataSources\TNS.API.ApiDataObjects.OptionsPositionData.datasource" />
+    <None Include="Properties\DataSources\TNS.API.ApiDataObjects.OptionTradingData.datasource" />
     <None Include="Properties\DataSources\TNS.API.ApiDataObjects.OrderStatusData.datasource" />
     <None Include="Properties\DataSources\TNS.API.ApiDataObjects.SecurityData.datasource" />
     <None Include="Properties\DataSources\TNS.API.ApiDataObjects.UnlOptions.datasource" />
@@ -190,6 +195,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\analysis.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Ribbon_AlignCenter_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Calendar_16x16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

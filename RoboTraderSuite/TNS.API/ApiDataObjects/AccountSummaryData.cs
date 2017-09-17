@@ -10,6 +10,8 @@ namespace TNS.API.ApiDataObjects
 {
     public class AccountSummaryData : IMessage
     {
+        private double _netLiquidation;
+        private double _lastTimeNetLiquidation;
 
         //tags = NetLiquidation,EquityWithLoanValue,BuyingPower,ExcessLiquidity,FullMaintMarginReq,FullInitMarginReq"
       
@@ -19,9 +21,30 @@ namespace TNS.API.ApiDataObjects
         public double ExcessLiquidity { get; set; }
         public double FullInitMarginReq { get; set; }
         public double FullMaintMarginReq { get; set; }
-        public double NetLiquidation { get; set; }
+
+        public double NetLiquidation
+        {
+            get => _netLiquidation;
+            set
+            {
+                _netLiquidation = value;
+                DailyPnL = _netLiquidation - _lastTimeNetLiquidation;
+            }
+        }
+
         public double FullExcessLiquidity { get; set; }
 
+        public double LastTimeNetLiquidation
+        {
+            get => _lastTimeNetLiquidation;
+            set
+            {
+                _lastTimeNetLiquidation = value;
+                DailyPnL = _netLiquidation - _lastTimeNetLiquidation;
+            }
+        }
+
+        public double  DailyPnL { get; private set; }
         public double PnL => NetLiquidation - AllConfigurations.AllConfigurationsObject.Trading.InitNetLiquidation;
 
         public EapiDataTypes APIDataType => EapiDataTypes.AccountSummaryData;
