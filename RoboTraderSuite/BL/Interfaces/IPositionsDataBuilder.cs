@@ -5,7 +5,7 @@ namespace TNS.BL.Interfaces
 {
     public interface IPositionsDataBuilder: IUnlBaseMemberManager
     {
-        //Dictionary<string, PositionData> PositionDataDic { get; }
+        Dictionary<string, OptionsPositionData> PositionDataDic { get; }
        
         void AddOrUpdateDataToPosition();
     }

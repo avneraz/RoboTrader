@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Windows.Forms;
 using DAL;
 using Infra;
+using Infra.Enum;
 using Infra.Extensions;
 using Infra.PopUpMessages;
 using log4net;
@@ -223,11 +224,36 @@ namespace RazboTrader
         {
             try
             {
-                string unl = "AMZN";
-                DateTime expiryDate = new DateTime(2017, 12, 15);
-               var list = OptionTradingDataFactory.GetOptionTradingDataList(unl, expiryDate);
+                var strike = Convert.ToDouble(txtStrike.Text);
+                var unlRate = Convert.ToDouble(txtUNLRate.Text);
+                EOptionType type;
+                if(Enum.TryParse(txtType.Text, true,out type) == false) throw new Exception("Wrong option type!");
+                bool mate = cbxSell.Checked;
+                var result = _appManager.CalculateMarginTest(unlRate, strike, mate, type);
+                MessageBox.Show($"The margin is {result}");
 
-                MessageBox.Show($"The UNL: '{unl}' Expiry={expiryDate} has {list.Count} items.");
+                // string unl = "AMZN";
+                // DateTime expiryDate = new DateTime(2017, 12, 15);
+                //var list = OptionTradingDataFactory.GetOptionTradingDataList(unl, expiryDate);
+
+                // MessageBox.Show($"The UNL: '{unl}' Expiry={expiryDate} has {list.Count} items.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnTestClosePositions_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var symbol = txtSymbol.Text;
+                _appManager.CloseEntireShortPositions(symbol);
+                //var expiryDate = dateTimePicker1.Value;
+
+                //var symbol = txtSymbol.Text;
+                //_appManager.CloseShortPositions(symbol,expiryDate);
             }
             catch (Exception ex)
             {

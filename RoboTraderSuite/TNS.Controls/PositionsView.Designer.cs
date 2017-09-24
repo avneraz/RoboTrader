@@ -146,7 +146,12 @@
             this.iBuyOption = new DevExpress.XtraBars.BarButtonItem();
             this.iOptionPicker = new DevExpress.XtraBars.BarButtonItem();
             this.iShowUNLOption = new DevExpress.XtraBars.BarButtonItem();
+            this.iMargin = new DevExpress.XtraBars.BarButtonItem();
+            this.iUNLMargin = new DevExpress.XtraBars.BarButtonItem();
+            this.iCloseUNLPositions = new DevExpress.XtraBars.BarButtonItem();
             this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.popupMenuUNL = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.iUNLOptionPicker = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.grdPositionData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.optionsPositionDataBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdViewPositionData)).BeginInit();
@@ -166,6 +171,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.grdViewMainSecurities)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.popupMenuUNL)).BeginInit();
             this.SuspendLayout();
             // 
             // grdPositionData
@@ -989,6 +995,7 @@
             this.gridViewUnLTradingData.OptionsView.ShowFooter = true;
             this.gridViewUnLTradingData.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colSymbol, DevExpress.Data.ColumnSortOrder.Ascending)});
+            this.gridViewUnLTradingData.PopupMenuShowing += new DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventHandler(this.gridViewUnLTradingData_PopupMenuShowing);
             // 
             // colAPIDataType
             // 
@@ -1549,9 +1556,13 @@
             this.iSellOption,
             this.iBuyOption,
             this.iOptionPicker,
-            this.iShowUNLOption});
+            this.iShowUNLOption,
+            this.iMargin,
+            this.iUNLMargin,
+            this.iCloseUNLPositions,
+            this.iUNLOptionPicker});
             this.barManager1.MainMenu = this.bar2;
-            this.barManager1.MaxItemId = 9;
+            this.barManager1.MaxItemId = 13;
             this.barManager1.StatusBar = this.bar3;
             // 
             // bar1
@@ -1648,15 +1659,57 @@
             this.iShowUNLOption.Name = "iShowUNLOption";
             this.iShowUNLOption.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iShowUnlOption_ItemClick);
             // 
+            // iMargin
+            // 
+            this.iMargin.Caption = "Margin?";
+            this.iMargin.Id = 9;
+            this.iMargin.ImageOptions.Image = global::TNS.Controls.Properties.Resources.Margin32;
+            this.iMargin.Name = "iMargin";
+            this.iMargin.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iMargin_ItemClick);
+            // 
+            // iUNLMargin
+            // 
+            this.iUNLMargin.Caption = "Margin?";
+            this.iUNLMargin.Id = 10;
+            this.iUNLMargin.ImageOptions.Image = global::TNS.Controls.Properties.Resources.Margin32;
+            this.iUNLMargin.Name = "iUNLMargin";
+            this.iUNLMargin.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iUNLMargin_ItemClick);
+            // 
+            // iCloseUNLPositions
+            // 
+            this.iCloseUNLPositions.Caption = "Close Positions";
+            this.iCloseUNLPositions.Id = 11;
+            this.iCloseUNLPositions.ImageOptions.Image = global::TNS.Controls.Properties.Resources.Delete;
+            this.iCloseUNLPositions.Name = "iCloseUNLPositions";
+            this.iCloseUNLPositions.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iCloseUNLPositions_ItemClick);
+            // 
             // popupMenu1
             // 
             this.popupMenu1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.iSellOption),
             new DevExpress.XtraBars.LinkPersistInfo(this.iBuyOption),
             new DevExpress.XtraBars.LinkPersistInfo(this.iOptionPicker),
-            new DevExpress.XtraBars.LinkPersistInfo(this.iShowUNLOption)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.iShowUNLOption),
+            new DevExpress.XtraBars.LinkPersistInfo(this.iMargin)});
             this.popupMenu1.Manager = this.barManager1;
             this.popupMenu1.Name = "popupMenu1";
+            // 
+            // popupMenuUNL
+            // 
+            this.popupMenuUNL.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.iUNLMargin),
+            new DevExpress.XtraBars.LinkPersistInfo(this.iCloseUNLPositions),
+            new DevExpress.XtraBars.LinkPersistInfo(this.iUNLOptionPicker)});
+            this.popupMenuUNL.Manager = this.barManager1;
+            this.popupMenuUNL.Name = "popupMenuUNL";
+            // 
+            // iUNLOptionPicker
+            // 
+            this.iUNLOptionPicker.Caption = "Option Picker";
+            this.iUNLOptionPicker.Id = 12;
+            this.iUNLOptionPicker.ImageOptions.Image = global::TNS.Controls.Properties.Resources.analysis;
+            this.iUNLOptionPicker.Name = "iUNLOptionPicker";
+            this.iUNLOptionPicker.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iUNLOptionPicker_ItemClick);
             // 
             // PositionsView
             // 
@@ -1692,6 +1745,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.grdViewMainSecurities)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.popupMenuUNL)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1817,5 +1871,10 @@
         private DevExpress.XtraBars.BarButtonItem iShowUNLOption;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lblDailyPnL;
+        private DevExpress.XtraBars.BarButtonItem iMargin;
+        private DevExpress.XtraBars.BarButtonItem iUNLMargin;
+        private DevExpress.XtraBars.BarButtonItem iCloseUNLPositions;
+        private DevExpress.XtraBars.PopupMenu popupMenuUNL;
+        private DevExpress.XtraBars.BarButtonItem iUNLOptionPicker;
     }
 }

@@ -90,15 +90,14 @@ namespace TNS.BL.UnlManagers
         }
         public OrderData BuyOption(OptionData optionData, int quantity)
         {
+            
             return SendOrder(optionData, quantity, false);
         }
         private OrderData SendOrder(OptionData optionData, int quantity, bool sell = true)
         {
-
-
-            OptionNegotiator optionNegotiator =
+            var optionNegotiator =
                 new OptionNegotiator(APIWrapper, UNLManager) {SimulatorAccount = IsSimulatorAccount};
-
+            quantity = Math.Abs(quantity);
             var orderData = optionNegotiator.StartTradingOption(optionData, sell, quantity);
             OptionNegotiatorDic[orderData.OrderId] = optionNegotiator;
             return orderData;

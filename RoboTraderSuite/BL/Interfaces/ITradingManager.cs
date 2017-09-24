@@ -9,6 +9,10 @@ namespace TNS.BL.Interfaces
         AccountSummaryData AccountSummaryData { get; set; }
         void TestTrading(TradeOrderData tradeOrderData);
 
+        void CloseShortPositions(DateTime? expiryDate);
+
+        void CloseEntireShortPositions();
+
         event Action<TradingTimeEvent> SendTradingTimeEvent;
     }
 }

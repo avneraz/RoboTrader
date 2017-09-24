@@ -34,6 +34,7 @@ namespace TNS.BL.UnlManagers
 
         public Dictionary< string, OptionsPositionData> PositionDataDic { get; }
 
+
         public override bool HandleMessage(IMessage message)
         {
             var result = base.HandleMessage(message);
@@ -60,8 +61,10 @@ namespace TNS.BL.UnlManagers
             var key = ((OptionContract)contract).OptionKey;
             var optionsPositionData = (OptionsPositionData)message;
             optionsPositionData.HandledByPositionDataBuilder = true;
+            //For logging purpose:
             var newPosition = PositionDataDic.ContainsKey(key) == false;
-                PositionDataDic[key] = optionsPositionData;
+            //Add or update
+            PositionDataDic[key] = optionsPositionData;
             //Log:
             var msg = $"{Symbol}.PDB +++ add PositionData:";
             if (newPosition == false)

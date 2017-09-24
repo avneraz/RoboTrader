@@ -95,7 +95,11 @@ namespace TNS.BL
                 case ETradingTimeEventType.EndTrading:
                     DBDiluter dbDiluter = new DBDiluter();
                     dbDiluter.DiluteFromAllUnLs();
-                    SavedPatametersManager.SaveLastNetLiquiditionParameter(AccountManager.NetLiquidation);
+                    //Save the parameter in one minute from now, and then 'Net Liquidition' will be stable!
+                    GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromMinutes(1), () =>
+                    {
+                        SavedPatametersManager.SaveLastNetLiquiditionParameter(AccountManager.NetLiquidation);
+                    }, false);
                     break;
             }
         }
@@ -109,6 +113,20 @@ namespace TNS.BL
             Distributer.Start();
         }
 
+        public void CloseShortPositions(string symbol, DateTime expiry)
+        {
+            var unlManager = UNLManagerDic[symbol] as UNLManager;
+            if(unlManager == null)
+                throw new Exception($"The symbol: '{symbol}' doesn't exist in the UNLManager list!");
+            unlManager.CloseShortPositions(expiry);
+        }
+        public void CloseEntireShortPositions(string symbol)
+        {
+            var unlManager = UNLManagerDic[symbol] as UNLManager;
+            if (unlManager == null)
+                throw new Exception($"The symbol: '{symbol}' doesn't exist in the UNLManager list!");
+            unlManager.CloseEntireShortPositions();
+        }
         public void ShutDownApplication()
         {
             GeneralTimer.GeneralTimerInstance.StopGeneralTimer();
@@ -132,7 +150,8 @@ namespace TNS.BL
                 var unlManager = new UNLManager(managedSecurity, APIWrapper, Distributer);
                 UNLManagerDic.Add(managedSecurity.Symbol, unlManager);
             }
-            MarginManager = new MarginManager(UNLManagerDic.Keys.ToList(), Distributer);
+            MarginManager = new MarginManager();
+
             DbWriter = new DBWriter(Configurations.Application.DBWritePeriod);
             Distributer.SetManagers(UNLManagerDic,AccountManager,ManagedSecuritiesManager, DbWriter,MarginManager);
             //UIDataManager = new UIDataManager();
@@ -173,8 +192,8 @@ namespace TNS.BL
                     AAPLSessionsToLoad = "20170817;20151016;20160115",
                     HighStrikePercentage = 15,
                     LowStrikePercentage = 15,
-                    MinimumDaysToExpiration = 92,
-                    MaxmumDaysToExpiration = 120,
+                    MinimumDaysToExpiration = 61,
+                    MaxmumDaysToExpiration = 119,
                 },
                 Trading =
                 {
@@ -221,6 +240,12 @@ namespace TNS.BL
         public void DiluteOptionsTest()
         {
             TradingManager_SendTradingTimeEvent(new TradingTimeEvent(ETradingTimeEventType.EndTrading));
+        }
+
+        public double CalculateMarginTest(double unlRate, double strike, bool mate, EOptionType type = EOptionType.Call)
+        {
+           var result = MarginManager.CalculateMargin(unlRate, strike, mate, type);
+            return result;
         }
         #endregion
 

@@ -162,6 +162,33 @@ namespace TNS.BL.UnlManagers
             //LoadUnlOptionsList();
         }
 
+        public void CloseEntireShortPositions()
+        {
+            CloseShortPositions();
+        }
+
+        public void CloseShortPositions(DateTime? expiryDate=null)
+        {
+            List<OptionsPositionData> positionList;
+            if (expiryDate.HasValue)
+                positionList = UNLManager.PositionsDataBuilder.PositionDataDic.Values
+                    .Where(pd => pd.Position < 0 && pd.OptionData.Expiry == expiryDate).ToList();
+            else
+                positionList = UNLManager.PositionsDataBuilder.PositionDataDic.Values
+                    .Where(pd => pd.Position < 0).ToList();
+
+            if (positionList.Count == 0)
+                return;
+
+            foreach (var positionData in positionList)
+            {
+                UNLManager.OrdersManager.BuyOption(positionData.OptionData, positionData.Position);
+            }
+            //If something happend during the posions closing.
+            UNLManager.AddScheduledTaskOnUnl(TimeSpan.FromSeconds(30),
+                () => CloseShortPositions(expiryDate));
+        }
+
         public void TestTrading(TradeOrderData tradeOrderData)
         {
             string optionKey = GetOptionKey(tradeOrderData.ExpiryDate, tradeOrderData.OptionType, tradeOrderData.Strike);

@@ -16,7 +16,6 @@ namespace TNS.Controls
         }
         private string _taskId;
 
-        private OptionsPositionData _positionData;
         private IPositionView _positionView;
 
         public IPositionView PositionView
@@ -29,43 +28,40 @@ namespace TNS.Controls
             }
         }
 
-       public OptionsPositionData PositionData
+        public void SetDataSource(OptionsPositionData positionData)
         {
-            get => _positionData;
-            set
-            {
-                _positionData = value;
-                SetDataSource();
-            }
+            var symbol = positionData.Symbol;
+            var expired = positionData.Expiry;
+
+            SetDataSource(symbol, expired);
         }
-        private List<OptionData> OptionsDataList { get; set; }
 
-        private void SetDataSource()
+        public void SetDataSource(string symbol) => SetDataSource(symbol, null);
+
+        private void SetDataSource(string symbol, DateTime? expired)
         {
-            var symbol = PositionData.Symbol;
-            var expired = PositionData.Expiry;
+            var options = expired.HasValue
+                ? OptionsDataList.Where(op => op.Symbol == symbol && op.OptionContract.Expiry == expired).ToList()
+                : OptionsDataList.Where(op => op.Symbol == symbol).ToList();
 
-            var list = OptionsDataList.Where(op => op.Symbol == symbol && op.OptionContract.Expiry == expired).ToList();
-            if (list.Count == 0)
+            if (options.Count == 0)
                 throw new Exception("No option elements were found!");
 
             grdOption.InvokeIfRequired(() =>
             {
-                optionDataBindingSource.DataSource = list;
+                optionDataBindingSource.DataSource = options;
                 optionDataBindingSource.ResetBindings(false);
             });
             grdViewOption.ExpandGroupLevel(0);
+            grdViewOption.ExpandGroupLevel(1);
 
             _taskId = GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(1),
-                () =>
-                {
-                    grdOption.InvokeIfRequired(() =>
-                    {
-                        optionDataBindingSource.ResetBindings(false);
-                    });
-                }, true);
+                () => { grdOption.InvokeIfRequired(() => { optionDataBindingSource.ResetBindings(false); }); }, true);
         }
 
+        private List<OptionData> OptionsDataList { get; set; }
+
+   
       
 
         private void btnSendOrder_Click(object sender, EventArgs e)

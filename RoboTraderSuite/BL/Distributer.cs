@@ -27,7 +27,7 @@ namespace TNS.BL
             _accountManager = accountManager;
             _managedSecuritiesManager = managedSecuritiesManager;
             _dbWriter = writer;
-            _marginManager = marginManager;
+            MarginManager = marginManager;
         }
         /// <summary>
         /// Indicate if the Greek  values of the options will be calculated locally, 
@@ -47,7 +47,7 @@ namespace TNS.BL
         private DBWriter _dbWriter;
         private IBaseLogic _uiMessageHandler;
         private IBaseLogic UIDataBroker { get; set; }
-        private MarginManager _marginManager;
+        private MarginManager MarginManager { get; set; }
 
         protected override string ThreadName => "Distributer";
 
@@ -69,7 +69,7 @@ namespace TNS.BL
                     break;
                 case EapiDataTypes.AccountSummaryData:
                     _accountManager.Enqueue(message, false);
-                    _marginManager.UpdateAccountData((AccountSummaryData) message);
+                    MarginManager.UpdateAccountData((AccountSummaryData) message);
                     PropagateMessageToAllUnlManagers(message);
                     break;
                 case EapiDataTypes.OptionData:
@@ -119,7 +119,7 @@ namespace TNS.BL
                     PropagateMessageToAllComponents(message);
                     break;
                 case EapiDataTypes.UnlTradingData:
-                    _marginManager.UpdateUnlTradingData((UnlTradingData) message);
+                    MarginManager.UpdateUnlTradingData((UnlTradingData) message);
                     _dbWriter.Enqueue(message, false);
                     break;
                 case EapiDataTypes.MarginData:
@@ -127,11 +127,6 @@ namespace TNS.BL
                     if (_unlManagersDic.ContainsKey(marginData.Symbol))
                         _unlManagersDic[marginData.Symbol].Enqueue(marginData,false);
                     break;
-                //case EapiDataTypes.TransactionData:
-                //    Debug.WriteLine(message.ToString());
-                //    _dbWriter.Enqueue(message, false);
-                //    PropagateMessageToAllUnlManagers(message);
-                //    break;
                 case EapiDataTypes.UnlOption:
                     _dbWriter.Enqueue(message, false);
                     break;

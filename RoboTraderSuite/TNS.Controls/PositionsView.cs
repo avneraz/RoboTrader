@@ -294,6 +294,15 @@ namespace TNS.Controls
             return positionData;
         }
 
+        private UnlTradingData GetSelectedUnlTradingData()
+        {
+            if ((unlTradingDataBindingSource == null) || unlTradingDataBindingSource.Count == 0)
+                return null;
+            var pos = gridViewUnLTradingData.GetSelectedRows()[0];
+            var unlTradingData = gridViewUnLTradingData.GetRow(pos) as UnlTradingData;
+
+            return unlTradingData;
+        }
         private void grdViewPositionData_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
         {
             if (e.HitInfo.InRow)
@@ -351,8 +360,8 @@ namespace TNS.Controls
                 var positionData = GetSelectedPositionData();
                 if (positionData == null) throw new Exception("There is no Position Data!!!");
 
-                var control = new OptionTradingControl {PositionView = this, PositionData = positionData};
-
+                var control = new OptionTradingControl {PositionView = this};
+                control.SetDataSource(positionData);
                 control.ShowControl(this.ParentForm, true);
             }
             catch (Exception ex)
@@ -389,6 +398,87 @@ namespace TNS.Controls
                 control.ShowControl(this.ParentForm, true);
 
                 //MessageBox.Show($"The UNL: '{unl}' Expiry={expiryDate} has {list.Count} items.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void iMargin_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            try
+            {
+                var positionData = GetSelectedPositionData();
+                if (positionData == null) throw new Exception("There is no Position Data!!!");
+
+               MessageBox.Show($" the Margin for sell 1 option is: {AppManager.MarginManager.OnePositionSellMargin(positionData):C0}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void gridViewUnLTradingData_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
+        {
+            if (e.HitInfo.InRow)
+            {
+                popupMenuUNL.ShowPopup(grdUnLTradingData.PointToScreen(e.Point));
+            }
+        }
+
+        private void iUNLMargin_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            try
+            {
+                var unlTradingData = GetSelectedUnlTradingData();
+                if (unlTradingData == null) throw new Exception("There is no UNL Data!!!");
+                var symbol = unlTradingData.Symbol;
+
+                //var result = AppManager.MarginManager.CalculateUNLRequierdMargin(unlTradingData.Symbol);
+                var result = AppManager.MarginManager.MarginDataDic[unlTradingData.Symbol];
+                MessageBox.Show($" The Margin requierd for '{symbol}' options is: {result.Margin:C0}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void iUNLOptionPicker_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            try
+            {
+                var unlTradingData = GetSelectedUnlTradingData();
+                if (unlTradingData == null) throw new Exception("There is no UNL Data!!!");
+                var symbol = unlTradingData.Symbol;
+
+                var control = new OptionTradingControl { PositionView = this };
+                control.SetDataSource(symbol);
+
+                var form = control.ShowControl(this.ParentForm, true);
+                form.TopMost = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void iCloseUNLPositions_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            try
+            {
+                var unlTradingData = GetSelectedUnlTradingData();
+                if (unlTradingData == null) throw new Exception("There is no UNL Data!!!");
+                var symbol = unlTradingData.Symbol;
+
+                var unlManager = AppManager.UNLManagerDic[symbol] as UNLManager;
+                if (unlManager == null)
+                    throw new Exception($"The symbol: '{symbol}' doesn't exist in the UNLManager list!");
+
+                unlManager.CloseEntireShortPositions();
             }
             catch (Exception ex)
             {

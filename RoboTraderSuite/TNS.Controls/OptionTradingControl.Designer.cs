@@ -135,9 +135,10 @@
             this.colId,
             this.colLastUpdate});
             this.grdViewOption.GridControl = this.grdOption;
-            this.grdViewOption.GroupCount = 1;
+            this.grdViewOption.GroupCount = 2;
             this.grdViewOption.Name = "grdViewOption";
             this.grdViewOption.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colOptionContract_Expiry, DevExpress.Data.ColumnSortOrder.Ascending),
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colOptionContract_OptionType, DevExpress.Data.ColumnSortOrder.Ascending),
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colOptionContract_Strike, DevExpress.Data.ColumnSortOrder.Ascending)});
             // 
@@ -155,7 +156,7 @@
             this.colOptionContract_Symbol.Name = "colOptionContract_Symbol";
             this.colOptionContract_Symbol.Visible = true;
             this.colOptionContract_Symbol.VisibleIndex = 0;
-            this.colOptionContract_Symbol.Width = 77;
+            this.colOptionContract_Symbol.Width = 98;
             // 
             // colOptionContract_Expiry
             // 
@@ -181,8 +182,8 @@
             this.colOptionContract_Strike.FieldName = "OptionContract.Strike";
             this.colOptionContract_Strike.Name = "colOptionContract_Strike";
             this.colOptionContract_Strike.Visible = true;
-            this.colOptionContract_Strike.VisibleIndex = 2;
-            this.colOptionContract_Strike.Width = 74;
+            this.colOptionContract_Strike.VisibleIndex = 1;
+            this.colOptionContract_Strike.Width = 88;
             // 
             // colBasePrice
             // 
@@ -192,8 +193,8 @@
             this.colBasePrice.FieldName = "BasePrice";
             this.colBasePrice.Name = "colBasePrice";
             this.colBasePrice.Visible = true;
-            this.colBasePrice.VisibleIndex = 3;
-            this.colBasePrice.Width = 70;
+            this.colBasePrice.VisibleIndex = 2;
+            this.colBasePrice.Width = 61;
             // 
             // colLastPrice
             // 
@@ -203,8 +204,8 @@
             this.colLastPrice.FieldName = "LastPrice";
             this.colLastPrice.Name = "colLastPrice";
             this.colLastPrice.Visible = true;
-            this.colLastPrice.VisibleIndex = 4;
-            this.colLastPrice.Width = 67;
+            this.colLastPrice.VisibleIndex = 3;
+            this.colLastPrice.Width = 69;
             // 
             // colAskPrice
             // 
@@ -220,8 +221,8 @@
             this.colAskPrice.FieldName = "AskPrice";
             this.colAskPrice.Name = "colAskPrice";
             this.colAskPrice.Visible = true;
-            this.colAskPrice.VisibleIndex = 6;
-            this.colAskPrice.Width = 42;
+            this.colAskPrice.VisibleIndex = 5;
+            this.colAskPrice.Width = 43;
             // 
             // colBidPrice
             // 
@@ -237,8 +238,8 @@
             this.colBidPrice.FieldName = "BidPrice";
             this.colBidPrice.Name = "colBidPrice";
             this.colBidPrice.Visible = true;
-            this.colBidPrice.VisibleIndex = 7;
-            this.colBidPrice.Width = 38;
+            this.colBidPrice.VisibleIndex = 6;
+            this.colBidPrice.Width = 39;
             // 
             // colDelta
             // 
@@ -256,8 +257,8 @@
             this.colDelta.FieldName = "Delta";
             this.colDelta.Name = "colDelta";
             this.colDelta.Visible = true;
-            this.colDelta.VisibleIndex = 8;
-            this.colDelta.Width = 65;
+            this.colDelta.VisibleIndex = 7;
+            this.colDelta.Width = 67;
             // 
             // colGamma
             // 
@@ -275,8 +276,8 @@
             this.colGamma.FieldName = "Gamma";
             this.colGamma.Name = "colGamma";
             this.colGamma.Visible = true;
-            this.colGamma.VisibleIndex = 9;
-            this.colGamma.Width = 55;
+            this.colGamma.VisibleIndex = 8;
+            this.colGamma.Width = 57;
             // 
             // colVega
             // 
@@ -294,8 +295,8 @@
             this.colVega.FieldName = "Vega";
             this.colVega.Name = "colVega";
             this.colVega.Visible = true;
-            this.colVega.VisibleIndex = 10;
-            this.colVega.Width = 53;
+            this.colVega.VisibleIndex = 9;
+            this.colVega.Width = 55;
             // 
             // colTheta
             // 
@@ -313,8 +314,8 @@
             this.colTheta.FieldName = "Theta";
             this.colTheta.Name = "colTheta";
             this.colTheta.Visible = true;
-            this.colTheta.VisibleIndex = 11;
-            this.colTheta.Width = 73;
+            this.colTheta.VisibleIndex = 10;
+            this.colTheta.Width = 76;
             // 
             // colImpliedVolatility
             // 
@@ -330,8 +331,8 @@
             this.colImpliedVolatility.FieldName = "ImpliedVolatility";
             this.colImpliedVolatility.Name = "colImpliedVolatility";
             this.colImpliedVolatility.Visible = true;
-            this.colImpliedVolatility.VisibleIndex = 12;
-            this.colImpliedVolatility.Width = 73;
+            this.colImpliedVolatility.VisibleIndex = 11;
+            this.colImpliedVolatility.Width = 76;
             // 
             // colModelPrice
             // 
@@ -341,8 +342,8 @@
             this.colModelPrice.FieldName = "ModelPrice";
             this.colModelPrice.Name = "colModelPrice";
             this.colModelPrice.Visible = true;
-            this.colModelPrice.VisibleIndex = 5;
-            this.colModelPrice.Width = 58;
+            this.colModelPrice.VisibleIndex = 4;
+            this.colModelPrice.Width = 60;
             // 
             // colUnderlinePrice
             // 
@@ -360,8 +361,8 @@
             this.colHighestPrice.FieldName = "HighestPrice";
             this.colHighestPrice.Name = "colHighestPrice";
             this.colHighestPrice.Visible = true;
-            this.colHighestPrice.VisibleIndex = 13;
-            this.colHighestPrice.Width = 81;
+            this.colHighestPrice.VisibleIndex = 12;
+            this.colHighestPrice.Width = 84;
             // 
             // colLowestPrice
             // 
@@ -371,8 +372,8 @@
             this.colLowestPrice.FieldName = "LowestPrice";
             this.colLowestPrice.Name = "colLowestPrice";
             this.colLowestPrice.Visible = true;
-            this.colLowestPrice.VisibleIndex = 14;
-            this.colLowestPrice.Width = 79;
+            this.colLowestPrice.VisibleIndex = 13;
+            this.colLowestPrice.Width = 82;
             // 
             // colOpeningPrice
             // 
@@ -382,8 +383,8 @@
             this.colOpeningPrice.FieldName = "OpeningPrice";
             this.colOpeningPrice.Name = "colOpeningPrice";
             this.colOpeningPrice.Visible = true;
-            this.colOpeningPrice.VisibleIndex = 15;
-            this.colOpeningPrice.Width = 87;
+            this.colOpeningPrice.VisibleIndex = 14;
+            this.colOpeningPrice.Width = 117;
             // 
             // colAskSize
             // 

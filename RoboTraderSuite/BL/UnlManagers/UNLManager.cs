@@ -53,6 +53,14 @@ namespace TNS.BL.UnlManagers
 
         #region Methods
 
+        public void CloseEntireShortPositions()
+        {
+            TradingManager.CloseEntireShortPositions();
+        }
+        public void CloseShortPositions(DateTime? expiry)
+        {
+            TradingManager.CloseShortPositions(expiry);
+        }
         internal string AddScheduledTaskOnUnl(TimeSpan span, Action task, bool reOccuring = false)
         {
             return AddScheduledTask(span, task, reOccuring);
