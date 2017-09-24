@@ -65,7 +65,6 @@
             this.colContract_Symbol = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colAvgPrice = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colChangeFromCost = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.btnLoadData = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lblNetLiquidation = new System.Windows.Forms.Label();
@@ -107,23 +106,7 @@
             this.colMaxAbsoluteDelta = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colMargin = new DevExpress.XtraGrid.Columns.GridColumn();
             this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.grdMainSecurities = new DevExpress.XtraGrid.GridControl();
             this.securityDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.grdViewMainSecurities = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colContract = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colHighestPrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colLowestPrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colBasePrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colOpeningPrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colAskSize = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colBidSize = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colVolume = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn6 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.barDockControl1 = new DevExpress.XtraBars.BarDockControl();
             this.barDockControl2 = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
@@ -136,7 +119,6 @@
             this.barDockControl7 = new DevExpress.XtraBars.BarDockControl();
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.bar1 = new DevExpress.XtraBars.Bar();
-            this.bar2 = new DevExpress.XtraBars.Bar();
             this.bar3 = new DevExpress.XtraBars.Bar();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControl8 = new DevExpress.XtraBars.BarDockControl();
@@ -149,9 +131,9 @@
             this.iMargin = new DevExpress.XtraBars.BarButtonItem();
             this.iUNLMargin = new DevExpress.XtraBars.BarButtonItem();
             this.iCloseUNLPositions = new DevExpress.XtraBars.BarButtonItem();
+            this.iUNLOptionPicker = new DevExpress.XtraBars.BarButtonItem();
             this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
             this.popupMenuUNL = new DevExpress.XtraBars.PopupMenu(this.components);
-            this.iUNLOptionPicker = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.grdPositionData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.optionsPositionDataBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdViewPositionData)).BeginInit();
@@ -162,13 +144,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridViewUnLTradingData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).BeginInit();
             this.splitContainerControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grdMainSecurities)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.securityDataBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grdViewMainSecurities)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenuUNL)).BeginInit();
@@ -182,7 +158,7 @@
             this.grdPositionData.MainView = this.grdViewPositionData;
             this.grdPositionData.Name = "grdPositionData";
             this.grdPositionData.Padding = new System.Windows.Forms.Padding(10);
-            this.grdPositionData.Size = new System.Drawing.Size(1221, 366);
+            this.grdPositionData.Size = new System.Drawing.Size(1231, 518);
             this.grdPositionData.TabIndex = 1;
             this.grdPositionData.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grdViewPositionData});
@@ -779,16 +755,6 @@
             this.colChangeFromCost.VisibleIndex = 10;
             this.colChangeFromCost.Width = 65;
             // 
-            // btnLoadData
-            // 
-            this.btnLoadData.Location = new System.Drawing.Point(72, 21);
-            this.btnLoadData.Name = "btnLoadData";
-            this.btnLoadData.Size = new System.Drawing.Size(94, 25);
-            this.btnLoadData.TabIndex = 2;
-            this.btnLoadData.Text = "Start Load Data";
-            this.btnLoadData.UseVisualStyleBackColor = true;
-            this.btnLoadData.Click += new System.EventHandler(this.btnLoadData_Click);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -843,7 +809,6 @@
             // 
             // grpAccountSummary
             // 
-            this.grpAccountSummary.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.grpAccountSummary.Controls.Add(this.label6);
             this.grpAccountSummary.Controls.Add(this.label4);
             this.grpAccountSummary.Controls.Add(this.label1);
@@ -854,9 +819,10 @@
             this.grpAccountSummary.Controls.Add(this.lblNetLiquidation);
             this.grpAccountSummary.Controls.Add(this.label3);
             this.grpAccountSummary.Controls.Add(this.label2);
-            this.grpAccountSummary.Location = new System.Drawing.Point(1015, 0);
+            this.grpAccountSummary.Dock = System.Windows.Forms.DockStyle.Right;
+            this.grpAccountSummary.Location = new System.Drawing.Point(1022, 0);
             this.grpAccountSummary.Name = "grpAccountSummary";
-            this.grpAccountSummary.Size = new System.Drawing.Size(209, 126);
+            this.grpAccountSummary.Size = new System.Drawing.Size(209, 189);
             this.grpAccountSummary.TabIndex = 4;
             this.grpAccountSummary.TabStop = false;
             this.grpAccountSummary.Text = "Account Summary";
@@ -935,17 +901,16 @@
             // 
             // grdUnLTradingData
             // 
-            this.grdUnLTradingData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.grdUnLTradingData.DataSource = this.unlTradingDataBindingSource;
-            this.grdUnLTradingData.Location = new System.Drawing.Point(3, 3);
+            this.grdUnLTradingData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grdUnLTradingData.Location = new System.Drawing.Point(0, 0);
             this.grdUnLTradingData.MainView = this.gridViewUnLTradingData;
             this.grdUnLTradingData.Name = "grdUnLTradingData";
-            this.grdUnLTradingData.Size = new System.Drawing.Size(1010, 127);
+            this.grdUnLTradingData.Size = new System.Drawing.Size(1022, 189);
             this.grdUnLTradingData.TabIndex = 5;
             this.grdUnLTradingData.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewUnLTradingData});
+            this.grdUnLTradingData.Click += new System.EventHandler(this.grdUnLTradingData_Click);
             // 
             // unlTradingDataBindingSource
             // 
@@ -1304,162 +1269,21 @@
             // 
             this.splitContainerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerControl1.Horizontal = false;
-            this.splitContainerControl1.Location = new System.Drawing.Point(0, 49);
+            this.splitContainerControl1.Location = new System.Drawing.Point(0, 0);
             this.splitContainerControl1.Name = "splitContainerControl1";
             this.splitContainerControl1.Panel1.Controls.Add(this.grdUnLTradingData);
             this.splitContainerControl1.Panel1.Controls.Add(this.grpAccountSummary);
             this.splitContainerControl1.Panel1.Text = "Panel1";
-            this.splitContainerControl1.Panel2.Controls.Add(this.splitContainer1);
+            this.splitContainerControl1.Panel2.Controls.Add(this.grdPositionData);
             this.splitContainerControl1.Panel2.Text = "Panel2";
-            this.splitContainerControl1.Size = new System.Drawing.Size(1231, 663);
-            this.splitContainerControl1.SplitterPosition = 132;
+            this.splitContainerControl1.Size = new System.Drawing.Size(1231, 712);
+            this.splitContainerControl1.SplitterPosition = 189;
             this.splitContainerControl1.TabIndex = 6;
             this.splitContainerControl1.Text = "splitContainerControl1";
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.Location = new System.Drawing.Point(3, -1);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.grdMainSecurities);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.grdPositionData);
-            this.splitContainer1.Size = new System.Drawing.Size(1221, 524);
-            this.splitContainer1.SplitterDistance = 154;
-            this.splitContainer1.TabIndex = 2;
-            // 
-            // grdMainSecurities
-            // 
-            this.grdMainSecurities.DataSource = this.securityDataBindingSource;
-            this.grdMainSecurities.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grdMainSecurities.Location = new System.Drawing.Point(0, 0);
-            this.grdMainSecurities.MainView = this.grdViewMainSecurities;
-            this.grdMainSecurities.Name = "grdMainSecurities";
-            this.grdMainSecurities.Size = new System.Drawing.Size(1221, 154);
-            this.grdMainSecurities.TabIndex = 1;
-            this.grdMainSecurities.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.grdViewMainSecurities});
             // 
             // securityDataBindingSource
             // 
             this.securityDataBindingSource.DataSource = typeof(TNS.API.ApiDataObjects.BaseSecurityData);
-            // 
-            // grdViewMainSecurities
-            // 
-            this.grdViewMainSecurities.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.gridColumn1,
-            this.colContract,
-            this.gridColumn2,
-            this.colHighestPrice,
-            this.colLowestPrice,
-            this.colBasePrice,
-            this.colOpeningPrice,
-            this.gridColumn3,
-            this.gridColumn4,
-            this.colAskSize,
-            this.colBidSize,
-            this.colVolume,
-            this.gridColumn6});
-            this.grdViewMainSecurities.GridControl = this.grdMainSecurities;
-            this.grdViewMainSecurities.Name = "grdViewMainSecurities";
-            this.grdViewMainSecurities.PopupMenuShowing += new DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventHandler(this.grdViewMainSecurities_PopupMenuShowing);
-            // 
-            // gridColumn1
-            // 
-            this.gridColumn1.FieldName = "APIDataType";
-            this.gridColumn1.Name = "gridColumn1";
-            this.gridColumn1.OptionsColumn.ReadOnly = true;
-            // 
-            // colContract
-            // 
-            this.colContract.FieldName = "Contract";
-            this.colContract.Name = "colContract";
-            // 
-            // gridColumn2
-            // 
-            this.gridColumn2.FieldName = "LastPrice";
-            this.gridColumn2.Name = "gridColumn2";
-            this.gridColumn2.Visible = true;
-            this.gridColumn2.VisibleIndex = 3;
-            // 
-            // colHighestPrice
-            // 
-            this.colHighestPrice.FieldName = "HighestPrice";
-            this.colHighestPrice.Name = "colHighestPrice";
-            this.colHighestPrice.Visible = true;
-            this.colHighestPrice.VisibleIndex = 4;
-            // 
-            // colLowestPrice
-            // 
-            this.colLowestPrice.FieldName = "LowestPrice";
-            this.colLowestPrice.Name = "colLowestPrice";
-            this.colLowestPrice.Visible = true;
-            this.colLowestPrice.VisibleIndex = 5;
-            // 
-            // colBasePrice
-            // 
-            this.colBasePrice.FieldName = "BasePrice";
-            this.colBasePrice.Name = "colBasePrice";
-            this.colBasePrice.Visible = true;
-            this.colBasePrice.VisibleIndex = 1;
-            // 
-            // colOpeningPrice
-            // 
-            this.colOpeningPrice.FieldName = "OpeningPrice";
-            this.colOpeningPrice.Name = "colOpeningPrice";
-            this.colOpeningPrice.Visible = true;
-            this.colOpeningPrice.VisibleIndex = 2;
-            // 
-            // gridColumn3
-            // 
-            this.gridColumn3.FieldName = "AskPrice";
-            this.gridColumn3.Name = "gridColumn3";
-            this.gridColumn3.Visible = true;
-            this.gridColumn3.VisibleIndex = 6;
-            // 
-            // gridColumn4
-            // 
-            this.gridColumn4.FieldName = "BidPrice";
-            this.gridColumn4.Name = "gridColumn4";
-            this.gridColumn4.Visible = true;
-            this.gridColumn4.VisibleIndex = 7;
-            // 
-            // colAskSize
-            // 
-            this.colAskSize.FieldName = "AskSize";
-            this.colAskSize.Name = "colAskSize";
-            this.colAskSize.Visible = true;
-            this.colAskSize.VisibleIndex = 8;
-            // 
-            // colBidSize
-            // 
-            this.colBidSize.FieldName = "BidSize";
-            this.colBidSize.Name = "colBidSize";
-            this.colBidSize.Visible = true;
-            this.colBidSize.VisibleIndex = 9;
-            // 
-            // colVolume
-            // 
-            this.colVolume.FieldName = "Volume";
-            this.colVolume.Name = "colVolume";
-            this.colVolume.Visible = true;
-            this.colVolume.VisibleIndex = 10;
-            // 
-            // gridColumn6
-            // 
-            this.gridColumn6.FieldName = "Symbol";
-            this.gridColumn6.Name = "gridColumn6";
-            this.gridColumn6.OptionsColumn.ReadOnly = true;
-            this.gridColumn6.Visible = true;
-            this.gridColumn6.VisibleIndex = 0;
             // 
             // barDockControl1
             // 
@@ -1545,7 +1369,6 @@
             // 
             this.barManager1.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
             this.bar1,
-            this.bar2,
             this.bar3});
             this.barManager1.DockControls.Add(this.barDockControlTop);
             this.barManager1.DockControls.Add(this.barDockControl8);
@@ -1561,7 +1384,6 @@
             this.iUNLMargin,
             this.iCloseUNLPositions,
             this.iUNLOptionPicker});
-            this.barManager1.MainMenu = this.bar2;
             this.barManager1.MaxItemId = 13;
             this.barManager1.StatusBar = this.bar3;
             // 
@@ -1569,19 +1391,11 @@
             // 
             this.bar1.BarName = "Tools";
             this.bar1.DockCol = 0;
-            this.bar1.DockRow = 1;
-            this.bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
+            this.bar1.DockRow = 0;
+            this.bar1.FloatLocation = new System.Drawing.Point(3394, 333);
+            this.bar1.Offset = 153;
             this.bar1.Text = "Tools";
-            // 
-            // bar2
-            // 
-            this.bar2.BarName = "Main menu";
-            this.bar2.DockCol = 0;
-            this.bar2.DockRow = 0;
-            this.bar2.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
-            this.bar2.OptionsBar.MultiLine = true;
-            this.bar2.OptionsBar.UseWholeRow = true;
-            this.bar2.Text = "Main menu";
+            this.bar1.Visible = false;
             // 
             // bar3
             // 
@@ -1601,7 +1415,7 @@
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
             this.barDockControlTop.Manager = this.barManager1;
-            this.barDockControlTop.Size = new System.Drawing.Size(1231, 49);
+            this.barDockControlTop.Size = new System.Drawing.Size(1231, 0);
             // 
             // barDockControl8
             // 
@@ -1615,17 +1429,17 @@
             // 
             this.barDockControl9.CausesValidation = false;
             this.barDockControl9.Dock = System.Windows.Forms.DockStyle.Left;
-            this.barDockControl9.Location = new System.Drawing.Point(0, 49);
+            this.barDockControl9.Location = new System.Drawing.Point(0, 0);
             this.barDockControl9.Manager = this.barManager1;
-            this.barDockControl9.Size = new System.Drawing.Size(0, 663);
+            this.barDockControl9.Size = new System.Drawing.Size(0, 712);
             // 
             // barDockControl10
             // 
             this.barDockControl10.CausesValidation = false;
             this.barDockControl10.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControl10.Location = new System.Drawing.Point(1231, 49);
+            this.barDockControl10.Location = new System.Drawing.Point(1231, 0);
             this.barDockControl10.Manager = this.barManager1;
-            this.barDockControl10.Size = new System.Drawing.Size(0, 663);
+            this.barDockControl10.Size = new System.Drawing.Size(0, 712);
             // 
             // iSellOption
             // 
@@ -1683,6 +1497,14 @@
             this.iCloseUNLPositions.Name = "iCloseUNLPositions";
             this.iCloseUNLPositions.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iCloseUNLPositions_ItemClick);
             // 
+            // iUNLOptionPicker
+            // 
+            this.iUNLOptionPicker.Caption = "Option Picker";
+            this.iUNLOptionPicker.Id = 12;
+            this.iUNLOptionPicker.ImageOptions.Image = global::TNS.Controls.Properties.Resources.analysis;
+            this.iUNLOptionPicker.Name = "iUNLOptionPicker";
+            this.iUNLOptionPicker.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iUNLOptionPicker_ItemClick);
+            // 
             // popupMenu1
             // 
             this.popupMenu1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
@@ -1703,20 +1525,11 @@
             this.popupMenuUNL.Manager = this.barManager1;
             this.popupMenuUNL.Name = "popupMenuUNL";
             // 
-            // iUNLOptionPicker
-            // 
-            this.iUNLOptionPicker.Caption = "Option Picker";
-            this.iUNLOptionPicker.Id = 12;
-            this.iUNLOptionPicker.ImageOptions.Image = global::TNS.Controls.Properties.Resources.analysis;
-            this.iUNLOptionPicker.Name = "iUNLOptionPicker";
-            this.iUNLOptionPicker.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iUNLOptionPicker_ItemClick);
-            // 
             // PositionsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.Controls.Add(this.btnLoadData);
             this.Controls.Add(this.splitContainerControl1);
             this.Controls.Add(this.barDockControl9);
             this.Controls.Add(this.barDockControl10);
@@ -1736,13 +1549,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridViewUnLTradingData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerControl1)).EndInit();
             this.splitContainerControl1.ResumeLayout(false);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.grdMainSecurities)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.securityDataBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grdViewMainSecurities)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenuUNL)).EndInit();
@@ -1785,7 +1592,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn colOptionData_ImpliedVolatility;
         private DevExpress.XtraGrid.Columns.GridColumn colContract_Symbol;
         private DevExpress.XtraGrid.Columns.GridColumn colAvgPrice;
-        private System.Windows.Forms.Button btnLoadData;
         private DevExpress.XtraGrid.Columns.GridColumn colExpiry;
         private DevExpress.XtraGrid.Columns.GridColumn colCalculatedOptionPrice;
         private System.Windows.Forms.Label label1;
@@ -1826,22 +1632,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn colUnlAsk;
         private DevExpress.XtraGrid.Columns.GridColumn colUnlChange;
         private DevExpress.XtraGrid.Columns.GridColumn colUnlOpen;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private DevExpress.XtraGrid.GridControl grdMainSecurities;
-        private DevExpress.XtraGrid.Views.Grid.GridView grdViewMainSecurities;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
-        private DevExpress.XtraGrid.Columns.GridColumn colContract;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
-        private DevExpress.XtraGrid.Columns.GridColumn colHighestPrice;
-        private DevExpress.XtraGrid.Columns.GridColumn colLowestPrice;
-        private DevExpress.XtraGrid.Columns.GridColumn colBasePrice;
-        private DevExpress.XtraGrid.Columns.GridColumn colOpeningPrice;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn4;
-        private DevExpress.XtraGrid.Columns.GridColumn colAskSize;
-        private DevExpress.XtraGrid.Columns.GridColumn colBidSize;
-        private DevExpress.XtraGrid.Columns.GridColumn colVolume;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn6;
         private System.Windows.Forms.BindingSource securityDataBindingSource;
         private DevExpress.XtraGrid.Columns.GridColumn colOffsetUnl;
         private DevExpress.XtraBars.BarDockControl barDockControl1;
@@ -1856,7 +1646,6 @@
         private DevExpress.XtraBars.BarDockControl barDockControl7;
         private DevExpress.XtraBars.BarManager barManager1;
         private DevExpress.XtraBars.Bar bar1;
-        private DevExpress.XtraBars.Bar bar2;
         private DevExpress.XtraBars.Bar bar3;
         private DevExpress.XtraBars.BarDockControl barDockControlTop;
         private DevExpress.XtraBars.BarDockControl barDockControl8;

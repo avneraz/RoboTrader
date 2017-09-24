@@ -87,10 +87,10 @@ namespace TNS.Controls
                         unlTradingDataBindingSource.ResetBindings(false);
 
                     });
-                    grdMainSecurities.InvokeIfRequired(() =>
-                    {
-                        securityDataBindingSource.ResetBindings(false);
-                    });
+                    //grdMainSecurities.InvokeIfRequired(() =>
+                    //{
+                    //    securityDataBindingSource.ResetBindings(false);
+                    //});
                  
                 },
                 true);
@@ -122,14 +122,14 @@ namespace TNS.Controls
 
         }
 
-        public void SetSecurityDataList(List<SecurityData> securityDataList)
-        {
-            grdMainSecurities.InvokeIfRequired(() =>
-            {
-                securityDataBindingSource.DataSource = securityDataList;
-                securityDataBindingSource.ResetBindings(false);
-            });
-        }
+        //public void SetSecurityDataList(List<SecurityData> securityDataList)
+        //{
+        //    grdMainSecurities.InvokeIfRequired(() =>
+        //    {
+        //        securityDataBindingSource.DataSource = securityDataList;
+        //        securityDataBindingSource.ResetBindings(false);
+        //    });
+        //}
         //public Dictionary<string, UnlTradingData> UnlTradingDataDic { get; private set; }
         public void SetAccountSummaryData(List<AccountSummaryData> accountSummaryDataList)
         {
@@ -372,13 +372,13 @@ namespace TNS.Controls
         }
 
       
-        private void grdViewMainSecurities_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
-        {
-            if (e.HitInfo.InRow)
-            {
-                popupMenu1.ShowPopup(grdMainSecurities.PointToScreen(e.Point));
-            }
-        }
+        //private void grdViewMainSecurities_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
+        //{
+        //    if (e.HitInfo.InRow)
+        //    {
+        //        popupMenu1.ShowPopup(grdMainSecurities.PointToScreen(e.Point));
+        //    }
+        //}
 
         private void iShowUnlOption_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
@@ -474,16 +474,25 @@ namespace TNS.Controls
                 if (unlTradingData == null) throw new Exception("There is no UNL Data!!!");
                 var symbol = unlTradingData.Symbol;
 
-                var unlManager = AppManager.UNLManagerDic[symbol] as UNLManager;
-                if (unlManager == null)
-                    throw new Exception($"The symbol: '{symbol}' doesn't exist in the UNLManager list!");
+                var control = new PositionClosingSelector {Symbol = symbol};
+                var form = control.ShowControl(this.ParentForm, true);
+                form.TopMost = true;
 
-                unlManager.CloseEntireShortPositions();
+                //var unlManager = AppManager.UNLManagerDic[symbol] as UNLManager;
+                //if (unlManager == null)
+                //    throw new Exception($"The symbol: '{symbol}' doesn't exist in the UNLManager list!");
+
+                //unlManager.CloseEntireShortPositions();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void grdUnLTradingData_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

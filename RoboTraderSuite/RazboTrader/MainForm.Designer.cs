@@ -40,8 +40,10 @@
             this.cbxSell = new System.Windows.Forms.CheckBox();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtType = new System.Windows.Forms.TextBox();
+            this.txtUNLRate = new System.Windows.Forms.TextBox();
             this.txtStrike = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtSymbol = new System.Windows.Forms.TextBox();
@@ -57,8 +59,6 @@
             this.btnTestDiluter = new System.Windows.Forms.Button();
             this.btnTest = new System.Windows.Forms.Button();
             this.btnTestClosePositions = new System.Windows.Forms.Button();
-            this.txtUNLRate = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.xPagePositions.SuspendLayout();
@@ -196,6 +196,15 @@
             this.label4.TabIndex = 3;
             this.label4.Text = "Type:";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(527, 18);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(56, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "UNL Rate:";
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -212,6 +221,14 @@
             this.txtType.Size = new System.Drawing.Size(35, 21);
             this.txtType.TabIndex = 2;
             this.txtType.Text = "CALL";
+            // 
+            // txtUNLRate
+            // 
+            this.txtUNLRate.Location = new System.Drawing.Point(588, 15);
+            this.txtUNLRate.Name = "txtUNLRate";
+            this.txtUNLRate.Size = new System.Drawing.Size(44, 21);
+            this.txtUNLRate.TabIndex = 2;
+            this.txtUNLRate.Text = "160";
             // 
             // txtStrike
             // 
@@ -350,23 +367,6 @@
             this.btnTestClosePositions.Text = "Test Close Positions";
             this.btnTestClosePositions.UseVisualStyleBackColor = true;
             this.btnTestClosePositions.Click += new System.EventHandler(this.btnTestClosePositions_Click);
-            // 
-            // txtUNLRate
-            // 
-            this.txtUNLRate.Location = new System.Drawing.Point(588, 15);
-            this.txtUNLRate.Name = "txtUNLRate";
-            this.txtUNLRate.Size = new System.Drawing.Size(44, 21);
-            this.txtUNLRate.TabIndex = 2;
-            this.txtUNLRate.Text = "160";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(527, 18);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "UNL Rate:";
             // 
             // MainForm
             // 

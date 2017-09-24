@@ -100,7 +100,7 @@ namespace RazboTrader
             positionsView1.SetPositionDataList(UIDataBroker.PositionDataList);
             positionsView1.SetAccountSummaryData(UIDataBroker.AccountSummaryDataList);
             positionsView1.SetUnlTradingDataList(UIDataBroker.UnlTradingDataList);
-            positionsView1.SetSecurityDataList(UIDataBroker.SecurityDataList);
+            //positionsView1.SetSecurityDataList(UIDataBroker.SecurityDataList);
             positionsView1.SetAppManager(_appManager);
             positionsView1.SetOptionDataList(UIDataBroker.OptionsDataList);
             ordersView1.SetOrderStatusDataList(UIDataBroker.OrderStatusDataList);

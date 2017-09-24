@@ -24,9 +24,8 @@ namespace TNS.Controls
         {
             try
             {
-                SetAndUpdate ();
-
-    }
+                SetAndUpdate();
+            }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
@@ -57,14 +56,14 @@ namespace TNS.Controls
         }
 
         private bool _dataloaded;
-        public void SetUnlTradingDataDic(Dictionary<string, UnlTradingData> unlTradingDataDic)
-        {
-            UnlTradingDataDic = unlTradingDataDic;
-            GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(30), () => grdUnLTradingData.InvokeIfRequired(SetAndUpdate), false);
-            //unlTradingDataBindingSource.DataSource = UnlTradingDataDic.Values.ToList();
-            //GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(1),
-            //    () => { gridControl1.InvokeIfRequired(() => { unlTradingDataBindingSource.ResetBindings(false); }); }, true);
-        }
+        //public void SetUnlTradingDataDic(Dictionary<string, UnlTradingData> unlTradingDataDic)
+        //{
+        //    UnlTradingDataDic = unlTradingDataDic;
+        //    GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(30), () => grdUnLTradingData.InvokeIfRequired(SetAndUpdate), false);
+        //    //unlTradingDataBindingSource.DataSource = UnlTradingDataDic.Values.ToList();
+        //    //GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(1),
+        //    //    () => { gridControl1.InvokeIfRequired(() => { unlTradingDataBindingSource.ResetBindings(false); }); }, true);
+        //}
         public Dictionary<string, UnlTradingData> UnlTradingDataDic { get; private set; }
     }
 }

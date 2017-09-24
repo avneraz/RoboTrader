@@ -37,8 +37,8 @@ namespace TNS.BL
             InitializeItems();
         }
 
-        private const double NoMateLossPercantag = .245;
-        private const double WithMateLossPercantag = .06;
+        private const double NO_MATE_LOSS_PERCANTAG = .245;
+        private const double WITH_MATE_LOSS_PERCANTAG = .06;
 
         private AppManager _appManager;
         private SimpleBaseLogic Distributer { get; }
@@ -187,7 +187,7 @@ namespace TNS.BL
 
         public double CalculateMargin(double unlRate, double strike, bool mate, EOptionType type = EOptionType.Call)
         {
-            double lossPercantag = mate ? WithMateLossPercantag : NoMateLossPercantag;
+            double lossPercantag = mate ? WITH_MATE_LOSS_PERCANTAG : NO_MATE_LOSS_PERCANTAG;
             //lossPercantag = 0.06;
             //lossPercantag = 0.245;
             double requierdMargin = 0;
