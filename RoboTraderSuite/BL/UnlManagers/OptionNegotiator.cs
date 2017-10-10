@@ -32,6 +32,8 @@ namespace TNS.BL.UnlManagers
         }
 
         #region Properties and Fields
+
+        private bool DoTradingWasTerminated { get; set; }
         public bool LastLimitOccurred { get; set; }
         /// <summary>
         /// The very first bid price before first order submitted.
@@ -160,17 +162,17 @@ namespace TNS.BL.UnlManagers
         /// </summary>
         private void DoTrading()
         {
-            if (OrderStatusData == null)
+            if ((OrderStatusData == null) || DoTradingWasTerminated)
                 return;
             //TerminateNegotiation();
             switch (OrderStatusData.OrderStatus)
             {
                 case OrderStatus.Filled:
-                    TerminateNegotiation();
+                    TerminateNegotiation(OrderStatus.Filled);
                     SaveTransaction();
                     break;
                 case OrderStatus.Cancelled:
-                    TerminateNegotiation();
+                    TerminateNegotiation(OrderStatus.Cancelled);
                     break;
                 case OrderStatus.Submitted:
                     TradingCycleIndex++;
@@ -183,7 +185,7 @@ namespace TNS.BL.UnlManagers
                             UpdateOrder(CurrentLimitPrice);
                             break;
                         }
-                        TerminateNegotiation();
+                        TerminateNegotiation(OrderStatus.NegotiationFailed);
                         CancelOrder(OrderData.OrderId);
                         break;
                     }
@@ -191,14 +193,14 @@ namespace TNS.BL.UnlManagers
                     UpdateOrder(CurrentLimitPrice);
                     break;
                 case OrderStatus.Inactive:
-                    TerminateNegotiation();
                     CancelOrder(OrderData.OrderId);
+                    TerminateNegotiation(OrderStatus.Cancelled);
                     break;
                 case OrderStatus.PreSubmitted:
                     if (UnlManager.IsNowWorkingTime == false)
                     {
-                        TerminateNegotiation();
                         CancelOrder(OrderData.OrderId);
+                        TerminateNegotiation(OrderStatus.Cancelled);
                     }
                     break;
                 case OrderStatus.PendingCancel:
@@ -243,10 +245,11 @@ namespace TNS.BL.UnlManagers
             
         }
 
-        private void TerminateNegotiation()
+        private void TerminateNegotiation(OrderStatus orderStatus)
         {
+            DoTradingWasTerminated = true;
             UnlManager.RemoveScheduledTaskOnUnl(ScheduledTaskId);
-            UnlManager.OrdersManager.SendOrderTaskAccomplished(OrderStatusData.OrderId);
+            UnlManager.OrdersManager.SendOrderTaskAccomplished(OrderStatusData.OrderId, orderStatus);
         }
 
      

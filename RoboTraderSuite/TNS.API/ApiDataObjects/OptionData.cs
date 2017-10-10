@@ -23,7 +23,7 @@ namespace TNS.API.ApiDataObjects
         public virtual OptionContract OptionContract { get; set; }
 
         public double Delta { get; set; }
-
+        public double DeltaAbsValue => Math.Abs(Delta);
         public double Gamma { get; set; }
 
         public double Vega { get; set; }

@@ -72,13 +72,14 @@
     <Compile Include="UnlManagers\OrdersManager.cs" />
     <Compile Include="UnlManagers\PositionsDataBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnlManagers\PositionsOptimizer.cs" />
     <Compile Include="UnlManagers\TradingManager.cs" />
     <Compile Include="UnlManagers\UNLManager.cs" />
     <Compile Include="UnlManagers\UnlMemberBaseManager.cs" />
     <Compile Include="UNLTradingOptimizer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BLClassDiagram.cd" />
+    <None Include="UnlManagers\TradingClassDiagram.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

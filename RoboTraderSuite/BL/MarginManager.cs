@@ -97,14 +97,14 @@ namespace TNS.BL
             }
 
             var marginData = MarginDataDic[symbol];
-            marginData.CallPositionCount = Math.Abs(callList.Sum(p => p.Position));
-            marginData.PutPositionCount = Math.Abs(putList.Sum(p => p.Position));
+            marginData.CallPositionCount = callList.Sum(p => p.Quantity);
+            marginData.PutPositionCount = putList.Sum(p => p.Quantity);
 
             double marginSum = 0;
-
+            var unlRate = _appManager.ManagedSecuritiesManager.Securities[symbol].LastPrice;
             try
             {
-                var unlRate = _appManager.ManagedSecuritiesManager.Securities[symbol].LastPrice;
+                
                 if (marginData.PutPositionCount >= marginData.CallPositionCount)
                 {
                     //First calculate the Put List
@@ -132,8 +132,15 @@ namespace TNS.BL
             {
                 Logger.Error("OptionData is null", ex);
             }
+            int singleCount;
+            EOptionType optionType;
+            marginData.MateCouplesCount = GetCoupleMateOptionsCount(symbol, out singleCount, out optionType);
+            marginData.SingleCount = singleCount;
+
+            marginData.SingleOptionType = singleCount == 0 ? EOptionType.None : optionType;
 
             marginData.Margin = marginSum;
+            marginData.MarginPerCouple = GetMarginForOneCoupleMateOptions(unlRate);
             return marginSum;
         }
 

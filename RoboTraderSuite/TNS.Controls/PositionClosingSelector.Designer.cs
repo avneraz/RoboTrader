@@ -29,45 +29,48 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblHeader = new System.Windows.Forms.Label();
             this.grpUNLSummary = new System.Windows.Forms.GroupBox();
+            this.lblTotalDeltaLabel = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lblSingleCount = new System.Windows.Forms.Label();
+            this.marginDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.lblMateCoupleCount = new System.Windows.Forms.Label();
+            this.lblTotalDelta = new System.Windows.Forms.Label();
+            this.unlTradingDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.lblMarginPerCouple = new System.Windows.Forms.Label();
             this.lblMargin = new System.Windows.Forms.Label();
             this.lblSingleType = new System.Windows.Forms.Label();
-            this.lblMateCoupleCount = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.lblTotalDelta = new System.Windows.Forms.Label();
-            this.lblTotalDeltaLabel = new System.Windows.Forms.Label();
             this.lblCouplesToCloseLabel = new System.Windows.Forms.Label();
             this.lblMarginGain = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.btnSubmitCloseCouples = new System.Windows.Forms.Button();
             this.gbxCloseCouples = new System.Windows.Forms.GroupBox();
             this.numCouplesToClose = new System.Windows.Forms.NumericUpDown();
-            this.unlTradingDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.txtExpireDate = new System.Windows.Forms.TextBox();
             this.grpUNLSummary.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.marginDataBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.unlTradingDataBindingSource)).BeginInit();
             this.gbxCloseCouples.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numCouplesToClose)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.unlTradingDataBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // lblHeader
             // 
-            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(255)))), ((int)(((byte)(251)))));
-            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label1.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
-            this.label1.ForeColor = System.Drawing.Color.Blue;
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(839, 28);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "AMZN - 971.25 Margin = 112,205";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(255)))), ((int)(((byte)(251)))));
+            this.lblHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblHeader.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            this.lblHeader.ForeColor = System.Drawing.Color.Blue;
+            this.lblHeader.Location = new System.Drawing.Point(0, 0);
+            this.lblHeader.Name = "lblHeader";
+            this.lblHeader.Size = new System.Drawing.Size(900, 28);
+            this.lblHeader.TabIndex = 2;
+            this.lblHeader.Text = "AMZN - 971.25 Margin = 112,205";
+            this.lblHeader.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // grpUNLSummary
             // 
@@ -84,12 +87,23 @@
             this.grpUNLSummary.Controls.Add(this.label3);
             this.grpUNLSummary.Controls.Add(this.label5);
             this.grpUNLSummary.Dock = System.Windows.Forms.DockStyle.Right;
-            this.grpUNLSummary.Location = new System.Drawing.Point(613, 28);
+            this.grpUNLSummary.Location = new System.Drawing.Point(674, 28);
             this.grpUNLSummary.Name = "grpUNLSummary";
             this.grpUNLSummary.Size = new System.Drawing.Size(226, 572);
             this.grpUNLSummary.TabIndex = 5;
             this.grpUNLSummary.TabStop = false;
             this.grpUNLSummary.Text = "UNL Summary";
+            // 
+            // lblTotalDeltaLabel
+            // 
+            this.lblTotalDeltaLabel.AutoSize = true;
+            this.lblTotalDeltaLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalDeltaLabel.ForeColor = System.Drawing.Color.DarkBlue;
+            this.lblTotalDeltaLabel.Location = new System.Drawing.Point(6, 136);
+            this.lblTotalDeltaLabel.Name = "lblTotalDeltaLabel";
+            this.lblTotalDeltaLabel.Size = new System.Drawing.Size(31, 15);
+            this.lblTotalDeltaLabel.TabIndex = 3;
+            this.lblTotalDeltaLabel.Text = "Σ δ:";
             // 
             // label6
             // 
@@ -127,23 +141,59 @@
             // lblSingleCount
             // 
             this.lblSingleCount.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.lblSingleCount.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.marginDataBindingSource, "SingleCount", true));
             this.lblSingleCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSingleCount.ForeColor = System.Drawing.Color.Green;
             this.lblSingleCount.Location = new System.Drawing.Point(150, 60);
             this.lblSingleCount.Name = "lblSingleCount";
-            this.lblSingleCount.Size = new System.Drawing.Size(64, 15);
+            this.lblSingleCount.Size = new System.Drawing.Size(70, 15);
             this.lblSingleCount.TabIndex = 3;
             this.lblSingleCount.Text = "1";
             this.lblSingleCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // marginDataBindingSource
+            // 
+            this.marginDataBindingSource.DataSource = typeof(TNS.API.ApiDataObjects.MarginData);
+            // 
+            // lblMateCoupleCount
+            // 
+            this.lblMateCoupleCount.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.lblMateCoupleCount.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.marginDataBindingSource, "MateCouplesCount", true));
+            this.lblMateCoupleCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMateCoupleCount.ForeColor = System.Drawing.Color.Green;
+            this.lblMateCoupleCount.Location = new System.Drawing.Point(150, 41);
+            this.lblMateCoupleCount.Name = "lblMateCoupleCount";
+            this.lblMateCoupleCount.Size = new System.Drawing.Size(70, 15);
+            this.lblMateCoupleCount.TabIndex = 3;
+            this.lblMateCoupleCount.Text = "15";
+            this.lblMateCoupleCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblTotalDelta
+            // 
+            this.lblTotalDelta.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.lblTotalDelta.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.unlTradingDataBindingSource, "DeltaTotal", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, "0", "N0"));
+            this.lblTotalDelta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalDelta.ForeColor = System.Drawing.Color.DarkBlue;
+            this.lblTotalDelta.Location = new System.Drawing.Point(150, 136);
+            this.lblTotalDelta.Name = "lblTotalDelta";
+            this.lblTotalDelta.Size = new System.Drawing.Size(70, 15);
+            this.lblTotalDelta.TabIndex = 3;
+            this.lblTotalDelta.Text = "-25";
+            this.lblTotalDelta.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // unlTradingDataBindingSource
+            // 
+            this.unlTradingDataBindingSource.DataSource = typeof(TNS.API.ApiDataObjects.UnlTradingData);
+            // 
             // lblMarginPerCouple
             // 
             this.lblMarginPerCouple.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.lblMarginPerCouple.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.marginDataBindingSource, "MarginPerCouple", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, null, "N0"));
             this.lblMarginPerCouple.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMarginPerCouple.ForeColor = System.Drawing.Color.Green;
             this.lblMarginPerCouple.Location = new System.Drawing.Point(150, 102);
             this.lblMarginPerCouple.Name = "lblMarginPerCouple";
-            this.lblMarginPerCouple.Size = new System.Drawing.Size(64, 15);
+            this.lblMarginPerCouple.Size = new System.Drawing.Size(70, 15);
             this.lblMarginPerCouple.TabIndex = 3;
             this.lblMarginPerCouple.Text = "35,140";
             this.lblMarginPerCouple.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -151,12 +201,12 @@
             // lblMargin
             // 
             this.lblMargin.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.lblMargin.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.unlTradingDataBindingSource, "Margin", true));
+            this.lblMargin.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.unlTradingDataBindingSource, "Margin", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, "0", "C0"));
             this.lblMargin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMargin.ForeColor = System.Drawing.Color.Green;
             this.lblMargin.Location = new System.Drawing.Point(150, 19);
             this.lblMargin.Name = "lblMargin";
-            this.lblMargin.Size = new System.Drawing.Size(64, 15);
+            this.lblMargin.Size = new System.Drawing.Size(70, 15);
             this.lblMargin.TabIndex = 3;
             this.lblMargin.Text = "112,205";
             this.lblMargin.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -164,26 +214,15 @@
             // lblSingleType
             // 
             this.lblSingleType.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.lblSingleType.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.marginDataBindingSource, "SingleOptionType", true));
             this.lblSingleType.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSingleType.ForeColor = System.Drawing.Color.Green;
             this.lblSingleType.Location = new System.Drawing.Point(150, 81);
             this.lblSingleType.Name = "lblSingleType";
-            this.lblSingleType.Size = new System.Drawing.Size(64, 15);
+            this.lblSingleType.Size = new System.Drawing.Size(70, 15);
             this.lblSingleType.TabIndex = 3;
             this.lblSingleType.Text = "Call";
             this.lblSingleType.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblMateCoupleCount
-            // 
-            this.lblMateCoupleCount.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.lblMateCoupleCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMateCoupleCount.ForeColor = System.Drawing.Color.Green;
-            this.lblMateCoupleCount.Location = new System.Drawing.Point(150, 41);
-            this.lblMateCoupleCount.Name = "lblMateCoupleCount";
-            this.lblMateCoupleCount.Size = new System.Drawing.Size(64, 15);
-            this.lblMateCoupleCount.TabIndex = 3;
-            this.lblMateCoupleCount.Text = "15";
-            this.lblMateCoupleCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label3
             // 
@@ -206,30 +245,6 @@
             this.label5.Size = new System.Drawing.Size(56, 15);
             this.label5.TabIndex = 3;
             this.label5.Text = "Margin:";
-            // 
-            // lblTotalDelta
-            // 
-            this.lblTotalDelta.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.lblTotalDelta.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.unlTradingDataBindingSource, "DeltaTotal", true));
-            this.lblTotalDelta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotalDelta.ForeColor = System.Drawing.Color.DarkBlue;
-            this.lblTotalDelta.Location = new System.Drawing.Point(73, 183);
-            this.lblTotalDelta.Name = "lblTotalDelta";
-            this.lblTotalDelta.Size = new System.Drawing.Size(64, 15);
-            this.lblTotalDelta.TabIndex = 3;
-            this.lblTotalDelta.Text = "-25";
-            this.lblTotalDelta.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblTotalDeltaLabel
-            // 
-            this.lblTotalDeltaLabel.AutoSize = true;
-            this.lblTotalDeltaLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotalDeltaLabel.ForeColor = System.Drawing.Color.DarkBlue;
-            this.lblTotalDeltaLabel.Location = new System.Drawing.Point(18, 183);
-            this.lblTotalDeltaLabel.Name = "lblTotalDeltaLabel";
-            this.lblTotalDeltaLabel.Size = new System.Drawing.Size(31, 15);
-            this.lblTotalDeltaLabel.TabIndex = 3;
-            this.lblTotalDeltaLabel.Text = "Σ δ:";
             // 
             // lblCouplesToCloseLabel
             // 
@@ -271,23 +286,27 @@
             this.btnSubmitCloseCouples.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnSubmitCloseCouples.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.btnSubmitCloseCouples.ForeColor = System.Drawing.Color.White;
-            this.btnSubmitCloseCouples.Location = new System.Drawing.Point(427, 24);
+            this.btnSubmitCloseCouples.Location = new System.Drawing.Point(547, 24);
             this.btnSubmitCloseCouples.Name = "btnSubmitCloseCouples";
             this.btnSubmitCloseCouples.Size = new System.Drawing.Size(75, 23);
             this.btnSubmitCloseCouples.TabIndex = 6;
             this.btnSubmitCloseCouples.Text = "Submit";
             this.btnSubmitCloseCouples.UseVisualStyleBackColor = false;
+            this.btnSubmitCloseCouples.Click += new System.EventHandler(this.btnSubmitCloseCouples_Click);
             // 
             // gbxCloseCouples
             // 
+            this.gbxCloseCouples.Controls.Add(this.txtExpireDate);
             this.gbxCloseCouples.Controls.Add(this.numCouplesToClose);
             this.gbxCloseCouples.Controls.Add(this.btnSubmitCloseCouples);
             this.gbxCloseCouples.Controls.Add(this.label9);
             this.gbxCloseCouples.Controls.Add(this.lblCouplesToCloseLabel);
             this.gbxCloseCouples.Controls.Add(this.lblMarginGain);
+            this.gbxCloseCouples.Font = new System.Drawing.Font("Tahoma", 11F);
+            this.gbxCloseCouples.ForeColor = System.Drawing.Color.Navy;
             this.gbxCloseCouples.Location = new System.Drawing.Point(16, 69);
             this.gbxCloseCouples.Name = "gbxCloseCouples";
-            this.gbxCloseCouples.Size = new System.Drawing.Size(525, 66);
+            this.gbxCloseCouples.Size = new System.Drawing.Size(642, 66);
             this.gbxCloseCouples.TabIndex = 9;
             this.gbxCloseCouples.TabStop = false;
             this.gbxCloseCouples.Text = "Close Couples";
@@ -297,17 +316,22 @@
             this.numCouplesToClose.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.numCouplesToClose.Location = new System.Drawing.Point(137, 28);
             this.numCouplesToClose.Name = "numCouplesToClose";
-            this.numCouplesToClose.Size = new System.Drawing.Size(53, 21);
+            this.numCouplesToClose.Size = new System.Drawing.Size(53, 25);
             this.numCouplesToClose.TabIndex = 10;
             this.numCouplesToClose.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
+            this.numCouplesToClose.ValueChanged += new System.EventHandler(this.numCouplesToClose_ValueChanged);
             // 
-            // unlTradingDataBindingSource
+            // txtExpireDate
             // 
-            this.unlTradingDataBindingSource.DataSource = typeof(TNS.API.ApiDataObjects.UnlTradingData);
+            this.txtExpireDate.Location = new System.Drawing.Point(415, 24);
+            this.txtExpireDate.Name = "txtExpireDate";
+            this.txtExpireDate.Size = new System.Drawing.Size(100, 25);
+            this.txtExpireDate.TabIndex = 11;
+            this.txtExpireDate.Text = "15/12/2017";
             // 
             // PositionClosingSelector
             // 
@@ -316,22 +340,24 @@
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.Controls.Add(this.gbxCloseCouples);
             this.Controls.Add(this.grpUNLSummary);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblHeader);
             this.Name = "PositionClosingSelector";
-            this.Size = new System.Drawing.Size(839, 600);
+            this.Size = new System.Drawing.Size(900, 600);
+            this.Load += new System.EventHandler(this.PositionClosingSelector_Load);
             this.grpUNLSummary.ResumeLayout(false);
             this.grpUNLSummary.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.marginDataBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.unlTradingDataBindingSource)).EndInit();
             this.gbxCloseCouples.ResumeLayout(false);
             this.gbxCloseCouples.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numCouplesToClose)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.unlTradingDataBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblHeader;
         private System.Windows.Forms.GroupBox grpUNLSummary;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label4;
@@ -352,5 +378,7 @@
         private System.Windows.Forms.GroupBox gbxCloseCouples;
         private System.Windows.Forms.NumericUpDown numCouplesToClose;
         private System.Windows.Forms.BindingSource unlTradingDataBindingSource;
+        private System.Windows.Forms.BindingSource marginDataBindingSource;
+        private System.Windows.Forms.TextBox txtExpireDate;
     }
 }

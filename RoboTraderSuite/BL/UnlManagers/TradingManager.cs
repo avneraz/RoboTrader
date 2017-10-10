@@ -11,6 +11,7 @@ using TNS.API;
 using TNS.API.ApiDataObjects;
 using TNS.BL.DataObjects;
 using TNS.BL.Interfaces;
+using OrderStatus = TNS.API.ApiDataObjects.OrderStatus;
 
 namespace TNS.BL.UnlManagers
 {
@@ -24,14 +25,18 @@ namespace TNS.BL.UnlManagers
             Action<TradingTimeEvent> handler = SendTradingTimeEvent;
             handler?.Invoke(tradingTimeEvent);
         }
+
         public TradingManager(ITradingApi apiWrapper, ManagedSecurity managedSecurity, UNLManager unlManager) : base(apiWrapper, managedSecurity, unlManager)
         {
             OrderManager = unlManager.OrdersManager;
+            OrdersStatusDic = new Dictionary<string, OrderStatus>();
         }
         private static readonly ILog Logger = LogManager.GetLogger(typeof(TradingManager));
+        private static readonly AppManager AppManager = AppManager.AppManagerSingleTonObject;
         private const int TRADING_CYCLE_TYME = 10;
         private string _taskId;
 
+        private Dictionary<string, OrderStatus> OrdersStatusDic { get; }
         private List<UnlOptions> UnlOptionsList { get; set; }
         private IOrdersManager OrderManager { get;  }
         public AccountSummaryData AccountSummaryData { get; set; }
@@ -88,6 +93,11 @@ namespace TNS.BL.UnlManagers
 
         }
 
+        public void OptimizePositions(string symbol, DateTime expiryDate)
+        {
+            var optimizer = new PositionsOptimizer(symbol, expiryDate);
+            optimizer.OptimizePositions();
+        }
         private void CreateOrUpdateUnlOption(TransactionData transactionData)
         {
             UnlOptions unlOptions;
@@ -188,6 +198,49 @@ namespace TNS.BL.UnlManagers
             UNLManager.AddScheduledTaskOnUnl(TimeSpan.FromSeconds(30),
                 () => CloseShortPositions(expiryDate));
         }
+
+        public void CloseMateCouples(int cuoplesCount, DateTime expiryDate)
+        {
+            var marginData = AppManager.MarginManager.MarginDataDic[Symbol];
+            var totalCouplesCount = marginData.MateCouplesCount;
+            cuoplesCount = Math.Min(cuoplesCount, totalCouplesCount);//In case the parameter greater then th ecouple total count.
+
+            for (var i = 0; i < cuoplesCount; i++)
+            {
+                //Close Call:
+                var position= UNLManager.PositionsDataBuilder.PositionDataDic.Values
+                    .FirstOrDefault(pd => pd.Position < 0 && pd.OptionType == EOptionType.Call && pd.OptionData.Expiry == expiryDate);
+
+                if (position != null)
+                {
+                    var orderData = OrderManager.BuyOption(position.OptionData, 1);
+                    OrdersStatusDic.Add(orderData.OrderId, OrderStatus.OrderSent);
+                    OrderManager.OrderTradingNegotioationWasTerminated += OrderManager_OrderTradingNegotioationWasTerminated1;
+                }
+                else throw new Exception("CloseMateCouples: can't find match call position");
+                //Close Put:
+                position = UNLManager.PositionsDataBuilder.PositionDataDic.Values
+                    .FirstOrDefault(pd => pd.Position < 0 && pd.OptionType == EOptionType.Put && pd.OptionData.Expiry == expiryDate);
+
+                if (position != null)
+                {
+                    var orderData = OrderManager.BuyOption(position.OptionData, 1);
+                    OrdersStatusDic.Add(orderData.OrderId, OrderStatus.OrderSent);
+                    OrderManager.OrderTradingNegotioationWasTerminated += OrderManager_OrderTradingNegotioationWasTerminated1;
+                }
+                else throw new Exception("CloseMateCouples: can't find match put position");
+            }
+            //Add task to check if all the orders done :
+           // UNLManager.AddScheduledTaskOnUnl(TimeSpan.FromSeconds(30),(() => ) )
+        }
+
+        private void OrderManager_OrderTradingNegotioationWasTerminated1(OrderStatus orderStatus, string orderId)
+        {
+            //OrdersStatusDic.Clear();
+            //OrderManager.OrderTradingNegotioationWasTerminated -= OrderManager_OrderTradingNegotioationWasTerminated1;
+            OrdersStatusDic[orderId] = orderStatus;
+        }
+
 
         public void TestTrading(TradeOrderData tradeOrderData)
         {

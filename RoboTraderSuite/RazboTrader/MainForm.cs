@@ -12,7 +12,7 @@ using log4net;
 using TNS.API.ApiDataObjects;
 using TNS.BL;
 using TNS.BL.DataObjects;
-using TNS.RoboTrader;
+using TNS.BL.UnlManagers;
 using UILogic;
 
 namespace RazboTrader
@@ -224,13 +224,17 @@ namespace RazboTrader
         {
             try
             {
-                var strike = Convert.ToDouble(txtStrike.Text);
-                var unlRate = Convert.ToDouble(txtUNLRate.Text);
-                EOptionType type;
-                if(Enum.TryParse(txtType.Text, true,out type) == false) throw new Exception("Wrong option type!");
-                bool mate = cbxSell.Checked;
-                var result = _appManager.CalculateMarginTest(unlRate, strike, mate, type);
-                MessageBox.Show($"The margin is {result}");
+                var symbol = txtSymbol.Text;
+                var expiryDate = dateTimePicker1.Value;
+                (_appManager.UNLManagerDic[symbol] as UNLManager).TradingManager.OptimizePositions(symbol, expiryDate);
+
+                //var strike = Convert.ToDouble(txtStrike.Text);
+                //var unlRate = Convert.ToDouble(txtUNLRate.Text);
+                //EOptionType type;
+                //if(Enum.TryParse(txtType.Text, true,out type) == false) throw new Exception("Wrong option type!");
+                //bool mate = cbxSell.Checked;
+                //var result = _appManager.CalculateMarginTest(unlRate, strike, mate, type);
+                //MessageBox.Show($"The margin is {result}");
 
                 // string unl = "AMZN";
                 // DateTime expiryDate = new DateTime(2017, 12, 15);

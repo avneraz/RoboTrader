@@ -280,7 +280,7 @@
             this.colOptionContract_OptionType.Name = "colOptionContract_OptionType";
             this.colOptionContract_OptionType.Visible = true;
             this.colOptionContract_OptionType.VisibleIndex = 1;
-            this.colOptionContract_OptionType.Width = 47;
+            this.colOptionContract_OptionType.Width = 40;
             // 
             // colPosition
             // 
@@ -322,8 +322,8 @@
             this.colCalculatedOptionPrice.FieldName = "CalculatedOptionPrice";
             this.colCalculatedOptionPrice.Name = "colCalculatedOptionPrice";
             this.colCalculatedOptionPrice.Visible = true;
-            this.colCalculatedOptionPrice.VisibleIndex = 9;
-            this.colCalculatedOptionPrice.Width = 71;
+            this.colCalculatedOptionPrice.VisibleIndex = 13;
+            this.colCalculatedOptionPrice.Width = 70;
             // 
             // colAverageCost
             // 
@@ -394,7 +394,7 @@
             this.colBidPrice.MinWidth = 50;
             this.colBidPrice.Name = "colBidPrice";
             this.colBidPrice.Visible = true;
-            this.colBidPrice.VisibleIndex = 11;
+            this.colBidPrice.VisibleIndex = 5;
             this.colBidPrice.Width = 51;
             // 
             // colAskPrice
@@ -415,7 +415,7 @@
             this.colAskPrice.MinWidth = 50;
             this.colAskPrice.Name = "colAskPrice";
             this.colAskPrice.Visible = true;
-            this.colAskPrice.VisibleIndex = 12;
+            this.colAskPrice.VisibleIndex = 6;
             this.colAskPrice.Width = 51;
             // 
             // colOptionDelta
@@ -437,8 +437,8 @@
             this.colOptionDelta.MaxWidth = 70;
             this.colOptionDelta.Name = "colOptionDelta";
             this.colOptionDelta.Visible = true;
-            this.colOptionDelta.VisibleIndex = 20;
-            this.colOptionDelta.Width = 20;
+            this.colOptionDelta.VisibleIndex = 8;
+            this.colOptionDelta.Width = 30;
             // 
             // colContract_ExpiryDate
             // 
@@ -477,8 +477,8 @@
             this.colDeltaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "DeltaTotal", "{0:#,##0}")});
             this.colDeltaTotal.Visible = true;
-            this.colDeltaTotal.VisibleIndex = 16;
-            this.colDeltaTotal.Width = 46;
+            this.colDeltaTotal.VisibleIndex = 17;
+            this.colDeltaTotal.Width = 45;
             // 
             // colTotalCost
             // 
@@ -500,8 +500,8 @@
             this.colTotalCost.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalCost", "{0:#,##0}")});
             this.colTotalCost.Visible = true;
-            this.colTotalCost.VisibleIndex = 5;
-            this.colTotalCost.Width = 71;
+            this.colTotalCost.VisibleIndex = 9;
+            this.colTotalCost.Width = 70;
             // 
             // colLastPrice
             // 
@@ -517,8 +517,8 @@
             this.colLastPrice.MinWidth = 50;
             this.colLastPrice.Name = "colLastPrice";
             this.colLastPrice.Visible = true;
-            this.colLastPrice.VisibleIndex = 14;
-            this.colLastPrice.Width = 51;
+            this.colLastPrice.VisibleIndex = 16;
+            this.colLastPrice.Width = 50;
             // 
             // colMarketValue
             // 
@@ -540,8 +540,8 @@
             this.colMarketValue.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "MarketValue", "{0:#,##0}")});
             this.colMarketValue.Visible = true;
-            this.colMarketValue.VisibleIndex = 6;
-            this.colMarketValue.Width = 71;
+            this.colMarketValue.VisibleIndex = 10;
+            this.colMarketValue.Width = 70;
             // 
             // colPNL
             // 
@@ -563,8 +563,8 @@
             this.colPNL.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "PnL", "{0:#,##0}")});
             this.colPNL.Visible = true;
-            this.colPNL.VisibleIndex = 7;
-            this.colPNL.Width = 71;
+            this.colPNL.VisibleIndex = 11;
+            this.colPNL.Width = 70;
             // 
             // colGammaTotal
             // 
@@ -590,8 +590,8 @@
             this.colGammaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "GammaTotal", "{0:#,##0}")});
             this.colGammaTotal.Visible = true;
-            this.colGammaTotal.VisibleIndex = 17;
-            this.colGammaTotal.Width = 46;
+            this.colGammaTotal.VisibleIndex = 18;
+            this.colGammaTotal.Width = 45;
             // 
             // colOptionData_ModelPrice
             // 
@@ -609,8 +609,8 @@
             this.colOptionData_ModelPrice.MinWidth = 50;
             this.colOptionData_ModelPrice.Name = "colOptionData_ModelPrice";
             this.colOptionData_ModelPrice.Visible = true;
-            this.colOptionData_ModelPrice.VisibleIndex = 13;
-            this.colOptionData_ModelPrice.Width = 51;
+            this.colOptionData_ModelPrice.VisibleIndex = 15;
+            this.colOptionData_ModelPrice.Width = 50;
             // 
             // colOptionData_UnderlinePrice
             // 
@@ -642,8 +642,8 @@
             this.colThetaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ThetaTotal", "{0:#,##0}")});
             this.colThetaTotal.Visible = true;
-            this.colThetaTotal.VisibleIndex = 18;
-            this.colThetaTotal.Width = 46;
+            this.colThetaTotal.VisibleIndex = 19;
+            this.colThetaTotal.Width = 45;
             // 
             // colVegaTotal
             // 
@@ -670,8 +670,8 @@
             this.colVegaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "VegaTotal", "{0:#,##0}")});
             this.colVegaTotal.Visible = true;
-            this.colVegaTotal.VisibleIndex = 19;
-            this.colVegaTotal.Width = 46;
+            this.colVegaTotal.VisibleIndex = 20;
+            this.colVegaTotal.Width = 48;
             // 
             // colOptionData_Gamma
             // 
@@ -694,7 +694,7 @@
             this.colOptionData_Gamma.Name = "colOptionData_Gamma";
             this.colOptionData_Gamma.Visible = true;
             this.colOptionData_Gamma.VisibleIndex = 21;
-            this.colOptionData_Gamma.Width = 54;
+            this.colOptionData_Gamma.Width = 70;
             // 
             // colOptionData_ImpliedVolatility
             // 
@@ -716,7 +716,7 @@
             this.colOptionData_ImpliedVolatility.MinWidth = 50;
             this.colOptionData_ImpliedVolatility.Name = "colOptionData_ImpliedVolatility";
             this.colOptionData_ImpliedVolatility.Visible = true;
-            this.colOptionData_ImpliedVolatility.VisibleIndex = 15;
+            this.colOptionData_ImpliedVolatility.VisibleIndex = 7;
             this.colOptionData_ImpliedVolatility.Width = 51;
             // 
             // colContract_Symbol
@@ -735,8 +735,8 @@
             this.colAvgPrice.UnboundExpression = "[TotalCostUSD] / [Position]";
             this.colAvgPrice.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
             this.colAvgPrice.Visible = true;
-            this.colAvgPrice.VisibleIndex = 8;
-            this.colAvgPrice.Width = 71;
+            this.colAvgPrice.VisibleIndex = 12;
+            this.colAvgPrice.Width = 70;
             // 
             // colChangeFromCost
             // 
@@ -752,8 +752,8 @@
             this.colChangeFromCost.UnboundExpression = "(100 * [CalculatedOptionPrice] - [AverageCost]) / [AverageCost]";
             this.colChangeFromCost.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
             this.colChangeFromCost.Visible = true;
-            this.colChangeFromCost.VisibleIndex = 10;
-            this.colChangeFromCost.Width = 65;
+            this.colChangeFromCost.VisibleIndex = 14;
+            this.colChangeFromCost.Width = 64;
             // 
             // label1
             // 
@@ -974,15 +974,16 @@
             this.colSymbol.Name = "colSymbol";
             this.colSymbol.Visible = true;
             this.colSymbol.VisibleIndex = 0;
-            this.colSymbol.Width = 61;
+            this.colSymbol.Width = 80;
             // 
             // colUnlBid
             // 
-            this.colUnlBid.Caption = "Un lBid";
+            this.colUnlBid.Caption = "Unl Bid";
             this.colUnlBid.FieldName = "UnlBid";
             this.colUnlBid.Name = "colUnlBid";
             this.colUnlBid.Visible = true;
-            this.colUnlBid.VisibleIndex = 2;
+            this.colUnlBid.VisibleIndex = 1;
+            this.colUnlBid.Width = 50;
             // 
             // colUnlAsk
             // 
@@ -990,27 +991,30 @@
             this.colUnlAsk.FieldName = "UnlAsk";
             this.colUnlAsk.Name = "colUnlAsk";
             this.colUnlAsk.Visible = true;
-            this.colUnlAsk.VisibleIndex = 3;
+            this.colUnlAsk.VisibleIndex = 2;
+            this.colUnlAsk.Width = 50;
             // 
             // colUnlChange
             // 
-            this.colUnlChange.Caption = "Unl Change";
+            this.colUnlChange.Caption = "Change";
             this.colUnlChange.DisplayFormat.FormatString = "#0.00%";
             this.colUnlChange.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colUnlChange.FieldName = "UnlChange";
             this.colUnlChange.Name = "colUnlChange";
             this.colUnlChange.Visible = true;
-            this.colUnlChange.VisibleIndex = 6;
+            this.colUnlChange.VisibleIndex = 5;
+            this.colUnlChange.Width = 48;
             // 
             // colUnlOpen
             // 
-            this.colUnlOpen.Caption = "Unl Open";
+            this.colUnlOpen.Caption = "Open";
             this.colUnlOpen.DisplayFormat.FormatString = "#0.00";
             this.colUnlOpen.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colUnlOpen.FieldName = "UnlBasePrice";
             this.colUnlOpen.Name = "colUnlOpen";
             this.colUnlOpen.Visible = true;
-            this.colUnlOpen.VisibleIndex = 4;
+            this.colUnlOpen.VisibleIndex = 3;
+            this.colUnlOpen.Width = 66;
             // 
             // colLastUpdate
             // 
@@ -1019,7 +1023,7 @@
             this.colLastUpdate.FieldName = "LastUpdate";
             this.colLastUpdate.Name = "colLastUpdate";
             this.colLastUpdate.Visible = true;
-            this.colLastUpdate.VisibleIndex = 23;
+            this.colLastUpdate.VisibleIndex = 22;
             this.colLastUpdate.Width = 121;
             // 
             // colShorts
@@ -1030,7 +1034,8 @@
             this.colShorts.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Shorts", "{0:#,##0}")});
             this.colShorts.Visible = true;
-            this.colShorts.VisibleIndex = 8;
+            this.colShorts.VisibleIndex = 7;
+            this.colShorts.Width = 48;
             // 
             // colTradingState
             // 
@@ -1053,8 +1058,8 @@
             this.colDeltaTotal2.FieldName = "DeltaTotal";
             this.colDeltaTotal2.Name = "colDeltaTotal2";
             this.colDeltaTotal2.Visible = true;
-            this.colDeltaTotal2.VisibleIndex = 11;
-            this.colDeltaTotal2.Width = 56;
+            this.colDeltaTotal2.VisibleIndex = 10;
+            this.colDeltaTotal2.Width = 36;
             // 
             // colGammaTotal2
             // 
@@ -1068,8 +1073,8 @@
             this.colGammaTotal2.FieldName = "GammaTotal";
             this.colGammaTotal2.Name = "colGammaTotal2";
             this.colGammaTotal2.Visible = true;
-            this.colGammaTotal2.VisibleIndex = 12;
-            this.colGammaTotal2.Width = 49;
+            this.colGammaTotal2.VisibleIndex = 11;
+            this.colGammaTotal2.Width = 31;
             // 
             // colThetaTotal2
             // 
@@ -1085,8 +1090,8 @@
             this.colThetaTotal2.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ThetaTotal", "{0:#,##0}")});
             this.colThetaTotal2.Visible = true;
-            this.colThetaTotal2.VisibleIndex = 13;
-            this.colThetaTotal2.Width = 49;
+            this.colThetaTotal2.VisibleIndex = 12;
+            this.colThetaTotal2.Width = 31;
             // 
             // colVegaTotal2
             // 
@@ -1102,8 +1107,8 @@
             this.colVegaTotal2.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "VegaTotal", "{0:#,##0}")});
             this.colVegaTotal2.Visible = true;
-            this.colVegaTotal2.VisibleIndex = 14;
-            this.colVegaTotal2.Width = 49;
+            this.colVegaTotal2.VisibleIndex = 13;
+            this.colVegaTotal2.Width = 31;
             // 
             // colMarginTotal
             // 
@@ -1115,8 +1120,8 @@
             this.colMarginTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "MaxAllowedMargin", "{0:#,##0}")});
             this.colMarginTotal.Visible = true;
-            this.colMarginTotal.VisibleIndex = 7;
-            this.colMarginTotal.Width = 72;
+            this.colMarginTotal.VisibleIndex = 6;
+            this.colMarginTotal.Width = 47;
             // 
             // colIVWeightedAvg
             // 
@@ -1126,8 +1131,8 @@
             this.colIVWeightedAvg.FieldName = "IVWeightedAvg";
             this.colIVWeightedAvg.Name = "colIVWeightedAvg";
             this.colIVWeightedAvg.Visible = true;
-            this.colIVWeightedAvg.VisibleIndex = 15;
-            this.colIVWeightedAvg.Width = 54;
+            this.colIVWeightedAvg.VisibleIndex = 14;
+            this.colIVWeightedAvg.Width = 34;
             // 
             // colVIX
             // 
@@ -1136,19 +1141,19 @@
             this.colVIX.FieldName = "VIX";
             this.colVIX.Name = "colVIX";
             this.colVIX.Visible = true;
-            this.colVIX.VisibleIndex = 16;
-            this.colVIX.Width = 48;
+            this.colVIX.VisibleIndex = 15;
+            this.colVIX.Width = 31;
             // 
             // colUnderlinePrice
             // 
-            this.colUnderlinePrice.Caption = "Unl. P";
+            this.colUnderlinePrice.Caption = "Price";
             this.colUnderlinePrice.DisplayFormat.FormatString = "#0.00";
             this.colUnderlinePrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colUnderlinePrice.FieldName = "UnderlinePrice";
             this.colUnderlinePrice.Name = "colUnderlinePrice";
             this.colUnderlinePrice.Visible = true;
-            this.colUnderlinePrice.VisibleIndex = 5;
-            this.colUnderlinePrice.Width = 48;
+            this.colUnderlinePrice.VisibleIndex = 4;
+            this.colUnderlinePrice.Width = 31;
             // 
             // gridColumn5
             // 
@@ -1164,8 +1169,8 @@
             this.gridColumn5.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "MarketValue", "{0:#,##0}")});
             this.gridColumn5.Visible = true;
-            this.gridColumn5.VisibleIndex = 17;
-            this.gridColumn5.Width = 48;
+            this.gridColumn5.VisibleIndex = 16;
+            this.gridColumn5.Width = 31;
             // 
             // colCostTotal
             // 
@@ -1181,8 +1186,8 @@
             this.colCostTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "CostTotal", "{0:#,##0}")});
             this.colCostTotal.Visible = true;
-            this.colCostTotal.VisibleIndex = 18;
-            this.colCostTotal.Width = 48;
+            this.colCostTotal.VisibleIndex = 17;
+            this.colCostTotal.Width = 31;
             // 
             // colPnLTotal
             // 
@@ -1199,8 +1204,8 @@
             this.colPnLTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "PnLTotal", "{0:#,##0}")});
             this.colPnLTotal.Visible = true;
-            this.colPnLTotal.VisibleIndex = 19;
-            this.colPnLTotal.Width = 48;
+            this.colPnLTotal.VisibleIndex = 18;
+            this.colPnLTotal.Width = 31;
             // 
             // colCommisionTotal
             // 
@@ -1210,8 +1215,8 @@
             this.colCommisionTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "CommisionTotal", "{0:#,##0}")});
             this.colCommisionTotal.Visible = true;
-            this.colCommisionTotal.VisibleIndex = 20;
-            this.colCommisionTotal.Width = 62;
+            this.colCommisionTotal.VisibleIndex = 19;
+            this.colCommisionTotal.Width = 40;
             // 
             // colLastDayPnL
             // 
@@ -1223,8 +1228,8 @@
             this.colLastDayPnL.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "LastDayPnL", "{0:#,##0}")});
             this.colLastDayPnL.Visible = true;
-            this.colLastDayPnL.VisibleIndex = 21;
-            this.colLastDayPnL.Width = 45;
+            this.colLastDayPnL.VisibleIndex = 20;
+            this.colLastDayPnL.Width = 29;
             // 
             // colDailyPnL
             // 
@@ -1237,8 +1242,8 @@
             this.colDailyPnL.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "DailyPnL", "{0:#,##0}")});
             this.colDailyPnL.Visible = true;
-            this.colDailyPnL.VisibleIndex = 22;
-            this.colDailyPnL.Width = 58;
+            this.colDailyPnL.VisibleIndex = 21;
+            this.colDailyPnL.Width = 37;
             // 
             // colMaxAbsoluteDelta
             // 
@@ -1249,8 +1254,8 @@
             this.colMaxAbsoluteDelta.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "MaxAbsoluteDelta", "{0:#,##0}")});
             this.colMaxAbsoluteDelta.Visible = true;
-            this.colMaxAbsoluteDelta.VisibleIndex = 10;
-            this.colMaxAbsoluteDelta.Width = 61;
+            this.colMaxAbsoluteDelta.VisibleIndex = 9;
+            this.colMaxAbsoluteDelta.Width = 39;
             // 
             // colMargin
             // 
@@ -1262,8 +1267,8 @@
             this.colMargin.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Margin", "{0:#,##0}")});
             this.colMargin.Visible = true;
-            this.colMargin.VisibleIndex = 9;
-            this.colMargin.Width = 49;
+            this.colMargin.VisibleIndex = 8;
+            this.colMargin.Width = 31;
             // 
             // splitContainerControl1
             // 

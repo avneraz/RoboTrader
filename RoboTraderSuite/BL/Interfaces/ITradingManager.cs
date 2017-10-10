@@ -12,6 +12,8 @@ namespace TNS.BL.Interfaces
         void CloseShortPositions(DateTime? expiryDate);
 
         void CloseEntireShortPositions();
+        void CloseMateCouples(int cuoplesCount, DateTime expiryDate);
+        void OptimizePositions(string symbol, DateTime expiryDate);
 
         event Action<TradingTimeEvent> SendTradingTimeEvent;
     }

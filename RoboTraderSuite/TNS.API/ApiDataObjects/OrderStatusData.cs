@@ -19,7 +19,9 @@ namespace TNS.API.ApiDataObjects
         Inactive,
         PreSubmitted,
         PendingCancel,
-        PendingSubmit
+        PendingSubmit,
+        OrderSent,
+        NegotiationFailed
 
 
     }

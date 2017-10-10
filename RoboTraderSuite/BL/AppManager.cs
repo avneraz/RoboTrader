@@ -55,7 +55,7 @@ namespace TNS.BL
 
             Configurations = configHandler.ReadConfig();
             //var a = Configurations.Trading.UNLSymbolsListForTrading();
-            Infra.AllConfigurations.AllConfigurationsObject = Configurations;
+            AllConfigurations.AllConfigurationsObject = Configurations;
             
             Distributer = new Distributer();
 
@@ -95,6 +95,8 @@ namespace TNS.BL
                 case ETradingTimeEventType.EndTrading:
                     DBDiluter dbDiluter = new DBDiluter();
                     dbDiluter.DiluteFromAllUnLs();
+                    //Don't save if it's not an operational account:
+                    if (AccountManager.MainAccount != Configurations.Application.MainAccount) break;
                     //Save the parameter in one minute from now, and then 'Net Liquidition' will be stable!
                     GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromMinutes(1), () =>
                     {
@@ -190,8 +192,8 @@ namespace TNS.BL
                     AAPLHighLoadingStrike = 100,
                     AAPLLowLoadingStrike = 200,
                     AAPLSessionsToLoad = "20170817;20151016;20160115",
-                    HighStrikePercentage = 15,
-                    LowStrikePercentage = 15,
+                    HighStrikePercentage = 20,
+                    LowStrikePercentage = 20,
                     MinimumDaysToExpiration = 61,
                     MaxmumDaysToExpiration = 119,
                 },

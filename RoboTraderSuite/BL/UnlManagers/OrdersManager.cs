@@ -16,7 +16,29 @@ namespace TNS.BL.UnlManagers
 {
     public class OrdersManager : UnlMemberBaseManager, IOrdersManager
     {
-        //public event Action<OrderStatusData> OrderStatusDataUpdated;
+        protected virtual void OnOrderTradingNegotioationWasTerminated(OrderStatus orderStatus, string orderId)
+        {
+            OrderTradingNegotioationWasTerminated?.Invoke(orderStatus, orderId);
+        }
+        public event Action<OrderStatus, string> OrderTradingNegotioationWasTerminated;
+
+        /// <summary>
+        /// Clear the invokation list of 'OrderTradingNegotioationWasTerminated' event.
+        /// </summary>
+        public void ClearEventInvokationList()
+        {
+            if (OrderTradingNegotioationWasTerminated == null) return;
+
+            Delegate[] dary = OrderTradingNegotioationWasTerminated.GetInvocationList();
+
+
+            foreach (Delegate del in dary)
+            {
+                //if(((Action<OrderStatus, string>)del).
+                OrderTradingNegotioationWasTerminated -= (Action<OrderStatus, string>) del;
+            }
+        }
+
         public OrdersManager(ITradingApi apiWrapper, ManagedSecurity managedSecurity, UNLManager unlManager) : base(apiWrapper, managedSecurity, unlManager)
         {
             OrderStatusDataDic = new Dictionary<string, OrderStatusData>();
@@ -58,7 +80,7 @@ namespace TNS.BL.UnlManagers
                         }
                         else//If it's true==> now isn't working time!==> terminate
                         {
-                            SendOrderTaskAccomplished(orderStatusData.OrderId);
+                            SendOrderTaskAccomplished(orderStatusData.OrderId, OrderStatus.Cancelled);
                         }
                         return true;
                     } 
@@ -106,11 +128,15 @@ namespace TNS.BL.UnlManagers
         /// <summary>
         /// The method used by the OptionNegotiator when the order task accomplished.
         /// </summary>
-        public void SendOrderTaskAccomplished(string orderId)
+        public void SendOrderTaskAccomplished(string orderId, OrderStatus orderStatus)
         {
             OptionNegotiatorDic.Remove(orderId);
+            OnOrderTradingNegotioationWasTerminated(orderStatus, orderId);
             //TODO....
         }
+
+        
+
         public void CancelOrder(string orderId)
         {
             OptionNegotiatorDic[orderId].CancelOrder(orderId);
@@ -147,5 +173,7 @@ namespace TNS.BL.UnlManagers
         {
             return $"{expiry}.{optionType}.{strike}";
         }
+
+       
     }
 }

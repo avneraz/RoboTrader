@@ -7,6 +7,6 @@ namespace TNS.BL.Interfaces
     {
         //Dictionary<string, OptionData> OptionDataDic { get; }
         OptionData GetOptionData(string optionKey);
-       
+        Dictionary<string, OptionData> OptionDataDic { get; }
     }
 }

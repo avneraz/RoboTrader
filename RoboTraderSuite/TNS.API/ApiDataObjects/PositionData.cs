@@ -27,6 +27,7 @@ namespace TNS.API.ApiDataObjects
         public abstract ContractBase GetContract();
         public abstract void SetContract(ContractBase contract);
         public int Position { get; set; }
+        public int Quantity => Math.Abs(Position);
         public double AverageCost { get; set; }
         public DateTime LastUpdate { get; set; }
         /// <summary>

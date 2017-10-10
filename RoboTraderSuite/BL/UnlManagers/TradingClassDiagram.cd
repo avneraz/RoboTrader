@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TNS.BL.UnlManagers.OptionNegotiator" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CwQIAJAwAAAQgAAAGESCQAIAAAAAICAADAowgEWACAA=</HashCode>
+      <FileName>UnlManagers\OptionNegotiator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.BL.UnlManagers.TradingManager" Collapsed="true">
+    <Position X="9" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IKQDAABCgAICAAAACIAAAAAAAAIAAAYAQIAAACAAAAA=</HashCode>
+      <FileName>UnlManagers\TradingManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TNS.BL.UnlManagers.UNLManager" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>KMABEhVCkAIAAAhAkAACEDAAAAAAAAoCCBAACAABCBs=</HashCode>
+      <FileName>UnlManagers\UNLManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNS.BL.UnlManagers.OrdersManager" Collapsed="true">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gIAAAABAgAACAAAgCAEQgAIABEAAEAIAAAAQAAAAAAA=</HashCode>
+      <FileName>UnlManagers\OrdersManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TNS.BL.UnlManagers.PositionsOptimizer" Collapsed="true">
+    <Position X="5.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAACABgAAACAA=</HashCode>
+      <FileName>UnlManagers\PositionsOptimizer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Infra.Bus;
 using TNS.API.ApiDataObjects;
 
-namespace TNS.RoboTrader
+namespace RazboTrader
 {
     class UIMessageHandler : SmartBaseLogic
     {

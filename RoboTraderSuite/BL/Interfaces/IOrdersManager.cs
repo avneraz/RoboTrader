@@ -16,8 +16,8 @@ namespace TNS.BL.Interfaces
         /// <summary>
         /// The method used by the OptionNegotiator when the order task accomplished.
         /// </summary>
-        void SendOrderTaskAccomplished(string orderId);
+        void SendOrderTaskAccomplished(string orderId, OrderStatus orderStatus);
 
-        //event Action<OrderStatusData> OrderStatusDataUpdated;
+        event Action<OrderStatus, string> OrderTradingNegotioationWasTerminated;
     }
 }

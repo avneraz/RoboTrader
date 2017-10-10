@@ -70,6 +70,7 @@ namespace TNS.Controls
                     grdPositionData.InvokeIfRequired(() =>
                     {
                         optionsPositionDataBindingSource.ResetBindings(false);
+                        grdPositionData.Refresh();
                             //grdPositionData.Height = 208 + (gridView1.RowHeight + 1) * (optionsPositionDataBindingSource.Count);
 
                     });
