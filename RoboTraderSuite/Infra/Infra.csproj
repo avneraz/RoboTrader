@@ -96,6 +96,12 @@
     <Compile Include="GeneralTimer.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Global\SavedParametersData.cs" />
+    <Compile Include="PopUpMessages\LoadingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PopUpMessages\LoadingControl.Designer.cs">
+      <DependentUpon>LoadingControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="PopUpMessages\PopupMessageForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,6 +122,9 @@
     <EmbeddedResource Include="Custom\FloatingForm.resx">
       <DependentUpon>FloatingForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PopUpMessages\LoadingControl.resx">
+      <DependentUpon>LoadingControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PopUpMessages\PopupMessageForm.resx">
       <DependentUpon>PopupMessageForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -133,6 +142,7 @@
   <ItemGroup>
     <Content Include="Resources\GlassPingSound.wav" />
     <None Include="Resources\Ribbon_Exit_16x16.png" />
+    <None Include="Resources\InternetSlowdown_Day.gif" />
     <Content Include="Resources\SIREN-247265934.wav" />
   </ItemGroup>
   <ItemGroup />

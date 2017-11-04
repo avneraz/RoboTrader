@@ -62,6 +62,7 @@
     <Compile Include="Interfaces\IOptionsManager.cs" />
     <Compile Include="Interfaces\IOrdersManager.cs" />
     <Compile Include="Interfaces\IPositionsDataBuilder.cs" />
+    <Compile Include="Interfaces\ISubscibeMessage.cs" />
     <Compile Include="Interfaces\ITradingManager.cs" />
     <Compile Include="Interfaces\IUnlBaseMemberManager.cs" />
     <Compile Include="ManagedSecuritiesManager.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="UnlManagers\TradingManager.cs" />
     <Compile Include="UnlManagers\UNLManager.cs" />
     <Compile Include="UnlManagers\UnlMemberBaseManager.cs" />
+    <Compile Include="UnlManagers\WhatIfOrderBroker.cs" />
     <Compile Include="UNLTradingOptimizer.cs" />
   </ItemGroup>
   <ItemGroup>

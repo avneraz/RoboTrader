@@ -86,8 +86,8 @@
             this.colUnlAsk = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colUnlChange = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colUnlOpen = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colLastUpdate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colShorts = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colMargin = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colTradingState = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colDeltaTotal2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colGammaTotal2 = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -104,7 +104,7 @@
             this.colLastDayPnL = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colDailyPnL = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colMaxAbsoluteDelta = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colMargin = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colLastUpdate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
             this.securityDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.barDockControl1 = new DevExpress.XtraBars.BarDockControl();
@@ -132,6 +132,11 @@
             this.iUNLMargin = new DevExpress.XtraBars.BarButtonItem();
             this.iCloseUNLPositions = new DevExpress.XtraBars.BarButtonItem();
             this.iUNLOptionPicker = new DevExpress.XtraBars.BarButtonItem();
+            this.iSellMateCouple = new DevExpress.XtraBars.BarButtonItem();
+            this.iOptimizePosition = new DevExpress.XtraBars.BarButtonItem();
+            this.iOptimizePartlyPosition = new DevExpress.XtraBars.BarButtonItem();
+            this.iEditSecurities = new DevExpress.XtraBars.BarButtonItem();
+            this.iWhatIf = new DevExpress.XtraBars.BarButtonItem();
             this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
             this.popupMenuUNL = new DevExpress.XtraBars.PopupMenu(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.grdPositionData)).BeginInit();
@@ -158,7 +163,7 @@
             this.grdPositionData.MainView = this.grdViewPositionData;
             this.grdPositionData.Name = "grdPositionData";
             this.grdPositionData.Padding = new System.Windows.Forms.Padding(10);
-            this.grdPositionData.Size = new System.Drawing.Size(1231, 518);
+            this.grdPositionData.Size = new System.Drawing.Size(1383, 408);
             this.grdPositionData.TabIndex = 1;
             this.grdPositionData.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grdViewPositionData});
@@ -322,7 +327,7 @@
             this.colCalculatedOptionPrice.FieldName = "CalculatedOptionPrice";
             this.colCalculatedOptionPrice.Name = "colCalculatedOptionPrice";
             this.colCalculatedOptionPrice.Visible = true;
-            this.colCalculatedOptionPrice.VisibleIndex = 13;
+            this.colCalculatedOptionPrice.VisibleIndex = 14;
             this.colCalculatedOptionPrice.Width = 70;
             // 
             // colAverageCost
@@ -437,7 +442,7 @@
             this.colOptionDelta.MaxWidth = 70;
             this.colOptionDelta.Name = "colOptionDelta";
             this.colOptionDelta.Visible = true;
-            this.colOptionDelta.VisibleIndex = 8;
+            this.colOptionDelta.VisibleIndex = 9;
             this.colOptionDelta.Width = 30;
             // 
             // colContract_ExpiryDate
@@ -477,7 +482,7 @@
             this.colDeltaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "DeltaTotal", "{0:#,##0}")});
             this.colDeltaTotal.Visible = true;
-            this.colDeltaTotal.VisibleIndex = 17;
+            this.colDeltaTotal.VisibleIndex = 18;
             this.colDeltaTotal.Width = 45;
             // 
             // colTotalCost
@@ -500,7 +505,7 @@
             this.colTotalCost.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalCost", "{0:#,##0}")});
             this.colTotalCost.Visible = true;
-            this.colTotalCost.VisibleIndex = 9;
+            this.colTotalCost.VisibleIndex = 10;
             this.colTotalCost.Width = 70;
             // 
             // colLastPrice
@@ -517,7 +522,7 @@
             this.colLastPrice.MinWidth = 50;
             this.colLastPrice.Name = "colLastPrice";
             this.colLastPrice.Visible = true;
-            this.colLastPrice.VisibleIndex = 16;
+            this.colLastPrice.VisibleIndex = 17;
             this.colLastPrice.Width = 50;
             // 
             // colMarketValue
@@ -540,7 +545,7 @@
             this.colMarketValue.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "MarketValue", "{0:#,##0}")});
             this.colMarketValue.Visible = true;
-            this.colMarketValue.VisibleIndex = 10;
+            this.colMarketValue.VisibleIndex = 11;
             this.colMarketValue.Width = 70;
             // 
             // colPNL
@@ -563,7 +568,7 @@
             this.colPNL.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "PnL", "{0:#,##0}")});
             this.colPNL.Visible = true;
-            this.colPNL.VisibleIndex = 11;
+            this.colPNL.VisibleIndex = 12;
             this.colPNL.Width = 70;
             // 
             // colGammaTotal
@@ -590,7 +595,7 @@
             this.colGammaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "GammaTotal", "{0:#,##0}")});
             this.colGammaTotal.Visible = true;
-            this.colGammaTotal.VisibleIndex = 18;
+            this.colGammaTotal.VisibleIndex = 19;
             this.colGammaTotal.Width = 45;
             // 
             // colOptionData_ModelPrice
@@ -609,7 +614,7 @@
             this.colOptionData_ModelPrice.MinWidth = 50;
             this.colOptionData_ModelPrice.Name = "colOptionData_ModelPrice";
             this.colOptionData_ModelPrice.Visible = true;
-            this.colOptionData_ModelPrice.VisibleIndex = 15;
+            this.colOptionData_ModelPrice.VisibleIndex = 16;
             this.colOptionData_ModelPrice.Width = 50;
             // 
             // colOptionData_UnderlinePrice
@@ -642,7 +647,7 @@
             this.colThetaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ThetaTotal", "{0:#,##0}")});
             this.colThetaTotal.Visible = true;
-            this.colThetaTotal.VisibleIndex = 19;
+            this.colThetaTotal.VisibleIndex = 20;
             this.colThetaTotal.Width = 45;
             // 
             // colVegaTotal
@@ -670,7 +675,7 @@
             this.colVegaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "VegaTotal", "{0:#,##0}")});
             this.colVegaTotal.Visible = true;
-            this.colVegaTotal.VisibleIndex = 20;
+            this.colVegaTotal.VisibleIndex = 21;
             this.colVegaTotal.Width = 48;
             // 
             // colOptionData_Gamma
@@ -693,7 +698,7 @@
             this.colOptionData_Gamma.MinWidth = 45;
             this.colOptionData_Gamma.Name = "colOptionData_Gamma";
             this.colOptionData_Gamma.Visible = true;
-            this.colOptionData_Gamma.VisibleIndex = 21;
+            this.colOptionData_Gamma.VisibleIndex = 22;
             this.colOptionData_Gamma.Width = 70;
             // 
             // colOptionData_ImpliedVolatility
@@ -716,7 +721,7 @@
             this.colOptionData_ImpliedVolatility.MinWidth = 50;
             this.colOptionData_ImpliedVolatility.Name = "colOptionData_ImpliedVolatility";
             this.colOptionData_ImpliedVolatility.Visible = true;
-            this.colOptionData_ImpliedVolatility.VisibleIndex = 7;
+            this.colOptionData_ImpliedVolatility.VisibleIndex = 8;
             this.colOptionData_ImpliedVolatility.Width = 51;
             // 
             // colContract_Symbol
@@ -735,7 +740,7 @@
             this.colAvgPrice.UnboundExpression = "[TotalCostUSD] / [Position]";
             this.colAvgPrice.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
             this.colAvgPrice.Visible = true;
-            this.colAvgPrice.VisibleIndex = 12;
+            this.colAvgPrice.VisibleIndex = 13;
             this.colAvgPrice.Width = 70;
             // 
             // colChangeFromCost
@@ -752,7 +757,7 @@
             this.colChangeFromCost.UnboundExpression = "(100 * [CalculatedOptionPrice] - [AverageCost]) / [AverageCost]";
             this.colChangeFromCost.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
             this.colChangeFromCost.Visible = true;
-            this.colChangeFromCost.VisibleIndex = 14;
+            this.colChangeFromCost.VisibleIndex = 15;
             this.colChangeFromCost.Width = 64;
             // 
             // label1
@@ -820,9 +825,9 @@
             this.grpAccountSummary.Controls.Add(this.label3);
             this.grpAccountSummary.Controls.Add(this.label2);
             this.grpAccountSummary.Dock = System.Windows.Forms.DockStyle.Right;
-            this.grpAccountSummary.Location = new System.Drawing.Point(1022, 0);
+            this.grpAccountSummary.Location = new System.Drawing.Point(1174, 0);
             this.grpAccountSummary.Name = "grpAccountSummary";
-            this.grpAccountSummary.Size = new System.Drawing.Size(209, 189);
+            this.grpAccountSummary.Size = new System.Drawing.Size(209, 299);
             this.grpAccountSummary.TabIndex = 4;
             this.grpAccountSummary.TabStop = false;
             this.grpAccountSummary.Text = "Account Summary";
@@ -906,11 +911,10 @@
             this.grdUnLTradingData.Location = new System.Drawing.Point(0, 0);
             this.grdUnLTradingData.MainView = this.gridViewUnLTradingData;
             this.grdUnLTradingData.Name = "grdUnLTradingData";
-            this.grdUnLTradingData.Size = new System.Drawing.Size(1022, 189);
+            this.grdUnLTradingData.Size = new System.Drawing.Size(1174, 299);
             this.grdUnLTradingData.TabIndex = 5;
             this.grdUnLTradingData.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridViewUnLTradingData});
-            this.grdUnLTradingData.Click += new System.EventHandler(this.grdUnLTradingData_Click);
             // 
             // unlTradingDataBindingSource
             // 
@@ -927,8 +931,8 @@
             this.colUnlAsk,
             this.colUnlChange,
             this.colUnlOpen,
-            this.colLastUpdate,
             this.colShorts,
+            this.colMargin,
             this.colTradingState,
             this.colDeltaTotal2,
             this.colGammaTotal2,
@@ -945,7 +949,7 @@
             this.colLastDayPnL,
             this.colDailyPnL,
             this.colMaxAbsoluteDelta,
-            this.colMargin});
+            this.colLastUpdate});
             this.gridViewUnLTradingData.GridControl = this.grdUnLTradingData;
             this.gridViewUnLTradingData.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "MarketValue", this.colThetaTotal2, "(Market: SUM={0:#,##0})"),
@@ -974,7 +978,7 @@
             this.colSymbol.Name = "colSymbol";
             this.colSymbol.Visible = true;
             this.colSymbol.VisibleIndex = 0;
-            this.colSymbol.Width = 80;
+            this.colSymbol.Width = 74;
             // 
             // colUnlBid
             // 
@@ -982,8 +986,8 @@
             this.colUnlBid.FieldName = "UnlBid";
             this.colUnlBid.Name = "colUnlBid";
             this.colUnlBid.Visible = true;
-            this.colUnlBid.VisibleIndex = 1;
-            this.colUnlBid.Width = 50;
+            this.colUnlBid.VisibleIndex = 3;
+            this.colUnlBid.Width = 43;
             // 
             // colUnlAsk
             // 
@@ -991,8 +995,8 @@
             this.colUnlAsk.FieldName = "UnlAsk";
             this.colUnlAsk.Name = "colUnlAsk";
             this.colUnlAsk.Visible = true;
-            this.colUnlAsk.VisibleIndex = 2;
-            this.colUnlAsk.Width = 50;
+            this.colUnlAsk.VisibleIndex = 4;
+            this.colUnlAsk.Width = 43;
             // 
             // colUnlChange
             // 
@@ -1002,8 +1006,8 @@
             this.colUnlChange.FieldName = "UnlChange";
             this.colUnlChange.Name = "colUnlChange";
             this.colUnlChange.Visible = true;
-            this.colUnlChange.VisibleIndex = 5;
-            this.colUnlChange.Width = 48;
+            this.colUnlChange.VisibleIndex = 2;
+            this.colUnlChange.Width = 50;
             // 
             // colUnlOpen
             // 
@@ -1013,18 +1017,8 @@
             this.colUnlOpen.FieldName = "UnlBasePrice";
             this.colUnlOpen.Name = "colUnlOpen";
             this.colUnlOpen.Visible = true;
-            this.colUnlOpen.VisibleIndex = 3;
-            this.colUnlOpen.Width = 66;
-            // 
-            // colLastUpdate
-            // 
-            this.colLastUpdate.DisplayFormat.FormatString = "G";
-            this.colLastUpdate.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
-            this.colLastUpdate.FieldName = "LastUpdate";
-            this.colLastUpdate.Name = "colLastUpdate";
-            this.colLastUpdate.Visible = true;
-            this.colLastUpdate.VisibleIndex = 22;
-            this.colLastUpdate.Width = 121;
+            this.colUnlOpen.VisibleIndex = 5;
+            this.colUnlOpen.Width = 56;
             // 
             // colShorts
             // 
@@ -1034,8 +1028,21 @@
             this.colShorts.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Shorts", "{0:#,##0}")});
             this.colShorts.Visible = true;
-            this.colShorts.VisibleIndex = 7;
-            this.colShorts.Width = 48;
+            this.colShorts.VisibleIndex = 9;
+            this.colShorts.Width = 38;
+            // 
+            // colMargin
+            // 
+            this.colMargin.Caption = "Margin";
+            this.colMargin.DisplayFormat.FormatString = "#,##0";
+            this.colMargin.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colMargin.FieldName = "Margin";
+            this.colMargin.Name = "colMargin";
+            this.colMargin.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Margin", "{0:#,##0}")});
+            this.colMargin.Visible = true;
+            this.colMargin.VisibleIndex = 10;
+            this.colMargin.Width = 23;
             // 
             // colTradingState
             // 
@@ -1043,8 +1050,8 @@
             this.colTradingState.FieldName = "TradingState";
             this.colTradingState.Name = "colTradingState";
             this.colTradingState.Visible = true;
-            this.colTradingState.VisibleIndex = 1;
-            this.colTradingState.Width = 73;
+            this.colTradingState.VisibleIndex = 6;
+            this.colTradingState.Width = 63;
             // 
             // colDeltaTotal2
             // 
@@ -1058,8 +1065,8 @@
             this.colDeltaTotal2.FieldName = "DeltaTotal";
             this.colDeltaTotal2.Name = "colDeltaTotal2";
             this.colDeltaTotal2.Visible = true;
-            this.colDeltaTotal2.VisibleIndex = 10;
-            this.colDeltaTotal2.Width = 36;
+            this.colDeltaTotal2.VisibleIndex = 11;
+            this.colDeltaTotal2.Width = 27;
             // 
             // colGammaTotal2
             // 
@@ -1073,8 +1080,8 @@
             this.colGammaTotal2.FieldName = "GammaTotal";
             this.colGammaTotal2.Name = "colGammaTotal2";
             this.colGammaTotal2.Visible = true;
-            this.colGammaTotal2.VisibleIndex = 11;
-            this.colGammaTotal2.Width = 31;
+            this.colGammaTotal2.VisibleIndex = 12;
+            this.colGammaTotal2.Width = 23;
             // 
             // colThetaTotal2
             // 
@@ -1090,8 +1097,8 @@
             this.colThetaTotal2.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ThetaTotal", "{0:#,##0}")});
             this.colThetaTotal2.Visible = true;
-            this.colThetaTotal2.VisibleIndex = 12;
-            this.colThetaTotal2.Width = 31;
+            this.colThetaTotal2.VisibleIndex = 13;
+            this.colThetaTotal2.Width = 23;
             // 
             // colVegaTotal2
             // 
@@ -1107,12 +1114,12 @@
             this.colVegaTotal2.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "VegaTotal", "{0:#,##0}")});
             this.colVegaTotal2.Visible = true;
-            this.colVegaTotal2.VisibleIndex = 13;
-            this.colVegaTotal2.Width = 31;
+            this.colVegaTotal2.VisibleIndex = 14;
+            this.colVegaTotal2.Width = 23;
             // 
             // colMarginTotal
             // 
-            this.colMarginTotal.Caption = "Margin Max ";
+            this.colMarginTotal.Caption = "Max  Margin ";
             this.colMarginTotal.DisplayFormat.FormatString = "#,##0";
             this.colMarginTotal.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colMarginTotal.FieldName = "MaxAllowedMargin";
@@ -1120,8 +1127,8 @@
             this.colMarginTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "MaxAllowedMargin", "{0:#,##0}")});
             this.colMarginTotal.Visible = true;
-            this.colMarginTotal.VisibleIndex = 6;
-            this.colMarginTotal.Width = 47;
+            this.colMarginTotal.VisibleIndex = 7;
+            this.colMarginTotal.Width = 60;
             // 
             // colIVWeightedAvg
             // 
@@ -1131,8 +1138,8 @@
             this.colIVWeightedAvg.FieldName = "IVWeightedAvg";
             this.colIVWeightedAvg.Name = "colIVWeightedAvg";
             this.colIVWeightedAvg.Visible = true;
-            this.colIVWeightedAvg.VisibleIndex = 14;
-            this.colIVWeightedAvg.Width = 34;
+            this.colIVWeightedAvg.VisibleIndex = 15;
+            this.colIVWeightedAvg.Width = 26;
             // 
             // colVIX
             // 
@@ -1141,8 +1148,8 @@
             this.colVIX.FieldName = "VIX";
             this.colVIX.Name = "colVIX";
             this.colVIX.Visible = true;
-            this.colVIX.VisibleIndex = 15;
-            this.colVIX.Width = 31;
+            this.colVIX.VisibleIndex = 16;
+            this.colVIX.Width = 23;
             // 
             // colUnderlinePrice
             // 
@@ -1152,8 +1159,8 @@
             this.colUnderlinePrice.FieldName = "UnderlinePrice";
             this.colUnderlinePrice.Name = "colUnderlinePrice";
             this.colUnderlinePrice.Visible = true;
-            this.colUnderlinePrice.VisibleIndex = 4;
-            this.colUnderlinePrice.Width = 31;
+            this.colUnderlinePrice.VisibleIndex = 1;
+            this.colUnderlinePrice.Width = 46;
             // 
             // gridColumn5
             // 
@@ -1169,8 +1176,8 @@
             this.gridColumn5.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "MarketValue", "{0:#,##0}")});
             this.gridColumn5.Visible = true;
-            this.gridColumn5.VisibleIndex = 16;
-            this.gridColumn5.Width = 31;
+            this.gridColumn5.VisibleIndex = 17;
+            this.gridColumn5.Width = 23;
             // 
             // colCostTotal
             // 
@@ -1186,8 +1193,8 @@
             this.colCostTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "CostTotal", "{0:#,##0}")});
             this.colCostTotal.Visible = true;
-            this.colCostTotal.VisibleIndex = 17;
-            this.colCostTotal.Width = 31;
+            this.colCostTotal.VisibleIndex = 18;
+            this.colCostTotal.Width = 23;
             // 
             // colPnLTotal
             // 
@@ -1204,8 +1211,8 @@
             this.colPnLTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "PnLTotal", "{0:#,##0}")});
             this.colPnLTotal.Visible = true;
-            this.colPnLTotal.VisibleIndex = 18;
-            this.colPnLTotal.Width = 31;
+            this.colPnLTotal.VisibleIndex = 19;
+            this.colPnLTotal.Width = 23;
             // 
             // colCommisionTotal
             // 
@@ -1215,8 +1222,8 @@
             this.colCommisionTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "CommisionTotal", "{0:#,##0}")});
             this.colCommisionTotal.Visible = true;
-            this.colCommisionTotal.VisibleIndex = 19;
-            this.colCommisionTotal.Width = 40;
+            this.colCommisionTotal.VisibleIndex = 20;
+            this.colCommisionTotal.Width = 31;
             // 
             // colLastDayPnL
             // 
@@ -1228,8 +1235,8 @@
             this.colLastDayPnL.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "LastDayPnL", "{0:#,##0}")});
             this.colLastDayPnL.Visible = true;
-            this.colLastDayPnL.VisibleIndex = 20;
-            this.colLastDayPnL.Width = 29;
+            this.colLastDayPnL.VisibleIndex = 21;
+            this.colLastDayPnL.Width = 22;
             // 
             // colDailyPnL
             // 
@@ -1242,8 +1249,8 @@
             this.colDailyPnL.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "DailyPnL", "{0:#,##0}")});
             this.colDailyPnL.Visible = true;
-            this.colDailyPnL.VisibleIndex = 21;
-            this.colDailyPnL.Width = 37;
+            this.colDailyPnL.VisibleIndex = 22;
+            this.colDailyPnL.Width = 28;
             // 
             // colMaxAbsoluteDelta
             // 
@@ -1254,21 +1261,18 @@
             this.colMaxAbsoluteDelta.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "MaxAbsoluteDelta", "{0:#,##0}")});
             this.colMaxAbsoluteDelta.Visible = true;
-            this.colMaxAbsoluteDelta.VisibleIndex = 9;
-            this.colMaxAbsoluteDelta.Width = 39;
+            this.colMaxAbsoluteDelta.VisibleIndex = 8;
+            this.colMaxAbsoluteDelta.Width = 30;
             // 
-            // colMargin
+            // colLastUpdate
             // 
-            this.colMargin.Caption = "Margin";
-            this.colMargin.DisplayFormat.FormatString = "#,##0";
-            this.colMargin.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colMargin.FieldName = "Margin";
-            this.colMargin.Name = "colMargin";
-            this.colMargin.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
-            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Margin", "{0:#,##0}")});
-            this.colMargin.Visible = true;
-            this.colMargin.VisibleIndex = 8;
-            this.colMargin.Width = 31;
+            this.colLastUpdate.DisplayFormat.FormatString = "G";
+            this.colLastUpdate.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.colLastUpdate.FieldName = "LastUpdate";
+            this.colLastUpdate.Name = "colLastUpdate";
+            this.colLastUpdate.Visible = true;
+            this.colLastUpdate.VisibleIndex = 23;
+            this.colLastUpdate.Width = 177;
             // 
             // splitContainerControl1
             // 
@@ -1281,8 +1285,8 @@
             this.splitContainerControl1.Panel1.Text = "Panel1";
             this.splitContainerControl1.Panel2.Controls.Add(this.grdPositionData);
             this.splitContainerControl1.Panel2.Text = "Panel2";
-            this.splitContainerControl1.Size = new System.Drawing.Size(1231, 712);
-            this.splitContainerControl1.SplitterPosition = 189;
+            this.splitContainerControl1.Size = new System.Drawing.Size(1383, 712);
+            this.splitContainerControl1.SplitterPosition = 299;
             this.splitContainerControl1.TabIndex = 6;
             this.splitContainerControl1.Text = "splitContainerControl1";
             // 
@@ -1388,8 +1392,13 @@
             this.iMargin,
             this.iUNLMargin,
             this.iCloseUNLPositions,
-            this.iUNLOptionPicker});
-            this.barManager1.MaxItemId = 13;
+            this.iUNLOptionPicker,
+            this.iSellMateCouple,
+            this.iOptimizePosition,
+            this.iOptimizePartlyPosition,
+            this.iEditSecurities,
+            this.iWhatIf});
+            this.barManager1.MaxItemId = 18;
             this.barManager1.StatusBar = this.bar3;
             // 
             // bar1
@@ -1420,7 +1429,7 @@
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
             this.barDockControlTop.Manager = this.barManager1;
-            this.barDockControlTop.Size = new System.Drawing.Size(1231, 0);
+            this.barDockControlTop.Size = new System.Drawing.Size(1383, 0);
             // 
             // barDockControl8
             // 
@@ -1428,7 +1437,7 @@
             this.barDockControl8.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.barDockControl8.Location = new System.Drawing.Point(0, 712);
             this.barDockControl8.Manager = this.barManager1;
-            this.barDockControl8.Size = new System.Drawing.Size(1231, 23);
+            this.barDockControl8.Size = new System.Drawing.Size(1383, 23);
             // 
             // barDockControl9
             // 
@@ -1442,7 +1451,7 @@
             // 
             this.barDockControl10.CausesValidation = false;
             this.barDockControl10.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControl10.Location = new System.Drawing.Point(1231, 0);
+            this.barDockControl10.Location = new System.Drawing.Point(1383, 0);
             this.barDockControl10.Manager = this.barManager1;
             this.barDockControl10.Size = new System.Drawing.Size(0, 712);
             // 
@@ -1510,6 +1519,46 @@
             this.iUNLOptionPicker.Name = "iUNLOptionPicker";
             this.iUNLOptionPicker.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iUNLOptionPicker_ItemClick);
             // 
+            // iSellMateCouple
+            // 
+            this.iSellMateCouple.Caption = "Sell Mate Couple";
+            this.iSellMateCouple.Id = 13;
+            this.iSellMateCouple.ImageOptions.Image = global::TNS.Controls.Properties.Resources.Basket_Add;
+            this.iSellMateCouple.Name = "iSellMateCouple";
+            this.iSellMateCouple.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.OpenSelector_ItemClick);
+            // 
+            // iOptimizePosition
+            // 
+            this.iOptimizePosition.Caption = "Optimize Position";
+            this.iOptimizePosition.Id = 14;
+            this.iOptimizePosition.ImageOptions.Image = global::TNS.Controls.Properties.Resources.Equipment;
+            this.iOptimizePosition.Name = "iOptimizePosition";
+            this.iOptimizePosition.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.OpenSelector_ItemClick);
+            // 
+            // iOptimizePartlyPosition
+            // 
+            this.iOptimizePartlyPosition.Caption = "Optimize Partly Position";
+            this.iOptimizePartlyPosition.Id = 15;
+            this.iOptimizePartlyPosition.ImageOptions.Image = global::TNS.Controls.Properties.Resources.bundle_24x24x8b;
+            this.iOptimizePartlyPosition.Name = "iOptimizePartlyPosition";
+            this.iOptimizePartlyPosition.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.OpenSelector_ItemClick);
+            // 
+            // iEditSecurities
+            // 
+            this.iEditSecurities.Caption = "Securities...";
+            this.iEditSecurities.Id = 16;
+            this.iEditSecurities.ImageOptions.Image = global::TNS.Controls.Properties.Resources.Table;
+            this.iEditSecurities.Name = "iEditSecurities";
+            this.iEditSecurities.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iEditSecurities_ItemClick);
+            // 
+            // iWhatIf
+            // 
+            this.iWhatIf.Caption = "What If (Buy)";
+            this.iWhatIf.Id = 17;
+            this.iWhatIf.ImageOptions.Image = global::TNS.Controls.Properties.Resources.Diagram;
+            this.iWhatIf.Name = "iWhatIf";
+            this.iWhatIf.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iWhatIf_ItemClick);
+            // 
             // popupMenu1
             // 
             this.popupMenu1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
@@ -1517,7 +1566,8 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.iBuyOption),
             new DevExpress.XtraBars.LinkPersistInfo(this.iOptionPicker),
             new DevExpress.XtraBars.LinkPersistInfo(this.iShowUNLOption),
-            new DevExpress.XtraBars.LinkPersistInfo(this.iMargin)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.iMargin),
+            new DevExpress.XtraBars.LinkPersistInfo(this.iWhatIf)});
             this.popupMenu1.Manager = this.barManager1;
             this.popupMenu1.Name = "popupMenu1";
             // 
@@ -1526,7 +1576,11 @@
             this.popupMenuUNL.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.iUNLMargin),
             new DevExpress.XtraBars.LinkPersistInfo(this.iCloseUNLPositions),
-            new DevExpress.XtraBars.LinkPersistInfo(this.iUNLOptionPicker)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.iUNLOptionPicker),
+            new DevExpress.XtraBars.LinkPersistInfo(this.iSellMateCouple),
+            new DevExpress.XtraBars.LinkPersistInfo(this.iOptimizePosition),
+            new DevExpress.XtraBars.LinkPersistInfo(this.iOptimizePartlyPosition),
+            new DevExpress.XtraBars.LinkPersistInfo(this.iEditSecurities)});
             this.popupMenuUNL.Manager = this.barManager1;
             this.popupMenuUNL.Name = "popupMenuUNL";
             // 
@@ -1541,7 +1595,8 @@
             this.Controls.Add(this.barDockControl8);
             this.Controls.Add(this.barDockControlTop);
             this.Name = "PositionsView";
-            this.Size = new System.Drawing.Size(1231, 735);
+            this.Size = new System.Drawing.Size(1383, 735);
+            this.Load += new System.EventHandler(this.PositionsView_Load);
             this.Resize += new System.EventHandler(this.PositionsView_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.grdPositionData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.optionsPositionDataBindingSource)).EndInit();
@@ -1670,5 +1725,10 @@
         private DevExpress.XtraBars.BarButtonItem iCloseUNLPositions;
         private DevExpress.XtraBars.PopupMenu popupMenuUNL;
         private DevExpress.XtraBars.BarButtonItem iUNLOptionPicker;
+        private DevExpress.XtraBars.BarButtonItem iSellMateCouple;
+        private DevExpress.XtraBars.BarButtonItem iOptimizePosition;
+        private DevExpress.XtraBars.BarButtonItem iOptimizePartlyPosition;
+        private DevExpress.XtraBars.BarButtonItem iEditSecurities;
+        private DevExpress.XtraBars.BarButtonItem iWhatIf;
     }
 }

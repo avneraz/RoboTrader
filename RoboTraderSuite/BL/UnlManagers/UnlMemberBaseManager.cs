@@ -8,11 +8,11 @@ namespace TNS.BL.UnlManagers
 {
     public abstract class UnlMemberBaseManager : IUnlBaseMemberManager
     {
-        protected UnlMemberBaseManager(ITradingApi apiWrapper, ManagedSecurity managedSecurity, UNLManager unlManager)
+        protected UnlMemberBaseManager( ManagedSecurity managedSecurity, UNLManager unlManager)
         {
             ManagedSecurity = managedSecurity;
-            APIWrapper = apiWrapper;
             UNLManager = unlManager;
+            APIWrapper = unlManager.APIWrapper;
             ConnectionStatus = ConnectionStatus.Disconnected;
             Symbol = managedSecurity.Symbol;
             UnlTradingData = unlManager.UnlTradingData;
@@ -28,7 +28,7 @@ namespace TNS.BL.UnlManagers
 
 
         public virtual SecurityData MainSecurityData { get; protected set; }
-        public UnlTradingData UnlTradingData { get; set; }
+        public UnlTradingData UnlTradingData { get; }
         /// <summary>
         /// Used as flag for request option chain:
         /// </summary>

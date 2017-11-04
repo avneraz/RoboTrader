@@ -1,13 +1,13 @@
 ﻿namespace TNS.Controls
 {
-    partial class PositionClosingSelector
+    partial class SellMateCoupleSelector
     {
-        /// <summary>
+        /// <summary> 
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
+        /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -20,16 +20,17 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Component Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.lblHeader = new System.Windows.Forms.Label();
+            this.numCouplesToSell = new System.Windows.Forms.NumericUpDown();
+            this.lblCouplesCountLabel = new System.Windows.Forms.Label();
             this.grpUNLSummary = new System.Windows.Forms.GroupBox();
             this.lblTotalDeltaLabel = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -45,34 +46,46 @@
             this.lblSingleType = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.lblCouplesToCloseLabel = new System.Windows.Forms.Label();
-            this.lblMarginGain = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.btnSubmitCloseCouples = new System.Windows.Forms.Button();
-            this.gbxCloseCouples = new System.Windows.Forms.GroupBox();
-            this.numCouplesToClose = new System.Windows.Forms.NumericUpDown();
-            this.btnCloseAllPositions = new System.Windows.Forms.Button();
             this.comBoxExpiries = new System.Windows.Forms.ComboBox();
+            this.lblHeader = new System.Windows.Forms.Label();
             this.lblComboBoxLabel = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnSellMateCouples = new DevExpress.XtraEditors.SimpleButton();
+            this.btnOptimizePosition = new DevExpress.XtraEditors.SimpleButton();
+            this.btnOptimizePartlyPosition = new DevExpress.XtraEditors.SimpleButton();
+            ((System.ComponentModel.ISupportInitialize)(this.numCouplesToSell)).BeginInit();
             this.grpUNLSummary.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.marginDataBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.unlTradingDataBindingSource)).BeginInit();
-            this.gbxCloseCouples.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numCouplesToClose)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // lblHeader
+            // numCouplesToSell
             // 
-            this.lblHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(255)))), ((int)(((byte)(251)))));
-            this.lblHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblHeader.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
-            this.lblHeader.ForeColor = System.Drawing.Color.Blue;
-            this.lblHeader.Location = new System.Drawing.Point(0, 0);
-            this.lblHeader.Name = "lblHeader";
-            this.lblHeader.Size = new System.Drawing.Size(900, 28);
-            this.lblHeader.TabIndex = 2;
-            this.lblHeader.Text = "AMZN - 971.25 Margin = 112,205";
-            this.lblHeader.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.numCouplesToSell.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numCouplesToSell.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.numCouplesToSell.Location = new System.Drawing.Point(179, 28);
+            this.numCouplesToSell.Name = "numCouplesToSell";
+            this.numCouplesToSell.Size = new System.Drawing.Size(53, 20);
+            this.numCouplesToSell.TabIndex = 12;
+            this.numCouplesToSell.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // lblCouplesCountLabel
+            // 
+            this.lblCouplesCountLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblCouplesCountLabel.AutoSize = true;
+            this.lblCouplesCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCouplesCountLabel.ForeColor = System.Drawing.Color.Red;
+            this.lblCouplesCountLabel.Location = new System.Drawing.Point(36, 28);
+            this.lblCouplesCountLabel.Name = "lblCouplesCountLabel";
+            this.lblCouplesCountLabel.Size = new System.Drawing.Size(104, 15);
+            this.lblCouplesCountLabel.TabIndex = 11;
+            this.lblCouplesCountLabel.Text = "Couples Count:";
             // 
             // grpUNLSummary
             // 
@@ -88,11 +101,10 @@
             this.grpUNLSummary.Controls.Add(this.lblSingleType);
             this.grpUNLSummary.Controls.Add(this.label3);
             this.grpUNLSummary.Controls.Add(this.label5);
-            this.grpUNLSummary.Dock = System.Windows.Forms.DockStyle.Left;
-            this.grpUNLSummary.Location = new System.Drawing.Point(0, 28);
+            this.grpUNLSummary.Location = new System.Drawing.Point(3, 37);
             this.grpUNLSummary.Name = "grpUNLSummary";
-            this.grpUNLSummary.Size = new System.Drawing.Size(226, 300);
-            this.grpUNLSummary.TabIndex = 5;
+            this.grpUNLSummary.Size = new System.Drawing.Size(219, 163);
+            this.grpUNLSummary.TabIndex = 13;
             this.grpUNLSummary.TabStop = false;
             this.grpUNLSummary.Text = "UNL Summary";
             // 
@@ -248,108 +260,27 @@
             this.label5.TabIndex = 3;
             this.label5.Text = "Margin:";
             // 
-            // lblCouplesToCloseLabel
-            // 
-            this.lblCouplesToCloseLabel.AutoSize = true;
-            this.lblCouplesToCloseLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCouplesToCloseLabel.ForeColor = System.Drawing.Color.Red;
-            this.lblCouplesToCloseLabel.Location = new System.Drawing.Point(12, 28);
-            this.lblCouplesToCloseLabel.Name = "lblCouplesToCloseLabel";
-            this.lblCouplesToCloseLabel.Size = new System.Drawing.Size(119, 15);
-            this.lblCouplesToCloseLabel.TabIndex = 3;
-            this.lblCouplesToCloseLabel.Text = "Couples to Close:";
-            // 
-            // lblMarginGain
-            // 
-            this.lblMarginGain.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.lblMarginGain.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMarginGain.ForeColor = System.Drawing.Color.Red;
-            this.lblMarginGain.Location = new System.Drawing.Point(224, 81);
-            this.lblMarginGain.Name = "lblMarginGain";
-            this.lblMarginGain.Size = new System.Drawing.Size(61, 18);
-            this.lblMarginGain.TabIndex = 3;
-            this.lblMarginGain.Text = "50,000";
-            this.lblMarginGain.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.Red;
-            this.label9.Location = new System.Drawing.Point(132, 83);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(86, 15);
-            this.label9.TabIndex = 3;
-            this.label9.Text = "Margin Gain";
-            // 
-            // btnSubmitCloseCouples
-            // 
-            this.btnSubmitCloseCouples.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnSubmitCloseCouples.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnSubmitCloseCouples.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.btnSubmitCloseCouples.ForeColor = System.Drawing.Color.White;
-            this.btnSubmitCloseCouples.Location = new System.Drawing.Point(474, 83);
-            this.btnSubmitCloseCouples.Name = "btnSubmitCloseCouples";
-            this.btnSubmitCloseCouples.Size = new System.Drawing.Size(148, 23);
-            this.btnSubmitCloseCouples.TabIndex = 6;
-            this.btnSubmitCloseCouples.Text = "Submit";
-            this.btnSubmitCloseCouples.UseVisualStyleBackColor = false;
-            this.btnSubmitCloseCouples.Click += new System.EventHandler(this.btnSubmitCloseCouples_Click);
-            // 
-            // gbxCloseCouples
-            // 
-            this.gbxCloseCouples.Controls.Add(this.lblComboBoxLabel);
-            this.gbxCloseCouples.Controls.Add(this.numCouplesToClose);
-            this.gbxCloseCouples.Controls.Add(this.comBoxExpiries);
-            this.gbxCloseCouples.Controls.Add(this.btnSubmitCloseCouples);
-            this.gbxCloseCouples.Controls.Add(this.label9);
-            this.gbxCloseCouples.Controls.Add(this.lblCouplesToCloseLabel);
-            this.gbxCloseCouples.Controls.Add(this.lblMarginGain);
-            this.gbxCloseCouples.Font = new System.Drawing.Font("Tahoma", 11F);
-            this.gbxCloseCouples.ForeColor = System.Drawing.Color.Navy;
-            this.gbxCloseCouples.Location = new System.Drawing.Point(232, 37);
-            this.gbxCloseCouples.Name = "gbxCloseCouples";
-            this.gbxCloseCouples.Size = new System.Drawing.Size(642, 122);
-            this.gbxCloseCouples.TabIndex = 9;
-            this.gbxCloseCouples.TabStop = false;
-            this.gbxCloseCouples.Text = "Close Couples";
-            // 
-            // numCouplesToClose
-            // 
-            this.numCouplesToClose.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.numCouplesToClose.Location = new System.Drawing.Point(137, 23);
-            this.numCouplesToClose.Name = "numCouplesToClose";
-            this.numCouplesToClose.Size = new System.Drawing.Size(53, 25);
-            this.numCouplesToClose.TabIndex = 10;
-            this.numCouplesToClose.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numCouplesToClose.ValueChanged += new System.EventHandler(this.numCouplesToClose_ValueChanged);
-            // 
-            // btnCloseAllPositions
-            // 
-            this.btnCloseAllPositions.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnCloseAllPositions.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnCloseAllPositions.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.btnCloseAllPositions.ForeColor = System.Drawing.Color.White;
-            this.btnCloseAllPositions.Location = new System.Drawing.Point(706, 217);
-            this.btnCloseAllPositions.Name = "btnCloseAllPositions";
-            this.btnCloseAllPositions.Size = new System.Drawing.Size(148, 23);
-            this.btnCloseAllPositions.TabIndex = 6;
-            this.btnCloseAllPositions.Text = "Close All Positions";
-            this.btnCloseAllPositions.UseVisualStyleBackColor = false;
-            this.btnCloseAllPositions.Click += new System.EventHandler(this.btnCloseAllPositions_Click);
-            // 
             // comBoxExpiries
             // 
             this.comBoxExpiries.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.comBoxExpiries.FormattingEnabled = true;
-            this.comBoxExpiries.Location = new System.Drawing.Point(310, 21);
+            this.comBoxExpiries.Location = new System.Drawing.Point(157, 62);
             this.comBoxExpiries.Name = "comBoxExpiries";
-            this.comBoxExpiries.Size = new System.Drawing.Size(88, 26);
-            this.comBoxExpiries.TabIndex = 16;
+            this.comBoxExpiries.Size = new System.Drawing.Size(75, 21);
+            this.comBoxExpiries.TabIndex = 15;
+            // 
+            // lblHeader
+            // 
+            this.lblHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(255)))), ((int)(((byte)(251)))));
+            this.lblHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblHeader.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
+            this.lblHeader.ForeColor = System.Drawing.Color.Blue;
+            this.lblHeader.Location = new System.Drawing.Point(0, 0);
+            this.lblHeader.Name = "lblHeader";
+            this.lblHeader.Size = new System.Drawing.Size(596, 28);
+            this.lblHeader.TabIndex = 16;
+            this.lblHeader.Text = "AMZN - 971.25 Margin = 112,205";
+            this.lblHeader.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblComboBoxLabel
             // 
@@ -357,61 +288,161 @@
             this.lblComboBoxLabel.AutoSize = true;
             this.lblComboBoxLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblComboBoxLabel.ForeColor = System.Drawing.Color.Red;
-            this.lblComboBoxLabel.Location = new System.Drawing.Point(241, 27);
+            this.lblComboBoxLabel.Location = new System.Drawing.Point(36, 62);
             this.lblComboBoxLabel.Name = "lblComboBoxLabel";
             this.lblComboBoxLabel.Size = new System.Drawing.Size(63, 15);
-            this.lblComboBoxLabel.TabIndex = 17;
+            this.lblComboBoxLabel.TabIndex = 11;
             this.lblComboBoxLabel.Text = "Expiries:";
             // 
-            // PositionClosingSelector
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.comBoxExpiries);
+            this.groupBox1.Controls.Add(this.lblCouplesCountLabel);
+            this.groupBox1.Controls.Add(this.lblComboBoxLabel);
+            this.groupBox1.Controls.Add(this.numCouplesToSell);
+            this.groupBox1.Location = new System.Drawing.Point(334, 37);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(251, 163);
+            this.groupBox1.TabIndex = 17;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Activities";
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnCancel.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.btnCancel.ForeColor = System.Drawing.Color.White;
+            this.btnCancel.Location = new System.Drawing.Point(442, 304);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(124, 35);
+            this.btnCancel.TabIndex = 14;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnSellMateCouples
+            // 
+            this.btnSellMateCouples.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSellMateCouples.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.btnSellMateCouples.Appearance.BackColor2 = System.Drawing.Color.Red;
+            this.btnSellMateCouples.Appearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.btnSellMateCouples.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.btnSellMateCouples.Appearance.ForeColor = System.Drawing.Color.White;
+            this.btnSellMateCouples.Appearance.Options.UseBackColor = true;
+            this.btnSellMateCouples.Appearance.Options.UseBorderColor = true;
+            this.btnSellMateCouples.Appearance.Options.UseFont = true;
+            this.btnSellMateCouples.Appearance.Options.UseForeColor = true;
+            this.btnSellMateCouples.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.Flat;
+            this.btnSellMateCouples.Location = new System.Drawing.Point(290, 304);
+            this.btnSellMateCouples.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.Office2003;
+            this.btnSellMateCouples.Name = "btnSellMateCouples";
+            this.btnSellMateCouples.Size = new System.Drawing.Size(124, 35);
+            this.btnSellMateCouples.TabIndex = 18;
+            this.btnSellMateCouples.Text = "Sell Mate Couple";
+            this.btnSellMateCouples.ToolTip = "יוסף";
+            this.btnSellMateCouples.Click += new System.EventHandler(this.btnSubmitCloseCouples_Click);
+            // 
+            // btnOptimizePosition
+            // 
+            this.btnOptimizePosition.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOptimizePosition.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.btnOptimizePosition.Appearance.BackColor2 = System.Drawing.Color.Red;
+            this.btnOptimizePosition.Appearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.btnOptimizePosition.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.btnOptimizePosition.Appearance.ForeColor = System.Drawing.Color.White;
+            this.btnOptimizePosition.Appearance.Options.UseBackColor = true;
+            this.btnOptimizePosition.Appearance.Options.UseBorderColor = true;
+            this.btnOptimizePosition.Appearance.Options.UseFont = true;
+            this.btnOptimizePosition.Appearance.Options.UseForeColor = true;
+            this.btnOptimizePosition.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.Flat;
+            this.btnOptimizePosition.Location = new System.Drawing.Point(27, 225);
+            this.btnOptimizePosition.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.Office2003;
+            this.btnOptimizePosition.Name = "btnOptimizePosition";
+            this.btnOptimizePosition.Size = new System.Drawing.Size(124, 35);
+            this.btnOptimizePosition.TabIndex = 18;
+            this.btnOptimizePosition.Text = "Optimize Position";
+            this.btnOptimizePosition.ToolTip = "יוסף";
+            this.btnOptimizePosition.Click += new System.EventHandler(this.btnOptimizePosition_Click);
+            // 
+            // btnOptimizePartlyPosition
+            // 
+            this.btnOptimizePartlyPosition.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOptimizePartlyPosition.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.btnOptimizePartlyPosition.Appearance.BackColor2 = System.Drawing.Color.Red;
+            this.btnOptimizePartlyPosition.Appearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.btnOptimizePartlyPosition.Appearance.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.btnOptimizePartlyPosition.Appearance.ForeColor = System.Drawing.Color.White;
+            this.btnOptimizePartlyPosition.Appearance.Options.UseBackColor = true;
+            this.btnOptimizePartlyPosition.Appearance.Options.UseBorderColor = true;
+            this.btnOptimizePartlyPosition.Appearance.Options.UseFont = true;
+            this.btnOptimizePartlyPosition.Appearance.Options.UseForeColor = true;
+            this.btnOptimizePartlyPosition.Appearance.Options.UseTextOptions = true;
+            this.btnOptimizePartlyPosition.Appearance.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
+            this.btnOptimizePartlyPosition.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.Flat;
+            this.btnOptimizePartlyPosition.Location = new System.Drawing.Point(178, 225);
+            this.btnOptimizePartlyPosition.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.Office2003;
+            this.btnOptimizePartlyPosition.Name = "btnOptimizePartlyPosition";
+            this.btnOptimizePartlyPosition.Size = new System.Drawing.Size(124, 35);
+            this.btnOptimizePartlyPosition.TabIndex = 18;
+            this.btnOptimizePartlyPosition.Text = "Optimize Partly Position";
+            this.btnOptimizePartlyPosition.ToolTip = "יוסף";
+            this.btnOptimizePartlyPosition.Click += new System.EventHandler(this.btnOptimizePartlyPosition_Click);
+            // 
+            // SellMateCoupleSelector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
-            this.Controls.Add(this.gbxCloseCouples);
+            this.Controls.Add(this.btnOptimizePartlyPosition);
+            this.Controls.Add(this.btnOptimizePosition);
+            this.Controls.Add(this.btnSellMateCouples);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.grpUNLSummary);
-            this.Controls.Add(this.btnCloseAllPositions);
+            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.lblHeader);
-            this.Name = "PositionClosingSelector";
-            this.Size = new System.Drawing.Size(900, 328);
-            this.Load += new System.EventHandler(this.PositionClosingSelector_Load);
+            this.MinimumSize = new System.Drawing.Size(438, 168);
+            this.Name = "SellMateCoupleSelector";
+            this.Size = new System.Drawing.Size(596, 366);
+            this.Load += new System.EventHandler(this.SellMateCoupleSelector_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.numCouplesToSell)).EndInit();
             this.grpUNLSummary.ResumeLayout(false);
             this.grpUNLSummary.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.marginDataBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.unlTradingDataBindingSource)).EndInit();
-            this.gbxCloseCouples.ResumeLayout(false);
-            this.gbxCloseCouples.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numCouplesToClose)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label lblHeader;
+        private System.Windows.Forms.NumericUpDown numCouplesToSell;
+        private System.Windows.Forms.Label lblCouplesCountLabel;
+        private System.Windows.Forms.BindingSource marginDataBindingSource;
+        private System.Windows.Forms.BindingSource unlTradingDataBindingSource;
         private System.Windows.Forms.GroupBox grpUNLSummary;
+        private System.Windows.Forms.Label lblTotalDeltaLabel;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblSingleCount;
         private System.Windows.Forms.Label lblMateCoupleCount;
+        private System.Windows.Forms.Label lblTotalDelta;
         private System.Windows.Forms.Label lblMarginPerCouple;
         private System.Windows.Forms.Label lblMargin;
         private System.Windows.Forms.Label lblSingleType;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label lblTotalDeltaLabel;
-        private System.Windows.Forms.Label lblTotalDelta;
-        private System.Windows.Forms.Label lblCouplesToCloseLabel;
-        private System.Windows.Forms.Label lblMarginGain;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button btnSubmitCloseCouples;
-        private System.Windows.Forms.GroupBox gbxCloseCouples;
-        private System.Windows.Forms.NumericUpDown numCouplesToClose;
-        private System.Windows.Forms.BindingSource unlTradingDataBindingSource;
-        private System.Windows.Forms.BindingSource marginDataBindingSource;
-        private System.Windows.Forms.Button btnCloseAllPositions;
         private System.Windows.Forms.ComboBox comBoxExpiries;
+        private System.Windows.Forms.Label lblHeader;
         private System.Windows.Forms.Label lblComboBoxLabel;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnCancel;
+        private DevExpress.XtraEditors.SimpleButton btnSellMateCouples;
+        private DevExpress.XtraEditors.SimpleButton btnOptimizePosition;
+        private DevExpress.XtraEditors.SimpleButton btnOptimizePartlyPosition;
     }
 }

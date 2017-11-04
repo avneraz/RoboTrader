@@ -12,14 +12,15 @@ using TNS.BL.Interfaces;
 
 namespace TNS.BL.UnlManagers
 {
-    public class OptionsManager: UnlMemberBaseManager, IOptionsManager
+    public class OptionsManager : UnlMemberBaseManager, IOptionsManager
     {
 
-        public OptionsManager(ITradingApi apiWrapper, ManagedSecurity managedSecurity, UNLManager unlManager) : base(apiWrapper, managedSecurity, unlManager)
+        public OptionsManager(ManagedSecurity managedSecurity, UNLManager unlManager) : base(
+            managedSecurity, unlManager)
         {
             OptionDataDic = new Dictionary<string, OptionData>();
         }
-       
+
         private static readonly ILog Logger = LogManager.GetLogger(typeof(OptionsManager));
         //private static readonly ILog Logger = LogManager.GetLogger(typeof(UNLManager));
 
@@ -27,7 +28,7 @@ namespace TNS.BL.UnlManagers
 
         public Dictionary<string, OptionData> OptionDataDic { get; }
 
-       
+
 
         public OptionData GetOptionData(string optionKey)
         {
@@ -38,7 +39,7 @@ namespace TNS.BL.UnlManagers
         public override bool HandleMessage(IMessage message)
         {
             bool result = base.HandleMessage(message);
-            
+
             if ((RequestOptionChainDone == false) && (message.APIDataType == EapiDataTypes.SecurityData))
             {
                 //Request detail contract only on the first time:
@@ -47,51 +48,54 @@ namespace TNS.BL.UnlManagers
                     RequestOptionChainDone = true;
                     _optionToLoadParameters = new OptionToLoadParameters(MainSecurityData);
                     APIWrapper.RequestOptionChain(_optionToLoadParameters);
-                   
+
                 }
             }
             if (result)
                 return true;
             //Handle only OptionData
-            if (message.APIDataType != EapiDataTypes.OptionData) return false ;
+            if (message.APIDataType != EapiDataTypes.OptionData) return false;
 
-            var optionData = (OptionData)message;
-            if (Symbol == "AMZN")
-            {
-                double vega = -1111;
-                vega = optionData.Vega;
-            }
+            var optionData = (OptionData) message;
+            if (Symbol == "AMZN") { }//for testing
+            //if (Symbol == "AMZN")
+            //{
+            //    double vega = -1111;
+            //    vega = optionData.Vega;
+            //}
             if (OptionDataDic.ContainsKey(optionData.GetOptionKey()) == false)
             {
-               
+
                 OptionDataDic.Add(optionData.GetOptionKey(), optionData);
-                Logger.InfoFormat($"OptionManager({Symbol}), add OptionData: {optionData}). OptionDataDic.Contains {OptionDataDic.Count} members.");
-              
+                Logger.InfoFormat(
+                    $"OptionManager({Symbol}), add OptionData: {optionData}). OptionDataDic.Contains {OptionDataDic.Count} members.");
+
             }
             else
                 OptionDataDic[optionData.GetOptionKey()] = optionData;
 
-            
-            if ((OptionDataDic.Count > _lastoptionCount) && 
-                    (OptionDataDic.Count == _optionToLoadParameters.RequestOptionMarketDataCount))
-                    LogEvent();
+
+            if ((OptionDataDic.Count > _lastoptionCount) &&
+                (OptionDataDic.Count == _optionToLoadParameters.RequestOptionMarketDataCount))
+                LogEvent();
             Logger.Debug($"++++++ Option count = {OptionDataDic.Count} for {Symbol}");
-            switch (Symbol) //For test
-            {
-                case "AAPL":
-                    break;
-                case "AMZN":
-                    break;
-                case "FB":
-                    break;
-                case "MCD":
-                    break;
-            }
+            //switch (Symbol) //For test
+            //{
+            //    case "AAPL":
+            //        break;
+            //    case "AMZN":
+            //        break;
+            //    case "FB":
+            //        break;
+            //    case "MCD":
+            //        break;
+            //}
             return true;
 
         }
 
-        private int  _lastoptionCount;
+        private int _lastoptionCount;
+
         private void LogEvent()
         {
 
@@ -102,13 +106,13 @@ namespace TNS.BL.UnlManagers
             Debug.WriteLine(msg);
             Logger.Warn(msg);
         }
-       
+
         private Stopwatch StopwatchT { get; } = new Stopwatch();
 
-      
+
         private OptionToLoadParameters _optionToLoadParameters;
 
-      
+
         /// <summary>
         /// Loads the options chain of all active session of the active underlines.
         /// It send Request Contract details to load the option chain of the specified UNL.
@@ -119,7 +123,7 @@ namespace TNS.BL.UnlManagers
             StopwatchT.Start();
         }
 
-     
+
     }
 
     //internal class LoadSessionInfo

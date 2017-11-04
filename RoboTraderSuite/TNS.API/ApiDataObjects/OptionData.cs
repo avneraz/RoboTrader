@@ -24,6 +24,8 @@ namespace TNS.API.ApiDataObjects
 
         public double Delta { get; set; }
         public double DeltaAbsValue => Math.Abs(Delta);
+        //Get the differnce of the delta and ATM delta (50 is the ideal.)
+        public double DeltaOffsetFromATM => Math.Abs(DeltaAbsValue - 0.5);
         public double Gamma { get; set; }
 
         public double Vega { get; set; }

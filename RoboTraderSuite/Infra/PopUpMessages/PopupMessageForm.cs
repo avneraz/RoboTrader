@@ -17,18 +17,23 @@ namespace Infra.PopUpMessages
             InitializeComponent();
             _cancellationTokenSource = new CancellationTokenSource();
         }
+
+        private Form HostForm { get; set; }
         private readonly CancellationTokenSource _cancellationTokenSource;
         public static void ShowMessage(string msg, Color backGroundColor, Form hostForm, int popupTimeSec = 5, bool withSiren = false)
         {
             var pmForm = new PopupMessageForm();
             pmForm.SetPopupParameters(msg,backGroundColor);
-            if(hostForm != null)
-                pmForm.SetFormOnSameScreen(hostForm);
+            if (hostForm != null)
+                pmForm.HostForm = hostForm;
+                
             pmForm.Show();
             if (withSiren)
                 pmForm.PlaySiren();
             //GeneralTimer.GeneralTimerInstance.AddTask()
-            pmForm.ClosePopupMessageInSec(popupTimeSec);
+            if(popupTimeSec > 0)
+                pmForm.ClosePopupMessageInSec(popupTimeSec);
+           
         }
         
         internal async void ClosePopupMessageInSec(int popupTimeSec)
@@ -74,6 +79,7 @@ namespace Infra.PopUpMessages
         {
             _cancellationTokenSource?.Cancel();
             StopPlayer();
+            Close();
 
         }
 
@@ -81,6 +87,8 @@ namespace Infra.PopUpMessages
         private void PopupMessageForm_Load(object sender, EventArgs e)
         {
             _initializedTop = this.Top;
+            if(HostForm != null)
+                this.SetFormOnSameScreen(HostForm);
         }
         private System.Media.SoundPlayer _soundPlayer;
         public SoundPlayer SoundPlayer

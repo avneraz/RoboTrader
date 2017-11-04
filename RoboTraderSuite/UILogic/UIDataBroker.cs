@@ -59,11 +59,10 @@ namespace UILogic
                         PositionDataList.RemoveAt(index);
                     else
                         PositionDataList[index] = optionsPositionData;
-
-
-
                     break;
-               
+               case EapiDataTypes.ManagedSecurity:
+
+                   break;
                 case EapiDataTypes.UnlTradingData:
                     var unlTradingData = (UnlTradingData)message;
 

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
@@ -158,5 +160,14 @@ namespace Infra.Extensions
             return containerForm;
         }
 
+        public static void ShowControlInContainer(this Control control, Control container)
+        {
+            int top = container.Top + ( container.Height - control.Height ) /2;
+            int left = container.Left + (container.Width - control.Width) / 2;
+            control.Location = new Point(left, top);
+            container.Controls.Add(control);
+            control.BringToFront();
+            control.Visible = true;
+        }
     }
 }

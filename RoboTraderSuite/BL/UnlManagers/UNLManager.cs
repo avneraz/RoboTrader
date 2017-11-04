@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Infra;
 using Infra.Bus;
 using Infra.Enum;
 using Infra.Extensions;
@@ -16,7 +17,11 @@ namespace TNS.BL.UnlManagers
     public class UNLManager : SimpleBaseLogic
     {
         public event Action<TradingTimeEvent> SendTradingTimeEvent;
-
+        public event Action<UNLManager> PositionNeedToOptimized;
+        protected virtual void OnPositionNeedToOptimized()
+        {
+            PositionNeedToOptimized?.Invoke(this);
+        }
         public virtual void OnSendTradingTimeEvent(TradingTimeEvent tradingTimeEvent)
         {
             Action<TradingTimeEvent> handler = SendTradingTimeEvent;
@@ -36,7 +41,7 @@ namespace TNS.BL.UnlManagers
 
 
         #region Properties
-
+        public AccountSummaryData AccountSummaryData { get; set; }
         public SimpleBaseLogic Distributer { get; }
         public UnlTradingData UnlTradingData { get; set; }
         public bool IsConnected => ConnectionStatus == ConnectionStatus.Connected;
@@ -45,13 +50,43 @@ namespace TNS.BL.UnlManagers
         public SecurityData MainSecurityData { get; set; }
         public SecurityContract SecurityContract { get; set; }
         private List<IUnlBaseMemberManager> _memberManagersList;
-        private ITradingApi APIWrapper { get; }
+        public ITradingApi APIWrapper { get; }
         public ManagedSecurity ManagedSecurity { get; }
+        public bool IsSimulatorAccount => !AllConfigurations.AllConfigurationsObject.Application.MainAccount.Equals(AccountSummaryData.MainAccount);
         protected override string ThreadName => ManagedSecurity.Symbol + "_UNLManager_Work";
 
+        public Dictionary<EapiDataTypes, List<ISubscibeMessage>> SubscriberDic { get; set; }
+        private object _subscriberSync = new object();
         #endregion
 
         #region Methods
+        public void RegisterForMessage(ISubscibeMessage subsciber, EapiDataTypes messageType)
+        {
+            if(SubscriberDic == null)
+                SubscriberDic = new Dictionary<EapiDataTypes, List<ISubscibeMessage>>();
+
+            lock (_subscriberSync)
+            {
+                if (SubscriberDic.ContainsKey(messageType))
+                    SubscriberDic[messageType].Add(subsciber);
+                else
+                {
+                    var subsciberList = new List<ISubscibeMessage> { subsciber };
+                    SubscriberDic[messageType] = subsciberList;
+                } 
+            }
+        }
+
+        public void UnRegisterForMessage(ISubscibeMessage subsciber, EapiDataTypes messageType)
+        {
+            if (SubscriberDic == null) return;
+
+            lock (_subscriberSync)
+            {
+                if (SubscriberDic.ContainsKey(messageType) && SubscriberDic[messageType].Contains(subsciber))
+                    SubscriberDic[messageType].Remove(subsciber);
+            }
+        }
 
         public void CloseEntireShortPositions()
         {
@@ -61,26 +96,28 @@ namespace TNS.BL.UnlManagers
         {
             TradingManager.CloseShortPositions(expiry);
         }
-        internal string AddScheduledTaskOnUnl(TimeSpan span, Action task, bool reOccuring = false)
+
+        public string AddScheduledTaskOnUnl(TimeSpan span, Action task, bool reOccuring = false)
         {
             return AddScheduledTask(span, task, reOccuring);
         }
 
-        internal void RemoveScheduledTaskOnUnl(string uniqueIdentifier)
+        public void RemoveScheduledTaskOnUnl(string uniqueIdentifier)
         {
             RemoveScheduledTask(uniqueIdentifier);
         }
         protected override void HandleMessage(IMessage message)
         {
-            if (Symbol.Equals("MCD"))//For test
-            {
+            //if (Symbol.Equals("MCD"))//For test
+            //{
                 
-            }
+            //}
             switch (message.APIDataType)
             {
                 case EapiDataTypes.AccountSummaryData:
                     TradingManager.HandleMessage(message);
                     OrdersManager.HandleMessage(message);
+                    AccountSummaryData = message as AccountSummaryData;
                     break;
                 case EapiDataTypes.SecurityContract:
                     SecurityContract = (SecurityContract)message;
@@ -100,6 +137,8 @@ namespace TNS.BL.UnlManagers
                         UnlTradingData.UnlBid = securityData.BidPrice;
                         UnlTradingData.UnlBasePrice = securityData.BasePrice;
                         UnlTradingData.UnlChange = securityData.Change;
+                        UnlTradingData.UnlHighestPrice = securityData.HighestPrice;
+                        UnlTradingData.UnlLowestPrice = securityData.LowestPrice;
                         MainSecurityData = securityData;
                         SendMessageToAllComponents(message);
                         UnlTradingData.SetLastUpdate();
@@ -146,8 +185,24 @@ namespace TNS.BL.UnlManagers
                     
                     break;
             }
+            SendMessageToSubscribers(message);
         }
 
+        private void SendMessageToSubscribers(IMessage message)
+        {
+            if (SubscriberDic == null) return;
+            if (!SubscriberDic.ContainsKey(message.APIDataType))
+                return;
+
+            lock (_subscriberSync)
+            {
+                foreach (var subsciber in SubscriberDic[message.APIDataType])
+                {
+                    subsciber.HandleMessage(message);
+                } 
+            }
+
+        }
         private void SendMessageToAllComponents(IMessage message)
         {
             if (_memberManagersList == null)
@@ -176,18 +231,24 @@ namespace TNS.BL.UnlManagers
         {
             _memberManagersList = new List<IUnlBaseMemberManager>();
 
-            OptionsManager = new OptionsManager(APIWrapper, ManagedSecurity, this);
+            OptionsManager = new OptionsManager( ManagedSecurity, this);
             _memberManagersList.Add(OptionsManager);
 
-            PositionsDataBuilder = new PositionsDataBuilder(APIWrapper, ManagedSecurity, this);
+            PositionsDataBuilder = new PositionsDataBuilder( ManagedSecurity, this);
             _memberManagersList.Add(PositionsDataBuilder);
 
-            OrdersManager = new OrdersManager(APIWrapper, ManagedSecurity, this);
+            OrdersManager = new OrdersManager( ManagedSecurity, this);
             _memberManagersList.Add(OrdersManager);
 
-            TradingManager = new TradingManager(APIWrapper, ManagedSecurity, this);
+            TradingManager = new TradingManager( ManagedSecurity, this);
             _memberManagersList.Add(TradingManager);
             TradingManager.SendTradingTimeEvent += TradingManager_SendTradingTimeEvent;
+            TradingManager.PositionNeedToOptimized += TradingManagerOnPositionNeedToOptimized;
+        }
+
+        private void TradingManagerOnPositionNeedToOptimized()
+        {
+            OnPositionNeedToOptimized();
         }
 
         private void TradingManager_SendTradingTimeEvent(TradingTimeEvent tradingTimeEvent)
@@ -313,5 +374,7 @@ namespace TNS.BL.UnlManagers
         }
 
         #endregion
+
+       
     }
 }

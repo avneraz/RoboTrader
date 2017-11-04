@@ -12,7 +12,8 @@ namespace TNS.API.ApiDataObjects
     public enum ConnectionStatus
     {
         Connected,
-        Disconnected
+        Disconnected,
+        TWSDisconnected
     }
     public class BrokerConnectionStatusMessage : IMessage
     {
@@ -21,6 +22,11 @@ namespace TNS.API.ApiDataObjects
             Status = status;
             MessageData = messageData;
             AfterConnectionToApiWrapper = false;
+        }
+
+        public BrokerConnectionStatusMessage(ConnectionStatus status)
+        {
+            Status = status;
         }
 
         public ConnectionStatus Status { get; }

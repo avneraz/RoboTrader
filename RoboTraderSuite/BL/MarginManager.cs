@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms.VisualStyles;
 using DAL;
 using Infra.Bus;
 using Infra.Enum;
@@ -40,12 +37,11 @@ namespace TNS.BL
         private const double NO_MATE_LOSS_PERCANTAG = .245;
         private const double WITH_MATE_LOSS_PERCANTAG = .06;
 
-        private AppManager _appManager;
+        private readonly AppManager _appManager;
         private SimpleBaseLogic Distributer { get; }
         private List<string> UnlSymbolList { get; }
         public Dictionary<string, MarginData> MarginDataDic { get; set; }
-        private double FullMaintMarginReq { get; set; }
-        private double NetLiquidation { get; set; }
+
         private void InitializeItems()
         {
             ISession session = DBSessionFactory.Instance.OpenSession();
@@ -62,10 +58,25 @@ namespace TNS.BL
                 MarginDataDic[symbol] = marginData;
             }
         }
+
+        public void UpdateMaxMargin(List<ManagedSecurity> managedSecuritiesList)
+        {
+            foreach (var managedSecurity in managedSecuritiesList)
+            {
+                if (MarginDataDic.ContainsKey(managedSecurity.Symbol) == false) continue;
+                var marginData = MarginDataDic[managedSecurity.Symbol];
+                if (marginData == null)
+                {
+                    var ex = new ArgumentNullException(nameof(marginData));
+                    Logger.Error($"There is no margin data for '{managedSecurity.Symbol}'!");
+                    continue;
+                }
+                marginData.MarginMaxAllowed = managedSecurity.MarginMaxAllowed;
+                Distributer.Enqueue(marginData);
+            }
+        }
         public void UpdateAccountData(AccountSummaryData accountSummaryData)
         {
-            NetLiquidation = accountSummaryData.NetLiquidation;
-            FullMaintMarginReq = accountSummaryData.FullInitMarginReq;
         }
         public void UpdateUnlTradingData(UnlTradingData unlTradingData)
         {
@@ -104,7 +115,7 @@ namespace TNS.BL
             var unlRate = _appManager.ManagedSecuritiesManager.Securities[symbol].LastPrice;
             try
             {
-                
+
                 if (marginData.PutPositionCount >= marginData.CallPositionCount)
                 {
                     //First calculate the Put List
@@ -113,15 +124,15 @@ namespace TNS.BL
                                                            EOptionType.Put) * Math.Abs(posData.Position));
                     //Than calculate the call, as a mate.
                     marginSum += callList.Sum(posData => CalculateMargin(unlRate,
-                                                             posData.OptionData.OptionContract.Strike, true,
-                                                             EOptionType.Call) * Math.Abs(posData.Position));
+                                                             posData.OptionData.OptionContract.Strike, true) *
+                                                         Math.Abs(posData.Position));
                 }
                 else
                 {
                     //First calculate the Calls List
                     marginSum = callList.Sum(posData => CalculateMargin(unlRate,
-                                                            posData.OptionData.OptionContract.Strike, false,
-                                                            EOptionType.Call) * Math.Abs(posData.Position));
+                                                            posData.OptionData.OptionContract.Strike, false) *
+                                                        Math.Abs(posData.Position));
                     //Than calculate the puts, as a mate.
                     marginSum += putList.Sum(posData => CalculateMargin(unlRate,
                                                             posData.OptionData.OptionContract.Strike, true,
@@ -177,7 +188,6 @@ namespace TNS.BL
             switch (marginData.PutCallPositionRelation)
             {
                 case EPutCallPositionRelation.Equel:
-                    mate = false;
                     break;
                 case EPutCallPositionRelation.PutGCall:
                     if (type == EOptionType.Call)
@@ -197,11 +207,9 @@ namespace TNS.BL
             double lossPercantag = mate ? WITH_MATE_LOSS_PERCANTAG : NO_MATE_LOSS_PERCANTAG;
             //lossPercantag = 0.06;
             //lossPercantag = 0.245;
-            double requierdMargin = 0;
             const int multiplier = 100;
 
-            requierdMargin = 
-                type == EOptionType.Call ?
+            var requierdMargin = type == EOptionType.Call ?
                 (unlRate * (1 + lossPercantag) - strike) * multiplier :
                 (strike - unlRate * (1 - lossPercantag)) * multiplier;
 
@@ -233,8 +241,8 @@ namespace TNS.BL
         public int GetCoupleMateOptionsCount(string symbol, out int singleCount, out EOptionType optionType)
         {
             var posList = GetPositionList(symbol);
-            var callPositionsCount = Math.Abs(posList.Where(pd=>pd.OptionType == EOptionType.Call).Sum(pd => pd.Position));
-            var putPositionsCount = Math.Abs(posList.Where(pd => pd.OptionType == EOptionType.Put).Sum(pd => pd.Position));
+            var callPositionsCount = posList.Where(pd => pd.OptionType == EOptionType.Call).Sum(pd => pd.Quantity);
+            var putPositionsCount = posList.Where(pd => pd.OptionType == EOptionType.Put).Sum(pd => pd.Quantity);
 
             var result = Math.Min(callPositionsCount, putPositionsCount);
             singleCount = Math.Abs(callPositionsCount - putPositionsCount);

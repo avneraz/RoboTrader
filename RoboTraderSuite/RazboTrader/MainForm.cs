@@ -13,6 +13,7 @@ using TNS.API.ApiDataObjects;
 using TNS.BL;
 using TNS.BL.DataObjects;
 using TNS.BL.UnlManagers;
+using TNS.Controls;
 using UILogic;
 
 namespace RazboTrader
@@ -52,7 +53,7 @@ namespace RazboTrader
                         this.InvokeIfRequired(() =>
                         {
                             PopupMessageForm.ShowMessage("Start Application Method fail, Time out 30 sec!!!!!!",
-                                Color.Red, ParentForm, 5, withSiren: true);
+                                Color.Red, this, 5, withSiren: true);
                         });
                     }
                 }, false);
@@ -81,10 +82,11 @@ namespace RazboTrader
                 this.InvokeIfRequired(() =>
                 {
                     PopupMessageForm.ShowMessage("Start Application Method finish successfully!!!", Color.Green,
-                        ParentForm, 5, withSiren: false);
+                        this, 5, withSiren: false);
                     UpdateGuiComponents();
                 });
-                
+                _appManager.PositionNeedToOptimized += AppManagerOnPositionNeedToOptimized;
+                _appManager.TWSDisconnected += AppManagerOnTWSDisconnected;
             }
             catch (Exception ex)
             {
@@ -94,15 +96,34 @@ namespace RazboTrader
             }
         }
 
+        private void AppManagerOnTWSDisconnected()
+        {
+            this.InvokeIfRequired(() =>
+            {
+                PopupMessageForm.ShowMessage("DisonnectFromBroker called. We are disconnected from TWS!",
+                    Color.Red, this, 15);
+            });
+        }
+
+        private void AppManagerOnPositionNeedToOptimized(string msg)
+        {
+            if (cbxShowPopUpMessages.Checked == false) return;
+            this.InvokeIfRequired(() =>
+            {
+                PopupMessageForm.ShowMessage(msg,
+                    Color.Orange, this, 15);
+            });
+        }
+
 
         private void UpdateGuiComponents()
         {
-            positionsView1.SetPositionDataList(UIDataBroker.PositionDataList);
-            positionsView1.SetAccountSummaryData(UIDataBroker.AccountSummaryDataList);
-            positionsView1.SetUnlTradingDataList(UIDataBroker.UnlTradingDataList);
-            //positionsView1.SetSecurityDataList(UIDataBroker.SecurityDataList);
-            positionsView1.SetAppManager(_appManager);
-            positionsView1.SetOptionDataList(UIDataBroker.OptionsDataList);
+            positionsView.SetPositionDataList(UIDataBroker.PositionDataList);
+            positionsView.SetAccountSummaryData(UIDataBroker.AccountSummaryDataList);
+            positionsView.SetUnlTradingDataList(UIDataBroker.UnlTradingDataList);
+            //positionsView.SetSecurityDataList(UIDataBroker.SecurityDataList);
+            positionsView.SetAppManager(_appManager);
+            positionsView.SetOptionDataList(UIDataBroker.OptionsDataList);
             ordersView1.SetOrderStatusDataList(UIDataBroker.OrderStatusDataList);
             optionsView1.SetOptionDataList(UIDataBroker.OptionsDataList);
             mainSecuritiesView1.SetManagedSecuritiesData(UIDataBroker.SecurityDataList);
@@ -111,12 +132,13 @@ namespace RazboTrader
         public List<OptionData> OptionsDataList { get; set; }
         private bool _startApplicationMethodDone;
 
+       
         private void DistributerOnExceptionThrown(ExceptionData exceptionData)
         {
             if (!(exceptionData.ThrownException is SocketException)) return;
             this.InvokeIfRequired(() =>
             {
-                PopupMessageForm.ShowMessage(exceptionData.ToString(), Color.Red, ParentForm, 5, withSiren: true);
+                PopupMessageForm.ShowMessage(exceptionData.ToString(), Color.Red, this, 5, withSiren: true);
             });
 
         }
@@ -208,11 +230,12 @@ namespace RazboTrader
             try
             {
                 DBDiluter dbDiluter = new DBDiluter();
-                DateTime startDate = new DateTime(2017, 8, 21);
-                DateTime endDate = new DateTime(2017, 8, 22);
+                dbDiluter.DiluteFromAllUnLs();
+                //DateTime startDate = new DateTime(2017, 8, 21);
+                //DateTime endDate = new DateTime(2017, 8, 22);
 
-                var count = dbDiluter.DiluteOptionsFromAllUnLs(startDate, endDate);
-                MessageBox.Show($"{count} rows were deleted");
+                //var count = dbDiluter.DiluteOptionsFromAllUnLs(startDate, endDate);
+                MessageBox.Show($"Records were diluted!");
             }
             catch (Exception ex)
             {
@@ -222,30 +245,51 @@ namespace RazboTrader
 
         private void btnTest_Click(object sender, EventArgs e)
         {
+
+
             try
             {
-                var symbol = txtSymbol.Text;
-                var expiryDate = dateTimePicker1.Value;
-                (_appManager.UNLManagerDic[symbol] as UNLManager).TradingManager.OptimizePositions(symbol, expiryDate);
+               
+                var control = new MangedSecuritiesControl(); 
+                var form = control.ShowControl(this, true);
+                form.TopMost = true;
 
-                //var strike = Convert.ToDouble(txtStrike.Text);
-                //var unlRate = Convert.ToDouble(txtUNLRate.Text);
-                //EOptionType type;
-                //if(Enum.TryParse(txtType.Text, true,out type) == false) throw new Exception("Wrong option type!");
-                //bool mate = cbxSell.Checked;
-                //var result = _appManager.CalculateMarginTest(unlRate, strike, mate, type);
-                //MessageBox.Show($"The margin is {result}");
-
-                // string unl = "AMZN";
-                // DateTime expiryDate = new DateTime(2017, 12, 15);
-                //var list = OptionTradingDataFactory.GetOptionTradingDataList(unl, expiryDate);
-
-                // MessageBox.Show($"The UNL: '{unl}' Expiry={expiryDate} has {list.Count} items.");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+
+
+
+
+
+            //try
+            //{
+
+
+            //    //var symbol = txtSymbol.Text;
+            //    //var expiryDate = dateTimePicker1.Value;
+            //    //(_appManager.UNLManagerDic[symbol] as UNLManager).TradingManager.OptimizePositions(expiryDate);
+
+            //    //var strike = Convert.ToDouble(txtStrike.Text);
+            //    //var unlRate = Convert.ToDouble(txtUNLRate.Text);
+            //    //EOptionType type;
+            //    //if(Enum.TryParse(txtType.Text, true,out type) == false) throw new Exception("Wrong option type!");
+            //    //bool mate = cbxSell.Checked;
+            //    //var result = _appManager.CalculateMarginTest(unlRate, strike, mate, type);
+            //    //MessageBox.Show($"The margin is {result}");
+
+            //    // string unl = "AMZN";
+            //    // DateTime expiryDate = new DateTime(2017, 12, 15);
+            //    //var list = OptionTradingDataFactory.GetOptionTradingDataList(unl, expiryDate);
+
+            //    // MessageBox.Show($"The UNL: '{unl}' Expiry={expiryDate} has {list.Count} items.");
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
 
         private void btnTestClosePositions_Click(object sender, EventArgs e)

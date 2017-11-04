@@ -100,9 +100,15 @@ namespace TNS.API.ApiDataObjects
         /// Hold the additional Margin that can be added by the current sent orders.
         /// </summary>
         public double MarginSentOrders { get; set; }
-        
+
+        public double UnlHighestPrice { get; set; }
+        public double UnlLowestPrice { get; set; }
+
         #endregion
 
+        public string MainInfo =>
+            $"{UnlChange:P}    Base: {UnlBasePrice:N}          Bid: {UnlBid:N}   Ask: {UnlAsk:N}    Highest: {UnlHighestPrice:N},   Lowest: {UnlLowestPrice:N}";
 
+       
     }
 }

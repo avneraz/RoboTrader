@@ -31,7 +31,7 @@
             this.txtMessages = new System.Windows.Forms.TextBox();
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.xPagePositions = new DevExpress.XtraTab.XtraTabPage();
-            this.positionsView1 = new TNS.Controls.PositionsView();
+            this.positionsView = new TNS.Controls.PositionsView();
             this.xPageAPIMessages = new DevExpress.XtraTab.XtraTabPage();
             this.apiMesagesView = new TNS.Controls.APIMesagesView();
             this.xtraPageMainSecurities = new DevExpress.XtraTab.XtraTabPage();
@@ -59,6 +59,7 @@
             this.btnTestDiluter = new System.Windows.Forms.Button();
             this.btnTest = new System.Windows.Forms.Button();
             this.btnTestClosePositions = new System.Windows.Forms.Button();
+            this.cbxShowPopUpMessages = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.xPagePositions.SuspendLayout();
@@ -98,22 +99,22 @@
             // 
             // xPagePositions
             // 
-            this.xPagePositions.Controls.Add(this.positionsView1);
+            this.xPagePositions.Controls.Add(this.positionsView);
             this.xPagePositions.Controls.Add(this.txtMessages);
             this.xPagePositions.Name = "xPagePositions";
             this.xPagePositions.Size = new System.Drawing.Size(1061, 492);
             this.xPagePositions.Text = "Positions";
             // 
-            // positionsView1
+            // positionsView
             // 
-            this.positionsView1.AccountSummaryDataList = null;
-            this.positionsView1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.positionsView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.positionsView1.Location = new System.Drawing.Point(0, 0);
-            this.positionsView1.Name = "positionsView1";
-            this.positionsView1.OptionsDataList = null;
-            this.positionsView1.Size = new System.Drawing.Size(1061, 492);
-            this.positionsView1.TabIndex = 1;
+            this.positionsView.AccountSummaryDataList = null;
+            this.positionsView.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.positionsView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.positionsView.Location = new System.Drawing.Point(0, 0);
+            this.positionsView.Name = "positionsView";
+            this.positionsView.OptionsDataList = null;
+            this.positionsView.Size = new System.Drawing.Size(1061, 492);
+            this.positionsView.TabIndex = 1;
             // 
             // xPageAPIMessages
             // 
@@ -368,11 +369,24 @@
             this.btnTestClosePositions.UseVisualStyleBackColor = true;
             this.btnTestClosePositions.Click += new System.EventHandler(this.btnTestClosePositions_Click);
             // 
+            // cbxShowPopUpMessages
+            // 
+            this.cbxShowPopUpMessages.AutoSize = true;
+            this.cbxShowPopUpMessages.Checked = true;
+            this.cbxShowPopUpMessages.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbxShowPopUpMessages.Location = new System.Drawing.Point(515, 13);
+            this.cbxShowPopUpMessages.Name = "cbxShowPopUpMessages";
+            this.cbxShowPopUpMessages.Size = new System.Drawing.Size(140, 17);
+            this.cbxShowPopUpMessages.TabIndex = 4;
+            this.cbxShowPopUpMessages.Text = "Show PopUp Messages";
+            this.cbxShowPopUpMessages.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1066, 585);
+            this.Controls.Add(this.cbxShowPopUpMessages);
             this.Controls.Add(this.btnTestClosePositions);
             this.Controls.Add(this.btnTest);
             this.Controls.Add(this.btnTestDiluter);
@@ -393,6 +407,7 @@
             this.xtraPageOptions.ResumeLayout(false);
             this.xtraPageUnlDataTrading.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -413,7 +428,7 @@
         private TNS.Controls.OptionsView optionsView1;
         private DevExpress.XtraTab.XtraTabPage xtraPageUnlDataTrading;
         private TNS.Controls.UnlTradingView unlTradingView1;
-        private TNS.Controls.PositionsView positionsView1;
+        private TNS.Controls.PositionsView positionsView;
         private System.Windows.Forms.Button btnBnsLocal;
         private System.Windows.Forms.Button btnCancelOrder;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
@@ -429,6 +444,7 @@
         private System.Windows.Forms.Button btnTestClosePositions;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtUNLRate;
+        private System.Windows.Forms.CheckBox cbxShowPopUpMessages;
     }
 }
 

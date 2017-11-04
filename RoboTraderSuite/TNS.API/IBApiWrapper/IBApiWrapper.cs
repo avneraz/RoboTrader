@@ -83,6 +83,8 @@ namespace TNS.API.IBApiWrapper
             {
                 if (_clientSocket == null)
                     return false;
+                if(_clientSocket.IsConnected() == false)
+                    ConnectToBroker();
                 return _clientSocket.IsConnected();
             }
         }
@@ -233,6 +235,7 @@ namespace TNS.API.IBApiWrapper
 
         public string CreateOrder(OrderData orderData)
         {
+            if(!IsConnected) throw new Exception("TWS not connected to RoboTrader!");
             Logger.Info($"Create orderData was called with {orderData}");
             int orderId = CurrentOrderId;
             string orderIdStr = orderId.ToString();

@@ -31,5 +31,6 @@ namespace Infra.Enum
         OptionContract,
         TransactionData,
         UnlOption,
+        ManagedSecurity
     }
 }

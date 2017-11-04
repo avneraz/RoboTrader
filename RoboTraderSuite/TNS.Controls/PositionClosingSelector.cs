@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Linq;
 using System.Windows.Forms;
+using DevExpress.XtraBars.Docking2010.DragEngine;
 using Infra.Extensions;
 using TNS.API.ApiDataObjects;
 using TNS.BL;
@@ -36,6 +39,18 @@ namespace TNS.Controls
                     _marginData = _appManager.MarginManager.MarginDataDic[_symbol];
                     marginDataBindingSource.DataSource = _marginData;
                     marginDataBindingSource.ResetBindings(false);
+
+                    IEnumerable expiryDateEnumerable = UnlManager.PositionsDataBuilder.PositionDataDic.Values
+                        .DistinctBy(p => p.Expiry)
+                        .Select(p => p.Expiry);
+
+
+                    foreach (var expiryDate in expiryDateEnumerable)
+                    {
+                        comBoxExpiries.Items.Add(expiryDate);
+                    }
+                    if (comBoxExpiries.Items.Count > 0)
+                        comBoxExpiries.SelectedIndex = 0;
                 });
              
             }
@@ -46,18 +61,36 @@ namespace TNS.Controls
             UnlTradingData unlTradingData = UnlManager.UnlTradingData;
             lblMarginGain.Text = (_marginData.MarginPerCouple * (double)numCouplesToClose.Value).ToString("C0");
             lblHeader.Text = $"{_symbol} - {unlTradingData.UnderlinePrice} Margin = {unlTradingData.Margin:C0}";
+            btnSubmitCloseCouples.Text = $"Close {numCouplesToClose.Value:##} Mate Couple";
+            numCouplesToClose.Maximum = _marginData.MateCouplesCount;
+            numCouplesToClose.Minimum = 1;
         }
 
         private void numCouplesToClose_ValueChanged(object sender, EventArgs e)
         {
             lblMarginGain.Text = (_marginData.MarginPerCouple * (double)numCouplesToClose.Value).ToString("C0");
+            btnSubmitCloseCouples.Text = $"Close {numCouplesToClose.Value:##} Mate Couple";
         }
 
         private void btnSubmitCloseCouples_Click(object sender, EventArgs e)
         {
             try
             {
-               UnlManager.TradingManager.CloseMateCouples((int)numCouplesToClose.Value, DateTime.Parse(txtExpireDate.Text));
+               UnlManager.TradingManager.CloseMateCouples((int)numCouplesToClose.Value, (DateTime)comBoxExpiries.SelectedItem);
+                ParentForm.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnCloseAllPositions_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                UnlManager.TradingManager.CloseEntireShortPositions();
+                ParentForm.Close();
             }
             catch (Exception ex)
             {

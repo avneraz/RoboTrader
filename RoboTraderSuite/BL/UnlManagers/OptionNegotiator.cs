@@ -25,10 +25,10 @@ namespace TNS.BL.UnlManagers
         {
             SuccesiveIntervalTimeSpan = AllConfigurations.AllConfigurationsObject.Trading.OrderIntervalTimeSpan;
         }
-        public OptionNegotiator(ITradingApi apiWrapper, UNLManager unlManager)
+        public OptionNegotiator(UNLManager unlManager)
         {
-            APIWrapper = apiWrapper;
             UnlManager = unlManager;
+            APIWrapper =  unlManager.APIWrapper;
         }
 
         #region Properties and Fields
@@ -83,23 +83,6 @@ namespace TNS.BL.UnlManagers
         }
       
 
-        public OrderData StartTradingOptionNew(OptionData optionData, bool sell, int quantity)
-        {
-            if (OptionData != null)
-                throw new ArgumentException("The OptionNegotiator already has open order!!!");
-
-            OptionData = optionData ?? throw new Exception("The option data not exist!!!");
-
-            OrderAction = sell ? OrderAction.SELL : OrderAction.BUY;
-            Quantity = quantity;
-            //InializeTrading:
-            InitializeNegotiationsTradingParameters();
-            //Start negotiation proccess:
-            ScheduledTaskId = UnlManager.AddScheduledTaskOnUnl(SuccesiveIntervalTimeSpan, DoTrading, true);
-            SendWhatIfOrder(CurrentLimitPrice);
-            CreateOrder(CurrentLimitPrice);
-            return OrderData;
-        }
         public OrderData StartTradingOption(OptionData optionData, bool sell, int quantity)
         {
             if (OptionData != null)
@@ -118,45 +101,79 @@ namespace TNS.BL.UnlManagers
             return OrderData;
         }
 
+      
         private void InitializeNegotiationsTradingParameters()
         {
             StarTime = DateTime.Now;
             var optionPrice = OptionData.CalculatedOptionPrice;
-
+            if (optionPrice < 0.1) optionPrice = 50;
             FirstAskPrice = OptionData.AskPrice;
             FirstBidPrice = OptionData.BidPrice;
             var askBidDif = FirstAskPrice - FirstBidPrice;
+            //Set  the resonable max diff
+            var maxDiff = IsUNLGrater400 ?  300 * MinPriceStep : 70 * MinPriceStep ;
+
+            //Check validity of the data and fix it if needed:
+            if ((askBidDif > maxDiff) || askBidDif < 0.01)
+            {
+                askBidDif = IsUNLGrater400 ? optionPrice * 0.2 : optionPrice * 0.1;
+                FirstAskPrice = optionPrice + 0.5 * askBidDif;
+                FirstBidPrice = optionPrice - 0.5 * askBidDif;
+            }
             CurrentLimitPrice = OrderAction == OrderAction.BUY ? FirstBidPrice : FirstAskPrice;
-            TradingCycleCount = 10;
+            TradingCycleCount = IsUNLGrater400 ? 15 : 10;//Set the default
+
             PriceStep = askBidDif / TradingCycleCount;
 
-            var minPriceStep = AllConfigurations.AllConfigurationsObject.Trading.MinPriceStep;
-            if (PriceStep < minPriceStep) //Less than 0.01
+           
+            if (PriceStep < MinPriceStep) //Less than 0.01
             {
-                PriceStep = minPriceStep;
-                TradingCycleCount = (int) Math.Ceiling(askBidDif / PriceStep);
+                PriceStep = MinPriceStep;
+                TradingCycleCount = (int)Math.Ceiling(askBidDif / PriceStep);
             }
             //Add an extra 3 cycles when it's simulation.
             TradingCycleCount = SimulatorAccount ? TradingCycleCount + 3 : TradingCycleCount;
-            PriceStep = RoundPrice(Math.Max(minPriceStep, PriceStep));
+            PriceStep = RoundPrice(Math.Max(MinPriceStep, PriceStep));
             TradingCycleIndex = 0;
         }
 
-
-     
+        private bool IsUNLGrater400 => UnlManager.UnlTradingData.UnderlinePrice > 400;//OptionData.UnderlinePrice > 400;
+        public double MinPriceStep => AllConfigurations.AllConfigurationsObject.Trading.MinPriceStep;
 
         private void CalculateNextCurrentLimitPrice()
         {
+            double multiplier = 1;
+            if (IsUNLGrater400)
+            {
+                //On the first 5 steps make the priceStep double:
+                multiplier = TradingCycleIndex > 10 ? 2 : 1;
+
+                //Make smaler price step toward the end of negotioation:
+                if (TradingCycleCount == 10)
+                {
+                    var diff = OrderAction == OrderAction.SELL
+                        ? CurrentLimitPrice - FirstBidPrice
+                        : FirstAskPrice - CurrentLimitPrice;
+
+                    PriceStep = RoundPrice(Math.Max(MinPriceStep, diff / 10));
+                }
+            }
             
+           
             if (OrderAction == OrderAction.SELL)
             {
-                CurrentLimitPrice = FirstAskPrice - TradingCycleIndex * PriceStep;
+                CurrentLimitPrice = FirstAskPrice - TradingCycleIndex * PriceStep * multiplier;
+                if (CurrentLimitPrice < OptionData.BidPrice)
+                    CurrentLimitPrice = OptionData.BidPrice;
             }
-            else//Buy
+            else //Buy
             {
-                CurrentLimitPrice = FirstBidPrice + TradingCycleIndex * PriceStep;
+                CurrentLimitPrice = FirstBidPrice + TradingCycleIndex * PriceStep * multiplier;
+                if (CurrentLimitPrice > OptionData.AskPrice)
+                    CurrentLimitPrice = OptionData.AskPrice;
             }
         }
+
         /// <summary>
         /// Called by the task scheduler
         /// </summary>
@@ -280,6 +297,7 @@ namespace TNS.BL.UnlManagers
                 Contract = OptionData.OptionContract
             };
 
+            //if (SimulatorAccount) OrderData.OrderType = OrderType.MKT;
             OrderData.OrderId = APIWrapper.CreateOrder(OrderData);
         }
 

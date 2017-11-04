@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Infra.Bus;
+using Infra.Enum;
 
 namespace TNS.API.ApiDataObjects
 {
-    public class ManagedSecurity
+    public class ManagedSecurity : IMessage
     {
+      
+
         public virtual int Id { get; protected set; }
         public string Symbol { get; set; }
         public SecurityType SecurityType { get; set; }
@@ -18,5 +22,6 @@ namespace TNS.API.ApiDataObjects
         public bool OptionChain { get; set; }
         public double MarginMaxAllowed { get; set; }
 
+        public EapiDataTypes APIDataType => EapiDataTypes.ManagedSecurity;
     }
 }

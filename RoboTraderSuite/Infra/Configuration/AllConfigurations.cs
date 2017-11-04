@@ -43,6 +43,7 @@ namespace Infra
 
             public string MainAccount { get; set; }
             public TimeSpan DBWritePeriod { get; set; }
+            public bool AllowAutoTrading { get; set; }
         }
 
         public class TradingConfiguration
@@ -67,6 +68,8 @@ namespace Infra
                 return _unlSymbolsList ?? (_unlSymbolsList = UNLSymbolsList.Split(';')); 
             }
 
+            public double MaxDeltaAllowed { get; set; }
+            public double MinDeltaAllowed { get; set; }
             /// <summary>
             /// (%) - The max amount of possible loss due to the delta. It's expressed in percantage of the current margin.
             /// </summary>

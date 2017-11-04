@@ -518,7 +518,7 @@ namespace IBApi
                     gamma = Double.MaxValue;
                 }
                 vega = ReadDouble();
-                if (Math.Abs(vega) > 1)
+                if (Math.Abs(vega) > 10)
                 { // -2 is the "not yet computed" indicator
                     vega = Double.MaxValue;
                 }

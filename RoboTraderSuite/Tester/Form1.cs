@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DAL;
+using Infra;
+using Infra.Configuration;
 
 namespace Tester
 {
@@ -18,6 +21,39 @@ namespace Tester
         public Form1()
         {
             InitializeComponent();
+            ConfigHandler configHandler = new ConfigHandler();
+            //Do the following just in case you want to create the configuration from scratch:
+
+            Configurations = configHandler.ReadConfig();
+            //var a = Configurations.Trading.UNLSymbolsListForTrading();
+            AllConfigurations.AllConfigurationsObject = Configurations;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public static AllConfigurations Configurations { get; private set; }
+        private async void btnTestDiluter_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DBDiluter dbDiluter = new DBDiluter();
+                int count = 0;
+                await Task.Run(()=> count = dbDiluter.DiluteFromAllUnLs());
+                //DateTime startDate = new DateTime(2017, 8, 21);
+                //DateTime endDate = new DateTime(2017, 8, 22);
+
+                //var count = dbDiluter.DiluteOptionsFromAllUnLs(startDate, endDate);
+                MessageBox.Show($"{count} Records were diluted!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnTestAsync_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("btnTestAsync Clicked");
         }
     }
 }

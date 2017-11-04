@@ -22,7 +22,16 @@ namespace TNS.BL
 {
     public class AppManager
     {
-
+        public event Action TWSDisconnected;
+        public virtual void OnTWSDisconnected()
+        {
+            TWSDisconnected?.Invoke();
+        }
+        public event Action<string> PositionNeedToOptimized;
+        protected virtual void OnPositionNeedToOptimized(string message)
+        {
+            PositionNeedToOptimized?.Invoke(message);
+        }
         public static AppManager AppManagerSingleTonObject { get; private set; }
         private static readonly ILog Logger = LogManager.GetLogger(typeof(AppManager));
         private void InitalizeUnhandledExceptionHandler()
@@ -151,6 +160,7 @@ namespace TNS.BL
             {
                 var unlManager = new UNLManager(managedSecurity, APIWrapper, Distributer);
                 UNLManagerDic.Add(managedSecurity.Symbol, unlManager);
+                unlManager.PositionNeedToOptimized += UNLManagerOnPositionNeedToOptimized;
             }
             MarginManager = new MarginManager();
 
@@ -158,6 +168,12 @@ namespace TNS.BL
             Distributer.SetManagers(UNLManagerDic,AccountManager,ManagedSecuritiesManager, DbWriter,MarginManager);
             //UIDataManager = new UIDataManager();
         }
+
+        private void UNLManagerOnPositionNeedToOptimized(UNLManager manager)
+        {
+            OnPositionNeedToOptimized($"UNL {manager.Symbol} ==> Position need to be optimimized");
+        }
+
         public Dictionary<string, SimpleBaseLogic> UNLManagerDic { get; private set; }
         public ITradingApi APIWrapper { get; private set; }
 
@@ -185,16 +201,17 @@ namespace TNS.BL
                     AppPort = 7496,//7496,4001,
                     MainAccount = "U1450837",
                     WDAppClientId = 12,
-                    DBWritePeriod = TimeSpan.FromSeconds(10)
+                    DBWritePeriod = TimeSpan.FromSeconds(60),
+                    AllowAutoTrading = false,
                 },
                 Session =
                 {
                     AAPLHighLoadingStrike = 100,
                     AAPLLowLoadingStrike = 200,
                     AAPLSessionsToLoad = "20170817;20151016;20160115",
-                    HighStrikePercentage = 20,
-                    LowStrikePercentage = 20,
-                    MinimumDaysToExpiration = 61,
+                    HighStrikePercentage = 12,
+                    LowStrikePercentage = 12,
+                    MinimumDaysToExpiration = 30,
                     MaxmumDaysToExpiration = 119,
                 },
                 Trading =
@@ -212,7 +229,8 @@ namespace TNS.BL
                     InitNetLiquidation = 210300,
                     OrderInterval = 1500,
                     MinPriceStep = 0.01,
-
+                    MaxDeltaAllowed = 0.56,
+                    MinDeltaAllowed = 0.43,
                 }
             };
 
@@ -252,5 +270,11 @@ namespace TNS.BL
         #endregion
 
 
+        public void TWSDisconnectedOccured()
+        {
+            OnTWSDisconnected();
+        }
+
+        
     }
 }

@@ -39,11 +39,12 @@ namespace TNS.BL.UnlManagers
             }
         }
 
-        public OrdersManager(ITradingApi apiWrapper, ManagedSecurity managedSecurity, UNLManager unlManager) : base(apiWrapper, managedSecurity, unlManager)
+        public OrdersManager(ManagedSecurity managedSecurity, UNLManager unlManager) : base(managedSecurity, unlManager)
         {
             OrderStatusDataDic = new Dictionary<string, OrderStatusData>();
             OptionNegotiatorDic = new Dictionary<string, OptionNegotiator>();
         }
+
         public bool IsSimulatorAccount => !AllConfigurations.AllConfigurationsObject.Application.MainAccount.Equals(AccountSummaryData.MainAccount) ;
         /// <summary>
         ///  = OrderType.LMT, used for testing
@@ -117,8 +118,10 @@ namespace TNS.BL.UnlManagers
         }
         private OrderData SendOrder(OptionData optionData, int quantity, bool sell = true)
         {
+            if(APIWrapper.IsConnected == false)
+                throw new Exception("TWS not connected to RoboTrader!");
             var optionNegotiator =
-                new OptionNegotiator(APIWrapper, UNLManager) {SimulatorAccount = IsSimulatorAccount};
+                new OptionNegotiator(UNLManager) {SimulatorAccount = IsSimulatorAccount};
             quantity = Math.Abs(quantity);
             var orderData = optionNegotiator.StartTradingOption(optionData, sell, quantity);
             OptionNegotiatorDic[orderData.OrderId] = optionNegotiator;
@@ -132,7 +135,6 @@ namespace TNS.BL.UnlManagers
         {
             OptionNegotiatorDic.Remove(orderId);
             OnOrderTradingNegotioationWasTerminated(orderStatus, orderId);
-            //TODO....
         }
 
         

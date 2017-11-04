@@ -97,8 +97,11 @@ namespace TNS.API.IBApiWrapper
             string futureExpiry, double dividendImpact, double dividendsToExpiry){}
         public void tickSnapshotEnd(int tickerId){}
 
-       
-        public void connectionClosed(){}
+
+        public void connectionClosed()
+        {
+            Consumer.Enqueue(new BrokerConnectionStatusMessage(ConnectionStatus.TWSDisconnected));
+        }
         public void bondContractDetails(int reqId, ContractDetails contract){}
         public void updateAccountValue(string key, string value, 
             string currency, string accountName){}

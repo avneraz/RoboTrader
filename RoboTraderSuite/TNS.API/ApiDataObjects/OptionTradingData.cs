@@ -33,7 +33,7 @@ namespace TNS.API.ApiDataObjects
         /// <summary>
         /// The change of the IV between sell and now, in percetage.
         /// </summary>
-        public double IVChange => 100 * (OptionData.ImpliedVolatility - UnlOptions.IV);
+        public double IVChange => (OptionData.ImpliedVolatility - UnlOptions.IV);
         public double DeltaChange => OptionData.Multiplier * (OptionData.Delta - UnlOptions.OptionData.Delta);
         public double ThetaChange => OptionData.Multiplier * (OptionData.Theta - UnlOptions.OptionData.Theta);
         public double GammaChange => OptionData.Multiplier * (OptionData.Gamma - UnlOptions.OptionData.Gamma);
@@ -44,5 +44,10 @@ namespace TNS.API.ApiDataObjects
 
         public EOptionType OptionType => OptionData.OptionContract.OptionType;
 
+        public double IvOnSell => UnlOptions.IV;
+        public double CurrentIV => OptionData.ImpliedVolatility;
+
+        public DateTime SellDateTime => UnlOptions.OpenTransaction.TransactionTime;
+        public int UnlID => UnlOptions.Id;
     }
 }

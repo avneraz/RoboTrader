@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
@@ -15,6 +17,7 @@ using TNS.BL;
 using TNS.BL.Interfaces;
 using TNS.BL.UnlManagers;
 using DAL;
+using Infra.PopUpMessages;
 
 namespace TNS.Controls
 {
@@ -67,27 +70,37 @@ namespace TNS.Controls
             GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromSeconds(1),
                 () =>
                 {
-                    grdPositionData.InvokeIfRequired(() =>
+                    try
                     {
-                        optionsPositionDataBindingSource.ResetBindings(false);
-                        grdPositionData.Refresh();
-                            //grdPositionData.Height = 208 + (gridView1.RowHeight + 1) * (optionsPositionDataBindingSource.Count);
+                        grdPositionData.InvokeIfRequired(() =>
+                                   {
+                                       optionsPositionDataBindingSource.ResetBindings(false);
+                                       grdPositionData.Refresh();
+                                       grdViewPositionData.BestFitColumns();
+                                       gridViewUnLTradingData.BestFitColumns();
+                        //grdPositionData.Height = 208 + (gridView1.RowHeight + 1) * (optionsPositionDataBindingSource.Count);
 
                     });
-                    grpAccountSummary.InvokeIfRequired(() =>
+                        grpAccountSummary.InvokeIfRequired(() =>
+                        {
+                            accountSummaryDataBindingSource.ResetBindings(false);
+                            var accountSummaryData = (accountSummaryDataBindingSource.Current) as AccountSummaryData;
+                            lblDailyPnL.ForeColor =
+                                accountSummaryData != null && accountSummaryData.DailyPnL < 0
+                                    ? Color.Red
+                                    : Color.ForestGreen;
+                        });
+                        grdUnLTradingData.InvokeIfRequired(() =>
+                        {
+                            unlTradingDataBindingSource.ResetBindings(false);
+                            grdViewPositionData.BestFitColumns();
+                            gridViewUnLTradingData.BestFitColumns();
+                        });
+                    }
+                    catch ( Exception ex)
                     {
-                        accountSummaryDataBindingSource.ResetBindings(false);
-                        var accountSummaryData = (accountSummaryDataBindingSource.Current) as AccountSummaryData;
-                        lblDailyPnL.ForeColor =
-                            accountSummaryData != null && accountSummaryData.DailyPnL < 0
-                                ? Color.Red
-                                : Color.ForestGreen;
-                    });
-                    grdUnLTradingData.InvokeIfRequired(() =>
-                    {
-                        unlTradingDataBindingSource.ResetBindings(false);
-
-                    });
+                        Logger.Error("PositionsView.SetAndUpdate() sell on anonimus method!!!", ex);
+                    }
                     //grdMainSecurities.InvokeIfRequired(() =>
                     //{
                     //    securityDataBindingSource.ResetBindings(false);
@@ -238,16 +251,21 @@ namespace TNS.Controls
                 var view = sender as GridView;
                 if ((view == null)) return;
                 //Add additional info about the underline on the group header:
-                var pData = (OptionsPositionData)grdViewPositionData.GetRow(e.RowHandle);
+                var positionData = (OptionsPositionData) grdViewPositionData.GetRow(e.RowHandle);
                 double unlPrice = 0;
-                if (pData.OptionData != null)
-                    unlPrice = pData.OptionData.UnderlinePrice;
-                var groupInfo = (GridGroupRowInfo)(e.Info);
-                //var mainInfo = GetSecurityMainInfo(pData.Symbol);
-                string mainInfo;
-                e.Appearance.ForeColor = IsUnderlineRaising(pData.Symbol, out mainInfo) ? Color.Green : Color.Red;
-                var unlInfo = GetUnlInfo(pData.Symbol);
-                groupInfo.GroupText = $"{pData.Symbol}:{unlPrice:N}           {mainInfo}   {unlInfo}";
+                if (positionData.OptionData != null)
+                    unlPrice = positionData.OptionData.UnderlinePrice;
+                var groupInfo = (GridGroupRowInfo) (e.Info);
+                string mainInfo; // = GetUnlMainInfo(positionData.Symbol);
+                bool noChange;
+                // string mainInfo = "tttttt";
+                e.Appearance.ForeColor = IsUnlDataChange(positionData.Symbol, out mainInfo, out noChange)
+                    ? Color.Green
+                    : Color.Red;
+                if (noChange) e.Appearance.ForeColor = Color.Black;
+
+                var unlInfo = GetUnlInfo(positionData.Symbol);
+                groupInfo.GroupText = $"{positionData.Symbol}:{unlPrice:N}           {mainInfo}   {unlInfo}";
             }
             catch (Exception ex)
             {
@@ -256,34 +274,49 @@ namespace TNS.Controls
 
         }
 
-        //private bool IsUnderlineRaising(string symbol)
+        //private bool IsUnlDataChange(string symbol)
         //{
         //   var secData = ((IEnumerable<SecurityData>) securityDataBindingSource.DataSource).FirstOrDefault(sd=>sd.Symbol == symbol);
         //    return secData != null && (secData.Change > 0);
         //}
 
-        private bool IsUnderlineRaising(string symbol, out string mainInfo)
+        private bool IsUnlDataChange(string symbol, out string mainInfo, out bool noChange)
         {
-            var secData = ((IEnumerable<SecurityData>)securityDataBindingSource.DataSource).FirstOrDefault(sd => sd.Symbol == symbol);
+            var secData =
+                ((IEnumerable<UnlTradingData>) unlTradingDataBindingSource.DataSource)
+                .FirstOrDefault(sd => sd.Symbol == symbol);
             mainInfo = secData != null ? secData.MainInfo : string.Empty;
-            return secData != null && (secData.Change > 0);
+            noChange = false;
+            if (secData != null)
+            {
+                noChange = Math.Abs(secData.UnlChange) < 0.002;
+                return  (secData.UnlChange > 0);
+            }
+            return false;
         }
 
 
-        private string GetSecurityMainInfo(string symbol)
-        {
-            var secData = ((IEnumerable<SecurityData>)securityDataBindingSource.DataSource).FirstOrDefault(sd => sd.Symbol == symbol);
-            return secData != null ? secData.MainInfo : string.Empty;
-        }
+        //private string GetUnlMainInfo(string symbol)
+        //{
+        //    var secData =
+        //        ((IEnumerable<UnlTradingData>) unlTradingDataBindingSource.DataSource)
+        //        .FirstOrDefault(sd => sd.Symbol == symbol);
+        //    return secData != null ? secData.MainInfo : string.Empty;
+        //}
+
         private string GetUnlInfo(string symbol)
         {
-            var unlTradingData = ((IEnumerable<UnlTradingData>) unlTradingDataBindingSource.DataSource).
-                FirstOrDefault(sd => sd.Symbol == symbol);
+            var unlTradingData =
+                ((IEnumerable<UnlTradingData>) unlTradingDataBindingSource.DataSource)
+                .FirstOrDefault(sd => sd.Symbol == symbol);
 
-            var unlInfo = unlTradingData != null ? $"VIX: {unlTradingData.VIX}  IV.W.Avg={unlTradingData.IVWeightedAvg:P}" : string.Empty; 
+            var unlInfoStr = unlTradingData != null
+                ? $"  IV.W.Avg={unlTradingData.IVWeightedAvg:P}" //VIX: {unlTradingData.VIX}
+                : string.Empty;
 
-            return unlInfo;
+            return unlInfoStr;
         }
+
         public OptionsPositionData GetSelectedPositionData()
         {
             if ((optionsPositionDataBindingSource == null) || optionsPositionDataBindingSource.Count == 0)
@@ -491,9 +524,118 @@ namespace TNS.Controls
             }
         }
 
-        private void grdUnLTradingData_Click(object sender, EventArgs e)
-        {
 
+        private void OpenSelectorDialog(EOperationType operationType)
+        {
+            var unlTradingData = GetSelectedUnlTradingData();
+            if (unlTradingData == null) throw new Exception("There is no UNL Data!!!");
+            var symbol = unlTradingData.Symbol;
+
+            var unlManager = AppManager.UNLManagerDic[symbol] as UNLManager;
+            if (unlManager == null)
+                throw new Exception($"The symbol: '{symbol}' doesn't exist in the UNLManager list!");
+
+            var control = new SellMateCoupleSelector {OperationType = operationType, Symbol = symbol };
+            var form = control.ShowControl(this.ParentForm, true);
+            form.TopMost = true;
         }
+
+       
+        private void OpenSelector_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            try
+            {
+                var name = e.Item.Name;
+               
+                if (name.Equals(iOptimizePosition.Name) )
+                    OpenSelectorDialog(EOperationType.OptimizePosition);
+                else if(name.Equals(iSellMateCouple.Name))
+                    OpenSelectorDialog(EOperationType.SellMateCouples);
+                else
+                    OpenSelectorDialog(EOperationType.OptimizePartlyPosition);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void PositionsView_Load(object sender, EventArgs e)
+        {
+            grdViewPositionData.BestFitColumns();
+            gridViewUnLTradingData.BestFitColumns();
+        }
+
+        private void iEditSecurities_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            try
+            {
+                var control = new MangedSecuritiesControl();
+                var form = control.ShowControl(ParentForm, true);
+                form.TopMost = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void iWhatIf_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            try
+            {
+                _loadingControl = new LoadingControl();
+                _loadingControl.ShowControlInContainer(this);
+                Application.DoEvents();
+                //var threadStart = new ThreadStart(DoWhatIf);
+                var thread = new Thread(DoWhatIf);
+                //thread.SetApartmentState(ApartmentState.STA);
+                thread.Start(OrderAction.BUY);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private LoadingControl _loadingControl;
+        private void DoWhatIf(object obj)
+        {
+            var msg = "";
+            var orderAction = (OrderAction)obj;
+            try
+            {
+                var positionData = GetSelectedPositionData();
+                if (positionData == null) throw new Exception("There is no Position Data!!!");
+                UNLManager unlManager = AppManager.UNLManagerDic[positionData.Symbol] as UNLManager;
+                if (unlManager == null) throw new Exception($"No UNLMAnager for this {positionData.Symbol}!!!");
+
+                WhatIfOrderBroker broker = new WhatIfOrderBroker(unlManager);
+
+                
+
+                //this.InvokeIfRequired(() => { _loadingControl.Visible = true; });
+                //Application.DoEvents();
+                var margin = broker.SendWhatIfOrder(positionData.OptionData, orderAction,
+                    positionData.Quantity);
+                msg = $" the Margin gain by buying this position is: {margin:C0}";
+            }
+            catch (Exception ex1)
+            {
+                msg = ex1.Message;
+            }
+            
+
+            this.InvokeIfRequired(() =>
+            {
+                _loadingControl.Visible = false; 
+                _loadingControl.Dispose();
+                this.Controls.Remove(_loadingControl);
+                
+                MessageBox.Show(msg);
+            });
+        }
+
     }
 }

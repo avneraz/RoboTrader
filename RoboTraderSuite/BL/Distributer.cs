@@ -116,6 +116,9 @@ namespace TNS.BL
                     _dbWriter.Enqueue(message, false);
                     break;
                 case EapiDataTypes.BrokerConnectionStatus:
+                    var statusMessage = message as BrokerConnectionStatusMessage;
+                    if (statusMessage != null && statusMessage.Status == ConnectionStatus.TWSDisconnected)
+                        AppManager.AppManagerSingleTonObject.OnTWSDisconnected();
                     PropagateMessageToAllComponents(message);
                     break;
                 case EapiDataTypes.UnlTradingData:
@@ -181,7 +184,7 @@ namespace TNS.BL
                     break;
                 case EapiDataTypes.UnlTradingData:
                 case EapiDataTypes.OrderStatus:
-                
+                case EapiDataTypes.ManagedSecurity:
                 case EapiDataTypes.AccountSummaryData:
                 case EapiDataTypes.SecurityData:
                     UIDataBroker.Enqueue(message, false);

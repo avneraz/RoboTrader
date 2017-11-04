@@ -18,17 +18,15 @@ namespace DAL
         private static readonly ILog Logger = LogManager.GetLogger(typeof(DBWriter));
         private ISession _session;
 
-        private readonly TimeSpan WriteTimeOut = TimeSpan.FromSeconds(60);
+        private  TimeSpan WriteTimeOut { get; }
         private readonly Dictionary<string, object> _aggregator;
 
         protected override string ThreadName => "DBWriter";
 
         public DBWriter(TimeSpan? writeTimeOut = null)
         {
-            if (writeTimeOut != null)
-            {
-                WriteTimeOut = writeTimeOut.Value;
-            }
+            WriteTimeOut = writeTimeOut ?? TimeSpan.FromSeconds(60);
+
             _aggregator = new Dictionary<string, object>();
             Connect();
         }

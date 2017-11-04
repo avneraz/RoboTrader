@@ -22,14 +22,16 @@ namespace TNS.BL.UnlManagers
        
 
         private static readonly ILog Logger = LogManager.GetLogger(typeof(PositionsDataBuilder));
-        public PositionsDataBuilder(ITradingApi apiWrapper, ManagedSecurity managedSecurity, 
-            UNLManager unlManager) 
-            : base(apiWrapper, managedSecurity, unlManager)
+
+        public PositionsDataBuilder(ManagedSecurity managedSecurity,
+            UNLManager unlManager)
+            : base(managedSecurity, unlManager)
         {
             PositionDataDic = new Dictionary<string, OptionsPositionData>();
             OptionsManager = unlManager.OptionsManager;
             Logger.DebugFormat("{0}.OptionsManager created. Thread name: {1}.", Symbol, Thread.CurrentThread.Name);
         }
+
         public IOptionsManager OptionsManager { get; }
 
         public Dictionary< string, OptionsPositionData> PositionDataDic { get; }
@@ -126,7 +128,7 @@ namespace TNS.BL.UnlManagers
             UnlTradingData.MarketValue = PositionDataDic.Values.Sum(pd => pd.MarketValue);
             UnlTradingData.Shorts = PositionDataDic.Values.Where(pd=>pd.Position<0).Sum(pd => pd.Position);
             UnlTradingData.Longs = PositionDataDic.Values.Where(pd=>pd.Position>0).Sum(pd => pd.Position);
-
+            //if(Symbol == "AMZN") { }//for testing
 
             UnlTradingData.IVWeightedAvg = PositionDataDic.Values.Sum(pd => pd.IV * Math.Abs(pd.Position))/ 
                 PositionDataDic.Values.Sum(pd => Math.Abs(pd.Position));

@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DAL;
+using DevExpress.LookAndFeel;
 using IBApi;
 using Infra;
 using log4net;
@@ -58,156 +59,21 @@ namespace Tester
     class Program
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(Program));
-
-        //static async Task<int> Bla(ContractDetailsWaiter waiter)
-        //{
-        //    var contract = await waiter.GetContracts();
-        //    return 5;
-        //}
-
-        //static void BlaCaller(ContractDetailsWaiter waiter)
-        //{
-        //    int a = Bla(waiter).Result;
-        //}
-
-        static void Main(string[] args)
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
         {
-            Consumer c = new Consumer();
-            c.Start();
-            IBApiWrapper wrapper = new IBApiWrapper("127.0.0.1", 7496, 8, c, "U1450837");
-            wrapper.ConnectToBroker();
-            SecurityData securityData = new SecurityData()
-            {
-                SecurityContract = new SecurityContract("AAPL", SecurityType.Stock)
-            };
-            var optionsToLoad = new OptionToLoadParameters(securityData);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
 
-            wrapper.RequestOptionChain(optionsToLoad);
-            //wrapper.RequestSecurityContractDetails(securityData);
-            OptionContract o = new OptionContract("MSFT", new DateTime(2017, 1,20), EOptionType.Call);
-            //wrapper.RequestContinousContractData(new List<ContractBase>() {o});
+           
 
-            Thread.Sleep(1000000);
+         
 
-            // ContractDetailsWaiter waiter = new ContractDetailsWaiter();
-            // Task mytask = Task.Run(() =>
-            // {
-            //     BlaCaller(waiter);
-            // });
-            // Thread.Sleep(10000);
-            // waiter.OnContractReceived(new ContractDetails());
-            // Thread.Sleep(10000000);
-
-            // AppManager.WriteConfigurationFromScratch(new ConfigHandler());
-
-            // UIDal dal = new UIDal();
-            // var bla = dal.GetLastOptionData();
-            // ConfigHandler h = new ConfigHandler();
-            // AllConfigurations a = new AllConfigurations();
-            // WriteConfiguration(a);
-
-            // h.SaveConfig(a);
-
-
-            // var readConfig = h.ReadConfig();
-
-
-
-            // //UIDal a = new UIDal();
-            // //var positions = a.GetAllPositions();
-            // //var appleOptions = a.GetOptionsBySymbol("AAPL");
-            // //string conString = "server=localhost;port=3306;database=RobotDB;uid=root;password=tom90raz";
-            // DBWriter d = new DBWriter();
-            // //d.WriteToDB(new List<OptionData>() { new OptionData() { AskPrice = 5, Key = "a" } });
-            // //d.WriteToDB(new List<TestModal>() { new TestModal() { B = "a" } });
-            // //Example.ExecuteExample();
-
-
-
-
-            // //DbConfiguration.SetConfiguration(new MySqlEFConfiguration())
-
-
-
-
-
-            // Logger.Info("Start Program - Tester");
-            // //AppManager appManager = new AppManager();
-            // //appManager.InitializeAppManager(null);
-            // //appManager.ConnectToBroker();
-            // Consumer c = new Consumer();
-            // IBApiWrapper wrapper = new IBApiWrapper("127.0.0.1", 7496, 8, d, "U1450837");
-            // //var accMgr = new AccountManager(wrapper);
-            // //var mainSecMgr = new ManagedSecuritiesManager(wrapper);
-            // //d.SetManagers()
-
-
-
-            ////
-
-
-            // wrapper.ConnectToBroker();
-            // wrapper.RequestAccountData();
-            // wrapper.RequestContinousContractData(new List<ContractBase>()
-            // {
-            //     //new OptionContract("AAPL", 0, new DateTime(2015, 12, 31), EOptionType.Call),
-            //     new OptionContract("AAPL", new DateTime(2016, 1, 15), EOptionType.Call),
-            //     new SecurityContract("AAPL", SecurityType.Stock)
-            // }); 
-
-            // wrapper.RequestContinousPositionsData();
-            // //Thread.Sleep(2000);
-            // //string orderIdStr = wrapper.CreateOrder(new OptionContract("AAPL", 120, new DateTime(2015, 12, 24), EOptionType.Call), new OrderData(OrderType.MKT, OrderAction.Sell, 1.8, 1));
-            // //Console.WriteLine("Placed Order ID = " + orderIdStr);
-            // //Thread.Sleep(10000);
-            // //orderIdStr = wrapper.CreateOrder(new OptionContract("AAPL", 125, new DateTime(2015, 12, 24), EOptionType.Call), new OrderData(OrderType.MKT, OrderAction.Sell, 1.8, 1));
-            // //Console.WriteLine("Placed Order ID = " + orderIdStr);
-            // //Thread.Sleep(10000);
-            // Thread.Sleep(1000);
-            // var orderIdStr = wrapper.CreateOrder(
-            //     new OrderData()
-            //     {
-            //         OrderType = OrderType.MKT,
-            //         OrderAction = OrderAction.SELL,
-            //         Quantity = 1,
-            //         //LimitPrice = 0.2,
-            //         Contract = new OptionContract("AAPL", 110, new DateTime(2016, 1, 15), EOptionType.Call)
-            //     });
-
-
-
-
-            // //Console.WriteLine("Placed Order ID = " + orderIdStr);
-            // //string tags = "NetLiquidation,EquityWithLoanValue,BuyingPower,ExcessLiquidity,FullMaintMarginReq,FullInitMarginReq";
-            // //wrapper.RequestAccountSummary();
-            // Thread.Sleep(10000000);
-            // BnSCalcHelpper bnSCalc = new BnSCalcHelpper();
-            // bnSCalc.UpdateGreekValues(new OptionData());
-
+            Application.Run(new Form1());
         }
-
-        private static void WriteConfiguration(AllConfigurations a)
-        {
-            a.Application.DefaultHost = "host";
-            a.Application.AppClientId = 1;
-            a.Application.AppPort = 7496;
-            a.Application.MainAccount = "U1450837";
-            a.Application.WDAppClientId = 11;
-
-            a.Session.AAPLHighLoadingStrike = 100;
-            a.Session.AAPLLowLoadingStrike = 200;
-            a.Session.AAPLSessionsToLoad = "20150821;20151016;20160115";
-
-            a.Trading.USAInterestPercentage = 0.25;
-            a.Trading.StatisticsSaveIntervalSec = 300;
-
-            a.Trading.PolicyID = 3;
-            a.Trading.AlgorithmType = 2;
-            a.Trading.OTMOffsetPut = 12;
-            a.Trading.OTMOffsetCall = 10;
-            
-
-
-        }
+        
     }
 }

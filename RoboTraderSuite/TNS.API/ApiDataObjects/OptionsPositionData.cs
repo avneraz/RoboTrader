@@ -67,8 +67,21 @@ namespace TNS.API.ApiDataObjects
         public double VegaTotal => OptionData?.Vega*OptionData?.Multiplier*Position ?? 0;
         public double Vega => OptionData?.Vega ?? -1;
 
-        public double AvgPrice => AverageCost / OptionData.Multiplier;
-      
+        public double AvgPrice
+        {
+            get
+            {
+                try
+                {
+                    return AverageCost / OptionData.Multiplier;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+        }
+
         #endregion
 
         public double MarketValue

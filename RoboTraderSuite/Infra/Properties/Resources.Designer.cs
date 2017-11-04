@@ -82,6 +82,16 @@ namespace Infra.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap InternetSlowdown_Day {
+            get {
+                object obj = ResourceManager.GetObject("InternetSlowdown_Day", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Ribbon_Exit_16x16 {
             get {
                 object obj = ResourceManager.GetObject("Ribbon_Exit_16x16", resourceCulture);
