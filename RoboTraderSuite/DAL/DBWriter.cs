@@ -37,7 +37,11 @@ namespace DAL
             AddScheduledTask(WriteTimeOut, WriteBulk, true);
         }
 
+        public override void Enqueue(IMessage message, bool duplicate = true)
+        {
 
+            base.Enqueue(message, duplicate);
+        }
 
         [MessageHandler]
         protected void HandleOptionMessage(OptionData data)

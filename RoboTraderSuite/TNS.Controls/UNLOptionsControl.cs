@@ -10,7 +10,9 @@ using System.Windows.Forms;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using Infra.Extensions;
+using log4net;
 using TNS.API.ApiDataObjects;
+using TNS.BL;
 
 namespace TNS.Controls
 {
@@ -22,7 +24,7 @@ namespace TNS.Controls
            
         }
 
-       
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(UNLOptionsControl));
         public void SetDataSource(List<OptionTradingData> list)
         {
             grdUnlOptions.InvokeIfRequired(() =>
@@ -80,7 +82,7 @@ namespace TNS.Controls
             }
             catch (Exception ex)
             {
-                //Logger.Error(ex.Message, ex);
+                Logger.Error(ex.Message, ex);
             }
         }
     }

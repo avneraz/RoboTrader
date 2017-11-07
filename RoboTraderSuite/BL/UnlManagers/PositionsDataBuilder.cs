@@ -130,8 +130,8 @@ namespace TNS.BL.UnlManagers
             UnlTradingData.Longs = PositionDataDic.Values.Where(pd=>pd.Position>0).Sum(pd => pd.Position);
             //if(Symbol == "AMZN") { }//for testing
 
-            UnlTradingData.IVWeightedAvg = PositionDataDic.Values.Sum(pd => pd.IV * Math.Abs(pd.Position))/ 
-                PositionDataDic.Values.Sum(pd => Math.Abs(pd.Position));
+            UnlTradingData.IVWeightedAvg = PositionDataDic.Values.Sum(pd => pd.IV * pd.Quantity) /
+                                           PositionDataDic.Values.Sum(pd => pd.Quantity);
             UnlTradingData.SetLastUpdate();
 
         }

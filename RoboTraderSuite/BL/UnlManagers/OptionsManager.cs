@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using DAL;
+using Infra;
 using Infra.Bus;
 using Infra.Enum;
 using log4net;
@@ -35,7 +37,35 @@ namespace TNS.BL.UnlManagers
             var opDataExist = OptionDataDic.ContainsKey(optionKey);
             return opDataExist ? OptionDataDic[optionKey] : null;
         }
-
+        public OptionData GetATMOptionData(DateTime expiry, EOptionType optionType)
+        {
+            const double epsilon = 0.005;
+            //Get all the options nearest the ATM
+            var options = OptionDataDic.Values
+                .Where(od => od.Expiry == expiry && od.OptionContract.OptionType == optionType &&
+                             od.DeltaOffsetFromATM < 0.05).ToList();
+            var minDeltaOffset = options.Min(od => od.DeltaOffsetFromATM);
+            var atmOptionData = options.FirstOrDefault(od => od.DeltaOffsetFromATM < (minDeltaOffset + epsilon));
+            if(atmOptionData == null)
+                throw new Exception("ATM Option didn't found. check your calculation!!!");
+            return atmOptionData;
+        }
+        /// <summary>
+        /// Check if there is any option that close enugh to the ATM option.
+        /// </summary>
+        /// <param name="optionType"></param>
+        /// <param name="expiryDate"></param>
+        /// <returns></returns>
+        public bool CheckForATMOptions(EOptionType optionType, DateTime expiryDate)
+        {
+            //
+            var exist = OptionDataDic.Values
+                .Any(op => op.Expiry == expiryDate &&
+                           op.OptionContract.OptionType == optionType &&
+                           op.DeltaOffsetFromATM < AllConfigurations.AllConfigurationsObject.Trading
+                               .MaxDeltaOffsetAllowed);
+            return exist;
+        }
         public override bool HandleMessage(IMessage message)
         {
             bool result = base.HandleMessage(message);

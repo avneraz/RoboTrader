@@ -13,6 +13,7 @@ namespace Infra.Enum
     {
         Unknoen,
         Open,
-        Close
+        Close,
+        AllStatus
     }
 }

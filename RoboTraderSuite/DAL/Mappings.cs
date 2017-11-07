@@ -181,6 +181,7 @@ namespace DAL
             Map(x => x.OrderStatus);
             Map(x => x.Commission);
             Map(x => x.MaintMargin);
+            Map(x => x.LastUpdateTime);
             Component(x => x.Order);
         }
     }

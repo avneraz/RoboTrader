@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using DAL;
 using log4net;
 using TNS.API.ApiDataObjects;
@@ -89,8 +90,8 @@ namespace TNS.BL
 
                     }
                     PropagateMessageToAdequateUnlManager(optionData);
-                    _dbWriter.Enqueue(message, false);
-                   
+                    WriteToDB(message);
+
                     break;
                 case EapiDataTypes.PositionData:
                     var posData = (OptionsPositionData) message;
@@ -99,21 +100,21 @@ namespace TNS.BL
                     if (posData != null && posData.HandledByPositionDataBuilder)
                         break;
                     PropagateMessageToAdequateUnlManager(message);
-                    _dbWriter.Enqueue(message, false);
+                    WriteToDB(message);
                     break;
                 case EapiDataTypes.OrderStatus:
                 case EapiDataTypes.OrderData:
                 case EapiDataTypes.SecurityContract:
                     PropagateMessageToAdequateUnlManager(message);
-                    _dbWriter.Enqueue(message, false);
+                    WriteToDB(message);
                     break;
                 case EapiDataTypes.SecurityData:
                     _managedSecuritiesManager.Enqueue(message, false);
                    
                     //ForTesting: if(securityData.SecurityContract.Symbol == "VIX"){ }
                     PropagateMessageToAllUnlManagers(message);
-                  
-                    _dbWriter.Enqueue(message, false);
+
+                    WriteToDB(message);
                     break;
                 case EapiDataTypes.BrokerConnectionStatus:
                     var statusMessage = message as BrokerConnectionStatusMessage;
@@ -123,7 +124,7 @@ namespace TNS.BL
                     break;
                 case EapiDataTypes.UnlTradingData:
                     MarginManager.UpdateUnlTradingData((UnlTradingData) message);
-                    _dbWriter.Enqueue(message, false);
+                    WriteToDB(message);
                     break;
                 case EapiDataTypes.MarginData:
                     var marginData = (MarginData) message;
@@ -131,9 +132,26 @@ namespace TNS.BL
                         _unlManagersDic[marginData.Symbol].Enqueue(marginData,false);
                     break;
                 case EapiDataTypes.UnlOption:
-                    _dbWriter.Enqueue(message, false);
+                    WriteToDB(message);
                     break;
             }
+        }
+
+        private UNLManager UnlManager => _unlManager ??
+                                         (_unlManager = _unlManagersDic.Values.FirstOrDefault() as UNLManager);
+
+        private void WriteToDB(IMessage message)
+        {
+            try
+            {
+                if (UnlManager.IsNowExtendedWorkingTime)
+                    _dbWriter.Enqueue(message, false);
+            }
+            catch
+            {
+                _dbWriter.Enqueue(message, false);
+            }
+           
         }
 
         private void PropagateMessageToAdequateUnlManager(IMessage message)
@@ -173,6 +191,8 @@ namespace TNS.BL
         }
 
         private int _optionDataHandledCount;
+        private  UNLManager _unlManager;
+
         private void SendMessageToUIDataBroker(IMessage message)
         {
             switch (message.APIDataType)

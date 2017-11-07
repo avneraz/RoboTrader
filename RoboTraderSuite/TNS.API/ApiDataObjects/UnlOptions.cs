@@ -36,6 +36,7 @@ namespace TNS.API.ApiDataObjects
             }
         }
 
+        public DateTime Expiry => GetExpiryDateFromOptionKey();
         private DateTime GetExpiryDateFromOptionKey()
         {
             var pos = OptionKey.IndexOf(" ");

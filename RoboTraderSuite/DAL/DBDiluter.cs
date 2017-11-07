@@ -30,7 +30,7 @@ namespace DAL
 
                 DateTime endDate = DateTime.Today;
 
-                count = DiluteOptionsFromAllUnLs(startDate, endDate);
+                count = DiluteOptionsFromAllUnLs(startDate, endDate);//
                 DiluteSecuritiesFromAllUnLs(startDate, endDate);
 
                 //Update DB
@@ -64,6 +64,8 @@ namespace DAL
 
         public int DiluteOneOptionPerMinute(string symbol, DateTime startDate, DateTime endDate)
         {
+            //endDate = new DateTime(2017, 11, 1, 0, 1, 0);
+            //startDate = new  DateTime(2017,10,31,0,1, 0);
             startDate = startDate.Date;
             DateTime dueDate = startDate;
             int counter = 0;
@@ -80,7 +82,7 @@ namespace DAL
                         .Where(optionData =>
                             optionData.OptionContract.Symbol.Equals(symbol) &&
                             optionData.LastUpdate >= theDate &&
-                            optionData.LastUpdate < theDate.AddHours(4)).Take(100000) .ToList();// &&
+                            optionData.LastUpdate < theDate.AddHours(4))/*.Take(100000)*/ .ToList();// &&
                             //optionData.Account.Equals(AllConfigurations.AllConfigurationsObject
                             //    .Application.MainAccount)).ToList() /*.Take(100000)*/;
 
@@ -136,7 +138,7 @@ namespace DAL
         public int DiluteSecuritiesFromAllUnLs(DateTime startDate,DateTime endDate)
         {
             Logger.InfoFormat("Start dilute securities from DB.");
-
+            //startDate = new DateTime(2017, 01, 30, 0, 1, 0);
             List<ManagedSecurity> activeUNLList = _session.Query<ManagedSecurity>()
                 .Where(contract => contract.IsActive).ToList();
 
@@ -144,6 +146,7 @@ namespace DAL
 
             foreach (var managedSecurity in activeUNLList)
             {
+                //if(managedSecurity.Symbol.Equals("AMZN") == false ) continue;
                 count += DiluteOneSecurityPerMinute(managedSecurity.Symbol, startDate, endDate);
             }
             return count;

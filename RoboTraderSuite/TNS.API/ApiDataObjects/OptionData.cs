@@ -1,4 +1,5 @@
 ﻿using System;
+using Infra;
 using Infra.Bus;
 using Infra.Enum;
 using Infra.Extensions;
@@ -8,7 +9,11 @@ namespace TNS.API.ApiDataObjects
 {
     public class OptionData : BaseSecurityData
     {
-
+        /// <summary>
+        /// The largest allowed offset from ATM option == 0.07;
+        /// </summary>
+        private static readonly double MaxDeltaOffsetAllowed =
+            AllConfigurations.AllConfigurationsObject.Trading.MaxDeltaOffsetAllowed;
         public override EapiDataTypes APIDataType => EapiDataTypes.OptionData;
         public override ContractBase GetContract()
         {
@@ -26,6 +31,8 @@ namespace TNS.API.ApiDataObjects
         public double DeltaAbsValue => Math.Abs(Delta);
         //Get the differnce of the delta and ATM delta (50 is the ideal.)
         public double DeltaOffsetFromATM => Math.Abs(DeltaAbsValue - 0.5);
+
+        public bool IsDeltaOutOfATMLimit => DeltaOffsetFromATM > MaxDeltaOffsetAllowed;
         public double Gamma { get; set; }
 
         public double Vega { get; set; }

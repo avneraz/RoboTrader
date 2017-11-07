@@ -280,7 +280,21 @@ namespace TNS.BL.UnlManagers
                 return IsWorkingDay && now >= StartTradingTimeLocal && now < EndTradingTimeLocal;
             }
         }
-       private Dictionary<ETradingTimeEventType, TradingTimeEvent> TradingTimeEventDic { get; } =
+        /// <summary>
+        /// Get indication if now is extended working time by 30 minutes :
+        /// ==> between StartTrading - 30 minutes  and EndTrading + 30 minutes!
+        /// </summary>
+        public bool IsNowExtendedWorkingTime
+        {
+            get
+            {
+                DateTime now = DateTime.Now;
+
+                return IsWorkingDay && now >= StartTradingTimeLocal.AddMinutes(-30) && now < EndTradingTimeLocal.AddMinutes(30);
+            }
+        }
+
+        private Dictionary<ETradingTimeEventType, TradingTimeEvent> TradingTimeEventDic { get; } =
             new Dictionary<ETradingTimeEventType, TradingTimeEvent>();
         /// <summary>
         /// Evaluate the trading events according to the trading time of the UNL.

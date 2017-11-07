@@ -637,5 +637,25 @@ namespace TNS.Controls
             });
         }
 
+        private void iShowUNLOptions_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            try
+            {
+                var unlTradingData = GetSelectedUnlTradingData();
+                if (unlTradingData == null) throw new Exception("There is no UNL Data!!!");
+                var symbol = unlTradingData.Symbol;
+
+                var unlOptionsSelector = new UNLOptionsSelectorControl {Symbol = symbol};
+                unlOptionsSelector.ShowControlInContainer(this);
+                
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+    
     }
 }

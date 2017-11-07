@@ -67,7 +67,10 @@ namespace Infra
             {
                 return _unlSymbolsList ?? (_unlSymbolsList = UNLSymbolsList.Split(';')); 
             }
-
+            /// <summary>
+            /// The largest allowed offset from ATM option
+            /// </summary>
+            public double MaxDeltaOffsetAllowed { get; set; }
             public double MaxDeltaAllowed { get; set; }
             public double MinDeltaAllowed { get; set; }
             /// <summary>

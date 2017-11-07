@@ -67,7 +67,7 @@ namespace Infra.Bus
             }
         }
 
-        public void Enqueue(IMessage message, bool duplicate=true)
+        public virtual void Enqueue(IMessage message, bool duplicate=true)
         {
             _queue.Enqueue(duplicate ? message.Copy() : message);
         }

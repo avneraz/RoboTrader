@@ -128,6 +128,12 @@
     <Compile Include="UNLOptionsControl.Designer.cs">
       <DependentUpon>UNLOptionsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UNLOptionsSelectorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UNLOptionsSelectorControl.Designer.cs">
+      <DependentUpon>UNLOptionsSelectorControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UnlTradingView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -180,6 +186,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UNLOptionsControl.resx">
       <DependentUpon>UNLOptionsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UNLOptionsSelectorControl.resx">
+      <DependentUpon>UNLOptionsSelectorControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UnlTradingView.resx">
       <DependentUpon>UnlTradingView.cs</DependentUpon>

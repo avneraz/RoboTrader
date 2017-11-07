@@ -33,6 +33,7 @@ namespace TNS.BL
             PositionNeedToOptimized?.Invoke(message);
         }
         public static AppManager AppManagerSingleTonObject { get; private set; }
+
         private static readonly ILog Logger = LogManager.GetLogger(typeof(AppManager));
         private void InitalizeUnhandledExceptionHandler()
         {
@@ -231,6 +232,7 @@ namespace TNS.BL
                     MinPriceStep = 0.01,
                     MaxDeltaAllowed = 0.56,
                     MinDeltaAllowed = 0.43,
+                    MaxDeltaOffsetAllowed = 0.07
                 }
             };
 

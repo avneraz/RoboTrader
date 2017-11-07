@@ -34,15 +34,22 @@ namespace TNS.BL.UnlManagers
             UNLManager = AppManager.AppManagerSingleTonObject.UNLManagerDic[Symbol] as UNLManager;
         }
 
-
-       
+        /// <summary>
+        /// The largest allowed offset from ATM option == 0.07;
+        /// </summary>
+        private static readonly double MaxDeltaOffsetAllowed =
+            AllConfigurations.AllConfigurationsObject.Trading.MaxDeltaOffsetAllowed;
         /// <summary>
         /// MAX_DELTA_OFFSET = 0.55;
         /// </summary>
-        private static readonly double MaxDeltaOffset = AllConfigurations.AllConfigurationsObject.Trading.MaxDeltaAllowed;//0.45;
+        private static readonly double MaxDeltaOffset =
+            AllConfigurations.AllConfigurationsObject.Trading.MaxDeltaAllowed;//0.55;
 
-        //MIN_DELTA_OFFSET = 0.45;
-        private static readonly double MinDeltaOffset = AllConfigurations.AllConfigurationsObject.Trading.MinDeltaAllowed;//0.45;
+        /// <summary>
+        /// MIN_DELTA_OFFSET = 0.45;
+        /// </summary>
+        private static readonly double MinDeltaOffset =
+            AllConfigurations.AllConfigurationsObject.Trading.MinDeltaAllowed;//0.45;
 
         private string Symbol { get; }
         private UNLManager UNLManager { get; }
@@ -130,6 +137,7 @@ namespace TNS.BL.UnlManagers
 
         private bool PrepareForOptimization(out List<OptionsPositionData> outLimitList, out bool doForPutPositions, out bool doForCallPositions)
         {
+            var atmOption = UNLManager.OptionsManager.GetATMOptionData(ExpiryDate, EOptionType.Call);
             //Check for trading time, Don't act if now isn't working time.
             if ((UNLManager.IsNowWorkingTime == false) && (UNLManager.IsSimulatorAccount == false))
                 throw new Exception("The operation can't be done now! it can be done only within working time.");
@@ -147,8 +155,8 @@ namespace TNS.BL.UnlManagers
                 throw new Exception($"{Symbol}: There is no out of limit Positions!");
             }
 
-            doForPutPositions = CheckForATMOptions(EOptionType.Put);
-            doForCallPositions = CheckForATMOptions(EOptionType.Call);
+            doForPutPositions = UNLManager.OptionsManager.CheckForATMOptions(EOptionType.Put, ExpiryDate);
+            doForCallPositions = UNLManager.OptionsManager.CheckForATMOptions(EOptionType.Call, ExpiryDate);
             if (!doForCallPositions && !doForPutPositions)
                 throw new Exception("There are no ATM Positions!!");
                 //return false;
@@ -166,33 +174,15 @@ namespace TNS.BL.UnlManagers
         private string _shutDownTaskId;
         private bool GetOutOfLimitPositions(out List<OptionsPositionData> outLimitList)
         {
-            outLimitList = null;
-            var positionList = UNLManager.PositionsDataBuilder.PositionDataDic.Values
-                .Where(pd => pd.Position < 0 && pd.OptionData.Expiry == ExpiryDate).ToList();
-            if (positionList.Count == 0)
-                return false;
-            //Check for options out of the 10% percants.
-            //Order by: The first will be with delta that is closest to the Ideal delta
-            outLimitList = positionList
-                .Where(p => p.OptionData.DeltaAbsValue >= MaxDeltaOffset ||
-                            p.OptionData.DeltaAbsValue <= MinDeltaOffset)
-                .OrderByDescending(p => p.OptionData.DeltaOffsetFromATM).ToList();
+            outLimitList = UNLManager.PositionsDataBuilder.PositionDataDic.Values
+                .Where(pd => pd.Position < 0 && pd.OptionData.Expiry == ExpiryDate)
+                .Where(p => p.OptionData.IsDeltaOutOfATMLimit)
+                .OrderBy(p => p.OptionData.DeltaOffsetFromATM).ToList();
 
             return outLimitList.Count >= 1;
         }
 
-        private bool CheckForATMOptions(EOptionType optionType)
-        {
-            //Check if there is any other option that can be replace the out of limit existing option.
-            var exist = UNLManager.OptionsManager.OptionDataDic.Values
-                .Any(op => op.Expiry == ExpiryDate && 
-                    op.OptionContract.OptionType == optionType &&
-                    op.DeltaAbsValue < MaxDeltaOffset &&
-                    op.DeltaAbsValue > MinDeltaOffset);
-
-
-            return exist;
-        }
+       
         /// <summary>
         /// Waiting for notifications from the OptionNegotiator and sell ATM option.
         /// </summary>
