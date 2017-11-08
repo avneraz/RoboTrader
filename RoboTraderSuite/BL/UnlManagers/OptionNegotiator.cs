@@ -137,7 +137,7 @@ namespace TNS.BL.UnlManagers
             TradingCycleIndex = 0;
         }
 
-        private bool IsUNLGrater400 => UnlManager.UnlTradingData.UnderlinePrice > 400;//OptionData.UnderlinePrice > 400;
+        private bool IsUNLGrater400 => UnlManager.UnlTradingData.Price > 400;//OptionData.Price > 400;
         public double MinPriceStep => AllConfigurations.AllConfigurationsObject.Trading.MinPriceStep;
 
         private void CalculateNextCurrentLimitPrice()

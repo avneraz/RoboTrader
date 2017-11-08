@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
 using DAL;
 using log4net;
 using TNS.API.ApiDataObjects;
 using Infra.Bus;
 using Infra.Enum;
-using log4net.Repository.Hierarchy;
 using TNS.BL.Analysis;
 using TNS.BL.UnlManagers;
 
@@ -15,11 +12,6 @@ namespace TNS.BL
 {
     public class Distributer : SimpleBaseLogic
     {
-
-        public Distributer()
-        {
-            
-        }
         public void SetManagers(Dictionary<string, SimpleBaseLogic> unlManagerDic,
             AccountManager accountManager, ManagedSecuritiesManager managedSecuritiesManager,
             DBWriter writer, MarginManager marginManager)
@@ -97,7 +89,7 @@ namespace TNS.BL
                     var posData = (OptionsPositionData) message;
                     //in case that it was handled already, dont handle it agian, it can happen
                     //becasue the PositionDataBuilder send the position data again
-                    if (posData != null && posData.HandledByPositionDataBuilder)
+                    if (posData.HandledByPositionDataBuilder)
                         break;
                     PropagateMessageToAdequateUnlManager(message);
                     WriteToDB(message);

@@ -4,7 +4,6 @@ using System.Linq;
 using Infra;
 using Infra.Bus;
 using Infra.Enum;
-using Infra.Extensions;
 using log4net;
 using TNS.API;
 using TNS.API.ApiDataObjects;
@@ -36,7 +35,7 @@ namespace TNS.BL.UnlManagers
             //PendingTradingTimeEventDic = new Dictionary<ETradingTimeEventType, TradingTimeEvent>();
             Logger.InfoFormat("UNLManager({0}) was created!", managedSecurity.Symbol);
             Distributer = distributer;
-            UnlTradingData = new UnlTradingData(ManagedSecurity.Symbol);
+            UnlTradingData = new UnlTradingData(ManagedSecurity);
         }
 
 
@@ -56,7 +55,7 @@ namespace TNS.BL.UnlManagers
         protected override string ThreadName => ManagedSecurity.Symbol + "_UNLManager_Work";
 
         public Dictionary<EapiDataTypes, List<ISubscibeMessage>> SubscriberDic { get; set; }
-        private object _subscriberSync = new object();
+        private readonly object _subscriberSync = new object();
         #endregion
 
         #region Methods
@@ -109,9 +108,7 @@ namespace TNS.BL.UnlManagers
         protected override void HandleMessage(IMessage message)
         {
             //if (Symbol.Equals("MCD"))//For test
-            //{
-                
-            //}
+            //{}
             switch (message.APIDataType)
             {
                 case EapiDataTypes.AccountSummaryData:
@@ -125,17 +122,13 @@ namespace TNS.BL.UnlManagers
                     break;
                 case EapiDataTypes.SecurityData:
                     var securityData = (SecurityData) message;
-                    if (securityData.SecurityContract.Symbol == "VIX")
+                   
+                    if (securityData.SecurityContract.Symbol == ManagedSecurity.Symbol)
                     {
-                        UnlTradingData.VIX = securityData.LastPrice;
-                        UnlTradingData.SetLastUpdate();
-                    }
-                    else if (securityData.SecurityContract.Symbol == ManagedSecurity.Symbol)
-                    {
-                        UnlTradingData.UnderlinePrice = securityData.LastPrice;
+                        UnlTradingData.Price = securityData.LastPrice;
                         UnlTradingData.UnlAsk = securityData.AskPrice;
                         UnlTradingData.UnlBid = securityData.BidPrice;
-                        UnlTradingData.UnlBasePrice = securityData.BasePrice;
+                        UnlTradingData.OpenningPrice = securityData.BasePrice;
                         UnlTradingData.UnlChange = securityData.Change;
                         UnlTradingData.UnlHighestPrice = securityData.HighestPrice;
                         UnlTradingData.UnlLowestPrice = securityData.LowestPrice;
@@ -166,7 +159,6 @@ namespace TNS.BL.UnlManagers
                 case EapiDataTypes.MarginData:
                     var marginData = (MarginData) message;
                     UnlTradingData.Margin = marginData.Margin;
-                    UnlTradingData.MaxAllowedMargin = marginData.MarginMaxAllowed;
                     UnlTradingData.SetLastUpdate();
                     break;
                 case EapiDataTypes.TransactionData:
@@ -219,7 +211,7 @@ namespace TNS.BL.UnlManagers
             //Start repeated task (every 1 sec) to Distributer:
             AddScheduledTask(TimeSpan.FromSeconds(10),
                 () => { AddScheduledTask(TimeSpan.FromSeconds(1),
-                    () => { Distributer.Enqueue(UnlTradingData); }, true); },false);
+                    () => { Distributer.Enqueue(UnlTradingData); }, true); });
         }
 
 
@@ -266,7 +258,8 @@ namespace TNS.BL.UnlManagers
         /// <summary>
         /// Get indication if today is working day for the UNL security.
         /// </summary>
-        public bool IsWorkingDay => SecurityContract.IsWorkingDay;
+        public bool IsWorkingDay => SecurityContract != null && SecurityContract.IsWorkingDay;
+
         public DateTime NextWorkingTime => SecurityContract.NextWorkingTime;
         public DateTime StartTradingTimeLocal => SecurityContract.StartTradingTimeLocal;
         public DateTime EndTradingTimeLocal => SecurityContract.EndTradingTimeLocal;

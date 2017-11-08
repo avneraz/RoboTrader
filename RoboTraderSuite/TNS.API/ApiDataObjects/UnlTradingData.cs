@@ -10,19 +10,30 @@ namespace TNS.API.ApiDataObjects
     /// </summary>
     public class UnlTradingData : IMessage
     {
+        private double _dailyPnL;
+
         public UnlTradingData()
         {
         }
 
-        public UnlTradingData(string symbol)
+        public UnlTradingData(ManagedSecurity security)
         {
-            Symbol = symbol;
+            //Symbol = security.Symbol;
+            Security = security;
             SetLastUpdate();
         }
+
+        public ManagedSecurity Security { get; protected set; }
+        public int Id { get; protected set; }
         public EapiDataTypes APIDataType => EapiDataTypes.UnlTradingData;
 
         #region Object Identification characteristics
-        public string Symbol { get; set; }
+
+        public string Symbol
+        {
+            get => Security.Symbol;
+            set => Security.Symbol = value;
+        }
 
         /// <summary>
         /// Holding the last date time that data and calculated values were updated.
@@ -33,12 +44,14 @@ namespace TNS.API.ApiDataObjects
         {
             LastUpdate = DateTime.Now;
         }
-        public int Shorts{get;set;}
-        public int Longs{get;set;}
+
+        public int Shorts { get; set; }
+        public int Longs { get; set; }
         public ETradingState TradingState { get; set; }
+
         #endregion
 
-        
+
         #region Greek
 
 
@@ -46,60 +59,75 @@ namespace TNS.API.ApiDataObjects
         public double GammaTotal { get; set; }
         public double ThetaTotal { get; set; }
         public double VegaTotal { get; set; }
-        public double MaxAllowedMargin { get; set; }
-        /// <summary>
-        /// Hold the additional Delta that can be added by the current sent orders.
-        /// </summary>
-        public double DeltaTotalSentOrders { get; set; }
 
-        /// <summary>
-        /// Hold the additional Gamma that can be added by the current sent orders.
-        /// </summary>
-        public double GammaTotalSentOrders { get; set; }
+
 
         /// <summary>
         /// Hold the calculated IV of all positions taking part on trading.<para></para>
         /// = SumOfAll[IV(option)X Position#] / SumOfAll(Position#).
         /// </summary>
         public double IVWeightedAvg { get; set; }
+
         /// <summary>
-        /// The last known VIX, normally it's updated by the associated manager (TradingManager).
+        /// The IV on the Call ATM option.
         /// </summary>
-        public double VIX  { get; set; }
+        public double ImVolOnCallATM { get; set; }
+
+        /// <summary>
+        /// The IV on the Put ATM option.
+        /// </summary>
+        public double ImVolOnPutATM { get; set; }
+        ///// <summary>
+        ///// The last known VIX, normally it's updated by the associated manager (TradingManager).
+        ///// </summary>
+        //public double VIX  { get; set; }
 
         #endregion
 
         #region Underline Properties
-        public double UnderlinePrice { get; set; }
 
-        public double UnlBasePrice { get; set; }
+        public double Price { get; set; }
+
+        public double OpenningPrice { get; set; }
 
         public double UnlAsk { get; set; }
         public double UnlBid { get; set; }
         public double UnlChange { get; set; }
+
         #endregion
 
         public double MarketValue { get; set; }
         public double CostTotal { get; set; }
         public double PnLTotal => MarketValue + CostTotal;
-        public double CommisionTotal{ get; set; }
-        public double LastDayPnL { get; set; }
-        public double DailyPnL => PnLTotal - LastDayPnL;
+        public double CommisionTotal { get; set; }
+
+        public double LastDayPnL
+        {
+            get => Security.LastDayPnL;
+            set => Security.LastDayPnL = value;
+        }
+
+        public double DailyPnL
+        {
+            get
+            {
+                _dailyPnL = CostTotal + MarketValue;
+                return _dailyPnL;
+            }
+            set => _dailyPnL = value;
+        }
 
         #region Trading Limitation parameters
-        /// <summary>
-        /// Gets The max absolute delta allowed on normal trading according the configuration and Margin.
-        /// </summary>
-        public int MaxAbsoluteDelta => (int)Math.Max(((AllConfigurations.AllConfigurationsObject.Trading.DeltaLossThreshold / 100) * Margin), 100);
+
+        public double MaxAllowedMargin {
+            get => Security.MarginMaxAllowed;
+            set => Security.MarginMaxAllowed = value;
+        }
 
         /// <summary>
         /// Gets or sets the actual margin for this underline.
         /// </summary>
         public double Margin { get; set; }
-        /// <summary>
-        /// Hold the additional Margin that can be added by the current sent orders.
-        /// </summary>
-        public double MarginSentOrders { get; set; }
 
         public double UnlHighestPrice { get; set; }
         public double UnlLowestPrice { get; set; }
@@ -107,7 +135,7 @@ namespace TNS.API.ApiDataObjects
         #endregion
 
         public string MainInfo =>
-            $"{UnlChange:P}    Base: {UnlBasePrice:N}          Bid: {UnlBid:N}   Ask: {UnlAsk:N}    Highest: {UnlHighestPrice:N},   Lowest: {UnlLowestPrice:N}";
+            $"{UnlChange:P}    Base: {OpenningPrice:N}          Bid: {UnlBid:N}   Ask: {UnlAsk:N}    Highest: {UnlHighestPrice:N},   Lowest: {UnlLowestPrice:N}";
 
        
     }

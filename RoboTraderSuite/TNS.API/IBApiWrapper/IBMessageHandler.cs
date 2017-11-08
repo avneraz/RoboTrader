@@ -276,6 +276,7 @@ namespace TNS.API.IBApiWrapper
                         break;
                     case TickType.CLOSE:
                         securityData.BasePrice = price > int.MaxValue ? -1 : price;
+                        //If last price still not update set it with the base price:
                         if ((securityData.LastPrice <= 0) && (securityData.BasePrice > 0))
                             securityData.LastPrice = securityData.BasePrice;
                         break;

@@ -44,6 +44,8 @@ namespace TNS.BL.UnlManagers
             var options = OptionDataDic.Values
                 .Where(od => od.Expiry == expiry && od.OptionContract.OptionType == optionType &&
                              od.DeltaOffsetFromATM < 0.05).ToList();
+            if (options.Count == 0)
+                return null;
             var minDeltaOffset = options.Min(od => od.DeltaOffsetFromATM);
             var atmOptionData = options.FirstOrDefault(od => od.DeltaOffsetFromATM < (minDeltaOffset + epsilon));
             if(atmOptionData == null)
@@ -56,7 +58,7 @@ namespace TNS.BL.UnlManagers
         /// <param name="optionType"></param>
         /// <param name="expiryDate"></param>
         /// <returns></returns>
-        public bool CheckForATMOptions(EOptionType optionType, DateTime expiryDate)
+        public bool CheckForATMOption(EOptionType optionType, DateTime expiryDate)
         {
             //
             var exist = OptionDataDic.Values
@@ -65,6 +67,15 @@ namespace TNS.BL.UnlManagers
                            op.DeltaOffsetFromATM < AllConfigurations.AllConfigurationsObject.Trading
                                .MaxDeltaOffsetAllowed);
             return exist;
+        }
+        /// <summary>
+        /// Get the Implied Volatility on the ATM option.
+        /// </summary>
+        public double GetImVolOnATMOption(EOptionType optionType, DateTime expiryDate)
+        {
+            var option = GetATMOptionData(expiryDate, optionType);
+            if (option != null) return option.ImpliedVolatility;
+            return 0;
         }
         public override bool HandleMessage(IMessage message)
         {

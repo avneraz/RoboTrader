@@ -200,14 +200,10 @@ namespace DAL
             Map(c => c.IsActive);
             Map(c => c.OptionChain);
             Map(c => c.MarginMaxAllowed);
+            Map(c => c.LastDayPnL);
 
         }
     }
-
- 
-
-  
-
     class TransactionDataMapper : ClassMap<TransactionData>
     {
         public TransactionDataMapper()
@@ -258,6 +254,37 @@ namespace DAL
             Map(c => c.LastDBDillution);
             Map(c => c.LastNetLiquidition).Column("LastNetLiquidition");
             Map(c => c.LastUpdate);
+        }
+    }
+
+    class UnlTradingDataMapper : ClassMap<UnlTradingData>
+    {
+        public UnlTradingDataMapper()
+        {
+            Table("UNL_TRADING_DATA");
+            Id(x => x.Id);
+            Map(c => c.Symbol);
+            Map(c => c.Shorts);
+            Map(c => c.DeltaTotal);
+            Map(c => c.GammaTotal);
+            Map(c => c.ThetaTotal);
+            Map(c => c.VegaTotal);
+            Map(c => c.MaxAllowedMargin);
+            Map(c => c.Margin);
+            Map(c => c.IVWeightedAvg);
+            Map(c => c.ImVolOnCallATM);
+            Map(c => c.ImVolOnPutATM);
+            Map(c => c.Price);
+            Map(c => c.OpenningPrice).Column("OPENING_PRICE");
+            Map(c => c.UnlBid).Column("BID");
+            Map(c => c.UnlAsk).Column("ASK");
+            Map(c => c.DailyPnL);
+            Map(c => c.LastDayPnL);
+            Map(c => c.LastUpdate);
+            //Map(c => c.Shorts);
+            //Map(c => c.Shorts);
+            //Map(c => c.Shorts);
+
         }
     }
 }

@@ -21,7 +21,7 @@ namespace TNS.API.ApiDataObjects
         public bool IsActive { get; set; }
         public bool OptionChain { get; set; }
         public double MarginMaxAllowed { get; set; }
-
+        public double LastDayPnL { get; set; }
         public EapiDataTypes APIDataType => EapiDataTypes.ManagedSecurity;
     }
 }

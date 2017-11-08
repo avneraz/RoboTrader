@@ -61,6 +61,7 @@ namespace TNS.BL
 
         public void UpdateMaxMargin(List<ManagedSecurity> managedSecuritiesList)
         {
+            
             foreach (var managedSecurity in managedSecuritiesList)
             {
                 if (MarginDataDic.ContainsKey(managedSecurity.Symbol) == false) continue;
@@ -68,7 +69,7 @@ namespace TNS.BL
                 if (marginData == null)
                 {
                     var ex = new ArgumentNullException(nameof(marginData));
-                    Logger.Error($"There is no margin data for '{managedSecurity.Symbol}'!");
+                    Logger.Error($"There is no margin data for '{managedSecurity.Symbol}'!",ex);
                     continue;
                 }
                 marginData.MarginMaxAllowed = managedSecurity.MarginMaxAllowed;
@@ -119,13 +120,23 @@ namespace TNS.BL
                 if (marginData.PutPositionCount >= marginData.CallPositionCount)
                 {
                     //First calculate the Put List
-                    marginSum = putList.Sum(posData => CalculateMargin(unlRate,
-                                                           posData.OptionData.OptionContract.Strike, false,
-                                                           EOptionType.Put) * Math.Abs(posData.Position));
+                    marginSum = putList.Sum(posData =>
+                    {
+                        if (posData.OptionData != null)
+                            return CalculateMargin(unlRate,
+                                       posData.OptionData.OptionContract.Strike, false,
+                                       EOptionType.Put) * Math.Abs(posData.Position);
+                        return 0;
+                    });
                     //Than calculate the call, as a mate.
-                    marginSum += callList.Sum(posData => CalculateMargin(unlRate,
-                                                             posData.OptionData.OptionContract.Strike, true) *
-                                                         Math.Abs(posData.Position));
+                    marginSum += callList.Sum(posData =>
+                    {
+                        if (posData.OptionData != null)
+                            return CalculateMargin(unlRate,
+                                       posData.OptionData.OptionContract.Strike, true) *
+                                   Math.Abs(posData.Position);
+                        else return 0;
+                    });
                 }
                 else
                 {
@@ -180,7 +191,7 @@ namespace TNS.BL
             var symbol = positionData.OptionData.Symbol;
             CalculateUNLRequierdMargin(symbol);
             var marginData = MarginDataDic[symbol];
-            //double unlRate = positionData.OptionData.UnderlinePrice;
+            //double unlRate = positionData.OptionData.Price;
             var unlRate = _appManager.ManagedSecuritiesManager.Securities[symbol].LastPrice;
             double strike = positionData.OptionContract.Strike;
             EOptionType type = positionData.OptionType;

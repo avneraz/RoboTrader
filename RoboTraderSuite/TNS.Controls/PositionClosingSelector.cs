@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Linq;
 using System.Windows.Forms;
-using DevExpress.XtraBars.Docking2010.DragEngine;
 using Infra.Extensions;
 using TNS.API.ApiDataObjects;
 using TNS.BL;
@@ -60,7 +59,7 @@ namespace TNS.Controls
         {
             UnlTradingData unlTradingData = UnlManager.UnlTradingData;
             lblMarginGain.Text = (_marginData.MarginPerCouple * (double)numCouplesToClose.Value).ToString("C0");
-            lblHeader.Text = $"{_symbol} - {unlTradingData.UnderlinePrice} Margin = {unlTradingData.Margin:C0}";
+            lblHeader.Text = $"{_symbol} - {unlTradingData.Price} Margin = {unlTradingData.Margin:C0}";
             btnSubmitCloseCouples.Text = $"Close {numCouplesToClose.Value:##} Mate Couple";
             numCouplesToClose.Maximum = _marginData.MateCouplesCount;
             numCouplesToClose.Minimum = 1;
@@ -76,8 +75,8 @@ namespace TNS.Controls
         {
             try
             {
-               UnlManager.TradingManager.CloseMateCouples((int)numCouplesToClose.Value, (DateTime)comBoxExpiries.SelectedItem);
-                ParentForm.Close();
+                UnlManager.TradingManager.CloseMateCouples((int)numCouplesToClose.Value, (DateTime)comBoxExpiries.SelectedItem);
+                ParentForm?.Close();
             }
             catch (Exception ex)
             {
@@ -90,7 +89,7 @@ namespace TNS.Controls
             try
             {
                 UnlManager.TradingManager.CloseEntireShortPositions();
-                ParentForm.Close();
+                ParentForm?.Close();
             }
             catch (Exception ex)
             {

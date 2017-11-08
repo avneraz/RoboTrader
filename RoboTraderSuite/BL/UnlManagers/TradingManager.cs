@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using DAL;
 using Infra;
 using Infra.Enum;
@@ -10,7 +8,6 @@ using Infra.Extensions;
 using log4net;
 using NHibernate;
 using NHibernate.Linq;
-using TNS.API;
 using TNS.API.ApiDataObjects;
 using TNS.BL.DataObjects;
 using TNS.BL.Interfaces;
@@ -120,7 +117,7 @@ namespace TNS.BL.UnlManagers
 
         public void OptimizePositions(DateTime expiryDate)
         {
-            var optimizer = new PositionsOptimizer(this.Symbol, expiryDate);
+            var optimizer = new PositionsOptimizer(Symbol, expiryDate);
             optimizer.OptimizePositions();
         }
         public void PerformPartialOptimization( DateTime expiryDate, int mateCoupleCount)
@@ -239,14 +236,6 @@ namespace TNS.BL.UnlManagers
         }
 
 
-        private bool CheckForOutOfLimitPositions()
-        {
-            return ExpiryDateEnumerable.Any(expiry => UNLManager.PositionsDataBuilder.PositionDataDic.Values.Any(
-                pd => pd.Position < 0 && pd.OptionData.Expiry == expiry &&
-                      (pd.OptionData.DeltaAbsValue >= MaxDeltaOffset ||
-                       pd.OptionData.DeltaAbsValue <= MinDeltaOffset)));
-        }
-
         public override void DoWorkAfterConnection()
         {
             //Don't load the list now because the AccountSummaryData is not yet loaded!! Avner 18/8/2017
@@ -315,8 +304,8 @@ namespace TNS.BL.UnlManagers
             //Add task to check if all the orders done :
            // UNLManager.AddScheduledTaskOnUnl(TimeSpan.FromSeconds(30),(() => ) )
         }
-        private Dictionary<string, OrderData> _pendingCloseDic;
-        private Dictionary<string, OrderData> _pendingSellDic;
+        private readonly Dictionary<string, OrderData> _pendingCloseDic;
+        private readonly Dictionary<string, OrderData> _pendingSellDic;
         private void OrderManager_OrderTradingNegotioationWasTerminated(OrderStatus orderStatus, string orderId)
         {
             if (_pendingSellDic.ContainsKey(orderId))

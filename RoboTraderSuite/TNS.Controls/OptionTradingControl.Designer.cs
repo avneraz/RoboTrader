@@ -349,7 +349,7 @@
             // 
             this.colUnderlinePrice.DisplayFormat.FormatString = "#0.00";
             this.colUnderlinePrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colUnderlinePrice.FieldName = "UnderlinePrice";
+            this.colUnderlinePrice.FieldName = "Price";
             this.colUnderlinePrice.Name = "colUnderlinePrice";
             this.colUnderlinePrice.Width = 41;
             // 

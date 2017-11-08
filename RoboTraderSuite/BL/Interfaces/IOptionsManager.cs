@@ -18,7 +18,15 @@ namespace TNS.BL.Interfaces
         /// <param name="optionType"></param>
         /// <param name="expiryDate"></param>
         /// <returns></returns>
-        bool CheckForATMOptions(EOptionType optionType, DateTime expiryDate);
+        bool CheckForATMOption(EOptionType optionType, DateTime expiryDate);
+
+        /// <summary>
+        /// Get the Implied Volatility on the ATM option.
+        /// </summary>
+        /// <param name="optionType"></param>
+        /// <param name="expiryDate"></param>
+        /// <returns></returns>
+        double GetImVolOnATMOption(EOptionType optionType, DateTime expiryDate);
         Dictionary<string, OptionData> OptionDataDic { get; }
     }
 }

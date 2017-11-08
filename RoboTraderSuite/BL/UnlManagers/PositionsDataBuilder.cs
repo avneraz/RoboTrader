@@ -6,7 +6,6 @@ using Infra.Bus;
 using Infra.Enum;
 using Infra.Extensions;
 using log4net;
-using TNS.API;
 using TNS.API.ApiDataObjects;
 using TNS.BL.Interfaces;
 
@@ -132,9 +131,25 @@ namespace TNS.BL.UnlManagers
 
             UnlTradingData.IVWeightedAvg = PositionDataDic.Values.Sum(pd => pd.IV * pd.Quantity) /
                                            PositionDataDic.Values.Sum(pd => pd.Quantity);
+            
+            CalculateATM_IV();
             UnlTradingData.SetLastUpdate();
-
+            
         }
+
+        private void CalculateATM_IV()
+        {
+            OptionsPositionData firstPosition = PositionDataDic.Values.FirstOrDefault(p=>p.OptionType == EOptionType.Call);
+            if (firstPosition != null)
+                UnlTradingData.ImVolOnCallATM =
+                    OptionsManager.GetImVolOnATMOption(firstPosition.OptionType, firstPosition.Expiry);
+
+            firstPosition = PositionDataDic.Values.FirstOrDefault(p => p.OptionType == EOptionType.Put);
+            if (firstPosition != null)
+                UnlTradingData.ImVolOnPutATM =
+                    OptionsManager.GetImVolOnATMOption(firstPosition.OptionType, firstPosition.Expiry);
+        }
+
         /// <summary>
         /// Get OptionData from OptionManager.
         /// </summary>

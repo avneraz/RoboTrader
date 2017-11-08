@@ -73,7 +73,8 @@ namespace TNS.API.ApiDataObjects
             {
                 try
                 {
-                    return AverageCost / OptionData.Multiplier;
+                    if (OptionData != null) return AverageCost / OptionData.Multiplier;
+                    return  0;
                 }
                 catch
                 {
