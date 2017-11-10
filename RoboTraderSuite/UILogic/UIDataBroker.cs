@@ -67,7 +67,8 @@ namespace UILogic
                     var unlTradingData = (UnlTradingData)message;
 
                     var existingUnlTradingData =
-                        UnlTradingDataList.FirstOrDefault(data => data.Symbol == unlTradingData.Symbol);
+                        UnlTradingDataList.FirstOrDefault(
+                            data => data != null && data.Symbol != null && data.Symbol == unlTradingData.Symbol);
                     if (existingUnlTradingData == null)
                     {
                         UnlTradingDataList.Add(unlTradingData);

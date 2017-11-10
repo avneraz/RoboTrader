@@ -226,7 +226,7 @@
             this.colUnderlinePrice.Caption = "Unl. P";
             this.colUnderlinePrice.DisplayFormat.FormatString = "#0.00";
             this.colUnderlinePrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colUnderlinePrice.FieldName = "Price";
+            this.colUnderlinePrice.FieldName = "LastPrice";
             this.colUnderlinePrice.Name = "colUnderlinePrice";
             this.colUnderlinePrice.Visible = true;
             this.colUnderlinePrice.VisibleIndex = 12;

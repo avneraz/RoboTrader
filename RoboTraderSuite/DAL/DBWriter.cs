@@ -55,7 +55,11 @@ namespace DAL
 
            // }
         }
-
+        [MessageHandler]
+        protected void HandleUnlTradingData(UnlTradingData data)
+        {
+            HandleSymbolData<SecurityContract>(data);
+        }
         [MessageHandler]
         protected void HandleStockData(SecurityData data)
         {

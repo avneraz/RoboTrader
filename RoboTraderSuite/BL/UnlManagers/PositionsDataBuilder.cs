@@ -7,6 +7,7 @@ using Infra.Enum;
 using Infra.Extensions;
 using log4net;
 using TNS.API.ApiDataObjects;
+using TNS.BL.DataObjects;
 using TNS.BL.Interfaces;
 
 namespace TNS.BL.UnlManagers
@@ -29,8 +30,12 @@ namespace TNS.BL.UnlManagers
             PositionDataDic = new Dictionary<string, OptionsPositionData>();
             OptionsManager = unlManager.OptionsManager;
             Logger.DebugFormat("{0}.OptionsManager created. Thread name: {1}.", Symbol, Thread.CurrentThread.Name);
+            PositionsSummaryData = new PositionsSummaryData();
+            if (UnlTradingData != null)
+                UnlTradingData.PositionsSummaryData = PositionsSummaryData;
         }
 
+        public PositionsSummaryData PositionsSummaryData { get; set; }
         public IOptionsManager OptionsManager { get; }
 
         public Dictionary< string, OptionsPositionData> PositionDataDic { get; }
@@ -97,8 +102,6 @@ namespace TNS.BL.UnlManagers
         {
 
             var contractList = new List<OptionContract>();
-
-            
             foreach (var positionData in PositionDataDic.Values)
             {
                 var key = ((OptionContract) (positionData.GetContract())).OptionKey;
@@ -107,7 +110,9 @@ namespace TNS.BL.UnlManagers
                 //used for UIDataBroker
                 UNLManager.Distributer.Enqueue(positionData, false);
             }
+
             CalculateUnlTradingData();
+            UNLManager.Distributer.Enqueue(UnlTradingData, false);
             if (contractList.Count < 1)
                 return;
 
@@ -119,21 +124,23 @@ namespace TNS.BL.UnlManagers
 
         private void CalculateUnlTradingData()
         {
-            UnlTradingData.CostTotal = PositionDataDic.Values.Sum(pd => pd.TotalCost);
-            UnlTradingData.DeltaTotal = PositionDataDic.Values.Sum(pd => pd.DeltaTotal);
-            UnlTradingData.GammaTotal = PositionDataDic.Values.Sum(pd => pd.GammaTotal);
-            UnlTradingData.ThetaTotal = PositionDataDic.Values.Sum(pd => pd.ThetaTotal);
-            UnlTradingData.VegaTotal = PositionDataDic.Values.Sum(pd => pd.VegaTotal);
-            UnlTradingData.MarketValue = PositionDataDic.Values.Sum(pd => pd.MarketValue);
-            UnlTradingData.Shorts = PositionDataDic.Values.Where(pd=>pd.Position<0).Sum(pd => pd.Position);
-            UnlTradingData.Longs = PositionDataDic.Values.Where(pd=>pd.Position>0).Sum(pd => pd.Position);
-            //if(Symbol == "AMZN") { }//for testing
 
-            UnlTradingData.IVWeightedAvg = PositionDataDic.Values.Sum(pd => pd.IV * pd.Quantity) /
+            UnlTradingData?.SetLastUpdate();
+
+            PositionsSummaryData.CostTotal   = PositionDataDic.Values.Sum(pd => pd.TotalCost);
+            PositionsSummaryData.DeltaTotal  = PositionDataDic.Values.Sum(pd => pd.DeltaTotal);
+            PositionsSummaryData.GammaTotal  = PositionDataDic.Values.Sum(pd => pd.GammaTotal);
+            PositionsSummaryData.ThetaTotal  = PositionDataDic.Values.Sum(pd => pd.ThetaTotal);
+            PositionsSummaryData.VegaTotal   = PositionDataDic.Values.Sum(pd => pd.VegaTotal);
+            PositionsSummaryData.MarketValue = PositionDataDic.Values.Sum(pd => pd.MarketValue);
+            PositionsSummaryData.Shorts      = PositionDataDic.Values.Where(pd=>pd.Position<0).Sum(pd => Math.Abs(pd.Position));
+            PositionsSummaryData.Longs       = PositionDataDic.Values.Where(pd=>pd.Position>0).Sum(pd => pd.Position);
+
+            PositionsSummaryData.IVWeightedAvg = PositionDataDic.Values.Sum(pd => pd.IV * pd.Quantity) /
                                            PositionDataDic.Values.Sum(pd => pd.Quantity);
             
             CalculateATM_IV();
-            UnlTradingData.SetLastUpdate();
+
             
         }
 
@@ -141,12 +148,12 @@ namespace TNS.BL.UnlManagers
         {
             OptionsPositionData firstPosition = PositionDataDic.Values.FirstOrDefault(p=>p.OptionType == EOptionType.Call);
             if (firstPosition != null)
-                UnlTradingData.ImVolOnCallATM =
+                PositionsSummaryData.ImVolOnCallATM =
                     OptionsManager.GetImVolOnATMOption(firstPosition.OptionType, firstPosition.Expiry);
 
             firstPosition = PositionDataDic.Values.FirstOrDefault(p => p.OptionType == EOptionType.Put);
             if (firstPosition != null)
-                UnlTradingData.ImVolOnPutATM =
+                PositionsSummaryData.ImVolOnPutATM =
                     OptionsManager.GetImVolOnATMOption(firstPosition.OptionType, firstPosition.Expiry);
         }
 

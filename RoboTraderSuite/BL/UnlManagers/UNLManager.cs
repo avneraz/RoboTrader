@@ -45,7 +45,7 @@ namespace TNS.BL.UnlManagers
         public UnlTradingData UnlTradingData { get; set; }
         public bool IsConnected => ConnectionStatus == ConnectionStatus.Connected;
         public ConnectionStatus ConnectionStatus { get; private set; }
-        public string Symbol => MainSecurityData != null ? MainSecurityData.GetContract().Symbol : string.Empty;
+        public string Symbol => ManagedSecurity.Symbol;
         public SecurityData MainSecurityData { get; set; }
         public SecurityContract SecurityContract { get; set; }
         private List<IUnlBaseMemberManager> _memberManagersList;
@@ -123,18 +123,13 @@ namespace TNS.BL.UnlManagers
                 case EapiDataTypes.SecurityData:
                     var securityData = (SecurityData) message;
                    
-                    if (securityData.SecurityContract.Symbol == ManagedSecurity.Symbol)
+                    if (securityData.SecurityContract.Symbol == Symbol)
                     {
-                        UnlTradingData.Price = securityData.LastPrice;
-                        UnlTradingData.UnlAsk = securityData.AskPrice;
-                        UnlTradingData.UnlBid = securityData.BidPrice;
-                        UnlTradingData.OpenningPrice = securityData.BasePrice;
-                        UnlTradingData.UnlChange = securityData.Change;
-                        UnlTradingData.UnlHighestPrice = securityData.HighestPrice;
-                        UnlTradingData.UnlLowestPrice = securityData.LowestPrice;
+                        UnlTradingData.UnlSecurityData = securityData;
+                        
                         MainSecurityData = securityData;
                         SendMessageToAllComponents(message);
-                        UnlTradingData.SetLastUpdate();
+                        
                     }
                     break;
                 case EapiDataTypes.OptionData:
@@ -159,7 +154,6 @@ namespace TNS.BL.UnlManagers
                 case EapiDataTypes.MarginData:
                     var marginData = (MarginData) message;
                     UnlTradingData.Margin = marginData.Margin;
-                    UnlTradingData.SetLastUpdate();
                     break;
                 case EapiDataTypes.TransactionData:
                     //Filter other unl messages:

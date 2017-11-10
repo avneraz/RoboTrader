@@ -55,11 +55,11 @@ namespace TNS.API.ApiDataObjects
         {
             get
             {
-               var optionPrice = (AskPrice <= 0) || BidPrice <= 0
+               var optionPrice = (Ask <= 0) || Bid <= 0
                     ? (LastPrice <= 0 && ModelPrice >= 0
                         ? ModelPrice
                         : LastPrice)
-                    : (AskPrice + BidPrice) / 2;
+                    : (Ask + Bid) / 2;
                 return optionPrice;
             }
         }

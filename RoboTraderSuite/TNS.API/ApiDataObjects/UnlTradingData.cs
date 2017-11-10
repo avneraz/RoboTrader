@@ -1,111 +1,90 @@
 ﻿using System;
-using Infra;
-using Infra.Bus;
+using System.Linq;
 using Infra.Enum;
 
 namespace TNS.API.ApiDataObjects
 {
     /// <summary>
-    /// Hold all the trading summary data of all positions of Specific underline security.
+    /// Hold all the trading summary data of all positions of Specific underline managedSecurity.
     /// </summary>
-    public class UnlTradingData : IMessage
+    public class UnlTradingData : SecurityData
     {
         private double _dailyPnL;
+        private SecurityData _unlSecurityData;
+        private double _margin;
+        private PositionsSummaryData _positionsSummaryData;
 
+        /// <summary>
+        /// Used for mapping:
+        /// </summary>
         public UnlTradingData()
         {
         }
 
-        public UnlTradingData(ManagedSecurity security)
+
+        public UnlTradingData(ManagedSecurity managedSecurity, SecurityData unlSecurityData)
         {
-            //Symbol = security.Symbol;
-            Security = security;
+            //Symbol = managedSecurity.Symbol;
+            ManagedSecurity = managedSecurity;
+            UnlSecurityData = unlSecurityData;
             SetLastUpdate();
         }
 
-        public ManagedSecurity Security { get; protected set; }
-        public int Id { get; protected set; }
-        public EapiDataTypes APIDataType => EapiDataTypes.UnlTradingData;
-
-        #region Object Identification characteristics
-
-        public string Symbol
+        public UnlTradingData(ManagedSecurity managedSecurity)
         {
-            get => Security.Symbol;
-            set => Security.Symbol = value;
+            ManagedSecurity = managedSecurity;
         }
 
-        /// <summary>
-        /// Holding the last date time that data and calculated values were updated.
-        /// </summary>
-        public DateTime LastUpdate { get; set; }
+        public new int Id { get; protected set; }
+        public override EapiDataTypes APIDataType => EapiDataTypes.UnlTradingData;
+
+        #region Managed Security
+
+        public ManagedSecurity ManagedSecurity { get; protected set; }
+        //public string Symbol => ManagedSecurity.Symbol;
+
+        public double LastDayPnL => ManagedSecurity.LastDayPnL;
+
+        public double MaxAllowedMargin => ManagedSecurity.MarginMaxAllowed;
+
+        #endregion  Managed Security
+
+        #region SecurityData
+
+        public SecurityData UnlSecurityData
+        {
+            get => _unlSecurityData;
+            set
+            {
+                SetLastUpdate();
+                _unlSecurityData = value;
+                var props = typeof(SecurityData).GetProperties()
+                    .Where(p => p.CanWrite && !p.GetIndexParameters().Any());
+                foreach (var prop in props)
+                {
+                    //if (prop.Name == "Symbol" || prop.Name == "MainInfo" || prop.Name == "APIDataType") continue;
+                    prop.SetValue(this, prop.GetValue(value));
+                }
+            }
+        }
+
+
+        #endregion SecurityData
+
+
+        #region Object Identification characteristics
 
         public void SetLastUpdate()
         {
             LastUpdate = DateTime.Now;
+            //var x = this.ImVolOnCallATM;
         }
 
-        public int Shorts { get; set; }
-        public int Longs { get; set; }
         public ETradingState TradingState { get; set; }
 
         #endregion
 
-
-        #region Greek
-
-
-        public double DeltaTotal { get; set; }
-        public double GammaTotal { get; set; }
-        public double ThetaTotal { get; set; }
-        public double VegaTotal { get; set; }
-
-
-
-        /// <summary>
-        /// Hold the calculated IV of all positions taking part on trading.<para></para>
-        /// = SumOfAll[IV(option)X Position#] / SumOfAll(Position#).
-        /// </summary>
-        public double IVWeightedAvg { get; set; }
-
-        /// <summary>
-        /// The IV on the Call ATM option.
-        /// </summary>
-        public double ImVolOnCallATM { get; set; }
-
-        /// <summary>
-        /// The IV on the Put ATM option.
-        /// </summary>
-        public double ImVolOnPutATM { get; set; }
-        ///// <summary>
-        ///// The last known VIX, normally it's updated by the associated manager (TradingManager).
-        ///// </summary>
-        //public double VIX  { get; set; }
-
-        #endregion
-
         #region Underline Properties
-
-        public double Price { get; set; }
-
-        public double OpenningPrice { get; set; }
-
-        public double UnlAsk { get; set; }
-        public double UnlBid { get; set; }
-        public double UnlChange { get; set; }
-
-        #endregion
-
-        public double MarketValue { get; set; }
-        public double CostTotal { get; set; }
-        public double PnLTotal => MarketValue + CostTotal;
-        public double CommisionTotal { get; set; }
-
-        public double LastDayPnL
-        {
-            get => Security.LastDayPnL;
-            set => Security.LastDayPnL = value;
-        }
 
         public double DailyPnL
         {
@@ -117,25 +96,66 @@ namespace TNS.API.ApiDataObjects
             set => _dailyPnL = value;
         }
 
-        #region Trading Limitation parameters
+        #endregion
 
-        public double MaxAllowedMargin {
-            get => Security.MarginMaxAllowed;
-            set => Security.MarginMaxAllowed = value;
+        #region Position Data
+
+        public PositionsSummaryData PositionsSummaryData
+        {
+            get => _positionsSummaryData;
+            set
+            {
+                SetLastUpdate();
+                _positionsSummaryData = value;
+            }
         }
+
+        public double DeltaTotal => PositionsSummaryData?.DeltaTotal ?? 0;
+        public double GammaTotal => PositionsSummaryData?.GammaTotal ?? 0;
+        public double ThetaTotal => PositionsSummaryData?.ThetaTotal ?? 0;
+        public double VegaTotal => PositionsSummaryData?.VegaTotal ?? 0;
+        public double MarketValue => PositionsSummaryData?.MarketValue ?? 0;
+        public double CostTotal => PositionsSummaryData?.CostTotal ?? 0;
+        public double PnLTotal => PositionsSummaryData?.PnLTotal ?? 0;
+        public double CommisionTotal => PositionsSummaryData?.CommisionTotal ?? 0;
+        public int Shorts => PositionsSummaryData?.Shorts ?? 0;
+
+        public int Longs => 0;// PositionsSummaryData.Longs;
+        /// <summary>
+        /// Hold the calculated IV of all positions taking part on trading.<para></para>
+        /// = SumOfAll[IV(option)X Position#] / SumOfAll(Position#).
+        /// </summary>
+        public double IVWeightedAvg => PositionsSummaryData?.IVWeightedAvg ?? 0;
+        /// <summary>
+        /// The IV on the Call ATM option.
+        /// </summary>
+        public double ImVolOnCallATM => PositionsSummaryData?.ImVolOnCallATM ?? 0;
+
+        /// <summary>
+        /// The IV on the Put ATM option.
+        /// </summary>
+        public double ImVolOnPutATM => PositionsSummaryData?.ImVolOnPutATM ?? 0;
+
+        #endregion Position Data
+
+        #region Trading Limitation parameters
 
         /// <summary>
         /// Gets or sets the actual margin for this underline.
         /// </summary>
-        public double Margin { get; set; }
-
-        public double UnlHighestPrice { get; set; }
-        public double UnlLowestPrice { get; set; }
+        public double Margin
+        {
+            get => _margin;
+            set
+            {
+                SetLastUpdate();
+                _margin = value;
+            }
+        }
 
         #endregion
 
-        public string MainInfo =>
-            $"{UnlChange:P}    Base: {OpenningPrice:N}          Bid: {UnlBid:N}   Ask: {UnlAsk:N}    Highest: {UnlHighestPrice:N},   Lowest: {UnlLowestPrice:N}";
+        public override string MainInfo => $"{base.MainInfo} " +        $"Margin:{Margin:##,###}.     IVWeightedAvg:{IVWeightedAvg:N}.         PnLTotal:{PnLTotal:##,###}.";
 
        
     }

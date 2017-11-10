@@ -71,7 +71,7 @@ namespace TNS.BL
             {
                 _apiWrapper.RequestSecurityContractDetails(securityData);
             }
-            Logger.DebugFormat("Request Security Contract Details for all managed securities({0}) done.", Securities.Count);
+            Logger.DebugFormat("Request ManagedSecurity Contract Details for all managed securities({0}) done.", Securities.Count);
         }
     }
 

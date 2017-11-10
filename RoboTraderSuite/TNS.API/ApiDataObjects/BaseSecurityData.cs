@@ -43,24 +43,31 @@ namespace TNS.API.ApiDataObjects
         /// <summary>
         /// Open quote (current day)
         /// </summary>
-        public double BasePrice { get; set; }
+        public double OpenningPrice { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         public double OpeningPrice { get; set; }
 
-        public double Change => (LastPrice - BasePrice)/BasePrice;
+        public double Change
+        {
+            get => (LastPrice - OpenningPrice) / OpenningPrice;
+            set
+            {
+                if (value < - int.MaxValue) throw new NotImplementedException();
+            }
+        }
 
         /// <summary>
-        /// Price a seller is willing to accept for a security
+        /// LastPrice a seller is willing to accept for a security
         /// </summary>
-        public double AskPrice { get; set; }
+        public double Ask { get; set; }
 
         /// <summary>
         /// An offer made by an investor, a trader or a dealer to buy a security
         /// </summary>
-        public double BidPrice { get; set; }
+        public double Bid { get; set; }
 
         /// <summary>
         /// 
@@ -87,9 +94,9 @@ namespace TNS.API.ApiDataObjects
         {
             return 
             $"SecurityData: [Contract: {GetContract()}, LastPrice: {LastPrice}," +
-            $" AskPrice: {AskPrice}, BidPrice: {BidPrice}," +
+            $" Ask: {Ask}, Bid: {Bid}," +
             $" HighestPrice: {HighestPrice}, LowestPrice: {LowestPrice}," +
-            $" BasePrice: {BasePrice}, OpeningPrice: {OpeningPrice}, " +
+            $" OpenningPrice: {OpenningPrice}, OpeningPrice: {OpeningPrice}, " +
             $" AskSize: {AskSize}, BidSize: {BidSize}, Volume: {Volume}]";
 
         }

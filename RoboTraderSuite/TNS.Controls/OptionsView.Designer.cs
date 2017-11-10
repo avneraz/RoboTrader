@@ -168,7 +168,7 @@
             // 
             this.colBasePrice.DisplayFormat.FormatString = "#0.00";
             this.colBasePrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colBasePrice.FieldName = "BasePrice";
+            this.colBasePrice.FieldName = "OpenningPrice";
             this.colBasePrice.Name = "colBasePrice";
             this.colBasePrice.Visible = true;
             this.colBasePrice.VisibleIndex = 2;
@@ -188,7 +188,7 @@
             // 
             this.colAskPrice.DisplayFormat.FormatString = "#0.00";
             this.colAskPrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colAskPrice.FieldName = "AskPrice";
+            this.colAskPrice.FieldName = "Ask";
             this.colAskPrice.Name = "colAskPrice";
             this.colAskPrice.Visible = true;
             this.colAskPrice.VisibleIndex = 4;
@@ -198,7 +198,7 @@
             // 
             this.colBidPrice.DisplayFormat.FormatString = "#0.00";
             this.colBidPrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colBidPrice.FieldName = "BidPrice";
+            this.colBidPrice.FieldName = "Bid";
             this.colBidPrice.Name = "colBidPrice";
             this.colBidPrice.Visible = true;
             this.colBidPrice.VisibleIndex = 5;
@@ -268,7 +268,7 @@
             // 
             this.colUnderlinePrice.DisplayFormat.FormatString = "#0.00";
             this.colUnderlinePrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colUnderlinePrice.FieldName = "Price";
+            this.colUnderlinePrice.FieldName = "LastPrice";
             this.colUnderlinePrice.Name = "colUnderlinePrice";
             this.colUnderlinePrice.Visible = true;
             this.colUnderlinePrice.VisibleIndex = 12;

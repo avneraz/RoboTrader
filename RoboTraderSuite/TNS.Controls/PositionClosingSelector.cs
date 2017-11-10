@@ -59,7 +59,7 @@ namespace TNS.Controls
         {
             UnlTradingData unlTradingData = UnlManager.UnlTradingData;
             lblMarginGain.Text = (_marginData.MarginPerCouple * (double)numCouplesToClose.Value).ToString("C0");
-            lblHeader.Text = $"{_symbol} - {unlTradingData.Price} Margin = {unlTradingData.Margin:C0}";
+            lblHeader.Text = $"{_symbol} - {unlTradingData.LastPrice} Margin = {unlTradingData.Margin:C0}";
             btnSubmitCloseCouples.Text = $"Close {numCouplesToClose.Value:##} Mate Couple";
             numCouplesToClose.Maximum = _marginData.MateCouplesCount;
             numCouplesToClose.Minimum = 1;

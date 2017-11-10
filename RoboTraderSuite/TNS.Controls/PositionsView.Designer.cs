@@ -315,7 +315,7 @@
             this.colOffsetUnl.MaxWidth = 50;
             this.colOffsetUnl.MinWidth = 30;
             this.colOffsetUnl.Name = "colOffsetUnl";
-            this.colOffsetUnl.UnboundExpression = "[OptionContract.Strike] - [OptionData.Price]";
+            this.colOffsetUnl.UnboundExpression = "[OptionContract.Strike] - [OptionData.LastPrice]";
             this.colOffsetUnl.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
             this.colOffsetUnl.Visible = true;
             this.colOffsetUnl.VisibleIndex = 3;
@@ -323,7 +323,7 @@
             // 
             // colCalculatedOptionPrice
             // 
-            this.colCalculatedOptionPrice.Caption = "Calc. Price";
+            this.colCalculatedOptionPrice.Caption = "Calc. LastPrice";
             this.colCalculatedOptionPrice.DisplayFormat.FormatString = "#,##0.00";
             this.colCalculatedOptionPrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colCalculatedOptionPrice.FieldName = "CalculatedOptionPrice";
@@ -396,7 +396,7 @@
             this.colBidPrice.Caption = "Bid";
             this.colBidPrice.DisplayFormat.FormatString = "#,##0.000";
             this.colBidPrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colBidPrice.FieldName = "OptionData.BidPrice";
+            this.colBidPrice.FieldName = "OptionData.Bid";
             this.colBidPrice.MaxWidth = 100;
             this.colBidPrice.MinWidth = 50;
             this.colBidPrice.Name = "colBidPrice";
@@ -417,7 +417,7 @@
             this.colAskPrice.Caption = "Ask";
             this.colAskPrice.DisplayFormat.FormatString = "#,##0.000";
             this.colAskPrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colAskPrice.FieldName = "OptionData.AskPrice";
+            this.colAskPrice.FieldName = "OptionData.Ask";
             this.colAskPrice.MaxWidth = 100;
             this.colAskPrice.MinWidth = 50;
             this.colAskPrice.Name = "colAskPrice";
@@ -621,7 +621,7 @@
             // 
             // colOptionData_UnderlinePrice
             // 
-            this.colOptionData_UnderlinePrice.FieldName = "OptionData.Price";
+            this.colOptionData_UnderlinePrice.FieldName = "OptionData.LastPrice";
             this.colOptionData_UnderlinePrice.MaxWidth = 100;
             this.colOptionData_UnderlinePrice.Name = "colOptionData_UnderlinePrice";
             // 
@@ -733,7 +733,7 @@
             // 
             // colAvgPrice
             // 
-            this.colAvgPrice.Caption = "Avg Price";
+            this.colAvgPrice.Caption = "Avg LastPrice";
             this.colAvgPrice.DisplayFormat.FormatString = "#,##0.00";
             this.colAvgPrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colAvgPrice.FieldName = "AvgPrice";
@@ -992,7 +992,7 @@
             this.colUnlBid.AppearanceHeader.Options.UseFont = true;
             this.colUnlBid.AppearanceHeader.Options.UseForeColor = true;
             this.colUnlBid.Caption = "Bid";
-            this.colUnlBid.FieldName = "UnlBid";
+            this.colUnlBid.FieldName = "Bid";
             this.colUnlBid.Name = "colUnlBid";
             this.colUnlBid.Visible = true;
             this.colUnlBid.VisibleIndex = 4;
@@ -1007,7 +1007,7 @@
             this.colUnlAsk.AppearanceHeader.Options.UseFont = true;
             this.colUnlAsk.AppearanceHeader.Options.UseForeColor = true;
             this.colUnlAsk.Caption = "Ask";
-            this.colUnlAsk.FieldName = "UnlAsk";
+            this.colUnlAsk.FieldName = "Ask";
             this.colUnlAsk.Name = "colUnlAsk";
             this.colUnlAsk.Visible = true;
             this.colUnlAsk.VisibleIndex = 5;
@@ -1018,7 +1018,7 @@
             this.colUnlChange.Caption = "Change";
             this.colUnlChange.DisplayFormat.FormatString = "#0.00%";
             this.colUnlChange.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colUnlChange.FieldName = "UnlChange";
+            this.colUnlChange.FieldName = "Change";
             this.colUnlChange.Name = "colUnlChange";
             this.colUnlChange.Visible = true;
             this.colUnlChange.VisibleIndex = 3;
@@ -1162,10 +1162,10 @@
             // 
             // colUnderlinePrice
             // 
-            this.colUnderlinePrice.Caption = "Price";
+            this.colUnderlinePrice.Caption = "LastPrice";
             this.colUnderlinePrice.DisplayFormat.FormatString = "#0.00";
             this.colUnderlinePrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colUnderlinePrice.FieldName = "Price";
+            this.colUnderlinePrice.FieldName = "LastPrice";
             this.colUnderlinePrice.Name = "colUnderlinePrice";
             this.colUnderlinePrice.Visible = true;
             this.colUnderlinePrice.VisibleIndex = 2;

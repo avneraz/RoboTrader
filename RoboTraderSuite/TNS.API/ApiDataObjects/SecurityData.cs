@@ -20,10 +20,12 @@ namespace TNS.API.ApiDataObjects
 
         public SecurityContract SecurityContract { get; set; }
 
-        public string Symbol => SecurityContract.Symbol;
+        public string Symbol => SecurityContract?.Symbol;
+            
+     
 
-        public string MainInfo =>
-            $"{Change:P}    Base: {BasePrice:N}          Bid: {BidPrice:N}   Ask: {AskPrice:N}    Highest: {HighestPrice:N},   Lowest: {LowestPrice:N}";
+        public virtual string MainInfo =>
+            $"{Change:P}    Base: {OpenningPrice:N}          Bid: {Bid:N}   Ask: {Ask:N}    Highest: {HighestPrice:N},   Lowest: {LowestPrice:N}";
 
 
     }

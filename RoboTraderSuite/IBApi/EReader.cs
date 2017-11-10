@@ -1520,30 +1520,36 @@ namespace IBApi
 
         public string ReadString()
         {
-            byte b = tcpReader.ReadByte();
+            byte b;
+            try
+            {
+                b = tcpReader.ReadByte();
+            }
+            catch 
+            {
+                b = 0;
+            }
             if (b == 0)
             {
                 return null;
             }
-            else
+
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.Append((char)b);
+            while (true)
             {
-                StringBuilder strBuilder = new StringBuilder();
-                strBuilder.Append((char)b);
-                while (true)
+                b = tcpReader.ReadByte();                    
+                if (b == 0)
                 {
-                    b = tcpReader.ReadByte();                    
-                    if (b == 0)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        strBuilder.Append((char)b);
-                    }
+                    break;
                 }
-                //Console.WriteLine("Last value being read: "+strBuilder.ToString());
-                return strBuilder.ToString();
+                else
+                {
+                    strBuilder.Append((char)b);
+                }
             }
+            //Console.WriteLine("Last value being read: "+strBuilder.ToString());
+            return strBuilder.ToString();
         }
     }
 }

@@ -191,7 +191,7 @@ namespace TNS.BL
             var symbol = positionData.OptionData.Symbol;
             CalculateUNLRequierdMargin(symbol);
             var marginData = MarginDataDic[symbol];
-            //double unlRate = positionData.OptionData.Price;
+            //double unlRate = positionData.OptionData.LastPrice;
             var unlRate = _appManager.ManagedSecuritiesManager.Securities[symbol].LastPrice;
             double strike = positionData.OptionContract.Strike;
             EOptionType type = positionData.OptionType;

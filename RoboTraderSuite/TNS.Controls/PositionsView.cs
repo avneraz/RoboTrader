@@ -289,8 +289,8 @@ namespace TNS.Controls
             noChange = false;
             if (secData != null)
             {
-                noChange = Math.Abs(secData.UnlChange) < 0.002;
-                return  (secData.UnlChange > 0);
+                noChange = Math.Abs(secData.Change) < 0.002;
+                return  (secData.Change > 0);
             }
             return false;
         }

@@ -260,10 +260,10 @@ namespace TNS.API.IBApiWrapper
                 switch (field)
                 {
                     case TickType.BID: //1
-                        securityData.BidPrice = price > int.MaxValue ? -1 : price;
+                        securityData.Bid = price > int.MaxValue ? -1 : price;
                         break;
                     case TickType.ASK:
-                        securityData.AskPrice = price;
+                        securityData.Ask = price;
                         break;
                     case TickType.LAST:
                         securityData.LastPrice = price > int.MaxValue ? -1 : price;
@@ -275,10 +275,10 @@ namespace TNS.API.IBApiWrapper
                         securityData.LowestPrice = price > int.MaxValue ? -1 : price;
                         break;
                     case TickType.CLOSE:
-                        securityData.BasePrice = price > int.MaxValue ? -1 : price;
+                        securityData.OpenningPrice = price > int.MaxValue ? -1 : price;
                         //If last price still not update set it with the base price:
-                        if ((securityData.LastPrice <= 0) && (securityData.BasePrice > 0))
-                            securityData.LastPrice = securityData.BasePrice;
+                        if ((securityData.LastPrice <= 0) && (securityData.OpenningPrice > 0))
+                            securityData.LastPrice = securityData.OpenningPrice;
                         break;
                     case TickType.OPEN:
                         securityData.OpeningPrice = price > int.MaxValue ? -1 : price;
@@ -348,20 +348,20 @@ namespace TNS.API.IBApiWrapper
                 {
                     case TickType.BID_OPTION://10
                         price = optPrice > int.MaxValue ? -1 : optPrice;
-                        if (optionData.BidPrice < 0)
-                            optionData.BidPrice = price;
-                        else if ((optionData.BidPrice > EPSILON) && (price > 0))
-                            optionData.BidPrice = price;
+                        if (optionData.Bid < 0)
+                            optionData.Bid = price;
+                        else if ((optionData.Bid > EPSILON) && (price > 0))
+                            optionData.Bid = price;
 
                         break;
                     case TickType.ASK_OPTION://11
                         price = optPrice > int.MaxValue ? -1 : optPrice;
-                        if (optionData.AskPrice < 0)
-                            optionData.AskPrice = price;
-                        else if ((optionData.AskPrice > EPSILON) && (price > 0))
-                            optionData.AskPrice = price;
+                        if (optionData.Ask < 0)
+                            optionData.Ask = price;
+                        else if ((optionData.Ask > EPSILON) && (price > 0))
+                            optionData.Ask = price;
 
-                        optionData.AskPrice = optPrice > int.MaxValue ? -1 : optPrice;
+                        optionData.Ask = optPrice > int.MaxValue ? -1 : optPrice;
                         break;
                     case TickType.LAST_OPTION://12
                         optionData.LastPrice = optPrice > int.MaxValue ? -1 : optPrice;

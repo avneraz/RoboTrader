@@ -195,7 +195,7 @@
             // 
             // colOrder_LimitPrice
             // 
-            this.colOrder_LimitPrice.Caption = "Limit Price";
+            this.colOrder_LimitPrice.Caption = "Limit LastPrice";
             this.colOrder_LimitPrice.DisplayFormat.FormatString = "0.00";
             this.colOrder_LimitPrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colOrder_LimitPrice.FieldName = "Order.LimitPrice";

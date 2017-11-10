@@ -122,7 +122,7 @@
             // 
             // colBasePrice
             // 
-            this.colBasePrice.FieldName = "BasePrice";
+            this.colBasePrice.FieldName = "OpenningPrice";
             this.colBasePrice.Name = "colBasePrice";
             this.colBasePrice.Visible = true;
             this.colBasePrice.VisibleIndex = 1;
@@ -136,14 +136,14 @@
             // 
             // colAskPrice
             // 
-            this.colAskPrice.FieldName = "AskPrice";
+            this.colAskPrice.FieldName = "Ask";
             this.colAskPrice.Name = "colAskPrice";
             this.colAskPrice.Visible = true;
             this.colAskPrice.VisibleIndex = 6;
             // 
             // colBidPrice
             // 
-            this.colBidPrice.FieldName = "BidPrice";
+            this.colBidPrice.FieldName = "Bid";
             this.colBidPrice.Name = "colBidPrice";
             this.colBidPrice.Visible = true;
             this.colBidPrice.VisibleIndex = 7;

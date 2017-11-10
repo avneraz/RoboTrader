@@ -11,8 +11,51 @@ using TNS.API.ApiDataObjects;
 
 namespace DAL
 {
-    #region Component Map
 
+    #region Component Map
+    public class PositionsSummaryDataComponent : ComponentMap<PositionsSummaryData>
+    {
+        public PositionsSummaryDataComponent()
+        {
+            Map(x => x.DeltaTotal);
+            Map(x => x.GammaTotal);
+            Map(x => x.ThetaTotal);
+            Map(x => x.VegaTotal);
+            Map(x => x.MarketValue);
+            Map(x => x.CostTotal);
+            Map(x => x.PnLTotal);
+
+            Map(x => x.CommisionTotal);
+            Map(x => x.Shorts);
+            Map(x => x.Longs);
+
+            Map(x => x.IVWeightedAvg);
+            Map(x => x.ImVolOnPutATM);
+            Map(x => x.ImVolOnCallATM);
+        }
+    }
+    public class SecurityDataComponent : ComponentMap<SecurityData>
+    {
+        public SecurityDataComponent()
+        {
+            Map(x => x.LastPrice);
+            Map(x => x.OpenningPrice).Column("OPENING_PRICE"); ;
+            Map(x => x.Ask);
+            Map(x => x.Bid);
+            Map(x => x.Change);
+            Map(x => x.HighestPrice);
+            Map(x => x.LowestPrice);
+        }
+    }
+    public class ManagedSecurityComponent : ComponentMap<ManagedSecurity>
+    {
+        public ManagedSecurityComponent()
+        {
+            Map(x => x.Symbol);
+            Map(x => x.LastDayPnL);
+            Map(x => x.MarginMaxAllowed);
+        }
+    }
     public class OrderStatusComponent : ComponentMap<OrderStatusData>
     {
         public OrderStatusComponent()
@@ -24,9 +67,9 @@ namespace DAL
 
         }
     }
-    public class OptionDataMapper : ComponentMap<OptionData>
+    public class OptionDataComponent : ComponentMap<OptionData>
     {
-        public OptionDataMapper()
+        public OptionDataComponent()
         {
             Map(c => c.Delta);
             Map(c => c.Gamma);
@@ -34,15 +77,15 @@ namespace DAL
             Map(c => c.Theta);
             Map(c => c.ImpliedVolatility);
             Map(c => c.ModelPrice);
-            Map(c => c.AskPrice);
-            Map(c => c.BidPrice);
+            Map(c => c.Ask);
+            Map(c => c.Bid);
             Map(c => c.UnderlinePrice);
 
         }
     }
-    public class OrderDataMapper : ComponentMap<OrderData>
+    public class OrderDataComponent : ComponentMap<OrderData>
     {
-        public OrderDataMapper()
+        public OrderDataComponent()
         {
             Map(x => x.LimitPrice);
             Map(x => x.OrderAction);
@@ -104,10 +147,10 @@ namespace DAL
             UseUnionSubclassForInheritanceMapping();
             Id(x => x.Id).Column("Id").GeneratedBy.GuidComb();
             Map(c => c.Account).Default(AllConfigurations.AllConfigurationsObject.Application.MainAccount);
-            Map(c => c.AskPrice);
+            Map(c => c.Ask);
             Map(c => c.AskSize);
-            Map(c => c.BasePrice);
-            Map(c => c.BidPrice);
+            Map(c => c.OpenningPrice);
+            Map(c => c.Bid);
             Map(c => c.BidSize);
             Map(c => c.HighestPrice);
             Map(c => c.LastPrice);
@@ -236,11 +279,9 @@ namespace DAL
             Map(c => c.Account).Default(AllConfigurations.AllConfigurationsObject.Application.MainAccount);
             References(x => x.OpenTransaction).Cascade.All().Column("OpenTransaction"); //.Cascade.All();
             References(x => x.CloseTransaction).Cascade.All().Column("CloseTransaction"); //.Cascade.All();
-            //Map(c => c.OptionData);
-            //References(x => x.OptionData).Cascade.None();
-            Component(x => x.OptionData);
-            //Component(x => x.OptionContract);
             References(x => x.OptionContract);
+
+            Component(x => x.OptionData);
         }
 
     }
@@ -263,28 +304,14 @@ namespace DAL
         {
             Table("UNL_TRADING_DATA");
             Id(x => x.Id);
-            Map(c => c.Symbol);
-            Map(c => c.Shorts);
-            Map(c => c.DeltaTotal);
-            Map(c => c.GammaTotal);
-            Map(c => c.ThetaTotal);
-            Map(c => c.VegaTotal);
-            Map(c => c.MaxAllowedMargin);
-            Map(c => c.Margin);
-            Map(c => c.IVWeightedAvg);
-            Map(c => c.ImVolOnCallATM);
-            Map(c => c.ImVolOnPutATM);
-            Map(c => c.Price);
-            Map(c => c.OpenningPrice).Column("OPENING_PRICE");
-            Map(c => c.UnlBid).Column("BID");
-            Map(c => c.UnlAsk).Column("ASK");
-            Map(c => c.DailyPnL);
-            Map(c => c.LastDayPnL);
-            Map(c => c.LastUpdate);
-            //Map(c => c.Shorts);
-            //Map(c => c.Shorts);
-            //Map(c => c.Shorts);
 
+            Map(c => c.Margin);
+            Map(c => c.DailyPnL);
+            Map(c => c.LastUpdate);
+
+            Component(x => x.ManagedSecurity); //==> Symbol; MaxAllowedMargin; LastDayPnL;
+            Component(x => x.UnlSecurityData);
+            Component(x => x.PositionsSummaryData);
         }
     }
 }

@@ -107,8 +107,8 @@ namespace TNS.BL.UnlManagers
             StarTime = DateTime.Now;
             var optionPrice = OptionData.CalculatedOptionPrice;
             if (optionPrice < 0.1) optionPrice = 50;
-            FirstAskPrice = OptionData.AskPrice;
-            FirstBidPrice = OptionData.BidPrice;
+            FirstAskPrice = OptionData.Ask;
+            FirstBidPrice = OptionData.Bid;
             var askBidDif = FirstAskPrice - FirstBidPrice;
             //Set  the resonable max diff
             var maxDiff = IsUNLGrater400 ?  300 * MinPriceStep : 70 * MinPriceStep ;
@@ -137,7 +137,7 @@ namespace TNS.BL.UnlManagers
             TradingCycleIndex = 0;
         }
 
-        private bool IsUNLGrater400 => UnlManager.UnlTradingData.Price > 400;//OptionData.Price > 400;
+        private bool IsUNLGrater400 => UnlManager.UnlTradingData.LastPrice > 400;//OptionData.LastPrice > 400;
         public double MinPriceStep => AllConfigurations.AllConfigurationsObject.Trading.MinPriceStep;
 
         private void CalculateNextCurrentLimitPrice()
@@ -163,14 +163,14 @@ namespace TNS.BL.UnlManagers
             if (OrderAction == OrderAction.SELL)
             {
                 CurrentLimitPrice = FirstAskPrice - TradingCycleIndex * PriceStep * multiplier;
-                if (CurrentLimitPrice < OptionData.BidPrice)
-                    CurrentLimitPrice = OptionData.BidPrice;
+                if (CurrentLimitPrice < OptionData.Bid)
+                    CurrentLimitPrice = OptionData.Bid;
             }
             else //Buy
             {
                 CurrentLimitPrice = FirstBidPrice + TradingCycleIndex * PriceStep * multiplier;
-                if (CurrentLimitPrice > OptionData.AskPrice)
-                    CurrentLimitPrice = OptionData.AskPrice;
+                if (CurrentLimitPrice > OptionData.Ask)
+                    CurrentLimitPrice = OptionData.Ask;
             }
         }
 

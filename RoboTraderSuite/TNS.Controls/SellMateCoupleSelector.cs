@@ -90,7 +90,7 @@ namespace TNS.Controls
         {
             UnlTradingData unlTradingData = UnlManager.UnlTradingData;
 
-            lblHeader.Text = $"{_symbol} - {unlTradingData.Price} Margin =" +
+            lblHeader.Text = $"{_symbol} - {unlTradingData.LastPrice} Margin =" +
                          $" {unlTradingData.Margin:C0} Max Margin = {unlTradingData.MaxAllowedMargin:C0}" + header;
 
             btnOptimizePosition.Visible = false;
