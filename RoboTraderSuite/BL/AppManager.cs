@@ -112,6 +112,26 @@ namespace TNS.BL
                     {
                         SavedPatametersManager.SaveLastNetLiquiditionParameter(AccountManager.NetLiquidation);
                     }, false);
+                   
+                    //Save UNL data
+                    using (var session = DBSessionFactory.Instance.OpenSession())
+                    {
+                        foreach (var simpleBaseLogic in UNLManagerDic.Values)
+                        {
+                            var unlManager = (UNLManager) simpleBaseLogic;
+
+                            var managedSecurity =
+                                session.Query<ManagedSecurity>().FirstOrDefault(ms => ms.Symbol == unlManager.Symbol);
+                            if (managedSecurity == null) continue;
+
+                            managedSecurity.LastDayPnL = unlManager.UnlTradingData.PnLTotal;
+                            session.SaveOrUpdate(managedSecurity);
+                        }
+                        session.Flush();
+                    }
+
+
+
                     break;
             }
         }

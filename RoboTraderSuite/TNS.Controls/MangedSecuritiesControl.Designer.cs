@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.label1 = new System.Windows.Forms.Label();
             this.gridSecurities = new DevExpress.XtraGrid.GridControl();
             this.managedSecurityBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.gridViewSecurities = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -45,7 +46,7 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.colLastDayPnL = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -75,6 +76,17 @@
             this.splitContainer1.SplitterDistance = 40;
             this.splitContainer1.TabIndex = 0;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.label1.Location = new System.Drawing.Point(421, 14);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(155, 18);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Managed Securities";
+            // 
             // gridSecurities
             // 
             this.gridSecurities.DataSource = this.managedSecurityBindingSource;
@@ -103,11 +115,13 @@
             this.colCurrency,
             this.colIsActive,
             this.colOptionChain,
-            this.colMarginMaxAllowed});
+            this.colMarginMaxAllowed,
+            this.colLastDayPnL});
             this.gridViewSecurities.GridControl = this.gridSecurities;
             this.gridViewSecurities.Name = "gridViewSecurities";
             this.gridViewSecurities.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
             this.gridViewSecurities.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.True;
+            this.gridViewSecurities.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Bottom;
             // 
             // colId
             // 
@@ -213,16 +227,13 @@
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // label1
+            // colLastDayPnL
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.label1.Location = new System.Drawing.Point(421, 14);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(155, 18);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Managed Securities";
+            this.colLastDayPnL.Caption = "Last Day PnL";
+            this.colLastDayPnL.FieldName = "LastDayPnL";
+            this.colLastDayPnL.Name = "colLastDayPnL";
+            this.colLastDayPnL.Visible = true;
+            this.colLastDayPnL.VisibleIndex = 9;
             // 
             // MangedSecuritiesControl
             // 
@@ -264,5 +275,6 @@
         private System.Windows.Forms.Button btnSubmit;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label label1;
+        private DevExpress.XtraGrid.Columns.GridColumn colLastDayPnL;
     }
 }

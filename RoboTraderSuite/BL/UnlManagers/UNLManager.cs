@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DAL;
 using Infra;
 using Infra.Bus;
 using Infra.Enum;
 using log4net;
+using NHibernate.Linq;
 using TNS.API;
 using TNS.API.ApiDataObjects;
 using TNS.BL.DataObjects;
@@ -240,6 +242,9 @@ namespace TNS.BL.UnlManagers
         private void TradingManager_SendTradingTimeEvent(TradingTimeEvent tradingTimeEvent)
         {
            OnSendTradingTimeEvent(tradingTimeEvent);
+            if(tradingTimeEvent.TradingTimeEventType != ETradingTimeEventType.EndTrading) return;
+           
+
         }
 
         public IOptionsManager OptionsManager { get; set; }

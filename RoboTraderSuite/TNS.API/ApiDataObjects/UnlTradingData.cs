@@ -155,7 +155,7 @@ namespace TNS.API.ApiDataObjects
 
         #endregion
 
-        public override string MainInfo => $"{base.MainInfo} " +        $"Margin:{Margin:##,###}.     IVWeightedAvg:{IVWeightedAvg:N}.         PnLTotal:{PnLTotal:##,###}.";
+        public override string MainInfo => $"{base.MainInfo} " +        $"Margin:{Margin:##,###}.          PnLTotal:{PnLTotal:##,###}.";
 
        
     }
