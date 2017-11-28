@@ -4,6 +4,7 @@ using System.Linq;
 using Infra.Enum;
 using log4net;
 using TNS.API.ApiDataObjects;
+using static System.Math;
 
 namespace TNS.BL.UnlManagers
 {
@@ -60,6 +61,7 @@ namespace TNS.BL.UnlManagers
 
             int callCloseCount = 0, putCloseCount = 0;
 
+
             //Buy (Close them) only the positions that have an adequate ATM alternative option.
             foreach (var positionData in outLimitList)
             {
@@ -68,12 +70,13 @@ namespace TNS.BL.UnlManagers
                 if ((optionType == EOptionType.Call && doForCallPositions && callCloseCount < mateCoupleCount))
                 {
                     //Calculate the desired positions:
-                    quantity =  Math.Min((mateCoupleCount - callCloseCount++), positionData.Quantity);
+                    quantity =  Min((mateCoupleCount - callCloseCount++), positionData.Quantity);
                 }
                 else if (optionType == EOptionType.Put && doForPutPositions && putCloseCount < mateCoupleCount)
                 {
                     //Calculate the desired positions:
-                    quantity = Math.Min(mateCoupleCount - putCloseCount++, positionData.Quantity);
+                    quantity = 
+                        Min(mateCoupleCount - putCloseCount++, positionData.Quantity);
                 }
                 else if (callCloseCount >= mateCoupleCount && putCloseCount >= mateCoupleCount)
                     break;
@@ -117,6 +120,41 @@ namespace TNS.BL.UnlManagers
             return true;
         }
 
+        private ( List<OptionsPositionData> ,  bool ,  bool ) PrepareForOptimizationNew()
+        {
+            //var atmOption = UNLManager.OptionsManager.GetATMOptionData(ExpiryDate, EOptionType.Call);
+            //Check for trading time, Don't act if now isn't working time.
+            if ((UNLManager.IsNowWorkingTime == false) && (UNLManager.IsSimulatorAccount == false))
+                throw new Exception("The operation can't be done now! it can be done only within working time.");
+
+            _notAllPositionClosed = false;
+
+            if (_pendingCloseDic == null) _pendingCloseDic = new Dictionary<string, OrderData>();
+            else _pendingCloseDic.Clear();
+
+            if (_pendingSellDic == null) _pendingSellDic = new Dictionary<string, OrderData>();
+            else _pendingSellDic.Clear();
+            List<OptionsPositionData> outLimitList;
+            if (!GetOutOfLimitPositions(out outLimitList))
+            {
+                throw new Exception($"{Symbol}: There is no out of limit Positions!");
+            }
+
+            bool doForPutPositions = UNLManager.OptionsManager.CheckForATMOption(EOptionType.Put, ExpiryDate);
+            bool doForCallPositions = UNLManager.OptionsManager.CheckForATMOption(EOptionType.Call, ExpiryDate);
+            if (!doForCallPositions && !doForPutPositions)
+                throw new Exception("There are no ATM Positions!!");
+                //return false;
+
+            //Initialize watchDog: Finish all works immediatly:
+            _shutDownTaskId = UNLManager.AddScheduledTaskOnUnl(TimeSpan.FromMinutes(1), ShutDown);
+
+            //Register for done notifications.
+            UNLManager.OrdersManager.OrderTradingNegotioationWasTerminated +=
+                OrdersManager_OrderTradingNegotioationWasTerminated;
+            //var outLimit = (outLimitList: List<OptionsPositionData>, doForPutPositions: bool, doForCallPositions: bool);
+            return ( outLimitList,  doForPutPositions,  doForCallPositions);
+        }
         private bool PrepareForOptimization(out List<OptionsPositionData> outLimitList, out bool doForPutPositions, out bool doForCallPositions)
         {
             //var atmOption = UNLManager.OptionsManager.GetATMOptionData(ExpiryDate, EOptionType.Call);
@@ -141,7 +179,7 @@ namespace TNS.BL.UnlManagers
             doForCallPositions = UNLManager.OptionsManager.CheckForATMOption(EOptionType.Call, ExpiryDate);
             if (!doForCallPositions && !doForPutPositions)
                 throw new Exception("There are no ATM Positions!!");
-                //return false;
+            //return false;
 
             //Initialize watchDog: Finish all works immediatly:
             _shutDownTaskId = UNLManager.AddScheduledTaskOnUnl(TimeSpan.FromMinutes(1), ShutDown);

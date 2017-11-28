@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Math;
 using Infra.Enum;
 using TNS.API.ApiDataObjects;
 
@@ -103,13 +104,13 @@ namespace TNS.BL.Analysis
             {
                 vega = SMALL_NUMBER;
             }
-            return Math.Abs(vega / maxReasonableVega - 1);
+            return Abs(vega / maxReasonableVega - 1);
         }
 
         private double ExpiryRank(OptionData option)
         {
             double maxReasonableExpiryDays = 365;
-            return Math.Abs(option.DaysLeft/maxReasonableExpiryDays-1);
+            return Abs(option.DaysLeft/maxReasonableExpiryDays-1);
         }
     }
 

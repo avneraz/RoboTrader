@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Net.Sockets;
 using System.Windows.Forms;
 using DAL;
@@ -9,6 +10,7 @@ using Infra.Enum;
 using Infra.Extensions;
 using Infra.PopUpMessages;
 using log4net;
+using NHibernate.Linq;
 using TNS.API.ApiDataObjects;
 using TNS.BL;
 using TNS.BL.DataObjects;
@@ -249,8 +251,18 @@ namespace RazboTrader
 
             try
             {
-               
-                var control = new MangedSecuritiesControl(); 
+                var control = new TradingDataChartControl();
+                using (var session = DBSessionFactory.Instance.OpenSession())
+                {
+                    DateTime startWholeRange = new DateTime(2017, 11, 12, 16, 0, 0);
+                    DateTime end = DateTime.Now;//new DateTime(2017, 11, 18, 0, 0, 0);
+
+                    var list = session.Query<UnlTradingData>().Where(td => td.ManagedSecurity.Symbol.Equals("FB")).ToList();
+
+                    var theList = list
+                        .Where(td => td.LastUpdate > startWholeRange && td.LastUpdate < end).ToList();
+                    control.SetDataSource(theList, startWholeRange);
+                }
                 var form = control.ShowControl(this, true);
                 form.TopMost = true;
 

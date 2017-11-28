@@ -1,6 +1,6 @@
 ﻿using System;
-using Infra.Bus;
 using Infra.Enum;
+using static System.Math;
 
 namespace TNS.API.ApiDataObjects
 {
@@ -8,11 +8,12 @@ namespace TNS.API.ApiDataObjects
     {
         private string _account;
 
-        public PositionData()
+        protected PositionData()
         {
             
         }
-        public PositionData(int position, double averageCost)
+
+        protected PositionData(int position, double averageCost)
         {
             Position = position;
             AverageCost = averageCost;
@@ -27,7 +28,7 @@ namespace TNS.API.ApiDataObjects
         public abstract ContractBase GetContract();
         public abstract void SetContract(ContractBase contract);
         public int Position { get; set; }
-        public int Quantity => Math.Abs(Position);
+        public int Quantity => Abs(Position);
         public double AverageCost { get; set; }
         public DateTime LastUpdate { get; set; }
         /// <summary>

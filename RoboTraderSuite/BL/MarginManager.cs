@@ -10,6 +10,7 @@ using NHibernate;
 using NHibernate.Linq;
 using TNS.API.ApiDataObjects;
 using TNS.BL.UnlManagers;
+using static System.Math;
 
 namespace TNS.BL
 {
@@ -125,7 +126,7 @@ namespace TNS.BL
                         if (posData.OptionData != null)
                             return CalculateMargin(unlRate,
                                        posData.OptionData.OptionContract.Strike, false,
-                                       EOptionType.Put) * Math.Abs(posData.Position);
+                                       EOptionType.Put) * Abs(posData.Position);
                         return 0;
                     });
                     //Than calculate the call, as a mate.
@@ -134,7 +135,7 @@ namespace TNS.BL
                         if (posData.OptionData != null)
                             return CalculateMargin(unlRate,
                                        posData.OptionData.OptionContract.Strike, true) *
-                                   Math.Abs(posData.Position);
+                                   Abs(posData.Position);
                         else return 0;
                     });
                 }
@@ -143,11 +144,11 @@ namespace TNS.BL
                     //First calculate the Calls List
                     marginSum = callList.Sum(posData => CalculateMargin(unlRate,
                                                             posData.OptionData.OptionContract.Strike, false) *
-                                                        Math.Abs(posData.Position));
+                                                        Abs(posData.Position));
                     //Than calculate the puts, as a mate.
                     marginSum += putList.Sum(posData => CalculateMargin(unlRate,
                                                             posData.OptionData.OptionContract.Strike, true,
-                                                            EOptionType.Put) * Math.Abs(posData.Position));
+                                                            EOptionType.Put) * Abs(posData.Position));
                 }
             }
             catch (Exception ex)
@@ -255,8 +256,8 @@ namespace TNS.BL
             var callPositionsCount = posList.Where(pd => pd.OptionType == EOptionType.Call).Sum(pd => pd.Quantity);
             var putPositionsCount = posList.Where(pd => pd.OptionType == EOptionType.Put).Sum(pd => pd.Quantity);
 
-            var result = Math.Min(callPositionsCount, putPositionsCount);
-            singleCount = Math.Abs(callPositionsCount - putPositionsCount);
+            var result = Min(callPositionsCount, putPositionsCount);
+            singleCount = Abs(callPositionsCount - putPositionsCount);
             optionType = callPositionsCount >= putPositionsCount ? EOptionType.Call : EOptionType.Put;
 
             return result;

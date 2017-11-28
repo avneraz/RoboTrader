@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using IBApi;
 using log4net;
 using TNS.API.ApiDataObjects;
 using Infra;
 using Infra.Bus;
-using Infra.Enum;
 using Infra.Extensions;
 using Infra.Extensions.ArrayExtensions;
+using static System.Math;
 
 namespace TNS.API.IBApiWrapper
 {
@@ -375,14 +374,14 @@ namespace TNS.API.IBApiWrapper
                 optionData.LastUpdate = DateTime.Now;
                 wrapper.UpdatedSinceLastPubish = true;
                 //filter defected values coming from IB
-                if (Math.Abs(delta) < 10)
+                if (Abs(delta) < 10)
                     optionData.Delta = delta;
                 if (gamma < 10)
                     optionData.Gamma = gamma;
                 if(optionData.Symbol.Equals("AMZN")){ }
                 if (vega < 10)
                     optionData.Vega = vega;
-                if (Math.Abs(theta) < 10)
+                if (Abs(theta) < 10)
                     optionData.Theta = theta;
                 optionData.UnderlinePrice = undPrice > int.MaxValue ? -1 : undPrice;
 

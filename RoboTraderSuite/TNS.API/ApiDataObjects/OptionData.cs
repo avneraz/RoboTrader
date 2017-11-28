@@ -3,6 +3,7 @@ using Infra;
 using Infra.Bus;
 using Infra.Enum;
 using Infra.Extensions;
+using static System.Math;
 
 
 namespace TNS.API.ApiDataObjects
@@ -28,9 +29,9 @@ namespace TNS.API.ApiDataObjects
         public virtual OptionContract OptionContract { get; set; }
 
         public double Delta { get; set; }
-        public double DeltaAbsValue => Math.Abs(Delta);
+        public double DeltaAbsValue => Abs(Delta);
         //Get the differnce of the delta and ATM delta (50 is the ideal.)
-        public double DeltaOffsetFromATM => Math.Abs(DeltaAbsValue - 0.5);
+        public double DeltaOffsetFromATM => Abs(DeltaAbsValue - 0.5);
 
         public bool IsDeltaOutOfATMLimit => DeltaOffsetFromATM > MaxDeltaOffsetAllowed;
         public double Gamma { get; set; }

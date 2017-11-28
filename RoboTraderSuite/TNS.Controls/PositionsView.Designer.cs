@@ -104,6 +104,8 @@
             this.colDailyPnL = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colMaxAbsoluteDelta = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colLastUpdate = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colImVolOnCallATM = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colImVolOnPutATM = new DevExpress.XtraGrid.Columns.GridColumn();
             this.splitContainerControl1 = new DevExpress.XtraEditors.SplitContainerControl();
             this.securityDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.barDockControl1 = new DevExpress.XtraBars.BarDockControl();
@@ -139,8 +141,6 @@
             this.iShowUNLOptions = new DevExpress.XtraBars.BarButtonItem();
             this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
             this.popupMenuUNL = new DevExpress.XtraBars.PopupMenu(this.components);
-            this.colImVolOnCallATM = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colImVolOnPutATM = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grdPositionData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.optionsPositionDataBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdViewPositionData)).BeginInit();
@@ -276,7 +276,7 @@
             this.colExpiry.Name = "colExpiry";
             this.colExpiry.Visible = true;
             this.colExpiry.VisibleIndex = 0;
-            this.colExpiry.Width = 91;
+            this.colExpiry.Width = 106;
             // 
             // colOptionContract_OptionType
             // 
@@ -287,7 +287,7 @@
             this.colOptionContract_OptionType.Name = "colOptionContract_OptionType";
             this.colOptionContract_OptionType.Visible = true;
             this.colOptionContract_OptionType.VisibleIndex = 1;
-            this.colOptionContract_OptionType.Width = 40;
+            this.colOptionContract_OptionType.Width = 46;
             // 
             // colPosition
             // 
@@ -303,8 +303,8 @@
             this.colPosition.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Position", "{0:#,##0}")});
             this.colPosition.Visible = true;
-            this.colPosition.VisibleIndex = 4;
-            this.colPosition.Width = 36;
+            this.colPosition.VisibleIndex = 3;
+            this.colPosition.Width = 42;
             // 
             // colOffsetUnl
             // 
@@ -317,8 +317,6 @@
             this.colOffsetUnl.Name = "colOffsetUnl";
             this.colOffsetUnl.UnboundExpression = "[OptionContract.Strike] - [OptionData.LastPrice]";
             this.colOffsetUnl.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
-            this.colOffsetUnl.Visible = true;
-            this.colOffsetUnl.VisibleIndex = 3;
             this.colOffsetUnl.Width = 46;
             // 
             // colCalculatedOptionPrice
@@ -329,8 +327,8 @@
             this.colCalculatedOptionPrice.FieldName = "CalculatedOptionPrice";
             this.colCalculatedOptionPrice.Name = "colCalculatedOptionPrice";
             this.colCalculatedOptionPrice.Visible = true;
-            this.colCalculatedOptionPrice.VisibleIndex = 13;
-            this.colCalculatedOptionPrice.Width = 70;
+            this.colCalculatedOptionPrice.VisibleIndex = 12;
+            this.colCalculatedOptionPrice.Width = 81;
             // 
             // colAverageCost
             // 
@@ -357,7 +355,7 @@
             this.colStrike.Name = "colStrike";
             this.colStrike.Visible = true;
             this.colStrike.VisibleIndex = 2;
-            this.colStrike.Width = 50;
+            this.colStrike.Width = 58;
             // 
             // colMultiplier
             // 
@@ -401,8 +399,8 @@
             this.colBidPrice.MinWidth = 50;
             this.colBidPrice.Name = "colBidPrice";
             this.colBidPrice.Visible = true;
-            this.colBidPrice.VisibleIndex = 5;
-            this.colBidPrice.Width = 51;
+            this.colBidPrice.VisibleIndex = 4;
+            this.colBidPrice.Width = 59;
             // 
             // colAskPrice
             // 
@@ -422,8 +420,8 @@
             this.colAskPrice.MinWidth = 50;
             this.colAskPrice.Name = "colAskPrice";
             this.colAskPrice.Visible = true;
-            this.colAskPrice.VisibleIndex = 6;
-            this.colAskPrice.Width = 51;
+            this.colAskPrice.VisibleIndex = 5;
+            this.colAskPrice.Width = 59;
             // 
             // colOptionDelta
             // 
@@ -444,8 +442,8 @@
             this.colOptionDelta.MaxWidth = 70;
             this.colOptionDelta.Name = "colOptionDelta";
             this.colOptionDelta.Visible = true;
-            this.colOptionDelta.VisibleIndex = 8;
-            this.colOptionDelta.Width = 30;
+            this.colOptionDelta.VisibleIndex = 7;
+            this.colOptionDelta.Width = 35;
             // 
             // colContract_ExpiryDate
             // 
@@ -484,8 +482,8 @@
             this.colDeltaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "DeltaTotal", "{0:#,##0}")});
             this.colDeltaTotal.Visible = true;
-            this.colDeltaTotal.VisibleIndex = 17;
-            this.colDeltaTotal.Width = 45;
+            this.colDeltaTotal.VisibleIndex = 16;
+            this.colDeltaTotal.Width = 52;
             // 
             // colTotalCost
             // 
@@ -507,8 +505,8 @@
             this.colTotalCost.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalCost", "{0:#,##0}")});
             this.colTotalCost.Visible = true;
-            this.colTotalCost.VisibleIndex = 9;
-            this.colTotalCost.Width = 70;
+            this.colTotalCost.VisibleIndex = 8;
+            this.colTotalCost.Width = 81;
             // 
             // colLastPrice
             // 
@@ -524,8 +522,8 @@
             this.colLastPrice.MinWidth = 50;
             this.colLastPrice.Name = "colLastPrice";
             this.colLastPrice.Visible = true;
-            this.colLastPrice.VisibleIndex = 16;
-            this.colLastPrice.Width = 50;
+            this.colLastPrice.VisibleIndex = 15;
+            this.colLastPrice.Width = 58;
             // 
             // colMarketValue
             // 
@@ -547,8 +545,8 @@
             this.colMarketValue.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "MarketValue", "{0:#,##0}")});
             this.colMarketValue.Visible = true;
-            this.colMarketValue.VisibleIndex = 10;
-            this.colMarketValue.Width = 70;
+            this.colMarketValue.VisibleIndex = 9;
+            this.colMarketValue.Width = 81;
             // 
             // colPNL
             // 
@@ -570,8 +568,8 @@
             this.colPNL.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "PnL", "{0:#,##0}")});
             this.colPNL.Visible = true;
-            this.colPNL.VisibleIndex = 11;
-            this.colPNL.Width = 70;
+            this.colPNL.VisibleIndex = 10;
+            this.colPNL.Width = 81;
             // 
             // colGammaTotal
             // 
@@ -597,8 +595,8 @@
             this.colGammaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "GammaTotal", "{0:#,##0}")});
             this.colGammaTotal.Visible = true;
-            this.colGammaTotal.VisibleIndex = 18;
-            this.colGammaTotal.Width = 45;
+            this.colGammaTotal.VisibleIndex = 17;
+            this.colGammaTotal.Width = 52;
             // 
             // colOptionData_ModelPrice
             // 
@@ -616,8 +614,8 @@
             this.colOptionData_ModelPrice.MinWidth = 50;
             this.colOptionData_ModelPrice.Name = "colOptionData_ModelPrice";
             this.colOptionData_ModelPrice.Visible = true;
-            this.colOptionData_ModelPrice.VisibleIndex = 15;
-            this.colOptionData_ModelPrice.Width = 50;
+            this.colOptionData_ModelPrice.VisibleIndex = 14;
+            this.colOptionData_ModelPrice.Width = 58;
             // 
             // colOptionData_UnderlinePrice
             // 
@@ -649,8 +647,8 @@
             this.colThetaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ThetaTotal", "{0:#,##0}")});
             this.colThetaTotal.Visible = true;
-            this.colThetaTotal.VisibleIndex = 19;
-            this.colThetaTotal.Width = 45;
+            this.colThetaTotal.VisibleIndex = 18;
+            this.colThetaTotal.Width = 52;
             // 
             // colVegaTotal
             // 
@@ -677,8 +675,8 @@
             this.colVegaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "VegaTotal", "{0:#,##0}")});
             this.colVegaTotal.Visible = true;
-            this.colVegaTotal.VisibleIndex = 20;
-            this.colVegaTotal.Width = 48;
+            this.colVegaTotal.VisibleIndex = 19;
+            this.colVegaTotal.Width = 45;
             // 
             // colOptionData_Gamma
             // 
@@ -700,7 +698,7 @@
             this.colOptionData_Gamma.MinWidth = 45;
             this.colOptionData_Gamma.Name = "colOptionData_Gamma";
             this.colOptionData_Gamma.Visible = true;
-            this.colOptionData_Gamma.VisibleIndex = 21;
+            this.colOptionData_Gamma.VisibleIndex = 20;
             this.colOptionData_Gamma.Width = 70;
             // 
             // colOptionData_ImpliedVolatility
@@ -723,8 +721,8 @@
             this.colOptionData_ImpliedVolatility.MinWidth = 50;
             this.colOptionData_ImpliedVolatility.Name = "colOptionData_ImpliedVolatility";
             this.colOptionData_ImpliedVolatility.Visible = true;
-            this.colOptionData_ImpliedVolatility.VisibleIndex = 7;
-            this.colOptionData_ImpliedVolatility.Width = 51;
+            this.colOptionData_ImpliedVolatility.VisibleIndex = 6;
+            this.colOptionData_ImpliedVolatility.Width = 59;
             // 
             // colContract_Symbol
             // 
@@ -742,8 +740,8 @@
             this.colAvgPrice.UnboundExpression = "[TotalCostUSD] / [Position]";
             this.colAvgPrice.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
             this.colAvgPrice.Visible = true;
-            this.colAvgPrice.VisibleIndex = 12;
-            this.colAvgPrice.Width = 70;
+            this.colAvgPrice.VisibleIndex = 11;
+            this.colAvgPrice.Width = 81;
             // 
             // colChangeFromCost
             // 
@@ -759,8 +757,8 @@
             this.colChangeFromCost.UnboundExpression = "(100 * [CalculatedOptionPrice] - [AverageCost]) / [AverageCost]";
             this.colChangeFromCost.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
             this.colChangeFromCost.Visible = true;
-            this.colChangeFromCost.VisibleIndex = 14;
-            this.colChangeFromCost.Width = 64;
+            this.colChangeFromCost.VisibleIndex = 13;
+            this.colChangeFromCost.Width = 74;
             // 
             // label1
             // 
@@ -1281,6 +1279,38 @@
             this.colLastUpdate.VisibleIndex = 22;
             this.colLastUpdate.Width = 177;
             // 
+            // colImVolOnCallATM
+            // 
+            this.colImVolOnCallATM.AppearanceCell.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.colImVolOnCallATM.AppearanceCell.Options.UseForeColor = true;
+            this.colImVolOnCallATM.AppearanceHeader.FontStyleDelta = System.Drawing.FontStyle.Bold;
+            this.colImVolOnCallATM.AppearanceHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.colImVolOnCallATM.AppearanceHeader.Options.UseFont = true;
+            this.colImVolOnCallATM.AppearanceHeader.Options.UseForeColor = true;
+            this.colImVolOnCallATM.Caption = "IV Call ATM";
+            this.colImVolOnCallATM.DisplayFormat.FormatString = "#0.00%";
+            this.colImVolOnCallATM.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colImVolOnCallATM.FieldName = "ImVolOnCallATM";
+            this.colImVolOnCallATM.Name = "colImVolOnCallATM";
+            this.colImVolOnCallATM.Visible = true;
+            this.colImVolOnCallATM.VisibleIndex = 13;
+            // 
+            // colImVolOnPutATM
+            // 
+            this.colImVolOnPutATM.AppearanceCell.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.colImVolOnPutATM.AppearanceCell.Options.UseForeColor = true;
+            this.colImVolOnPutATM.AppearanceHeader.FontStyleDelta = System.Drawing.FontStyle.Bold;
+            this.colImVolOnPutATM.AppearanceHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.colImVolOnPutATM.AppearanceHeader.Options.UseFont = true;
+            this.colImVolOnPutATM.AppearanceHeader.Options.UseForeColor = true;
+            this.colImVolOnPutATM.Caption = "IV Put ATM";
+            this.colImVolOnPutATM.DisplayFormat.FormatString = "#0.00%";
+            this.colImVolOnPutATM.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colImVolOnPutATM.FieldName = "ImVolOnPutATM";
+            this.colImVolOnPutATM.Name = "colImVolOnPutATM";
+            this.colImVolOnPutATM.Visible = true;
+            this.colImVolOnPutATM.VisibleIndex = 14;
+            // 
             // splitContainerControl1
             // 
             this.splitContainerControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1599,38 +1629,6 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.iShowUNLOptions)});
             this.popupMenuUNL.Manager = this.barManager1;
             this.popupMenuUNL.Name = "popupMenuUNL";
-            // 
-            // colImVolOnCallATM
-            // 
-            this.colImVolOnCallATM.AppearanceCell.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.colImVolOnCallATM.AppearanceCell.Options.UseForeColor = true;
-            this.colImVolOnCallATM.AppearanceHeader.FontStyleDelta = System.Drawing.FontStyle.Bold;
-            this.colImVolOnCallATM.AppearanceHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.colImVolOnCallATM.AppearanceHeader.Options.UseFont = true;
-            this.colImVolOnCallATM.AppearanceHeader.Options.UseForeColor = true;
-            this.colImVolOnCallATM.Caption = "IV Call ATM";
-            this.colImVolOnCallATM.DisplayFormat.FormatString = "#0.00%";
-            this.colImVolOnCallATM.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colImVolOnCallATM.FieldName = "ImVolOnCallATM";
-            this.colImVolOnCallATM.Name = "colImVolOnCallATM";
-            this.colImVolOnCallATM.Visible = true;
-            this.colImVolOnCallATM.VisibleIndex = 13;
-            // 
-            // colImVolOnPutATM
-            // 
-            this.colImVolOnPutATM.AppearanceCell.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.colImVolOnPutATM.AppearanceCell.Options.UseForeColor = true;
-            this.colImVolOnPutATM.AppearanceHeader.FontStyleDelta = System.Drawing.FontStyle.Bold;
-            this.colImVolOnPutATM.AppearanceHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.colImVolOnPutATM.AppearanceHeader.Options.UseFont = true;
-            this.colImVolOnPutATM.AppearanceHeader.Options.UseForeColor = true;
-            this.colImVolOnPutATM.Caption = "IV Put ATM";
-            this.colImVolOnPutATM.DisplayFormat.FormatString = "#0.00%";
-            this.colImVolOnPutATM.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colImVolOnPutATM.FieldName = "ImVolOnPutATM";
-            this.colImVolOnPutATM.Name = "colImVolOnPutATM";
-            this.colImVolOnPutATM.Visible = true;
-            this.colImVolOnPutATM.VisibleIndex = 14;
             // 
             // PositionsView
             // 

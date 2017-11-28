@@ -13,6 +13,7 @@ using TNS.BL.DataObjects;
 using TNS.BL.Interfaces;
 using IMessage = Infra.Bus.IMessage;
 using OrderStatus = TNS.API.ApiDataObjects.OrderStatus;
+using static System.Math;
 
 namespace TNS.BL.UnlManagers
 {
@@ -276,7 +277,7 @@ namespace TNS.BL.UnlManagers
                 throw new Exception("Do this activity during working time!!!");
             var marginData = AppManager.MarginManager.MarginDataDic[Symbol];
             var totalCouplesCount = marginData.MateCouplesCount;
-            cuoplesCount = Math.Min(cuoplesCount, totalCouplesCount);//In case the parameter greater then th ecouple total count.
+            cuoplesCount = Min(cuoplesCount, totalCouplesCount);//In case the parameter greater then th ecouple total count.
 
             for (var i = 0; i < cuoplesCount; i++)
             {

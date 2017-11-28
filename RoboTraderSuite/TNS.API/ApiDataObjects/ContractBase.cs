@@ -99,6 +99,18 @@ namespace TNS.API.ApiDataObjects
             }
         }
         /// <summary>
+        /// Get indication if now is extended working time by 30 minutes :
+        /// ==> between StartTrading - 30 minutes  and EndTrading + 30 minutes!
+        /// </summary>
+        public bool IsNowExtendedWorkingTime
+        {
+            get
+            {
+                DateTime now = DateTime.Now;
+                return IsWorkingDay && now >= StartTradingTimeLocal.AddMinutes(-30) && now < EndTradingTimeLocal.AddMinutes(30);
+            }
+        }
+        /// <summary>
         /// Get indication if today is working day for AAPL security.
         /// </summary>
         public bool IsWorkingDay { get; set; }

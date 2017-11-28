@@ -45,6 +45,7 @@ namespace DAL
             Map(x => x.Change);
             Map(x => x.HighestPrice);
             Map(x => x.LowestPrice);
+            Map(x => x.LastUpdate);
         }
     }
     public class ManagedSecurityComponent : ComponentMap<ManagedSecurity>
@@ -307,7 +308,7 @@ namespace DAL
 
             Map(c => c.Margin);
             Map(c => c.DailyPnL);
-            Map(c => c.LastUpdate);
+            //Map(c => c.LastUpdate);
 
             Component(x => x.ManagedSecurity); //==> Symbol; MaxAllowedMargin; LastDayPnL;
             Component(x => x.UnlSecurityData);

@@ -103,39 +103,49 @@ namespace TNS.BL
                 case ETradingTimeEventType.EndTradingIn60Seconds:
                     break;
                 case ETradingTimeEventType.EndTrading:
-                    DBDiluter dbDiluter = new DBDiluter();
-                    dbDiluter.DiluteFromAllUnLs();
                     //Don't save if it's not an operational account:
-                    if (AccountManager.MainAccount != Configurations.Application.MainAccount) break;
-                    //Save the parameter in one minute from now, and then 'Net Liquidition' will be stable!
-                    GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromMinutes(1), () =>
-                    {
-                        SavedPatametersManager.SaveLastNetLiquiditionParameter(AccountManager.NetLiquidation);
-                    }, false);
-                   
-                    //Save UNL data
-                    using (var session = DBSessionFactory.Instance.OpenSession())
-                    {
-                        foreach (var simpleBaseLogic in UNLManagerDic.Values)
-                        {
-                            var unlManager = (UNLManager) simpleBaseLogic;
-
-                            var managedSecurity =
-                                session.Query<ManagedSecurity>().FirstOrDefault(ms => ms.Symbol == unlManager.Symbol);
-                            if (managedSecurity == null) continue;
-
-                            managedSecurity.LastDayPnL = unlManager.UnlTradingData.PnLTotal;
-                            session.SaveOrUpdate(managedSecurity);
-                        }
-                        session.Flush();
-                    }
-
-
-
+                    if (AccountManager.MainAccount == Configurations.Application.MainAccount)
+                        DoWorkAfterTradingEnding();
                     break;
             }
         }
 
+        private void DoWorkAfterTradingEnding()
+        {
+            try
+            {
+                DBDiluter dbDiluter = new DBDiluter();
+                dbDiluter.DiluteFromAllUnLs();
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+            }
+           
+            //Save the parameter in one minute from now, and then 'Net Liquidition' will be stable!
+            GeneralTimer.GeneralTimerInstance.AddTask(TimeSpan.FromMinutes(1), () =>
+            {
+                SavedPatametersManager.SaveLastNetLiquiditionParameter(AccountManager.NetLiquidation);
+            }, false);
+
+            //Save UNL data
+            using (var session = DBSessionFactory.Instance.OpenSession())
+            {
+                foreach (var simpleBaseLogic in UNLManagerDic.Values)
+                {
+                    var unlManager = (UNLManager)simpleBaseLogic;
+
+                    var managedSecurity =
+                        session.Query<ManagedSecurity>().FirstOrDefault(ms => ms.Symbol == unlManager.Symbol);
+                    if (managedSecurity == null) continue;
+
+                    managedSecurity.LastDayPnL = unlManager.UnlTradingData.PnLTotal;
+                    session.SaveOrUpdate(managedSecurity);
+                }
+                session.Flush();
+            }
+        }
+        
         private void StartManagers()
         {
             AccountManager.Start();
@@ -172,11 +182,13 @@ namespace TNS.BL
             AccountManager = new AccountManager(APIWrapper);
             
             ManagedSecuritiesManager = new ManagedSecuritiesManager(APIWrapper);
-
+            List<ManagedSecurity> activeUNLList;
             UNLManagerDic = new Dictionary<string, SimpleBaseLogic>();
-            ISession session = DBSessionFactory.Instance.OpenSession();
-            List<ManagedSecurity> activeUNLList = session.Query<ManagedSecurity>().Where(contract => contract.IsActive && contract.OptionChain).ToList();
-
+            using (var session = DBSessionFactory.Instance.OpenSession())
+            {
+                 activeUNLList = session.Query<ManagedSecurity>()
+                    .Where(contract => contract.IsActive && contract.OptionChain).ToList();
+            }
             foreach (var managedSecurity in activeUNLList)
             {
                 var unlManager = new UNLManager(managedSecurity, APIWrapper, Distributer);

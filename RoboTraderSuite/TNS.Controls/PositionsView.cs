@@ -18,6 +18,7 @@ using TNS.BL.Interfaces;
 using TNS.BL.UnlManagers;
 using DAL;
 using Infra.PopUpMessages;
+using static System.Math;
 
 namespace TNS.Controls
 {
@@ -289,7 +290,7 @@ namespace TNS.Controls
             noChange = false;
             if (secData != null)
             {
-                noChange = Math.Abs(secData.Change) < 0.002;
+                noChange = Abs(secData.Change) < 0.002;
                 return  (secData.Change > 0);
             }
             return false;

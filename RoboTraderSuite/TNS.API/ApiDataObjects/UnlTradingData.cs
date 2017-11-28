@@ -27,7 +27,7 @@ namespace TNS.API.ApiDataObjects
             //Symbol = managedSecurity.Symbol;
             ManagedSecurity = managedSecurity;
             UnlSecurityData = unlSecurityData;
-            SetLastUpdate();
+            //SetLastUpdate();
         }
 
         public UnlTradingData(ManagedSecurity managedSecurity)
@@ -56,7 +56,7 @@ namespace TNS.API.ApiDataObjects
             get => _unlSecurityData;
             set
             {
-                SetLastUpdate();
+                //SetLastUpdate();
                 _unlSecurityData = value;
                 var props = typeof(SecurityData).GetProperties()
                     .Where(p => p.CanWrite && !p.GetIndexParameters().Any());
@@ -70,7 +70,6 @@ namespace TNS.API.ApiDataObjects
 
 
         #endregion SecurityData
-
 
         #region Object Identification characteristics
 
@@ -103,11 +102,7 @@ namespace TNS.API.ApiDataObjects
         public PositionsSummaryData PositionsSummaryData
         {
             get => _positionsSummaryData;
-            set
-            {
-                SetLastUpdate();
-                _positionsSummaryData = value;
-            }
+            set => _positionsSummaryData = value;
         }
 
         public double DeltaTotal => PositionsSummaryData?.DeltaTotal ?? 0;
@@ -146,16 +141,12 @@ namespace TNS.API.ApiDataObjects
         public double Margin
         {
             get => _margin;
-            set
-            {
-                SetLastUpdate();
-                _margin = value;
-            }
+            set => _margin = value;
         }
 
         #endregion
 
-        public override string MainInfo => $"{base.MainInfo} " +        $"Margin:{Margin:##,###}.          PnLTotal:{PnLTotal:##,###}.";
+        public override string MainInfo => $"{base.MainInfo} " +  $" LUD: {LastUpdate:G}Margin:{Margin:##,###}.          PnLTotal:{PnLTotal:##,###}.";
 
        
     }

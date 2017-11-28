@@ -11,6 +11,7 @@ using TNS.API.ApiDataObjects;
 using TNS.BL.DataObjects;
 using TNS.BL.Interfaces;
 using OrderStatus = TNS.API.ApiDataObjects.OrderStatus;
+using static System.Math;
 
 namespace TNS.BL.UnlManagers
 {
@@ -122,7 +123,7 @@ namespace TNS.BL.UnlManagers
                 throw new Exception("TWS not connected to RoboTrader!");
             var optionNegotiator =
                 new OptionNegotiator(UNLManager) {SimulatorAccount = IsSimulatorAccount};
-            quantity = Math.Abs(quantity);
+            quantity = Abs(quantity);
             var orderData = optionNegotiator.StartTradingOption(optionData, sell, quantity);
             OptionNegotiatorDic[orderData.OrderId] = optionNegotiator;
             return orderData;

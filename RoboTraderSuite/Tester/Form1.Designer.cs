@@ -43,6 +43,9 @@
             this.popupMenu1 = new DevExpress.XtraBars.PopupMenu();
             this.btnTestDiluter = new System.Windows.Forms.Button();
             this.btnTestAsync = new System.Windows.Forms.Button();
+            this.btnTestChart = new System.Windows.Forms.Button();
+            this.tradingDataChartControl1 = new TNS.Controls.TradingDataChartControl();
+            this.btnBnS = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).BeginInit();
             this.SuspendLayout();
@@ -108,15 +111,15 @@
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
             this.barDockControlTop.Manager = this.barManager1;
-            this.barDockControlTop.Size = new System.Drawing.Size(545, 49);
+            this.barDockControlTop.Size = new System.Drawing.Size(763, 49);
             // 
             // barDockControlBottom
             // 
             this.barDockControlBottom.CausesValidation = false;
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(0, 415);
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 515);
             this.barDockControlBottom.Manager = this.barManager1;
-            this.barDockControlBottom.Size = new System.Drawing.Size(545, 23);
+            this.barDockControlBottom.Size = new System.Drawing.Size(763, 23);
             // 
             // barDockControlLeft
             // 
@@ -124,15 +127,15 @@
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.barDockControlLeft.Location = new System.Drawing.Point(0, 49);
             this.barDockControlLeft.Manager = this.barManager1;
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 366);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 466);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(545, 49);
+            this.barDockControlRight.Location = new System.Drawing.Point(763, 49);
             this.barDockControlRight.Manager = this.barManager1;
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 366);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 466);
             // 
             // popupMenu1
             // 
@@ -141,7 +144,7 @@
             // 
             // btnTestDiluter
             // 
-            this.btnTestDiluter.Location = new System.Drawing.Point(34, 75);
+            this.btnTestDiluter.Location = new System.Drawing.Point(75, 29);
             this.btnTestDiluter.Name = "btnTestDiluter";
             this.btnTestDiluter.Size = new System.Drawing.Size(75, 23);
             this.btnTestDiluter.TabIndex = 5;
@@ -151,7 +154,7 @@
             // 
             // btnTestAsync
             // 
-            this.btnTestAsync.Location = new System.Drawing.Point(418, 279);
+            this.btnTestAsync.Location = new System.Drawing.Point(176, 29);
             this.btnTestAsync.Name = "btnTestAsync";
             this.btnTestAsync.Size = new System.Drawing.Size(75, 23);
             this.btnTestAsync.TabIndex = 5;
@@ -159,11 +162,45 @@
             this.btnTestAsync.UseVisualStyleBackColor = true;
             this.btnTestAsync.Click += new System.EventHandler(this.btnTestAsync_Click);
             // 
+            // btnTestChart
+            // 
+            this.btnTestChart.Location = new System.Drawing.Point(272, 29);
+            this.btnTestChart.Name = "btnTestChart";
+            this.btnTestChart.Size = new System.Drawing.Size(75, 23);
+            this.btnTestChart.TabIndex = 11;
+            this.btnTestChart.Text = "TestChart";
+            this.btnTestChart.UseVisualStyleBackColor = true;
+            this.btnTestChart.Click += new System.EventHandler(this.btnTestChart_Click);
+            // 
+            // tradingDataChartControl1
+            // 
+            this.tradingDataChartControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tradingDataChartControl1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.tradingDataChartControl1.Location = new System.Drawing.Point(12, 58);
+            this.tradingDataChartControl1.Name = "tradingDataChartControl1";
+            this.tradingDataChartControl1.Size = new System.Drawing.Size(739, 451);
+            this.tradingDataChartControl1.TabIndex = 12;
+            // 
+            // btnBnS
+            // 
+            this.btnBnS.Location = new System.Drawing.Point(645, 29);
+            this.btnBnS.Name = "btnBnS";
+            this.btnBnS.Size = new System.Drawing.Size(106, 23);
+            this.btnBnS.TabIndex = 11;
+            this.btnBnS.Text = "Black && Schultz";
+            this.btnBnS.UseVisualStyleBackColor = true;
+            this.btnBnS.Click += new System.EventHandler(this.btnBnS_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(545, 438);
+            this.ClientSize = new System.Drawing.Size(763, 538);
+            this.Controls.Add(this.tradingDataChartControl1);
+            this.Controls.Add(this.btnBnS);
+            this.Controls.Add(this.btnTestChart);
             this.Controls.Add(this.btnTestAsync);
             this.Controls.Add(this.btnTestDiluter);
             this.Controls.Add(this.standaloneBarDockControl1);
@@ -194,5 +231,8 @@
         private DevExpress.XtraBars.PopupMenu popupMenu1;
         private System.Windows.Forms.Button btnTestDiluter;
         private System.Windows.Forms.Button btnTestAsync;
+        private System.Windows.Forms.Button btnTestChart;
+        private TNS.Controls.TradingDataChartControl tradingDataChartControl1;
+        private System.Windows.Forms.Button btnBnS;
     }
 }

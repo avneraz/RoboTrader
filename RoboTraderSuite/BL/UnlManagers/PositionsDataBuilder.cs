@@ -7,7 +7,7 @@ using Infra.Enum;
 using Infra.Extensions;
 using log4net;
 using TNS.API.ApiDataObjects;
-using TNS.BL.DataObjects;
+using static System.Math;
 using TNS.BL.Interfaces;
 
 namespace TNS.BL.UnlManagers
@@ -125,7 +125,7 @@ namespace TNS.BL.UnlManagers
         private void CalculateUnlTradingData()
         {
 
-            UnlTradingData?.SetLastUpdate();
+            //UnlTradingData?.SetLastUpdate();
 
             PositionsSummaryData.CostTotal   = PositionDataDic.Values.Sum(pd => pd.TotalCost);
             PositionsSummaryData.DeltaTotal  = PositionDataDic.Values.Sum(pd => pd.DeltaTotal);
@@ -133,7 +133,7 @@ namespace TNS.BL.UnlManagers
             PositionsSummaryData.ThetaTotal  = PositionDataDic.Values.Sum(pd => pd.ThetaTotal);
             PositionsSummaryData.VegaTotal   = PositionDataDic.Values.Sum(pd => pd.VegaTotal);
             PositionsSummaryData.MarketValue = PositionDataDic.Values.Sum(pd => pd.MarketValue);
-            PositionsSummaryData.Shorts      = PositionDataDic.Values.Where(pd=>pd.Position<0).Sum(pd => Math.Abs(pd.Position));
+            PositionsSummaryData.Shorts      = PositionDataDic.Values.Where(pd=>pd.Position<0).Sum(pd => Abs(pd.Position));
             PositionsSummaryData.Longs       = PositionDataDic.Values.Where(pd=>pd.Position>0).Sum(pd => pd.Position);
 
             PositionsSummaryData.IVWeightedAvg = PositionDataDic.Values.Sum(pd => pd.IV * pd.Quantity) /

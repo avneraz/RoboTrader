@@ -144,9 +144,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(10, 49);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(88, 13);
+            this.label5.Size = new System.Drawing.Size(57, 13);
             this.label5.TabIndex = 9;
-            this.label5.Text = "Underlined LastPrice:";
+            this.label5.Text = "UnL Price:";
             // 
             // label1
             // 
@@ -475,7 +475,7 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(20, 72);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(35, 13);
+            this.label7.Size = new System.Drawing.Size(59, 13);
             this.label7.TabIndex = 9;
             this.label7.Text = "DeltaTotal:";
             // 
@@ -579,7 +579,7 @@
             this.label16.AutoSize = true;
             this.label16.Location = new System.Drawing.Point(9, 51);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(68, 13);
+            this.label16.Size = new System.Drawing.Size(88, 13);
             this.label16.TabIndex = 10;
             this.label16.Text = "Option LastPrice:";
             // 

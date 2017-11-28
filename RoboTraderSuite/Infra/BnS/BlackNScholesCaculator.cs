@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using Infra.Enum;
+using static System.Math;
 
 //using System.Collections.Generic;
 //using System.Linq;
@@ -127,18 +128,18 @@ namespace Infra.BnS
         private double CalculateD1()
         {
             double d1 =
-                (Math.Log(StockPrice / StrikePrice) +
+                (Log(StockPrice / StrikePrice) +
                     ExpiryTime * (RiskFreeInterestRate + ImpliedVolatilities * ImpliedVolatilities / 2)) /
-                    (ImpliedVolatilities * Math.Sqrt(ExpiryTime));
+                    (ImpliedVolatilities * Sqrt(ExpiryTime));
             return d1;
         }
 
         private double CalculateD2()
         {
             double d2 =
-                (Math.Log(StockPrice / StrikePrice) +
+                (Log(StockPrice / StrikePrice) +
                     ExpiryTime * (RiskFreeInterestRate - ImpliedVolatilities * ImpliedVolatilities / 2)) /
-                    (ImpliedVolatilities * Math.Sqrt(ExpiryTime));
+                    (ImpliedVolatilities * Sqrt(ExpiryTime));
             return d2;
         }
 
@@ -160,9 +161,9 @@ namespace Infra.BnS
 
 
             double k = 1.0 / (1.0 + alpha * x);
-            double nX1 = (Math.Exp(-(x * x / 2))) /
-                         Math.Sqrt((2 * Convert.ToDouble(Math.PI.ToString(CultureInfo.InvariantCulture))));
-            double result = 1 - (nX1 * (a1 * k + a2 * k * k + a3 * k * k * k + a4 * Math.Pow(k, 4.0) + a5 * Math.Pow(k, 5.0)));
+            double nX1 = (Exp(-(x * x / 2))) /
+                         Sqrt((2 * Convert.ToDouble(PI.ToString(CultureInfo.InvariantCulture))));
+            double result = 1 - (nX1 * (a1 * k + a2 * k * k + a3 * k * k * k + a4 * Pow(k, 4.0) + a5 * Pow(k, 5.0)));
             return result;
         }
 
@@ -171,35 +172,36 @@ namespace Infra.BnS
             ThetaCall = -(
                 (
                     (
-                        StockPrice * ((Math.Exp(-(_d1 * _d1 / 2))) /
-                        Math.Sqrt(2.0 * Math.PI)) * ImpliedVolatilities
+                        StockPrice * ((
+                        Exp(-(_d1 * _d1 / 2))) /
+                        Sqrt(2.0 * PI)) * ImpliedVolatilities
                     ) /
-                    (2 * Math.Sqrt(ExpiryTime))
+                    (2 * Sqrt(ExpiryTime))
                 ) -
                 (
                     RiskFreeInterestRate * StrikePrice *
-                    Math.Exp(-RiskFreeInterestRate * ExpiryTime) * CalculateNOfX(_d2)
+                    Exp(-RiskFreeInterestRate * ExpiryTime) * CalculateNOfX(_d2)
                 )) / 2.5;
 
             ThetaPut = (
                 (
                     -(
-                        StockPrice * ((Math.Exp(-(_d1 * _d1 / 2))) /
-                        Math.Sqrt(2.0 * Math.PI)) * ImpliedVolatilities
+                        StockPrice * ((Exp(-(_d1 * _d1 / 2))) /
+                        Sqrt(2.0 * PI)) * ImpliedVolatilities
                     ) /
-                    (2 * Math.Sqrt(ExpiryTime))
+                    (2 * Sqrt(ExpiryTime))
                 ) +
                 (
                     RiskFreeInterestRate * StrikePrice *
-                    Math.Exp(-RiskFreeInterestRate * ExpiryTime) * CalculateNOfX(-_d2)
+                    Exp(-RiskFreeInterestRate * ExpiryTime) * CalculateNOfX(-_d2)
                 )) / 2.5;
 
         }
 
         private void CalculateGama()
         {
-            double sigma = (Multiplier) * ((Math.Exp(-(_d1 * _d1 / 2))) / Math.Sqrt(2.0 * Math.PI)) /
-                             (StockPrice * ImpliedVolatilities * Math.Sqrt(ExpiryTime));
+            double sigma = (Multiplier) * ((Exp(-(_d1 * _d1 / 2))) / Sqrt(2.0 * PI)) /
+                             (StockPrice * ImpliedVolatilities * Sqrt(ExpiryTime));
             GamaCall = GamaPut = sigma;
         }
 
@@ -207,9 +209,9 @@ namespace Infra.BnS
         {
             StockPrice += 1.0;
             double call = CalculateCallValue();
-            DeltaCall = Math.Abs(call - CallValue);
+            DeltaCall = Abs(call - CallValue);
             double put = CalculatePutValue();
-            DeltaPut = -Math.Abs(put - PutValue);
+            DeltaPut = -Abs(put - PutValue);
             //Return the original value:
             StockPrice -= 1.0;
         }
@@ -237,14 +239,14 @@ namespace Infra.BnS
         {
             var callValue = Multiplier *
                     (StockPrice * CalculateNOfX(_d1) -
-                     CalculateNOfX(_d2) * StrikePrice * Math.Exp(-RiskFreeInterestRate * ExpiryTime));
+                     CalculateNOfX(_d2) * StrikePrice * Exp(-RiskFreeInterestRate * ExpiryTime));
             return callValue;
         }
 
         public double CalculatePutValue()
         {
             var putValue = Multiplier *
-                    (CalculateNOfX(-_d2) * StrikePrice * Math.Exp(-RiskFreeInterestRate * ExpiryTime) -
+                    (CalculateNOfX(-_d2) * StrikePrice * Exp(-RiskFreeInterestRate * ExpiryTime) -
                      (StockPrice * CalculateNOfX(-_d1)));
             return putValue;
         }
@@ -303,7 +305,7 @@ namespace Infra.BnS
                 double time, double optionPrice)
         {
             // check for arbitrage violations.
-            if (optionPrice < 0.99 * (spot - strike * Math.Exp(-time * interestRate)))
+            if (optionPrice < 0.99 * (spot - strike * Exp(-time * interestRate)))
             {
                 return 0.0;                             // Option price is too low if this happens
             }
@@ -354,7 +356,7 @@ namespace Infra.BnS
                 price = blackNScholesCaculator.CallValue;
 
                 double test = (price - optionPrice);
-                if (Math.Abs(test) < ACCURACY)
+                if (Abs(test) < ACCURACY)
                 {
                     IterationCounter = i;
                     return sigma;
@@ -391,7 +393,7 @@ namespace Infra.BnS
                 double time, double optionPrice)
         {
             // check for arbitrage violations.
-            if (optionPrice < 0.99 * (spot - strike * Math.Exp(-time * interestRate)))
+            if (optionPrice < 0.99 * (spot - strike * Exp(-time * interestRate)))
             {
                 return 0.0;   // Option price is too low if this happens
             }
@@ -442,7 +444,7 @@ namespace Infra.BnS
                 price = blackNScholesCaculator.PutValue;
 
                 double test = (price - optionPrice);
-                if (Math.Abs(test) < ACCURACY)
+                if (Abs(test) < ACCURACY)
                 {
                     IterationCounter = i;
                     return sigma;
@@ -473,7 +475,7 @@ namespace Infra.BnS
                 StrikePrice = 40
             };
             double callValue = o.CalculateCallValue();
-            if (Math.Abs(callValue - 11.01) > 0.1)
+            if (Abs(callValue - 11.01) > 0.1)
                 return false;
 
             return true;
@@ -490,7 +492,7 @@ namespace Infra.BnS
                 StrikePrice = 40
             };
             var putValue = o.CalculatePutValue();
-            return !(Math.Abs(putValue - 0.078) > 0.001);
+            return !(Abs(putValue - 0.078) > 0.001);
         }
 
         #endregion
@@ -525,14 +527,14 @@ namespace Infra.BnS
                 double time, double optionPrice)
         {
             // check for arbitrage violations. Option price is too low if this happens
-            if (optionPrice < 0.99 * (spot - strike * Math.Exp(-time * interestRate)))
+            if (optionPrice < 0.99 * (spot - strike * Exp(-time * interestRate)))
             {
                 return 0.0;
             }
 
             const int MAX_ITERATIONS = 100;
             const double ACCURACY = 1.0e-5;
-            double tSqrt = Math.Sqrt(time);
+            double tSqrt = Sqrt(time);
 
             var blackNScholesCaculator = new BlackNScholesCaculator
             {
@@ -551,9 +553,9 @@ namespace Infra.BnS
                 double price = blackNScholesCaculator.CallValue;
                 // price = OptionPriceCallBlackScholes(spot, strike, interestRate, sigma, time);
                 double diff = optionPrice - price;
-                if (Math.Abs(diff) < ACCURACY)
+                if (Abs(diff) < ACCURACY)
                     return sigma;
-                double d1 = (Math.Log(spot / strike) + interestRate * time) / (sigma * tSqrt) + 0.5 * sigma * tSqrt;
+                double d1 = (Log(spot / strike) + interestRate * time) / (sigma * tSqrt) + 0.5 * sigma * tSqrt;
 
                 double vega = spot * tSqrt * CumulativeNormDist(d1);
                 sigma = sigma + diff / vega;
@@ -584,9 +586,9 @@ namespace Infra.BnS
             double p = 0.2316419;
             double c2 = 0.3989423;
 
-            double a = Math.Abs(z);
+            double a = Abs(z);
             double t = 1.0 / (1.0 + a * p);
-            double b = c2 * Math.Exp((-z) * (z / 2.0));
+            double b = c2 * Exp((-z) * (z / 2.0));
             double n = ((((b5 * t + b4) * t + b3) * t + b2) * t + b1) * t;
             n = 1.0 - b * n;
             if (z < 0.0)

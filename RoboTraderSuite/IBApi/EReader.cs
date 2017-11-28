@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Net.Sockets;
 using System.IO;
+using static System.Math;
 
 namespace IBApi
 {
@@ -489,7 +490,7 @@ namespace IBApi
             if (impliedVolatility < 0)
                 impliedVolatility = Double.MaxValue;
             double delta = ReadDouble();
-            if (Math.Abs(delta) > 1)
+            if (Abs(delta) > 1)
                 delta = Double.MaxValue;
             double optPrice = Double.MaxValue;
             double pvDividend = Double.MaxValue;
@@ -513,17 +514,17 @@ namespace IBApi
             if (msgVersion >= 6)
             {
                 gamma = ReadDouble();
-                if (Math.Abs(gamma) > 1)
+                if (Abs(gamma) > 1)
                 { // -2 is the "not yet computed" indicator
                     gamma = Double.MaxValue;
                 }
                 vega = ReadDouble();
-                if (Math.Abs(vega) > 10)
+                if (Abs(vega) > 10)
                 { // -2 is the "not yet computed" indicator
                     vega = Double.MaxValue;
                 }
                 theta = ReadDouble();
-                if (Math.Abs(theta) > 1)
+                if (Abs(theta) > 1)
                 { // -2 is the "not yet computed" indicator
                     theta = Double.MaxValue;
                 }

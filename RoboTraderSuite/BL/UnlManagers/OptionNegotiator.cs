@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Infra;
 using TNS.API;
 using TNS.API.ApiDataObjects;
+using static System.Math;
 
 namespace TNS.BL.UnlManagers
 {
@@ -129,11 +130,11 @@ namespace TNS.BL.UnlManagers
             if (PriceStep < MinPriceStep) //Less than 0.01
             {
                 PriceStep = MinPriceStep;
-                TradingCycleCount = (int)Math.Ceiling(askBidDif / PriceStep);
+                TradingCycleCount = (int)Ceiling(askBidDif / PriceStep);
             }
             //Add an extra 3 cycles when it's simulation.
             TradingCycleCount = SimulatorAccount ? TradingCycleCount + 3 : TradingCycleCount;
-            PriceStep = RoundPrice(Math.Max(MinPriceStep, PriceStep));
+            PriceStep = RoundPrice(Max(MinPriceStep, PriceStep));
             TradingCycleIndex = 0;
         }
 
@@ -155,7 +156,7 @@ namespace TNS.BL.UnlManagers
                         ? CurrentLimitPrice - FirstBidPrice
                         : FirstAskPrice - CurrentLimitPrice;
 
-                    PriceStep = RoundPrice(Math.Max(MinPriceStep, diff / 10));
+                    PriceStep = RoundPrice(Max(MinPriceStep, diff / 10));
                 }
             }
             
@@ -236,7 +237,7 @@ namespace TNS.BL.UnlManagers
         /// <returns></returns>
         private double RoundPrice(double price)
         {
-            return Math.Round(price, 2);
+            return Round(price, 2);
         }
         private void SaveTransaction()
         {

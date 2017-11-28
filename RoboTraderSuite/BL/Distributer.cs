@@ -116,6 +116,7 @@ namespace TNS.BL
                     break;
                 case EapiDataTypes.UnlTradingData:
                     MarginManager.UpdateUnlTradingData((UnlTradingData) message);
+                    ((UnlTradingData)message).SetLastUpdate();
                     WriteToDB(message);
                     break;
                 case EapiDataTypes.MarginData:
@@ -137,7 +138,9 @@ namespace TNS.BL
             try
             {
                 if (UnlManager.IsNowExtendedWorkingTime)
+                {
                     _dbWriter.Enqueue(message, false);
+                }
             }
             catch
             {

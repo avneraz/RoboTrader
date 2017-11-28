@@ -206,7 +206,7 @@ namespace TNS.BL.UnlManagers
             CreateManagers();
             //Start repeated task (every 1 sec) to Distributer:
             AddScheduledTask(TimeSpan.FromSeconds(10),
-                () => { AddScheduledTask(TimeSpan.FromSeconds(1),
+                () => { AddScheduledTask(TimeSpan.FromSeconds(60),
                     () => { Distributer.Enqueue(UnlTradingData); }, true); });
         }
 
@@ -263,28 +263,15 @@ namespace TNS.BL.UnlManagers
         public DateTime StartTradingTimeLocal => SecurityContract.StartTradingTimeLocal;
         public DateTime EndTradingTimeLocal => SecurityContract.EndTradingTimeLocal;
 
-        public bool IsNowWorkingTime
-        {
-            get
-            {
-                DateTime now = DateTime.Now;
+        public bool IsNowWorkingTime => SecurityContract != null && SecurityContract.IsNowWorkingTime;
+        
 
-                return IsWorkingDay && now >= StartTradingTimeLocal && now < EndTradingTimeLocal;
-            }
-        }
         /// <summary>
         /// Get indication if now is extended working time by 30 minutes :
         /// ==> between StartTrading - 30 minutes  and EndTrading + 30 minutes!
         /// </summary>
-        public bool IsNowExtendedWorkingTime
-        {
-            get
-            {
-                DateTime now = DateTime.Now;
-
-                return IsWorkingDay && now >= StartTradingTimeLocal.AddMinutes(-30) && now < EndTradingTimeLocal.AddMinutes(30);
-            }
-        }
+        public bool IsNowExtendedWorkingTime => SecurityContract != null && SecurityContract.IsNowExtendedWorkingTime;
+        
 
         private Dictionary<ETradingTimeEventType, TradingTimeEvent> TradingTimeEventDic { get; } =
             new Dictionary<ETradingTimeEventType, TradingTimeEvent>();

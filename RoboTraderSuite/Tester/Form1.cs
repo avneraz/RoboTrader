@@ -8,8 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DAL;
+using DevExpress.Data.Helpers;
 using Infra;
 using Infra.Configuration;
+using Infra.Extensions;
+using NHibernate.Linq;
+using TNS.API.ApiDataObjects;
+using TNS.Controls;
 
 namespace Tester
 {
@@ -54,6 +59,37 @@ namespace Tester
         private void btnTestAsync_Click(object sender, EventArgs e)
         {
             MessageBox.Show("btnTestAsync Clicked");
+        }
+
+        private void btnTestChart_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //var control = new TradingDataChartControl();
+                using (var session = DBSessionFactory.Instance.OpenSession())
+                {
+                    DateTime start = DateTime.Today.AddDays(-10); /*new DateTime(2017,11,15,16,00,00);*/
+                    DateTime end = DateTime.Now;//new DateTime(2017, 11, 16, 17, 38, 00);
+
+                    var list = session.Query<UnlTradingData>().Where(td=>td.ManagedSecurity.Symbol.Equals("FB")).ToList();
+
+                    var theList = list
+                        .Where(td => td.LastUpdate > start && td.LastUpdate < end ).ToList();
+                    tradingDataChartControl1.SetDataSource(theList, start);
+                }
+              
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnBnS_Click(object sender, EventArgs e)
+        {
+            OptionCalculatorForm calc = new OptionCalculatorForm();
+            calc.Show();
         }
     }
 }
