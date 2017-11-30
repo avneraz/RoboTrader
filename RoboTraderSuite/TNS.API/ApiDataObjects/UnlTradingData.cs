@@ -11,8 +11,6 @@ namespace TNS.API.ApiDataObjects
     {
         private double _dailyPnL;
         private SecurityData _unlSecurityData;
-        private double _margin;
-        private PositionsSummaryData _positionsSummaryData;
 
         /// <summary>
         /// Used for mapping:
@@ -22,13 +20,6 @@ namespace TNS.API.ApiDataObjects
         }
 
 
-        public UnlTradingData(ManagedSecurity managedSecurity, SecurityData unlSecurityData)
-        {
-            //Symbol = managedSecurity.Symbol;
-            ManagedSecurity = managedSecurity;
-            UnlSecurityData = unlSecurityData;
-            //SetLastUpdate();
-        }
 
         public UnlTradingData(ManagedSecurity managedSecurity)
         {
@@ -99,12 +90,9 @@ namespace TNS.API.ApiDataObjects
 
         #region Position Data
 
-        public PositionsSummaryData PositionsSummaryData
-        {
-            get => _positionsSummaryData;
-            set => _positionsSummaryData = value;
-        }
+        public PositionsSummaryData PositionsSummaryData { get; set; }
 
+        public string Title { get; set; }
         public double DeltaTotal => PositionsSummaryData?.DeltaTotal ?? 0;
         public double GammaTotal => PositionsSummaryData?.GammaTotal ?? 0;
         public double ThetaTotal => PositionsSummaryData?.ThetaTotal ?? 0;
@@ -138,11 +126,7 @@ namespace TNS.API.ApiDataObjects
         /// <summary>
         /// Gets or sets the actual margin for this underline.
         /// </summary>
-        public double Margin
-        {
-            get => _margin;
-            set => _margin = value;
-        }
+        public double Margin { get; set; }
 
         #endregion
 

@@ -12,24 +12,33 @@ namespace TNS.BL.UnlManagers
     public class WhatIfOrderBroker : ISubscibeMessage
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(WhatIfOrderBroker));
-        public WhatIfOrderBroker(UNLManager unlManager)
+       
+        private readonly string _symbol;
+        private readonly AutoResetEvent _autoResetEvent = new AutoResetEvent(false);
+
+        public WhatIfOrderBroker(string symbol)
         {
-            UnlManager = unlManager;
-            APIWrapper = unlManager.APIWrapper;
-            DataType = EapiDataTypes.OrderStatus;
-           
+            _symbol = symbol;
+            InitializeMembers();
         }
 
-        private readonly AutoResetEvent _autoResetEvent = new AutoResetEvent(false);
-        public UNLManager UnlManager { get; }
-        public EapiDataTypes DataType { get; }
-
-        protected ITradingApi APIWrapper { get; }
+        public UNLManager UnlManager { get; set; }
+        public EapiDataTypes DataType { get; set; }
+        private AppManager AppManager => AppManager.AppManagerSingleTonObject;
+        protected ITradingApi APIWrapper { get; set; }
         public OrderData OrderData { get; set; }
         private OrderStatusData OrderStatusData { get; set; }
         public double RequierdMargin { get; set; }
         public OptionData OptionData { get; set; }
         public string WhatIfOrderId { get; set; }
+
+        private void InitializeMembers()
+        {
+            UnlManager = AppManager.UNLManagerDic[_symbol] as UNLManager;
+            if (UnlManager == null) throw new Exception("The symbol is not exist!!");
+            APIWrapper = UnlManager.APIWrapper;
+            DataType = EapiDataTypes.OrderStatus;
+        }
 
         public double SendWhatIfOrder(OptionData optionData, OrderAction orderAction, int quantity)
         {

@@ -3,10 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Net.Sockets;
 using System.IO;
 using static System.Math;
 
@@ -1456,9 +1454,9 @@ namespace IBApi
 
         private void ReceiveFAEvent()
         {
-            int msgVersion = ReadInt();
-            int faDataType = ReadInt();
-            string faData = ReadString();
+            ReadInt();
+            var faDataType = ReadInt();
+            var faData = ReadString();
             parent.Wrapper.receiveFA(faDataType, faData);
         }
 
@@ -1510,13 +1508,13 @@ namespace IBApi
         protected int ReadIntMax() 
         {
             string str = ReadString();
-            return (str == null || str.Length == 0) ? Int32.MaxValue : Int32.Parse(str);
+            return string.IsNullOrEmpty(str) ? int.MaxValue : int.Parse(str);
         }
 
         protected bool ReadBoolFromInt()
         {
             string str = ReadString();
-            return str == null ? false : (Int32.Parse(str) != 0);
+            return str != null && (int.Parse(str) != 0);
         }
 
         public string ReadString()

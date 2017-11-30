@@ -139,8 +139,9 @@
             this.iEditSecurities = new DevExpress.XtraBars.BarButtonItem();
             this.iWhatIf = new DevExpress.XtraBars.BarButtonItem();
             this.iShowUNLOptions = new DevExpress.XtraBars.BarButtonItem();
-            this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.popupMenuPositions = new DevExpress.XtraBars.PopupMenu(this.components);
             this.popupMenuUNL = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.iWhatIfAnalyse = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.grdPositionData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.optionsPositionDataBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdViewPositionData)).BeginInit();
@@ -153,7 +154,7 @@
             this.splitContainerControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.securityDataBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.popupMenuPositions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenuUNL)).BeginInit();
             this.SuspendLayout();
             // 
@@ -1435,8 +1436,9 @@
             this.iOptimizePartlyPosition,
             this.iEditSecurities,
             this.iWhatIf,
-            this.iShowUNLOptions});
-            this.barManager1.MaxItemId = 19;
+            this.iShowUNLOptions,
+            this.iWhatIfAnalyse});
+            this.barManager1.MaxItemId = 20;
             this.barManager1.StatusBar = this.bar3;
             // 
             // bar1
@@ -1604,17 +1606,17 @@
             this.iShowUNLOptions.Name = "iShowUNLOptions";
             this.iShowUNLOptions.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iShowUNLOptions_ItemClick);
             // 
-            // popupMenu1
+            // popupMenuPositions
             // 
-            this.popupMenu1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            this.popupMenuPositions.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.iSellOption),
             new DevExpress.XtraBars.LinkPersistInfo(this.iBuyOption),
             new DevExpress.XtraBars.LinkPersistInfo(this.iOptionPicker),
             new DevExpress.XtraBars.LinkPersistInfo(this.iShowUNLOption),
             new DevExpress.XtraBars.LinkPersistInfo(this.iMargin),
             new DevExpress.XtraBars.LinkPersistInfo(this.iWhatIf)});
-            this.popupMenu1.Manager = this.barManager1;
-            this.popupMenu1.Name = "popupMenu1";
+            this.popupMenuPositions.Manager = this.barManager1;
+            this.popupMenuPositions.Name = "popupMenuPositions";
             // 
             // popupMenuUNL
             // 
@@ -1626,9 +1628,18 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.iOptimizePosition),
             new DevExpress.XtraBars.LinkPersistInfo(this.iOptimizePartlyPosition),
             new DevExpress.XtraBars.LinkPersistInfo(this.iEditSecurities),
-            new DevExpress.XtraBars.LinkPersistInfo(this.iShowUNLOptions)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.iShowUNLOptions),
+            new DevExpress.XtraBars.LinkPersistInfo(this.iWhatIfAnalyse)});
             this.popupMenuUNL.Manager = this.barManager1;
             this.popupMenuUNL.Name = "popupMenuUNL";
+            // 
+            // iWhatIfAnalyse
+            // 
+            this.iWhatIfAnalyse.Caption = "What If...";
+            this.iWhatIfAnalyse.Id = 19;
+            this.iWhatIfAnalyse.ImageOptions.Image = global::TNS.Controls.Properties.Resources.Diagram;
+            this.iWhatIfAnalyse.Name = "iWhatIfAnalyse";
+            this.iWhatIfAnalyse.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iWhatIfAnalyse_ItemClick);
             // 
             // PositionsView
             // 
@@ -1657,7 +1668,7 @@
             this.splitContainerControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.securityDataBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.popupMenuPositions)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenuUNL)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1758,7 +1769,7 @@
         private DevExpress.XtraBars.BarDockControl barDockControl10;
         private DevExpress.XtraBars.BarButtonItem iSellOption;
         private DevExpress.XtraBars.BarButtonItem iBuyOption;
-        private DevExpress.XtraBars.PopupMenu popupMenu1;
+        private DevExpress.XtraBars.PopupMenu popupMenuPositions;
         private DevExpress.XtraBars.BarButtonItem iOptionPicker;
         private System.Windows.Forms.Label lblExcessLiq;
         private System.Windows.Forms.Label label3;
@@ -1778,5 +1789,6 @@
         private DevExpress.XtraBars.BarButtonItem iShowUNLOptions;
         private DevExpress.XtraGrid.Columns.GridColumn colImVolOnCallATM;
         private DevExpress.XtraGrid.Columns.GridColumn colImVolOnPutATM;
+        private DevExpress.XtraBars.BarButtonItem iWhatIfAnalyse;
     }
 }

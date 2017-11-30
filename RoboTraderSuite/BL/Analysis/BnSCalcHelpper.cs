@@ -32,22 +32,33 @@ namespace TNS.BL.Analysis
         /// <param name="optionData"></param>
         public void UpdateGreekValues(OptionData optionData)
         {
-            BnSCalculationData bnSCalculationData = CalculateValuesByBnS(optionData);
+            //Calculate the new BnS values:
+            var bnSCalculationData = CalculateValuesByBnS(optionData);
+             
+            //Update the optionData object by the new values:
             UpdateOptionData(bnSCalculationData, optionData);
         }
-
+        /// <summary>
+        /// Calculate the values according the Bns calculations
+        /// </summary>
+        /// <param name="optionData"></param>
+        /// <returns></returns>
         public BnSCalculationData CalculateValuesByBnS(OptionData optionData)
         {
-            double calculatedIV = CalculateIVByOptionPrice(optionData);
-            return CalculateValuesByBnS(optionData, calculatedIV);
-        }
-        public BnSCalculationData CalculateValuesByBnS(OptionData optionData, double calculatedIV)
-        {
-            var calculationData = new BnSCalculationData(optionData, calculatedIV);
-            CalculateBnSValues(calculationData);
-            return calculationData;
-        }
+            //First calculate the IV according the actual prices, UNL and option price.
+            var calculatedIV = CalculateIVByOptionPrice(optionData);
 
+            var bnSCalculationData = new BnSCalculationData(optionData, calculatedIV);
+            CalculateBnSValues(bnSCalculationData);
+            return bnSCalculationData;
+
+
+        }
+        /// <summary>
+        /// Calculate the IV according the actual prices, UNL and option price.
+        /// </summary>
+        /// <param name="optionData"></param>
+        /// <returns></returns>
         public double CalculateIVByOptionPrice(OptionData optionData)
         {
 
@@ -73,6 +84,10 @@ namespace TNS.BL.Analysis
 
             return iv;
         }
+        /// <summary>
+        /// Use BnS equation to calculate the values (Greek parameters).
+        /// </summary>
+        /// <param name="bnSCalculationData"></param>
         private void CalculateBnSValues(BnSCalculationData bnSCalculationData)
         {
             var blackNScholesCaculator = new BlackNScholesCaculator
@@ -108,7 +123,11 @@ namespace TNS.BL.Analysis
                 bnSCalculationData.ResultDataValues.Vega = blackNScholesCaculator.VegaPut / multiplier;
             }
         }
-
+        /// <summary>
+        /// Insert the new calculated values to the OptionData object, instead of the old values.
+        /// </summary>
+        /// <param name="bnSCalculationData"></param>
+        /// <param name="optionData"></param>
         private void UpdateOptionData(BnSCalculationData bnSCalculationData, OptionData optionData)
         {
             optionData.ImpliedVolatility = bnSCalculationData.ImpliedVolatilitiesBase;
