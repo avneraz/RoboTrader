@@ -43,7 +43,7 @@ namespace TNS.Controls
                        //OptionType = EOptionTypes.Put,
                        RiskFreeInterestRate = this.RiskFreeInterestRate,
                        StockPrice = this.StockPrice,
-                       StrikePrice = this.StrikePrice
+                       Strike = this.StrikePrice
                    };
                 blackNScholesCaculator.CalculateAll();
                 double resValue = blackNScholesCaculator.CallValue;
@@ -79,7 +79,7 @@ namespace TNS.Controls
 
                        RiskFreeInterestRate = this.RiskFreeInterestRate,
                        StockPrice = this.StockPrice,
-                       StrikePrice = this.StrikePrice
+                       Strike = this.StrikePrice
                    };
 
                 var iv = OptionType == EOptionType.Call

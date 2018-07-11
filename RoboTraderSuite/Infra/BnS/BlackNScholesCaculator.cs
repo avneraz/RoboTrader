@@ -68,7 +68,7 @@ namespace Infra.BnS
         /// at which the owner of an option can purchase (in the case of a call), 
         /// or sell (in the case of a put)
         /// </summary>
-        public double StrikePrice { get; set; }
+        public double Strike { get; set; }
         /// <summary>
         /// The risk-free rate represents the interest that an investor would expect 
         /// from an absolutely risk-free investment over a given period of time.
@@ -128,7 +128,7 @@ namespace Infra.BnS
         private double CalculateD1()
         {
             double d1 =
-                (Log(StockPrice / StrikePrice) +
+                (Log(StockPrice / Strike) +
                     ExpiryTime * (RiskFreeInterestRate + ImpliedVolatilities * ImpliedVolatilities / 2)) /
                     (ImpliedVolatilities * Sqrt(ExpiryTime));
             return d1;
@@ -137,7 +137,7 @@ namespace Infra.BnS
         private double CalculateD2()
         {
             double d2 =
-                (Log(StockPrice / StrikePrice) +
+                (Log(StockPrice / Strike) +
                     ExpiryTime * (RiskFreeInterestRate - ImpliedVolatilities * ImpliedVolatilities / 2)) /
                     (ImpliedVolatilities * Sqrt(ExpiryTime));
             return d2;
@@ -179,7 +179,7 @@ namespace Infra.BnS
                     (2 * Sqrt(ExpiryTime))
                 ) -
                 (
-                    RiskFreeInterestRate * StrikePrice *
+                    RiskFreeInterestRate * Strike *
                     Exp(-RiskFreeInterestRate * ExpiryTime) * CalculateNOfX(_d2)
                 )) / 2.5;
 
@@ -192,7 +192,7 @@ namespace Infra.BnS
                     (2 * Sqrt(ExpiryTime))
                 ) +
                 (
-                    RiskFreeInterestRate * StrikePrice *
+                    RiskFreeInterestRate * Strike *
                     Exp(-RiskFreeInterestRate * ExpiryTime) * CalculateNOfX(-_d2)
                 )) / 2.5;
 
@@ -239,14 +239,14 @@ namespace Infra.BnS
         {
             var callValue = Multiplier *
                     (StockPrice * CalculateNOfX(_d1) -
-                     CalculateNOfX(_d2) * StrikePrice * Exp(-RiskFreeInterestRate * ExpiryTime));
+                     CalculateNOfX(_d2) * Strike * Exp(-RiskFreeInterestRate * ExpiryTime));
             return callValue;
         }
 
         public double CalculatePutValue()
         {
             var putValue = Multiplier *
-                    (CalculateNOfX(-_d2) * StrikePrice * Exp(-RiskFreeInterestRate * ExpiryTime) -
+                    (CalculateNOfX(-_d2) * Strike * Exp(-RiskFreeInterestRate * ExpiryTime) -
                      (StockPrice * CalculateNOfX(-_d1)));
             return putValue;
         }
@@ -264,7 +264,7 @@ namespace Infra.BnS
         /// <returns></returns>
         public double GetCallIVBisections(double callOptionPrice)
         {
-            double impliedVolatility = CallOptionPriceIVBisections(StockPrice, StrikePrice,
+            double impliedVolatility = CallOptionPriceIVBisections(StockPrice, Strike,
                 RiskFreeInterestRate, ExpiryTime, callOptionPrice);
             return impliedVolatility;
         }
@@ -277,7 +277,7 @@ namespace Infra.BnS
         /// <returns></returns>
         public double GetPutIVBisections(double putOptionPrice)
         {
-            double impliedVolatility = PutOptionPriceIVBisections(StockPrice, StrikePrice,
+            double impliedVolatility = PutOptionPriceIVBisections(StockPrice, Strike,
                 RiskFreeInterestRate, ExpiryTime, putOptionPrice);
             return impliedVolatility;
         }
@@ -327,7 +327,7 @@ namespace Infra.BnS
                 ExpiryTime = time,
                 RiskFreeInterestRate = interestRate,
                 StockPrice = spot,
-                StrikePrice = strike,
+                Strike = strike,
                 ImpliedVolatilities = sigmaHigh
             };
 
@@ -415,7 +415,7 @@ namespace Infra.BnS
                 ExpiryTime = time,
                 RiskFreeInterestRate = interestRate,
                 StockPrice = spot,
-                StrikePrice = strike,
+                Strike = strike,
                 ImpliedVolatilities = sigmaHigh
             };
 
@@ -472,7 +472,7 @@ namespace Infra.BnS
                 OptionType = EOptionType.Call,
                 RiskFreeInterestRate = 0.1,
                 StockPrice = 50,
-                StrikePrice = 40
+                Strike = 40
             };
             double callValue = o.CalculateCallValue();
             if (Abs(callValue - 11.01) > 0.1)
@@ -489,7 +489,7 @@ namespace Infra.BnS
                 OptionType = EOptionType.Call,
                 RiskFreeInterestRate = 0.1,
                 StockPrice = 50,
-                StrikePrice = 40
+                Strike = 40
             };
             var putValue = o.CalculatePutValue();
             return !(Abs(putValue - 0.078) > 0.001);
@@ -500,7 +500,7 @@ namespace Infra.BnS
         #region Not used code
         //public double CalculateImpliedVolatilityBNSNewton(double callOptionPrice)
         //{
-        //    double impliedVolatility = OptionPriceImpliedVolatilityCallBlackScholesNewton(StockPrice, StrikePrice,
+        //    double impliedVolatility = OptionPriceImpliedVolatilityCallBlackScholesNewton(StockPrice, Strike,
         //        RiskFreeInterestRate, ExpiryTime, callOptionPrice);
         //    return impliedVolatility;
         //}
@@ -541,7 +541,7 @@ namespace Infra.BnS
                 ExpiryTime = time,
                 RiskFreeInterestRate = interestRate,
                 StockPrice = spot,
-                StrikePrice = strike,
+                Strike = strike,
                 //ImpliedVolatilities = sigmaHigh
             };
 

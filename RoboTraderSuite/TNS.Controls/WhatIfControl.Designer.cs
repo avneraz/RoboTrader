@@ -89,6 +89,7 @@
             this.btnCalculate.TabIndex = 19;
             this.btnCalculate.Text = "Calculate";
             this.btnCalculate.ToolTip = "יוסף";
+            this.btnCalculate.Click += new System.EventHandler(this.btnCalculate_Click);
             // 
             // lblHeader
             // 

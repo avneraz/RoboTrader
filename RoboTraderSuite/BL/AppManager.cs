@@ -244,12 +244,12 @@ namespace TNS.BL
                     AAPLSessionsToLoad = "20170817;20151016;20160115",
                     HighStrikePercentage = 12,
                     LowStrikePercentage = 12,
-                    MinimumDaysToExpiration = 30,
-                    MaxmumDaysToExpiration = 119,
+                    MinimumDaysToExpiration = 100,
+                    MaxmumDaysToExpiration = 160,
                 },
                 Trading =
                 {
-                    AllowedDeltaOffset = 20,
+                    AllowedDeltaOffset = 30,
                     USAInterestPercentage = 0.25,
                     StatisticsSaveIntervalSec = 300,
                     DeltaLossThreshold = 0.25,

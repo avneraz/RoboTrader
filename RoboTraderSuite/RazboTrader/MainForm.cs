@@ -247,7 +247,7 @@ namespace RazboTrader
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-
+            string symbol = txtSymbol.Text;
 
             try
             {
@@ -257,7 +257,7 @@ namespace RazboTrader
                     DateTime startWholeRange = new DateTime(2017, 11, 12, 16, 0, 0);
                     DateTime end = DateTime.Now;//new DateTime(2017, 11, 18, 0, 0, 0);
 
-                    var list = session.Query<UnlTradingData>().Where(td => td.ManagedSecurity.Symbol.Equals("FB")).ToList();
+                    var list = session.Query<UnlTradingData>().Where(td => td.ManagedSecurity.Symbol.Equals(symbol)).ToList();
 
                     var theList = list
                         .Where(td => td.LastUpdate > startWholeRange && td.LastUpdate < end).ToList();

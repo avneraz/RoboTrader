@@ -25,7 +25,7 @@ namespace Infra.BnS
                 ImpliedVolatilities = ImpliedVolatilities,
                 RiskFreeInterestRate = RiskFreeInterestRate,
                 StockPrice = StockPrice,
-                StrikePrice = StrikePrice,
+                Strike = StrikePrice,
                 Multiplier = Multiplier
             };
             blackNScholesCaculator.CalculateAll();
@@ -56,7 +56,7 @@ namespace Infra.BnS
 
                 RiskFreeInterestRate = RiskFreeInterestRate,
                 StockPrice = stockPrice,
-                StrikePrice = StrikePrice
+                Strike = StrikePrice
             };
             double iv = 0;
             try

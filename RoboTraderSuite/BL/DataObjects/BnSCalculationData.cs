@@ -18,13 +18,33 @@ namespace TNS.BL.DataObjects
             ResultDataValues = new ResultData();
         }
 
-        public BnSCalculationData(string symbol, EOptionType optionType, double stockPrice, double strikePrice, int dayLefts, int multiplier = 100)
+        
+
+        public BnSCalculationData(ParametersForCalc parametersForCalc)
+                
+        {
+            Symbol = parametersForCalc.Symbol;
+            OptionType = parametersForCalc.OptionType;
+            StockPrice = parametersForCalc.StockPrice;
+            Strike = parametersForCalc.OptionPrice;
+            DayLeftsOriginal = parametersForCalc.DaysLeftToExpiry;
+            Multiplier = parametersForCalc.Multiplier;
+            IVChange = parametersForCalc.IVChange;
+            DaysLeftChange = parametersForCalc.DaysLeftChange;
+            ImpliedVolatilitiesBase = parametersForCalc.ImpliedVolatilitiesBase;
+            // parametersForCalc.
+            ResultDataValues = new ResultData();
+           
+        }
+
+        public BnSCalculationData(string symbol, EOptionType optionType, double stockPrice, double strike,
+            int dayLeftsOriginal, int multiplier = 100)
         {
             Symbol = symbol;
             OptionType = optionType;
             StockPrice = stockPrice;
-            StrikePrice = strikePrice;
-            DayLefts = dayLefts;
+            Strike = strike;
+            DayLeftsOriginal = dayLeftsOriginal;
             ResultDataValues = new ResultData();
             Multiplier = multiplier;
         }
@@ -34,8 +54,8 @@ namespace TNS.BL.DataObjects
             Symbol = optionData.OptionContract.Symbol;
             OptionType = optionData.OptionContract.OptionType;
             StockPrice = optionData.UnderlinePrice;
-            StrikePrice = optionData.OptionContract.Strike;
-            DayLefts = optionData.DaysLeft;
+            Strike = optionData.OptionContract.Strike;
+            DayLeftsOriginal = optionData.DaysLeft;
             ImpliedVolatilitiesBase = calculatedIV;
             Multiplier = optionData.Multiplier;
             ResultDataValues = new ResultData();
@@ -48,28 +68,26 @@ namespace TNS.BL.DataObjects
 
         public EOptionType OptionType { get; set; }
 
-        //public double CurrentUNLPrice { get; set; }
-
-        //private double? _stockPrice;
-
-        //public double StockPrice
-        //{
-        //    get
-        //    {
-        //        if (_stockPrice == null)
-        //            _stockPrice = CurrentUNLPrice;
-        //        return _stockPrice.Value;
-        //    }
-        //    set { _stockPrice = value; }
-        //}
+       
         public double StockPrice { get; set; }
-        public double StrikePrice { get; set; }
+
+        public double Strike { get; set; }
 
         public double BaseOptionPrice { get; set; }
 
-        public int DayLefts { get; set; }
+        public int DayLeftsOriginal { get; set; }
+        public int DayLeftsForCalc => DayLeftsOriginal - DaysLeftChange;
+        /// <summary>
+        /// Get or Set the change on the left daye to expiry.
+        /// </summary>
+        public int DaysLeftChange { get; set; }
 
-        //public double ImpliedVolatilities => ImpliedVolatilitiesBase + IVChange;
+        /// <summary>
+        /// Get or Set the change on the IV
+        /// </summary>
+        public double IVChange { get; set; }
+
+        public double ImpliedVolatilitiesForCalc => ImpliedVolatilitiesBase + IVChange;
 
         /// <summary>
         /// Gets or sets the base implied volatilities that calculated from the current option price.
@@ -91,6 +109,8 @@ namespace TNS.BL.DataObjects
 
 
         public int Position { get; set; }
+
+        public int Quantity => Math.Abs(Position);
 
         public int PositionActual => Position == 0 ? 1 : Position;
         public double DeltaTotal => ResultDataValues.Delta * PositionActual;
@@ -123,7 +143,54 @@ namespace TNS.BL.DataObjects
 
             public double Vega { get; set; }
         }
-
-
     }
+
+    public struct ParametersForCalc
+        {
+            public ParametersForCalc(OptionData optionData, int daysLeftChange = 0, double ivChange = 0) : this()
+            {
+                SetParameters(optionData, daysLeftChange,ivChange);
+            }
+
+            public string Symbol { get; set; }
+
+            public EOptionType OptionType { get; set; }
+
+            public double StockPrice { get; set; }
+
+            public double OptionPrice { get; set; }
+
+            public double Strike { get; set; }
+
+            public int DaysLeftToExpiry { get; set; }
+
+            public int Multiplier { get; set; }
+
+            /// <summary>
+            /// Get or Set the change on the left daye to expiry.
+            /// </summary>
+            public int DaysLeftChange { get; set; }
+
+            /// <summary>
+            /// Get or Set the change on the IV
+            /// </summary>
+            public double IVChange { get; set; }
+
+            public double ImpliedVolatilitiesBase { get; set; }
+
+        public void SetParameters(OptionData optionData, int daysLeftChange = 0, double ivChange = 0)
+            {
+                Symbol = optionData.Symbol;
+                OptionType = optionData.OptionContract.OptionType;
+                StockPrice = optionData.UnderlinePrice;
+                OptionPrice = optionData.LastPrice;
+                Strike = optionData.OptionContract.Strike;
+                DaysLeftToExpiry = optionData.DaysLeft;
+                Multiplier = optionData.Multiplier;
+                IVChange = ivChange;
+                DaysLeftChange = daysLeftChange;
+            }
+
+        }
+    
 }

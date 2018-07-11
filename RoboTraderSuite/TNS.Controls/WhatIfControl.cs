@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using Infra.Extensions;
+using TNS.API.ApiDataObjects;
 using TNS.BL;
+using TNS.BL.Analysis;
 using TNS.BL.UnlManagers;
 
 namespace TNS.Controls
@@ -27,14 +30,17 @@ namespace TNS.Controls
         private readonly string _symbol;
         private UNLManager UnlManager { get; set; }
        
+        private List<UnlTradingData> UnlTradingDataList { get; set; }
         private void InitializeMembers()
         {
             UnlManager = AppManager.UNLManagerDic[_symbol] as UNLManager;
             if (UnlManager == null) throw new Exception("The symbol is not exist!!");
 
+            UnlTradingDataList = new List<UnlTradingData> {UnlManager.UnlTradingData};
+
             this.InvokeIfRequired(() =>
             {
-                unlTradingDataBindingSource.DataSource = UnlManager.UnlTradingData;
+                unlTradingDataBindingSource.DataSource = UnlTradingDataList;
                 unlTradingDataBindingSource.ResetBindings(false);
             });
             IEnumerable expiryDateEnumerable = UnlManager.PositionsDataBuilder.PositionDataDic.Values
@@ -75,6 +81,25 @@ namespace TNS.Controls
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void btnCalculate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                WhatIfAnalayzer analayzer = new WhatIfAnalayzer(_symbol);
+                UnlTradingData unlTradingDataCalculated = analayzer.CalculateWhatIf(-0.02, 0);
+                UnlTradingDataList.Add(unlTradingDataCalculated);
+                this.InvokeIfRequired(() =>
+                {
+                    unlTradingDataBindingSource.ResetBindings(false);
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
     }
 }

@@ -32,23 +32,29 @@ namespace TNS.BL.Analysis
         /// <param name="optionData"></param>
         public void UpdateGreekValues(OptionData optionData)
         {
-            //Calculate the new BnS values:
+           //Calculate the new BnS values:
             var bnSCalculationData = CalculateValuesByBnS(optionData);
              
             //Update the optionData object by the new values:
             UpdateOptionData(bnSCalculationData, optionData);
         }
+
         /// <summary>
         /// Calculate the values according the Bns calculations
         /// </summary>
-        /// <param name="optionData"></param>
+        /// <param name="optionData"> </param>
+        /// <param name="daysLeftChange">the change on the left daye to expiry.</param>
+        /// <param name="ivChange">the change on the IV</param>
         /// <returns></returns>
-        public BnSCalculationData CalculateValuesByBnS(OptionData optionData)
+        public BnSCalculationData CalculateValuesByBnS(OptionData optionData, int daysLeftChange = 0, double ivChange = 0)
         {
             //First calculate the IV according the actual prices, UNL and option price.
             var calculatedIV = CalculateIVByOptionPrice(optionData);
-
-            var bnSCalculationData = new BnSCalculationData(optionData, calculatedIV);
+            //Create object for calculation and store the results:
+            var parametersForCalc =
+                new ParametersForCalc(optionData, daysLeftChange, ivChange) {ImpliedVolatilitiesBase = calculatedIV};
+            var bnSCalculationData = new BnSCalculationData(parametersForCalc);
+            //Do BnS calculations:
             CalculateBnSValues(bnSCalculationData);
             return bnSCalculationData;
 
@@ -68,7 +74,7 @@ namespace TNS.BL.Analysis
                 Multiplier = optionData.Multiplier,
                 RiskFreeInterestRate = RiskFreeInterestRate,
                 StockPrice = optionData.UnderlinePrice,
-                StrikePrice = optionData.OptionContract.Strike,
+                Strike = optionData.OptionContract.Strike,
             };
             double iv = 0;
             try
@@ -92,11 +98,11 @@ namespace TNS.BL.Analysis
         {
             var blackNScholesCaculator = new BlackNScholesCaculator
             {
-                DayLefts = bnSCalculationData.DayLefts,
-                ImpliedVolatilities = bnSCalculationData.ImpliedVolatilitiesBase,
+                DayLefts = bnSCalculationData.DayLeftsForCalc,
+                ImpliedVolatilities = bnSCalculationData.ImpliedVolatilitiesForCalc,
                 RiskFreeInterestRate = RiskFreeInterestRate,
                 StockPrice = bnSCalculationData.StockPrice,
-                StrikePrice = bnSCalculationData.StrikePrice,
+                Strike = bnSCalculationData.Strike,
                 Multiplier = bnSCalculationData.Multiplier
             };
             int multiplier = bnSCalculationData.Multiplier;

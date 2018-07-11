@@ -9,6 +9,9 @@ using TNS.BL.Interfaces;
 
 namespace TNS.BL.UnlManagers
 {
+    /// <summary>
+    /// Use for calculation Margin with "WhatIf" orders.
+    /// </summary>
     public class WhatIfOrderBroker : ISubscibeMessage
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(WhatIfOrderBroker));
