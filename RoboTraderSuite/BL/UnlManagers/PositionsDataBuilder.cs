@@ -129,6 +129,7 @@ namespace TNS.BL.UnlManagers
 
             PositionsSummaryData.CostTotal   = PositionDataDic.Values.Sum(pd => pd.TotalCost);
             PositionsSummaryData.DeltaTotal  = PositionDataDic.Values.Sum(pd => pd.DeltaTotal);
+            PositionsSummaryData.NormalizedDeltaTotal = PositionDataDic.Values.Sum(pd => pd.NormalizedDeltaTotal);
             PositionsSummaryData.GammaTotal  = PositionDataDic.Values.Sum(pd => pd.GammaTotal);
             PositionsSummaryData.ThetaTotal  = PositionDataDic.Values.Sum(pd => pd.ThetaTotal);
             PositionsSummaryData.VegaTotal   = PositionDataDic.Values.Sum(pd => pd.VegaTotal);
@@ -140,7 +141,6 @@ namespace TNS.BL.UnlManagers
                                            PositionDataDic.Values.Sum(pd => pd.Quantity);
             
             CalculateATM_IV();
-
             
         }
 

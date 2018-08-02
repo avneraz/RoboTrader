@@ -60,6 +60,7 @@ namespace TNS.API.ApiDataObjects
 
         public double Delta => OptionData?.Delta ?? -1;
         public double DeltaTotal => OptionData?.Delta*OptionData?.Multiplier*Position ?? 0;
+        public double NormalizedDeltaTotal => OptionData?.NormalizedDelta * OptionData?.Multiplier * Position ?? 0;
         public double GammaTotal => OptionData?.Gamma*OptionData?.Multiplier*Position ?? 0;
         public double Gamma => OptionData?.Gamma ?? -1;
         public double ThetaTotal => OptionData?.Theta*OptionData?.Multiplier*Position ?? 0;

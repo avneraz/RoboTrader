@@ -5,6 +5,7 @@ namespace TNS.API.ApiDataObjects
     public class PositionsSummaryData
     {
         public double DeltaTotal { get; set; }
+        public double NormalizedDeltaTotal { get; set; }
         public double GammaTotal { get; set; }
         public double ThetaTotal { get; set; }
         public double VegaTotal { get; set; }

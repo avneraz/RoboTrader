@@ -1,0 +1,363 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{60C9BF13-7546-40A8-9FC4-814E565782C5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TNS.Controls</RootNamespace>
+    <AssemblyName>TNS.Controls</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Charts.v17.1.Core, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Data.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Images.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v17.1.Core, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Sparkline.v17.1.Core, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraBars.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraCharts.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraCharts.v17.1.UI, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraCharts.v17.1.Wizard, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraEditors.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGrid.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraLayout.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraPrinting.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NHibernate.4.0.0.4000\lib\net40\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.AppContext.4.3.0\lib\net46\System.AppContext.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Console, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Console.4.3.0\lib\net46\System.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.3.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Globalization.Calendars, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Globalization.Calendars.4.3.0\lib\net46\System.Globalization.Calendars.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.4.3.0\lib\net46\System.IO.Compression.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.0\lib\net46\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Sockets, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Sockets.4.3.0\lib\net46\System.Net.Sockets.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net46\System.Security.Cryptography.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net46\System.Security.Cryptography.X509Certificates.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.ReaderWriter, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Xml.ReaderWriter.4.3.0\lib\net46\System.Xml.ReaderWriter.dll</HintPath>
+    </Reference>
+    <Reference Include="TupleExtensions, Version=1.2.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TupleExtensions.VictorGavrish.1.2.4\lib\netstandard1.0\TupleExtensions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="APIMesagesView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="APIMesagesView.Designer.cs">
+      <DependentUpon>APIMesagesView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TradingDataChartControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TradingDataChartControl.Designer.cs">
+      <DependentUpon>TradingDataChartControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IPositionView.cs" />
+    <Compile Include="MainSecuritiesView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainSecuritiesView.Designer.cs">
+      <DependentUpon>MainSecuritiesView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MangedSecuritiesControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MangedSecuritiesControl.Designer.cs">
+      <DependentUpon>MangedSecuritiesControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OptionCalculatorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OptionCalculatorForm.designer.cs">
+      <DependentUpon>OptionCalculatorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OptionsView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OptionsView.Designer.cs">
+      <DependentUpon>OptionsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OptionTradingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OptionTradingControl.Designer.cs">
+      <DependentUpon>OptionTradingControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OrdersView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OrdersView.Designer.cs">
+      <DependentUpon>OrdersView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PositionsView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PositionsView.Designer.cs">
+      <DependentUpon>PositionsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SellMateCoupleSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SellMateCoupleSelector.Designer.cs">
+      <DependentUpon>SellMateCoupleSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UNLOptionsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UNLOptionsControl.Designer.cs">
+      <DependentUpon>UNLOptionsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UNLOptionsSelectorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UNLOptionsSelectorControl.Designer.cs">
+      <DependentUpon>UNLOptionsSelectorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UnlTradingView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UnlTradingView.Designer.cs">
+      <DependentUpon>UnlTradingView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PositionClosingSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PositionClosingSelector.Designer.cs">
+      <DependentUpon>PositionClosingSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WhatIfControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WhatIfControl.Designer.cs">
+      <DependentUpon>WhatIfControl.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="APIMesagesView.resx">
+      <DependentUpon>APIMesagesView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TradingDataChartControl.resx">
+      <DependentUpon>TradingDataChartControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainSecuritiesView.resx">
+      <DependentUpon>MainSecuritiesView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MangedSecuritiesControl.resx">
+      <DependentUpon>MangedSecuritiesControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OptionCalculatorForm.resx">
+      <DependentUpon>OptionCalculatorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OptionsView.resx">
+      <DependentUpon>OptionsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OptionTradingControl.resx">
+      <DependentUpon>OptionTradingControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrdersView.resx">
+      <DependentUpon>OrdersView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PositionClosingSelector.resx">
+      <DependentUpon>PositionClosingSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PositionsView.resx">
+      <DependentUpon>PositionsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SellMateCoupleSelector.resx">
+      <DependentUpon>SellMateCoupleSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UNLOptionsControl.resx">
+      <DependentUpon>UNLOptionsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UNLOptionsSelectorControl.resx">
+      <DependentUpon>UNLOptionsSelectorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UnlTradingView.resx">
+      <DependentUpon>UnlTradingView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WhatIfControl.resx">
+      <DependentUpon>WhatIfControl.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BL\BL.csproj">
+      <Project>{399b0096-559a-4541-b9e7-81f19a164826}</Project>
+      <Name>BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{b3c26503-8185-421c-920e-09a738d5bf29}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infra\Infra.csproj">
+      <Project>{bcb4c6f8-73e1-48d8-a410-0bcc0295ee61}</Project>
+      <Name>Infra</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TNS.API\TNS.API.csproj">
+      <Project>{c50ba368-93c1-45ad-8779-683189b0ba34}</Project>
+      <Name>TNS.API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UILogic\UILogic.csproj">
+      <Project>{70470a7b-5474-4edc-8443-ba2e165bd147}</Project>
+      <Name>UILogic</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\TNS.API.ApiDataObjects.AccountSummaryData.datasource" />
+    <None Include="Properties\DataSources\TNS.API.ApiDataObjects.APIMessageData.datasource" />
+    <None Include="Properties\DataSources\TNS.API.ApiDataObjects.ManagedSecurity.datasource" />
+    <None Include="Properties\DataSources\TNS.API.ApiDataObjects.MarginData.datasource" />
+    <None Include="Properties\DataSources\TNS.API.ApiDataObjects.OptionData.datasource" />
+    <None Include="Properties\DataSources\TNS.API.ApiDataObjects.OptionsPositionData.datasource" />
+    <None Include="Properties\DataSources\TNS.API.ApiDataObjects.OptionTradingData.datasource" />
+    <None Include="Properties\DataSources\TNS.API.ApiDataObjects.OrderStatusData.datasource" />
+    <None Include="Properties\DataSources\TNS.API.ApiDataObjects.SecurityData.datasource" />
+    <None Include="Properties\DataSources\TNS.API.ApiDataObjects.UnlOptions.datasource" />
+    <None Include="Properties\DataSources\TNS.API.ApiDataObjects.UnlTradingData.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Basket-Add.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Basket-delete.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Basket-Add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\analysis.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Ribbon_AlignCenter_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Calendar_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\private-equity.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Margin32.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Delete.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Equipment.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bundle-24x24x8b.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Table.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Diagram.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

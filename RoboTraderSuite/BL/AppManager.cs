@@ -242,9 +242,9 @@ namespace TNS.BL
                     AAPLHighLoadingStrike = 100,
                     AAPLLowLoadingStrike = 200,
                     AAPLSessionsToLoad = "20170817;20151016;20160115",
-                    HighStrikePercentage = 12,
-                    LowStrikePercentage = 12,
-                    MinimumDaysToExpiration = 100,
+                    HighStrikePercentage = 30,
+                    LowStrikePercentage = 30,
+                    MinimumDaysToExpiration = 70,
                     MaxmumDaysToExpiration = 160,
                 },
                 Trading =

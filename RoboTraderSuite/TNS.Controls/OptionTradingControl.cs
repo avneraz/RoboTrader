@@ -66,20 +66,49 @@ namespace TNS.Controls
 
         private void btnSendOrder_Click(object sender, EventArgs e)
         {
+            //OpenOrderDialog();
+
+        }
+
+        private void OpenOrderDialog()
+        {
             try
             {
                 OptionData optionData = GetSelectedOptionData();
-                if (rbtSell.Checked)
-                    PositionView.SendSellOrder(optionData, Convert.ToInt32(txtQuantity.Text));
-                else
-                    PositionView.SendBuyOrder(optionData, Convert.ToInt32(txtQuantity.Text));
+                _tradingControl = new TradingControl();
+                var caption = $"{optionData.Symbol} ==> {optionData.OptionContract.OptionType} {optionData.OptionContract.Strike}. {optionData.Expiry.ToShortDateString()}";
+                //_tradingControl.SetTradeCaption(caption);
+                var containerForm = _tradingControl.ShowControl(ParentForm, true);
+                containerForm.Text = caption;
+                //containerForm.
+                containerForm.FormClosing += ContainerForm_FormClosing;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            
         }
+
+        private TradingControl _tradingControl;
+        private void ContainerForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (_tradingControl == null) return;
+
+            if (_tradingControl.TradingInfo == null) return;
+
+            //Do trading:
+            OptionData optionData = GetSelectedOptionData();
+            if (_tradingControl.TradingInfo.OrderAction == OrderAction.BUY)
+            {
+                PositionView.SendBuyOrder(optionData, _tradingControl.TradingInfo.OptionCount);
+            }
+            else
+            {
+                PositionView.SendSellOrder(optionData, _tradingControl.TradingInfo.OptionCount);
+            }
+        }     
+
+
 
         private OptionData GetSelectedOptionData()
         {
@@ -104,6 +133,19 @@ namespace TNS.Controls
         {
             if (ParentForm != null) ParentForm.Closed += ParentFormOnClosed;
         }
+
+        private void grdViewOption_PopupMenuShowing(object sender, DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs e)
+        {
+            if (e.HitInfo.InRow)
+            {
+                popupMenu1.ShowPopup(grdOption.PointToScreen(e.Point));
+            }
+        }
+
     
+        private void barButtonItem1_ItemClick_1(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            OpenOrderDialog();
+        }
     }
 }

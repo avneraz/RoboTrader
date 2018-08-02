@@ -30,6 +30,11 @@ namespace TNS.API.ApiDataObjects
 
         public double Delta { get; set; }
         public double DeltaAbsValue => Abs(Delta);
+
+        /// <summary>
+        /// Get the delta when the underline price is change by 1 precent.
+        /// </summary>
+        public double NormalizedDelta => CalculateNormalizedDelta();
         //Get the differnce of the delta and ATM delta (50 is the ideal.)
         public double DeltaOffsetFromATM => Abs(DeltaAbsValue - 0.5);
 
@@ -64,7 +69,24 @@ namespace TNS.API.ApiDataObjects
                 return optionPrice;
             }
         }
-
+        /// <summary>
+        /// Calculate the delta when the underline price is change by 1 precent.
+        /// Assuming that Gamma remain unchanged during the iteration.
+        /// </summary>
+        /// <returns></returns>
+        private double CalculateNormalizedDelta()
+        {
+            double currentUNL = UnderlinePrice;
+            var multiplier = (this.Delta < 0) ? -1 : 1;
+            double maxUNL = UnderlinePrice * 1.01;
+            double currentDelta = Math.Abs(Delta);
+            while (currentUNL <= maxUNL)
+            {
+                currentDelta += Gamma;
+                currentUNL += 1;                
+            }
+            return currentDelta * multiplier;
+        }
         /// <summary>
         /// Return the price of 1 option (Position = 1)
         /// </summary>

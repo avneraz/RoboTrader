@@ -29,13 +29,22 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
+            this.colPNL = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colTotalCost = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colMarketValue = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colDeltaTotal = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colGammaTotal = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colThetaTotal = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colVegaTotal = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colPosition = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colThetaTotal2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.grdPositionData = new DevExpress.XtraGrid.GridControl();
             this.optionsPositionDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.grdViewPositionData = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colDescription = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colExpiry = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOptionContract_OptionType = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colPosition = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOffsetUnl = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCalculatedOptionPrice = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colAverageCost = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -48,18 +57,12 @@
             this.colBidPrice = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colAskPrice = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOptionDelta = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colNormalizedDeltaTotal = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colContract_ExpiryDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOptionData_OptionType = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colDeltaTotal = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colTotalCost = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colLastPrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colMarketValue = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colPNL = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colGammaTotal = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOptionData_ModelPrice = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOptionData_UnderlinePrice = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colThetaTotal = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colVegaTotal = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOptionData_Gamma = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOptionData_ImpliedVolatility = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colContract_Symbol = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -91,7 +94,6 @@
             this.colTradingState = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colDeltaTotal2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colGammaTotal2 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colThetaTotal2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colVegaTotal2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colMarginTotal = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colIVWeightedAvg = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -139,9 +141,9 @@
             this.iEditSecurities = new DevExpress.XtraBars.BarButtonItem();
             this.iWhatIf = new DevExpress.XtraBars.BarButtonItem();
             this.iShowUNLOptions = new DevExpress.XtraBars.BarButtonItem();
+            this.iWhatIfAnalyse = new DevExpress.XtraBars.BarButtonItem();
             this.popupMenuPositions = new DevExpress.XtraBars.PopupMenu(this.components);
             this.popupMenuUNL = new DevExpress.XtraBars.PopupMenu(this.components);
-            this.iWhatIfAnalyse = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.grdPositionData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.optionsPositionDataBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdViewPositionData)).BeginInit();
@@ -158,10 +160,223 @@
             ((System.ComponentModel.ISupportInitialize)(this.popupMenuUNL)).BeginInit();
             this.SuspendLayout();
             // 
+            // colPNL
+            // 
+            this.colPNL.AppearanceCell.BackColor = System.Drawing.Color.LemonChiffon;
+            this.colPNL.AppearanceCell.ForeColor = System.Drawing.Color.DarkMagenta;
+            this.colPNL.AppearanceCell.Options.UseBackColor = true;
+            this.colPNL.AppearanceCell.Options.UseForeColor = true;
+            this.colPNL.AppearanceHeader.BackColor = System.Drawing.Color.LemonChiffon;
+            this.colPNL.AppearanceHeader.ForeColor = System.Drawing.Color.DarkMagenta;
+            this.colPNL.AppearanceHeader.Options.UseBackColor = true;
+            this.colPNL.AppearanceHeader.Options.UseForeColor = true;
+            this.colPNL.Caption = "PnL";
+            this.colPNL.DisplayFormat.FormatString = "#,##0";
+            this.colPNL.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colPNL.FieldName = "PnL";
+            this.colPNL.MaxWidth = 120;
+            this.colPNL.MinWidth = 70;
+            this.colPNL.Name = "colPNL";
+            this.colPNL.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "PnL", "{0:#,##0}")});
+            this.colPNL.Visible = true;
+            this.colPNL.VisibleIndex = 10;
+            this.colPNL.Width = 81;
+            // 
+            // colTotalCost
+            // 
+            this.colTotalCost.AppearanceCell.BackColor = System.Drawing.Color.LemonChiffon;
+            this.colTotalCost.AppearanceCell.ForeColor = System.Drawing.Color.Magenta;
+            this.colTotalCost.AppearanceCell.Options.UseBackColor = true;
+            this.colTotalCost.AppearanceCell.Options.UseForeColor = true;
+            this.colTotalCost.AppearanceHeader.BackColor = System.Drawing.Color.LemonChiffon;
+            this.colTotalCost.AppearanceHeader.ForeColor = System.Drawing.Color.Magenta;
+            this.colTotalCost.AppearanceHeader.Options.UseBackColor = true;
+            this.colTotalCost.AppearanceHeader.Options.UseForeColor = true;
+            this.colTotalCost.Caption = "Cost";
+            this.colTotalCost.DisplayFormat.FormatString = "#,##0";
+            this.colTotalCost.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colTotalCost.FieldName = "TotalCost";
+            this.colTotalCost.MaxWidth = 120;
+            this.colTotalCost.MinWidth = 70;
+            this.colTotalCost.Name = "colTotalCost";
+            this.colTotalCost.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalCost", "{0:#,##0}")});
+            this.colTotalCost.Visible = true;
+            this.colTotalCost.VisibleIndex = 8;
+            this.colTotalCost.Width = 81;
+            // 
+            // colMarketValue
+            // 
+            this.colMarketValue.AppearanceCell.BackColor = System.Drawing.Color.LemonChiffon;
+            this.colMarketValue.AppearanceCell.ForeColor = System.Drawing.Color.MediumVioletRed;
+            this.colMarketValue.AppearanceCell.Options.UseBackColor = true;
+            this.colMarketValue.AppearanceCell.Options.UseForeColor = true;
+            this.colMarketValue.AppearanceHeader.BackColor = System.Drawing.Color.LemonChiffon;
+            this.colMarketValue.AppearanceHeader.ForeColor = System.Drawing.Color.MediumVioletRed;
+            this.colMarketValue.AppearanceHeader.Options.UseBackColor = true;
+            this.colMarketValue.AppearanceHeader.Options.UseForeColor = true;
+            this.colMarketValue.Caption = "Market Val.";
+            this.colMarketValue.DisplayFormat.FormatString = "#,##0";
+            this.colMarketValue.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colMarketValue.FieldName = "MarketValue";
+            this.colMarketValue.MaxWidth = 120;
+            this.colMarketValue.MinWidth = 70;
+            this.colMarketValue.Name = "colMarketValue";
+            this.colMarketValue.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "MarketValue", "{0:#,##0}")});
+            this.colMarketValue.Visible = true;
+            this.colMarketValue.VisibleIndex = 9;
+            this.colMarketValue.Width = 81;
+            // 
+            // colDeltaTotal
+            // 
+            this.colDeltaTotal.AppearanceCell.BackColor = System.Drawing.Color.LightCyan;
+            this.colDeltaTotal.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.colDeltaTotal.AppearanceCell.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.colDeltaTotal.AppearanceCell.Options.UseBackColor = true;
+            this.colDeltaTotal.AppearanceCell.Options.UseFont = true;
+            this.colDeltaTotal.AppearanceCell.Options.UseForeColor = true;
+            this.colDeltaTotal.AppearanceHeader.BackColor = System.Drawing.Color.LightCyan;
+            this.colDeltaTotal.AppearanceHeader.ForeColor = System.Drawing.Color.Blue;
+            this.colDeltaTotal.AppearanceHeader.Options.UseBackColor = true;
+            this.colDeltaTotal.AppearanceHeader.Options.UseForeColor = true;
+            this.colDeltaTotal.Caption = "Σ δ";
+            this.colDeltaTotal.DisplayFormat.FormatString = "#,##0.0";
+            this.colDeltaTotal.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colDeltaTotal.FieldName = "DeltaTotal";
+            this.colDeltaTotal.MaxWidth = 120;
+            this.colDeltaTotal.MinWidth = 45;
+            this.colDeltaTotal.Name = "colDeltaTotal";
+            this.colDeltaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "DeltaTotal", "{0:#,##0}")});
+            this.colDeltaTotal.Visible = true;
+            this.colDeltaTotal.VisibleIndex = 17;
+            this.colDeltaTotal.Width = 52;
+            // 
+            // colGammaTotal
+            // 
+            this.colGammaTotal.AppearanceCell.BackColor = System.Drawing.Color.LightCyan;
+            this.colGammaTotal.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.colGammaTotal.AppearanceCell.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.colGammaTotal.AppearanceCell.Options.UseBackColor = true;
+            this.colGammaTotal.AppearanceCell.Options.UseFont = true;
+            this.colGammaTotal.AppearanceCell.Options.UseForeColor = true;
+            this.colGammaTotal.AppearanceHeader.BackColor = System.Drawing.Color.LightCyan;
+            this.colGammaTotal.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.colGammaTotal.AppearanceHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.colGammaTotal.AppearanceHeader.Options.UseBackColor = true;
+            this.colGammaTotal.AppearanceHeader.Options.UseFont = true;
+            this.colGammaTotal.AppearanceHeader.Options.UseForeColor = true;
+            this.colGammaTotal.Caption = "Σ γ";
+            this.colGammaTotal.DisplayFormat.FormatString = "#,##0.0";
+            this.colGammaTotal.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colGammaTotal.FieldName = "GammaTotal";
+            this.colGammaTotal.MaxWidth = 120;
+            this.colGammaTotal.MinWidth = 45;
+            this.colGammaTotal.Name = "colGammaTotal";
+            this.colGammaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "GammaTotal", "{0:#,##0}")});
+            this.colGammaTotal.Visible = true;
+            this.colGammaTotal.VisibleIndex = 18;
+            this.colGammaTotal.Width = 52;
+            // 
+            // colThetaTotal
+            // 
+            this.colThetaTotal.AppearanceCell.BackColor = System.Drawing.Color.LightCyan;
+            this.colThetaTotal.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.colThetaTotal.AppearanceCell.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.colThetaTotal.AppearanceCell.Options.UseBackColor = true;
+            this.colThetaTotal.AppearanceCell.Options.UseFont = true;
+            this.colThetaTotal.AppearanceCell.Options.UseForeColor = true;
+            this.colThetaTotal.AppearanceHeader.BackColor = System.Drawing.Color.LightCyan;
+            this.colThetaTotal.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.colThetaTotal.AppearanceHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.colThetaTotal.AppearanceHeader.Options.UseBackColor = true;
+            this.colThetaTotal.AppearanceHeader.Options.UseFont = true;
+            this.colThetaTotal.AppearanceHeader.Options.UseForeColor = true;
+            this.colThetaTotal.Caption = "Σ Θ";
+            this.colThetaTotal.DisplayFormat.FormatString = "#,##0.0";
+            this.colThetaTotal.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colThetaTotal.FieldName = "ThetaTotal";
+            this.colThetaTotal.MaxWidth = 120;
+            this.colThetaTotal.MinWidth = 45;
+            this.colThetaTotal.Name = "colThetaTotal";
+            this.colThetaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ThetaTotal", "{0:#,##0}")});
+            this.colThetaTotal.Visible = true;
+            this.colThetaTotal.VisibleIndex = 19;
+            this.colThetaTotal.Width = 52;
+            // 
+            // colVegaTotal
+            // 
+            this.colVegaTotal.AppearanceCell.BackColor = System.Drawing.Color.LightCyan;
+            this.colVegaTotal.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.colVegaTotal.AppearanceCell.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.colVegaTotal.AppearanceCell.Options.UseBackColor = true;
+            this.colVegaTotal.AppearanceCell.Options.UseFont = true;
+            this.colVegaTotal.AppearanceCell.Options.UseForeColor = true;
+            this.colVegaTotal.AppearanceHeader.BackColor = System.Drawing.Color.LightCyan;
+            this.colVegaTotal.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.colVegaTotal.AppearanceHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.colVegaTotal.AppearanceHeader.Options.UseBackColor = true;
+            this.colVegaTotal.AppearanceHeader.Options.UseFont = true;
+            this.colVegaTotal.AppearanceHeader.Options.UseForeColor = true;
+            this.colVegaTotal.Caption = "Σ V";
+            this.colVegaTotal.DisplayFormat.FormatString = "#,##0.0";
+            this.colVegaTotal.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colVegaTotal.FieldName = "VegaTotal";
+            this.colVegaTotal.FieldNameSortGroup = "VegaTotal";
+            this.colVegaTotal.MaxWidth = 120;
+            this.colVegaTotal.MinWidth = 45;
+            this.colVegaTotal.Name = "colVegaTotal";
+            this.colVegaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "VegaTotal", "{0:#,##0}")});
+            this.colVegaTotal.Visible = true;
+            this.colVegaTotal.VisibleIndex = 20;
+            this.colVegaTotal.Width = 45;
+            // 
+            // colPosition
+            // 
+            this.colPosition.AppearanceCell.BackColor = System.Drawing.Color.LemonChiffon;
+            this.colPosition.AppearanceCell.Options.UseBackColor = true;
+            this.colPosition.AppearanceHeader.BackColor = System.Drawing.Color.LemonChiffon;
+            this.colPosition.AppearanceHeader.Options.UseBackColor = true;
+            this.colPosition.Caption = "Pos #";
+            this.colPosition.FieldName = "Position";
+            this.colPosition.MaxWidth = 100;
+            this.colPosition.MinWidth = 36;
+            this.colPosition.Name = "colPosition";
+            this.colPosition.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Position", "{0:#,##0}")});
+            this.colPosition.Visible = true;
+            this.colPosition.VisibleIndex = 3;
+            this.colPosition.Width = 42;
+            // 
+            // colThetaTotal2
+            // 
+            this.colThetaTotal2.AppearanceCell.BackColor = System.Drawing.Color.LightCyan;
+            this.colThetaTotal2.AppearanceCell.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.colThetaTotal2.AppearanceCell.Options.UseBackColor = true;
+            this.colThetaTotal2.AppearanceCell.Options.UseForeColor = true;
+            this.colThetaTotal2.Caption = "Σ Θ";
+            this.colThetaTotal2.DisplayFormat.FormatString = "#,##0";
+            this.colThetaTotal2.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colThetaTotal2.FieldName = "ThetaTotal";
+            this.colThetaTotal2.Name = "colThetaTotal2";
+            this.colThetaTotal2.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ThetaTotal", "{0:#,##0}")});
+            this.colThetaTotal2.Visible = true;
+            this.colThetaTotal2.VisibleIndex = 11;
+            this.colThetaTotal2.Width = 23;
+            // 
             // grdPositionData
             // 
             this.grdPositionData.DataSource = this.optionsPositionDataBindingSource;
             this.grdPositionData.Dock = System.Windows.Forms.DockStyle.Fill;
+            gridLevelNode2.RelationName = "Level1";
+            this.grdPositionData.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
+            gridLevelNode2});
             this.grdPositionData.Location = new System.Drawing.Point(0, 0);
             this.grdPositionData.MainView = this.grdViewPositionData;
             this.grdPositionData.Name = "grdPositionData";
@@ -209,6 +424,7 @@
             this.colBidPrice,
             this.colAskPrice,
             this.colOptionDelta,
+            this.colNormalizedDeltaTotal,
             this.colContract_ExpiryDate,
             this.colOptionData_OptionType,
             this.colDeltaTotal,
@@ -236,7 +452,8 @@
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "GammaTotal", this.colGammaTotal, "{0:#,##0.0}"),
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ThetaTotal", this.colThetaTotal, "{0:#,##0.0}"),
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "VegaTotal", this.colVegaTotal, "{0:#,##0.0}"),
-            new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Position", this.colPosition, "{0:#,##0}")});
+            new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Position", this.colPosition, "{0:#,##0}"),
+            new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NormalizedDeltaTotal", this.colNormalizedDeltaTotal, "{0:#,##0.0}")});
             this.grdViewPositionData.Name = "grdViewPositionData";
             this.grdViewPositionData.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
             this.grdViewPositionData.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
@@ -289,23 +506,6 @@
             this.colOptionContract_OptionType.Visible = true;
             this.colOptionContract_OptionType.VisibleIndex = 1;
             this.colOptionContract_OptionType.Width = 46;
-            // 
-            // colPosition
-            // 
-            this.colPosition.AppearanceCell.BackColor = System.Drawing.Color.LemonChiffon;
-            this.colPosition.AppearanceCell.Options.UseBackColor = true;
-            this.colPosition.AppearanceHeader.BackColor = System.Drawing.Color.LemonChiffon;
-            this.colPosition.AppearanceHeader.Options.UseBackColor = true;
-            this.colPosition.Caption = "Pos #";
-            this.colPosition.FieldName = "Position";
-            this.colPosition.MaxWidth = 100;
-            this.colPosition.MinWidth = 36;
-            this.colPosition.Name = "colPosition";
-            this.colPosition.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
-            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Position", "{0:#,##0}")});
-            this.colPosition.Visible = true;
-            this.colPosition.VisibleIndex = 3;
-            this.colPosition.Width = 42;
             // 
             // colOffsetUnl
             // 
@@ -446,6 +646,26 @@
             this.colOptionDelta.VisibleIndex = 7;
             this.colOptionDelta.Width = 35;
             // 
+            // colNormalizedDeltaTotal
+            // 
+            this.colNormalizedDeltaTotal.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.colNormalizedDeltaTotal.AppearanceCell.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.colNormalizedDeltaTotal.AppearanceCell.Options.UseFont = true;
+            this.colNormalizedDeltaTotal.AppearanceCell.Options.UseForeColor = true;
+            this.colNormalizedDeltaTotal.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold);
+            this.colNormalizedDeltaTotal.AppearanceHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.colNormalizedDeltaTotal.AppearanceHeader.Options.UseFont = true;
+            this.colNormalizedDeltaTotal.AppearanceHeader.Options.UseForeColor = true;
+            this.colNormalizedDeltaTotal.Caption = "Nor Σ δ";
+            this.colNormalizedDeltaTotal.DisplayFormat.FormatString = "#,##0";
+            this.colNormalizedDeltaTotal.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colNormalizedDeltaTotal.FieldName = "NormalizedDeltaTotal";
+            this.colNormalizedDeltaTotal.Name = "colNormalizedDeltaTotal";
+            this.colNormalizedDeltaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NormalizedDeltaTotal", "{0:#,##0}")});
+            this.colNormalizedDeltaTotal.Visible = true;
+            this.colNormalizedDeltaTotal.VisibleIndex = 16;
+            // 
             // colContract_ExpiryDate
             // 
             this.colContract_ExpiryDate.Caption = "Session";
@@ -460,54 +680,6 @@
             this.colOptionData_OptionType.MaxWidth = 50;
             this.colOptionData_OptionType.Name = "colOptionData_OptionType";
             this.colOptionData_OptionType.Width = 50;
-            // 
-            // colDeltaTotal
-            // 
-            this.colDeltaTotal.AppearanceCell.BackColor = System.Drawing.Color.LightCyan;
-            this.colDeltaTotal.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.colDeltaTotal.AppearanceCell.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.colDeltaTotal.AppearanceCell.Options.UseBackColor = true;
-            this.colDeltaTotal.AppearanceCell.Options.UseFont = true;
-            this.colDeltaTotal.AppearanceCell.Options.UseForeColor = true;
-            this.colDeltaTotal.AppearanceHeader.BackColor = System.Drawing.Color.LightCyan;
-            this.colDeltaTotal.AppearanceHeader.ForeColor = System.Drawing.Color.Blue;
-            this.colDeltaTotal.AppearanceHeader.Options.UseBackColor = true;
-            this.colDeltaTotal.AppearanceHeader.Options.UseForeColor = true;
-            this.colDeltaTotal.Caption = "Σ δ";
-            this.colDeltaTotal.DisplayFormat.FormatString = "#,##0.0";
-            this.colDeltaTotal.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colDeltaTotal.FieldName = "DeltaTotal";
-            this.colDeltaTotal.MaxWidth = 120;
-            this.colDeltaTotal.MinWidth = 45;
-            this.colDeltaTotal.Name = "colDeltaTotal";
-            this.colDeltaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
-            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "DeltaTotal", "{0:#,##0}")});
-            this.colDeltaTotal.Visible = true;
-            this.colDeltaTotal.VisibleIndex = 16;
-            this.colDeltaTotal.Width = 52;
-            // 
-            // colTotalCost
-            // 
-            this.colTotalCost.AppearanceCell.BackColor = System.Drawing.Color.LemonChiffon;
-            this.colTotalCost.AppearanceCell.ForeColor = System.Drawing.Color.Magenta;
-            this.colTotalCost.AppearanceCell.Options.UseBackColor = true;
-            this.colTotalCost.AppearanceCell.Options.UseForeColor = true;
-            this.colTotalCost.AppearanceHeader.BackColor = System.Drawing.Color.LemonChiffon;
-            this.colTotalCost.AppearanceHeader.ForeColor = System.Drawing.Color.Magenta;
-            this.colTotalCost.AppearanceHeader.Options.UseBackColor = true;
-            this.colTotalCost.AppearanceHeader.Options.UseForeColor = true;
-            this.colTotalCost.Caption = "Cost";
-            this.colTotalCost.DisplayFormat.FormatString = "#,##0";
-            this.colTotalCost.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colTotalCost.FieldName = "TotalCost";
-            this.colTotalCost.MaxWidth = 120;
-            this.colTotalCost.MinWidth = 70;
-            this.colTotalCost.Name = "colTotalCost";
-            this.colTotalCost.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
-            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalCost", "{0:#,##0}")});
-            this.colTotalCost.Visible = true;
-            this.colTotalCost.VisibleIndex = 8;
-            this.colTotalCost.Width = 81;
             // 
             // colLastPrice
             // 
@@ -525,79 +697,6 @@
             this.colLastPrice.Visible = true;
             this.colLastPrice.VisibleIndex = 15;
             this.colLastPrice.Width = 58;
-            // 
-            // colMarketValue
-            // 
-            this.colMarketValue.AppearanceCell.BackColor = System.Drawing.Color.LemonChiffon;
-            this.colMarketValue.AppearanceCell.ForeColor = System.Drawing.Color.MediumVioletRed;
-            this.colMarketValue.AppearanceCell.Options.UseBackColor = true;
-            this.colMarketValue.AppearanceCell.Options.UseForeColor = true;
-            this.colMarketValue.AppearanceHeader.BackColor = System.Drawing.Color.LemonChiffon;
-            this.colMarketValue.AppearanceHeader.ForeColor = System.Drawing.Color.MediumVioletRed;
-            this.colMarketValue.AppearanceHeader.Options.UseBackColor = true;
-            this.colMarketValue.AppearanceHeader.Options.UseForeColor = true;
-            this.colMarketValue.Caption = "Market Val.";
-            this.colMarketValue.DisplayFormat.FormatString = "#,##0";
-            this.colMarketValue.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colMarketValue.FieldName = "MarketValue";
-            this.colMarketValue.MaxWidth = 120;
-            this.colMarketValue.MinWidth = 70;
-            this.colMarketValue.Name = "colMarketValue";
-            this.colMarketValue.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
-            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "MarketValue", "{0:#,##0}")});
-            this.colMarketValue.Visible = true;
-            this.colMarketValue.VisibleIndex = 9;
-            this.colMarketValue.Width = 81;
-            // 
-            // colPNL
-            // 
-            this.colPNL.AppearanceCell.BackColor = System.Drawing.Color.LemonChiffon;
-            this.colPNL.AppearanceCell.ForeColor = System.Drawing.Color.DarkMagenta;
-            this.colPNL.AppearanceCell.Options.UseBackColor = true;
-            this.colPNL.AppearanceCell.Options.UseForeColor = true;
-            this.colPNL.AppearanceHeader.BackColor = System.Drawing.Color.LemonChiffon;
-            this.colPNL.AppearanceHeader.ForeColor = System.Drawing.Color.DarkMagenta;
-            this.colPNL.AppearanceHeader.Options.UseBackColor = true;
-            this.colPNL.AppearanceHeader.Options.UseForeColor = true;
-            this.colPNL.Caption = "PnL";
-            this.colPNL.DisplayFormat.FormatString = "#,##0";
-            this.colPNL.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colPNL.FieldName = "PnL";
-            this.colPNL.MaxWidth = 120;
-            this.colPNL.MinWidth = 70;
-            this.colPNL.Name = "colPNL";
-            this.colPNL.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
-            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "PnL", "{0:#,##0}")});
-            this.colPNL.Visible = true;
-            this.colPNL.VisibleIndex = 10;
-            this.colPNL.Width = 81;
-            // 
-            // colGammaTotal
-            // 
-            this.colGammaTotal.AppearanceCell.BackColor = System.Drawing.Color.LightCyan;
-            this.colGammaTotal.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.colGammaTotal.AppearanceCell.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.colGammaTotal.AppearanceCell.Options.UseBackColor = true;
-            this.colGammaTotal.AppearanceCell.Options.UseFont = true;
-            this.colGammaTotal.AppearanceCell.Options.UseForeColor = true;
-            this.colGammaTotal.AppearanceHeader.BackColor = System.Drawing.Color.LightCyan;
-            this.colGammaTotal.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.colGammaTotal.AppearanceHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.colGammaTotal.AppearanceHeader.Options.UseBackColor = true;
-            this.colGammaTotal.AppearanceHeader.Options.UseFont = true;
-            this.colGammaTotal.AppearanceHeader.Options.UseForeColor = true;
-            this.colGammaTotal.Caption = "Σ γ";
-            this.colGammaTotal.DisplayFormat.FormatString = "#,##0.0";
-            this.colGammaTotal.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colGammaTotal.FieldName = "GammaTotal";
-            this.colGammaTotal.MaxWidth = 120;
-            this.colGammaTotal.MinWidth = 45;
-            this.colGammaTotal.Name = "colGammaTotal";
-            this.colGammaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
-            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "GammaTotal", "{0:#,##0}")});
-            this.colGammaTotal.Visible = true;
-            this.colGammaTotal.VisibleIndex = 17;
-            this.colGammaTotal.Width = 52;
             // 
             // colOptionData_ModelPrice
             // 
@@ -624,61 +723,6 @@
             this.colOptionData_UnderlinePrice.MaxWidth = 100;
             this.colOptionData_UnderlinePrice.Name = "colOptionData_UnderlinePrice";
             // 
-            // colThetaTotal
-            // 
-            this.colThetaTotal.AppearanceCell.BackColor = System.Drawing.Color.LightCyan;
-            this.colThetaTotal.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.colThetaTotal.AppearanceCell.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.colThetaTotal.AppearanceCell.Options.UseBackColor = true;
-            this.colThetaTotal.AppearanceCell.Options.UseFont = true;
-            this.colThetaTotal.AppearanceCell.Options.UseForeColor = true;
-            this.colThetaTotal.AppearanceHeader.BackColor = System.Drawing.Color.LightCyan;
-            this.colThetaTotal.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.colThetaTotal.AppearanceHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.colThetaTotal.AppearanceHeader.Options.UseBackColor = true;
-            this.colThetaTotal.AppearanceHeader.Options.UseFont = true;
-            this.colThetaTotal.AppearanceHeader.Options.UseForeColor = true;
-            this.colThetaTotal.Caption = "Σ Θ";
-            this.colThetaTotal.DisplayFormat.FormatString = "#,##0.0";
-            this.colThetaTotal.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colThetaTotal.FieldName = "ThetaTotal";
-            this.colThetaTotal.MaxWidth = 120;
-            this.colThetaTotal.MinWidth = 45;
-            this.colThetaTotal.Name = "colThetaTotal";
-            this.colThetaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
-            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ThetaTotal", "{0:#,##0}")});
-            this.colThetaTotal.Visible = true;
-            this.colThetaTotal.VisibleIndex = 18;
-            this.colThetaTotal.Width = 52;
-            // 
-            // colVegaTotal
-            // 
-            this.colVegaTotal.AppearanceCell.BackColor = System.Drawing.Color.LightCyan;
-            this.colVegaTotal.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.colVegaTotal.AppearanceCell.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.colVegaTotal.AppearanceCell.Options.UseBackColor = true;
-            this.colVegaTotal.AppearanceCell.Options.UseFont = true;
-            this.colVegaTotal.AppearanceCell.Options.UseForeColor = true;
-            this.colVegaTotal.AppearanceHeader.BackColor = System.Drawing.Color.LightCyan;
-            this.colVegaTotal.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.colVegaTotal.AppearanceHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.colVegaTotal.AppearanceHeader.Options.UseBackColor = true;
-            this.colVegaTotal.AppearanceHeader.Options.UseFont = true;
-            this.colVegaTotal.AppearanceHeader.Options.UseForeColor = true;
-            this.colVegaTotal.Caption = "Σ V";
-            this.colVegaTotal.DisplayFormat.FormatString = "#,##0.0";
-            this.colVegaTotal.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colVegaTotal.FieldName = "VegaTotal";
-            this.colVegaTotal.FieldNameSortGroup = "VegaTotal";
-            this.colVegaTotal.MaxWidth = 120;
-            this.colVegaTotal.MinWidth = 45;
-            this.colVegaTotal.Name = "colVegaTotal";
-            this.colVegaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
-            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "VegaTotal", "{0:#,##0}")});
-            this.colVegaTotal.Visible = true;
-            this.colVegaTotal.VisibleIndex = 19;
-            this.colVegaTotal.Width = 45;
-            // 
             // colOptionData_Gamma
             // 
             this.colOptionData_Gamma.AppearanceCell.BackColor = System.Drawing.Color.AliceBlue;
@@ -699,7 +743,7 @@
             this.colOptionData_Gamma.MinWidth = 45;
             this.colOptionData_Gamma.Name = "colOptionData_Gamma";
             this.colOptionData_Gamma.Visible = true;
-            this.colOptionData_Gamma.VisibleIndex = 20;
+            this.colOptionData_Gamma.VisibleIndex = 21;
             this.colOptionData_Gamma.Width = 70;
             // 
             // colOptionData_ImpliedVolatility
@@ -1094,23 +1138,6 @@
             this.colGammaTotal2.Visible = true;
             this.colGammaTotal2.VisibleIndex = 10;
             this.colGammaTotal2.Width = 23;
-            // 
-            // colThetaTotal2
-            // 
-            this.colThetaTotal2.AppearanceCell.BackColor = System.Drawing.Color.LightCyan;
-            this.colThetaTotal2.AppearanceCell.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.colThetaTotal2.AppearanceCell.Options.UseBackColor = true;
-            this.colThetaTotal2.AppearanceCell.Options.UseForeColor = true;
-            this.colThetaTotal2.Caption = "Σ Θ";
-            this.colThetaTotal2.DisplayFormat.FormatString = "#,##0";
-            this.colThetaTotal2.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colThetaTotal2.FieldName = "ThetaTotal";
-            this.colThetaTotal2.Name = "colThetaTotal2";
-            this.colThetaTotal2.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
-            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ThetaTotal", "{0:#,##0}")});
-            this.colThetaTotal2.Visible = true;
-            this.colThetaTotal2.VisibleIndex = 11;
-            this.colThetaTotal2.Width = 23;
             // 
             // colVegaTotal2
             // 
@@ -1606,6 +1633,14 @@
             this.iShowUNLOptions.Name = "iShowUNLOptions";
             this.iShowUNLOptions.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iShowUNLOptions_ItemClick);
             // 
+            // iWhatIfAnalyse
+            // 
+            this.iWhatIfAnalyse.Caption = "What If...";
+            this.iWhatIfAnalyse.Id = 19;
+            this.iWhatIfAnalyse.ImageOptions.Image = global::TNS.Controls.Properties.Resources.Diagram;
+            this.iWhatIfAnalyse.Name = "iWhatIfAnalyse";
+            this.iWhatIfAnalyse.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iWhatIfAnalyse_ItemClick);
+            // 
             // popupMenuPositions
             // 
             this.popupMenuPositions.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
@@ -1632,14 +1667,6 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.iWhatIfAnalyse)});
             this.popupMenuUNL.Manager = this.barManager1;
             this.popupMenuUNL.Name = "popupMenuUNL";
-            // 
-            // iWhatIfAnalyse
-            // 
-            this.iWhatIfAnalyse.Caption = "What If...";
-            this.iWhatIfAnalyse.Id = 19;
-            this.iWhatIfAnalyse.ImageOptions.Image = global::TNS.Controls.Properties.Resources.Diagram;
-            this.iWhatIfAnalyse.Name = "iWhatIfAnalyse";
-            this.iWhatIfAnalyse.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iWhatIfAnalyse_ItemClick);
             // 
             // PositionsView
             // 
@@ -1790,5 +1817,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn colImVolOnCallATM;
         private DevExpress.XtraGrid.Columns.GridColumn colImVolOnPutATM;
         private DevExpress.XtraBars.BarButtonItem iWhatIfAnalyse;
+        private DevExpress.XtraGrid.Columns.GridColumn colNormalizedDeltaTotal;
     }
 }
