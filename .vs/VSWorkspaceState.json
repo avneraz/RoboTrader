@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\RoboTraderSuite",
+    "\\RoboTraderSuite\\BL",
+    "\\RoboTraderSuite\\Infra",
+    "\\RoboTraderSuite\\Infra\\Extensions",
+    "\\RoboTraderSuite\\Tester",
+    "\\RoboTraderSuite\\TNS.API",
+    "\\RoboTraderSuite\\TNS.API\\ApiDataObjects",
+    "\\RoboTraderSuite\\TNS.Controls"
+  ],
+  "SelectedNode": "\\RoboTraderSuite\\TNS.Controls\\TradingControl.cs",
+  "PreviewInSolutionExplorer": false
+}

@@ -76,10 +76,16 @@ namespace TNS.Controls
             {
                 OptionData optionData = GetSelectedOptionData();
                 _tradingControl = new TradingControl();
-                var caption = $"{optionData.Symbol} ==> {optionData.OptionContract.OptionType} {optionData.OptionContract.Strike}. {optionData.Expiry.ToShortDateString()}";
-                //_tradingControl.SetTradeCaption(caption);
+                
+                _tradingControl.SetTradingData(optionData);
                 var containerForm = _tradingControl.ShowControl(ParentForm, true);
-                containerForm.Text = caption;
+
+                containerForm.ControlBox = false;
+                containerForm.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+                containerForm.ShowIcon = false;
+                containerForm.ShowInTaskbar = false;
+                containerForm.TopMost = true;
+                //containerForm.Text = caption;
                 //containerForm.
                 containerForm.FormClosing += ContainerForm_FormClosing;
             }

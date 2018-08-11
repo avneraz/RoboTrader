@@ -128,7 +128,6 @@
             this.barDockControl9 = new DevExpress.XtraBars.BarDockControl();
             this.barDockControl10 = new DevExpress.XtraBars.BarDockControl();
             this.iSellOption = new DevExpress.XtraBars.BarButtonItem();
-            this.iBuyOption = new DevExpress.XtraBars.BarButtonItem();
             this.iOptionPicker = new DevExpress.XtraBars.BarButtonItem();
             this.iShowUNLOption = new DevExpress.XtraBars.BarButtonItem();
             this.iMargin = new DevExpress.XtraBars.BarButtonItem();
@@ -1451,7 +1450,6 @@
             this.barManager1.Form = this;
             this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.iSellOption,
-            this.iBuyOption,
             this.iOptionPicker,
             this.iShowUNLOption,
             this.iMargin,
@@ -1524,19 +1522,11 @@
             // 
             // iSellOption
             // 
-            this.iSellOption.Caption = "Sell  Option";
+            this.iSellOption.Caption = "Trading Option";
             this.iSellOption.Id = 5;
             this.iSellOption.ImageOptions.Image = global::TNS.Controls.Properties.Resources.Basket_Add1;
             this.iSellOption.Name = "iSellOption";
             this.iSellOption.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iSellOption_ItemClick);
-            // 
-            // iBuyOption
-            // 
-            this.iBuyOption.Caption = "Buy Option";
-            this.iBuyOption.Id = 6;
-            this.iBuyOption.ImageOptions.Image = global::TNS.Controls.Properties.Resources.Basket_delete;
-            this.iBuyOption.Name = "iBuyOption";
-            this.iBuyOption.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.iBuyOption_ItemClick);
             // 
             // iOptionPicker
             // 
@@ -1645,9 +1635,8 @@
             // 
             this.popupMenuPositions.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.iSellOption),
-            new DevExpress.XtraBars.LinkPersistInfo(this.iBuyOption),
-            new DevExpress.XtraBars.LinkPersistInfo(this.iOptionPicker),
-            new DevExpress.XtraBars.LinkPersistInfo(this.iShowUNLOption),
+            new DevExpress.XtraBars.LinkPersistInfo(this.iOptionPicker, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.iShowUNLOption, true),
             new DevExpress.XtraBars.LinkPersistInfo(this.iMargin),
             new DevExpress.XtraBars.LinkPersistInfo(this.iWhatIf)});
             this.popupMenuPositions.Manager = this.barManager1;
@@ -1795,7 +1784,6 @@
         private DevExpress.XtraBars.BarDockControl barDockControl9;
         private DevExpress.XtraBars.BarDockControl barDockControl10;
         private DevExpress.XtraBars.BarButtonItem iSellOption;
-        private DevExpress.XtraBars.BarButtonItem iBuyOption;
         private DevExpress.XtraBars.PopupMenu popupMenuPositions;
         private DevExpress.XtraBars.BarButtonItem iOptionPicker;
         private System.Windows.Forms.Label lblExcessLiq;

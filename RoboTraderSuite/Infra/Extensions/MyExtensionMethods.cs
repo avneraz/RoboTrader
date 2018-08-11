@@ -151,7 +151,7 @@ namespace Infra.Extensions
         public static Form ShowControl(this Control control, Form parentForm, bool floating = false)
         {
             var containerForm = floating ? new FloatingForm() : new Form();
-            containerForm.Size = control.Size;
+            containerForm.Size = control.Size;           
 
             control.Dock = DockStyle.Fill;
             containerForm.Controls.Add(control);

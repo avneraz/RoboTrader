@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http.Headers;
 using Infra;
 using Infra.Bus;
 using Infra.Enum;
@@ -77,15 +78,43 @@ namespace TNS.API.ApiDataObjects
         private double CalculateNormalizedDelta()
         {
             double currentUNL = UnderlinePrice;
-            var multiplier = (this.Delta < 0) ? -1 : 1;
-            double maxUNL = UnderlinePrice * 1.01;
-            double currentDelta = Math.Abs(Delta);
-            while (currentUNL <= maxUNL)
+            var multiplier = (this.Delta < 0) ? -1 : 1;//delta
+            double maxUNL = UnderlinePrice * 1.01;//change of 1 %
+            double divider = 1;
+            double unlForLoop = Math.Floor(maxUNL);
+            //assuming Delta> 0 ==> CALL:
+            //if (Delta < 0) return 0;
+
+            double delta10 = Math.Abs(Delta) / divider;
+            double currentDelta = delta10;
+            double totalDelta = 0;// = currentDelta;
+            double gamma10 = Gamma / divider;
+
+            while (currentUNL <= unlForLoop)
             {
-                currentDelta += Gamma;
-                currentUNL += 1;                
+                totalDelta += currentDelta;
+                currentDelta += gamma10;
+                currentUNL += 1;
+
             }
-            return currentDelta * multiplier;
+            var fructionDelta = (maxUNL - unlForLoop) * (currentDelta + gamma10);
+            return (totalDelta + fructionDelta) * multiplier;
+
+
+
+            //double currentUNL = UnderlinePrice;
+            //var multiplier = (this.Delta < 0) ? -1 : 1;//delta
+            //double maxUNL = UnderlinePrice * 1.01;//change of 1 %
+            //double currentDelta = Math.Abs(Delta)/ 10;
+            //double totalDelta = 0;// = currentDelta;
+            //while (currentUNL <= maxUNL)
+            //{
+            //    totalDelta += currentDelta;
+            //    currentDelta += Gamma/10;
+            //    currentUNL += 0.1;
+
+            //}
+            //return totalDelta * multiplier;
         }
         /// <summary>
         /// Return the price of 1 option (Position = 1)

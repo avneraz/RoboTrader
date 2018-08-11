@@ -345,17 +345,7 @@ namespace TNS.Controls
 
         private void iSellOption_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            try
-            {
-                var positionData = GetSelectedPositionData();
-                if (positionData == null) return;
-                SendSellOrder(positionData.OptionData);
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex.Message, ex);
-                MessageBox.Show(ex.Message);
-            }
+            OpenOrderDialog();
         }
 
         private void iBuyOption_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -372,6 +362,60 @@ namespace TNS.Controls
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void OpenOrderDialog()
+        {
+            try
+            {
+                OptionData optionData = GetSelectedPositionData().OptionData;
+                _tradingControl = new TradingControl();
+
+                _tradingControl.SetTradingData(optionData);
+                var containerForm = _tradingControl.ShowControl(ParentForm, true);
+
+                containerForm.ControlBox = false;
+                containerForm.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+                containerForm.ShowIcon = false;
+                containerForm.ShowInTaskbar = false;
+                containerForm.TopMost = true;
+                //containerForm.Text = caption;
+                //containerForm.
+                containerForm.FormClosing += ContainerForm_FormClosing;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private TradingControl _tradingControl;
+        private void ContainerForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                if (_tradingControl == null) return;
+
+                if (_tradingControl.TradingInfo == null) return;
+
+                //Do trading:
+                OptionData optionData = GetSelectedPositionData().OptionData;
+                if (_tradingControl.TradingInfo.OrderAction == OrderAction.BUY)
+                {
+                    SendBuyOrder(optionData, _tradingControl.TradingInfo.OptionCount);
+                }
+                else
+                {
+                    SendSellOrder(optionData, _tradingControl.TradingInfo.OptionCount);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex);
+                MessageBox.Show(ex.Message);
+            }
+        }
+
 
         public void SendSellOrder(OptionData optionData, int quantity = 1)
         {
