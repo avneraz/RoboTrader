@@ -76,7 +76,7 @@
             this.txtMessages.Location = new System.Drawing.Point(0, 0);
             this.txtMessages.Multiline = true;
             this.txtMessages.Name = "txtMessages";
-            this.txtMessages.Size = new System.Drawing.Size(1061, 492);
+            this.txtMessages.Size = new System.Drawing.Size(1146, 550);
             this.txtMessages.TabIndex = 0;
             // 
             // xtraTabControl1
@@ -87,7 +87,7 @@
             this.xtraTabControl1.Location = new System.Drawing.Point(-1, 65);
             this.xtraTabControl1.Name = "xtraTabControl1";
             this.xtraTabControl1.SelectedTabPage = this.xPagePositions;
-            this.xtraTabControl1.Size = new System.Drawing.Size(1067, 520);
+            this.xtraTabControl1.Size = new System.Drawing.Size(1152, 578);
             this.xtraTabControl1.TabIndex = 1;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xPageAPIMessages,
@@ -102,7 +102,7 @@
             this.xPagePositions.Controls.Add(this.positionsView);
             this.xPagePositions.Controls.Add(this.txtMessages);
             this.xPagePositions.Name = "xPagePositions";
-            this.xPagePositions.Size = new System.Drawing.Size(1061, 492);
+            this.xPagePositions.Size = new System.Drawing.Size(1146, 550);
             this.xPagePositions.Text = "Positions";
             // 
             // positionsView
@@ -113,7 +113,7 @@
             this.positionsView.Location = new System.Drawing.Point(0, 0);
             this.positionsView.Name = "positionsView";
             this.positionsView.OptionsDataList = null;
-            this.positionsView.Size = new System.Drawing.Size(1061, 492);
+            this.positionsView.Size = new System.Drawing.Size(1146, 550);
             this.positionsView.TabIndex = 1;
             // 
             // xPageAPIMessages
@@ -385,7 +385,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1066, 585);
+            this.ClientSize = new System.Drawing.Size(1151, 643);
             this.Controls.Add(this.cbxShowPopUpMessages);
             this.Controls.Add(this.btnTestClosePositions);
             this.Controls.Add(this.btnTest);

@@ -3,5 +3,6 @@
 /RoboTraderSuite/packages
 /RoboTraderSuite/BinDebug
 /RoboTraderSuite/obj
+/RoboTraderSuite/.vs
 obj/
 bin/
