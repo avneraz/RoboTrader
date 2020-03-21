@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
             this.colPNL = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colTotalCost = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colMarketValue = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -143,6 +143,7 @@
             this.iWhatIfAnalyse = new DevExpress.XtraBars.BarButtonItem();
             this.popupMenuPositions = new DevExpress.XtraBars.PopupMenu(this.components);
             this.popupMenuUNL = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.grdPositionData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.optionsPositionDataBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdViewPositionData)).BeginInit();
@@ -157,6 +158,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenuPositions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenuUNL)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // colPNL
@@ -373,9 +375,9 @@
             // 
             this.grdPositionData.DataSource = this.optionsPositionDataBindingSource;
             this.grdPositionData.Dock = System.Windows.Forms.DockStyle.Fill;
-            gridLevelNode2.RelationName = "Level1";
+            gridLevelNode1.RelationName = "Level1";
             this.grdPositionData.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode2});
+            gridLevelNode1});
             this.grdPositionData.Location = new System.Drawing.Point(0, 0);
             this.grdPositionData.MainView = this.grdViewPositionData;
             this.grdPositionData.Name = "grdPositionData";
@@ -689,7 +691,7 @@
             this.colLastPrice.Caption = "Last P";
             this.colLastPrice.DisplayFormat.FormatString = "#,##0.000";
             this.colLastPrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colLastPrice.FieldName = "OptionData.LastPrice";
+            this.colLastPrice.FieldName = "OptionData.ImpliedVolatility";
             this.colLastPrice.MaxWidth = 100;
             this.colLastPrice.MinWidth = 50;
             this.colLastPrice.Name = "colLastPrice";
@@ -1347,6 +1349,7 @@
             this.splitContainerControl1.Panel1.Controls.Add(this.grdUnLTradingData);
             this.splitContainerControl1.Panel1.Controls.Add(this.grpAccountSummary);
             this.splitContainerControl1.Panel1.Text = "Panel1";
+            this.splitContainerControl1.Panel2.Controls.Add(this.dataGridView1);
             this.splitContainerControl1.Panel2.Controls.Add(this.grdPositionData);
             this.splitContainerControl1.Panel2.Text = "Panel2";
             this.splitContainerControl1.Size = new System.Drawing.Size(1383, 712);
@@ -1657,6 +1660,14 @@
             this.popupMenuUNL.Manager = this.barManager1;
             this.popupMenuUNL.Name = "popupMenuUNL";
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(693, 140);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(8, 8);
+            this.dataGridView1.TabIndex = 2;
+            // 
             // PositionsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1686,6 +1697,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenuPositions)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenuUNL)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1806,5 +1818,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn colImVolOnPutATM;
         private DevExpress.XtraBars.BarButtonItem iWhatIfAnalyse;
         private DevExpress.XtraGrid.Columns.GridColumn colNormalizedDeltaTotal;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
