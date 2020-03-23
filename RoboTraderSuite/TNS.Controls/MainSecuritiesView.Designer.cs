@@ -122,7 +122,7 @@
             // 
             // colBasePrice
             // 
-            this.colBasePrice.FieldName = "OpenningPrice";
+            this.colBasePrice.FieldName = "PriorClosePrice";
             this.colBasePrice.Name = "colBasePrice";
             this.colBasePrice.Visible = true;
             this.colBasePrice.VisibleIndex = 1;

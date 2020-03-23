@@ -202,7 +202,7 @@
             this.colBasePrice.Caption = "Base P.";
             this.colBasePrice.DisplayFormat.FormatString = "#0.00";
             this.colBasePrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colBasePrice.FieldName = "OpenningPrice";
+            this.colBasePrice.FieldName = "PriorClosePrice";
             this.colBasePrice.Name = "colBasePrice";
             this.colBasePrice.Visible = true;
             this.colBasePrice.VisibleIndex = 2;

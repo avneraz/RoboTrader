@@ -60,6 +60,7 @@
             this.colNormalizedDeltaTotal = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colContract_ExpiryDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOptionData_OptionType = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colVegaPnL = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colLastPrice = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOptionData_ModelPrice = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOptionData_UnderlinePrice = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -143,7 +144,6 @@
             this.iWhatIfAnalyse = new DevExpress.XtraBars.BarButtonItem();
             this.popupMenuPositions = new DevExpress.XtraBars.PopupMenu(this.components);
             this.popupMenuUNL = new DevExpress.XtraBars.PopupMenu(this.components);
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.grdPositionData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.optionsPositionDataBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdViewPositionData)).BeginInit();
@@ -158,7 +158,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenuPositions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenuUNL)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // colPNL
@@ -168,8 +167,10 @@
             this.colPNL.AppearanceCell.Options.UseBackColor = true;
             this.colPNL.AppearanceCell.Options.UseForeColor = true;
             this.colPNL.AppearanceHeader.BackColor = System.Drawing.Color.LemonChiffon;
+            this.colPNL.AppearanceHeader.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.colPNL.AppearanceHeader.ForeColor = System.Drawing.Color.DarkMagenta;
             this.colPNL.AppearanceHeader.Options.UseBackColor = true;
+            this.colPNL.AppearanceHeader.Options.UseFont = true;
             this.colPNL.AppearanceHeader.Options.UseForeColor = true;
             this.colPNL.Caption = "PnL";
             this.colPNL.DisplayFormat.FormatString = "#,##0";
@@ -306,7 +307,7 @@
             this.colThetaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ThetaTotal", "{0:#,##0}")});
             this.colThetaTotal.Visible = true;
-            this.colThetaTotal.VisibleIndex = 19;
+            this.colThetaTotal.VisibleIndex = 20;
             this.colThetaTotal.Width = 52;
             // 
             // colVegaTotal
@@ -324,7 +325,7 @@
             this.colVegaTotal.AppearanceHeader.Options.UseFont = true;
             this.colVegaTotal.AppearanceHeader.Options.UseForeColor = true;
             this.colVegaTotal.Caption = "Σ V";
-            this.colVegaTotal.DisplayFormat.FormatString = "#,##0.0";
+            this.colVegaTotal.DisplayFormat.FormatString = "#,##0.000";
             this.colVegaTotal.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colVegaTotal.FieldName = "VegaTotal";
             this.colVegaTotal.FieldNameSortGroup = "VegaTotal";
@@ -334,7 +335,7 @@
             this.colVegaTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "VegaTotal", "{0:#,##0}")});
             this.colVegaTotal.Visible = true;
-            this.colVegaTotal.VisibleIndex = 20;
+            this.colVegaTotal.VisibleIndex = 21;
             this.colVegaTotal.Width = 45;
             // 
             // colPosition
@@ -428,6 +429,7 @@
             this.colNormalizedDeltaTotal,
             this.colContract_ExpiryDate,
             this.colOptionData_OptionType,
+            this.colVegaPnL,
             this.colDeltaTotal,
             this.colTotalCost,
             this.colLastPrice,
@@ -454,7 +456,8 @@
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ThetaTotal", this.colThetaTotal, "{0:#,##0.0}"),
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "VegaTotal", this.colVegaTotal, "{0:#,##0.0}"),
             new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Position", this.colPosition, "{0:#,##0}"),
-            new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NormalizedDeltaTotal", this.colNormalizedDeltaTotal, "{0:#,##0.0}")});
+            new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "NormalizedDeltaTotal", this.colNormalizedDeltaTotal, "{0:#,##0.0}"),
+            new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "VegaPnL", this.colVegaPnL, "{0:#,##0.0}")});
             this.grdViewPositionData.Name = "grdViewPositionData";
             this.grdViewPositionData.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
             this.grdViewPositionData.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
@@ -682,6 +685,21 @@
             this.colOptionData_OptionType.Name = "colOptionData_OptionType";
             this.colOptionData_OptionType.Width = 50;
             // 
+            // colVegaPnL
+            // 
+            this.colVegaPnL.AppearanceCell.ForeColor = System.Drawing.Color.Fuchsia;
+            this.colVegaPnL.AppearanceCell.Options.UseForeColor = true;
+            this.colVegaPnL.AppearanceHeader.ForeColor = System.Drawing.Color.Fuchsia;
+            this.colVegaPnL.AppearanceHeader.Options.UseForeColor = true;
+            this.colVegaPnL.DisplayFormat.FormatString = "{0:#,##0}";
+            this.colVegaPnL.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colVegaPnL.FieldName = "VegaPnL";
+            this.colVegaPnL.Name = "colVegaPnL";
+            this.colVegaPnL.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "VegaPnL", "{0:#,##0}")});
+            this.colVegaPnL.Visible = true;
+            this.colVegaPnL.VisibleIndex = 19;
+            // 
             // colLastPrice
             // 
             this.colLastPrice.AppearanceCell.BackColor = System.Drawing.Color.LightBlue;
@@ -744,7 +762,7 @@
             this.colOptionData_Gamma.MinWidth = 45;
             this.colOptionData_Gamma.Name = "colOptionData_Gamma";
             this.colOptionData_Gamma.Visible = true;
-            this.colOptionData_Gamma.VisibleIndex = 21;
+            this.colOptionData_Gamma.VisibleIndex = 22;
             this.colOptionData_Gamma.Width = 70;
             // 
             // colOptionData_ImpliedVolatility
@@ -1073,7 +1091,7 @@
             this.colUnlOpen.Caption = "Open";
             this.colUnlOpen.DisplayFormat.FormatString = "#0.00";
             this.colUnlOpen.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colUnlOpen.FieldName = "OpenningPrice";
+            this.colUnlOpen.FieldName = "PriorClosePrice";
             this.colUnlOpen.Name = "colUnlOpen";
             this.colUnlOpen.Visible = true;
             this.colUnlOpen.VisibleIndex = 1;
@@ -1349,7 +1367,6 @@
             this.splitContainerControl1.Panel1.Controls.Add(this.grdUnLTradingData);
             this.splitContainerControl1.Panel1.Controls.Add(this.grpAccountSummary);
             this.splitContainerControl1.Panel1.Text = "Panel1";
-            this.splitContainerControl1.Panel2.Controls.Add(this.dataGridView1);
             this.splitContainerControl1.Panel2.Controls.Add(this.grdPositionData);
             this.splitContainerControl1.Panel2.Text = "Panel2";
             this.splitContainerControl1.Size = new System.Drawing.Size(1383, 712);
@@ -1660,14 +1677,6 @@
             this.popupMenuUNL.Manager = this.barManager1;
             this.popupMenuUNL.Name = "popupMenuUNL";
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(693, 140);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(8, 8);
-            this.dataGridView1.TabIndex = 2;
-            // 
             // PositionsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1697,7 +1706,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenuPositions)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenuUNL)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1818,6 +1826,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn colImVolOnPutATM;
         private DevExpress.XtraBars.BarButtonItem iWhatIfAnalyse;
         private DevExpress.XtraGrid.Columns.GridColumn colNormalizedDeltaTotal;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private DevExpress.XtraGrid.Columns.GridColumn colVegaPnL;
     }
 }

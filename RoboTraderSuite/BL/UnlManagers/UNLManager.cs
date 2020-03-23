@@ -222,7 +222,8 @@ namespace TNS.BL.UnlManagers
             OptionsManager = new OptionsManager( ManagedSecurity, this);
             _memberManagersList.Add(OptionsManager);
 
-            PositionsDataBuilder = new PositionsDataBuilder( ManagedSecurity, this);
+            PositionsDataBuilder = new PositionsDataBuilder( ManagedSecurity, this);	
+
             _memberManagersList.Add(PositionsDataBuilder);
 
             OrdersManager = new OrdersManager( ManagedSecurity, this);

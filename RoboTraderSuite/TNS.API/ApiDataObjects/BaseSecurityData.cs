@@ -41,18 +41,18 @@ namespace TNS.API.ApiDataObjects
         public double LowestPrice { get; set; }
 
         /// <summary>
-        /// Open quote (current day)
+        /// Prior Close underline price
         /// </summary>
-        public double OpenningPrice { get; set; }
+        public double PriorClosePrice { get; set; }
 
         /// <summary>
-        /// 
+        /// The first price of the day. on opening trading.
         /// </summary>
         public double OpeningPrice { get; set; }
 
         public double Change
         {
-            get => (LastPrice - OpenningPrice) / OpenningPrice;
+            get => (LastPrice - PriorClosePrice) / PriorClosePrice;
             set
             {
                 if (value < - int.MaxValue) throw new NotImplementedException();
@@ -96,7 +96,7 @@ namespace TNS.API.ApiDataObjects
             $"SecurityData: [Contract: {GetContract()}, LastPrice: {LastPrice}," +
             $" Ask: {Ask}, Bid: {Bid}," +
             $" HighestPrice: {HighestPrice}, LowestPrice: {LowestPrice}," +
-            $" OpenningPrice: {OpenningPrice}, OpeningPrice: {OpeningPrice}, " +
+            $" PriorClosePrice: {PriorClosePrice}, OpeningPrice: {OpeningPrice}, " +
             $" AskSize: {AskSize}, BidSize: {BidSize}, Volume: {Volume}]";
 
         }

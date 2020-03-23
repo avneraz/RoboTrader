@@ -25,7 +25,7 @@ namespace TNS.API.ApiDataObjects
      
 
         public virtual string MainInfo =>
-            $"{Change:P}    Base: {OpenningPrice:N}          Bid: {Bid:N}   Ask: {Ask:N}    Highest: {HighestPrice:N},   Lowest: {LowestPrice:N}";
+            $"{Change:P}    Base: {PriorClosePrice:N}          Bid: {Bid:N}   Ask: {Ask:N}    Highest: {HighestPrice:N},   Lowest: {LowestPrice:N}";
 
 
     }

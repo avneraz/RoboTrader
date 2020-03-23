@@ -68,6 +68,33 @@ namespace TNS.API.ApiDataObjects
         public double VegaTotal => OptionData?.Vega*OptionData?.Multiplier*Position ?? 0;
         public double Vega => OptionData?.Vega ?? -1;
 
+        /// <summary>
+        /// Get the amount of PnL according the vega and UNL changed percents.
+        /// = Vega * UNL_Changed
+        /// </summary>
+        public double VegaPnL
+        {
+            get
+            {
+                try
+                {
+                    if ((OptionData != null) &&  // check if the PriorClosePrice is reasonable.
+                        (OptionData.PriorClosePrice > (OptionData.UnderlinePrice * 0.5)) )
+                    {
+                        double changedPercent = (OptionData.UnderlinePrice - OptionData.PriorClosePrice) * 100 / 
+                            OptionData.PriorClosePrice;
+                        return VegaTotal * changedPercent;
+                    }
+                    return -0.01;
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+        }
+        //public double VegaPnL => c(OptionData?.UnderlinePrice ?? 0  - OptionData?.PriorClosePrice ?? 0);
+
         public double AvgPrice
         {
             get

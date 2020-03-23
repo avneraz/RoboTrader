@@ -39,7 +39,7 @@ namespace DAL
         public SecurityDataComponent()
         {
             Map(x => x.LastPrice);
-            Map(x => x.OpenningPrice).Column("OPENING_PRICE"); ;
+            Map(x => x.PriorClosePrice).Column("OPENING_PRICE"); ;
             Map(x => x.Ask);
             Map(x => x.Bid);
             Map(x => x.Change);
@@ -150,7 +150,7 @@ namespace DAL
             Map(c => c.Account).Default(AllConfigurations.AllConfigurationsObject.Application.MainAccount);
             Map(c => c.Ask);
             Map(c => c.AskSize);
-            Map(c => c.OpenningPrice);
+            Map(c => c.PriorClosePrice);
             Map(c => c.Bid);
             Map(c => c.BidSize);
             Map(c => c.HighestPrice);

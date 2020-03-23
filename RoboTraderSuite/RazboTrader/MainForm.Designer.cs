@@ -120,7 +120,7 @@
             // 
             this.xPageAPIMessages.Controls.Add(this.apiMesagesView);
             this.xPageAPIMessages.Name = "xPageAPIMessages";
-            this.xPageAPIMessages.Size = new System.Drawing.Size(1061, 492);
+            this.xPageAPIMessages.Size = new System.Drawing.Size(1146, 550);
             this.xPageAPIMessages.Text = "API Messages";
             // 
             // apiMesagesView
@@ -129,14 +129,14 @@
             this.apiMesagesView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.apiMesagesView.Location = new System.Drawing.Point(0, 0);
             this.apiMesagesView.Name = "apiMesagesView";
-            this.apiMesagesView.Size = new System.Drawing.Size(1061, 492);
+            this.apiMesagesView.Size = new System.Drawing.Size(1146, 550);
             this.apiMesagesView.TabIndex = 0;
             // 
             // xtraPageMainSecurities
             // 
             this.xtraPageMainSecurities.Controls.Add(this.mainSecuritiesView1);
             this.xtraPageMainSecurities.Name = "xtraPageMainSecurities";
-            this.xtraPageMainSecurities.Size = new System.Drawing.Size(1061, 492);
+            this.xtraPageMainSecurities.Size = new System.Drawing.Size(1146, 550);
             this.xtraPageMainSecurities.Text = "Main Securities";
             // 
             // mainSecuritiesView1
@@ -145,7 +145,7 @@
             this.mainSecuritiesView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainSecuritiesView1.Location = new System.Drawing.Point(0, 0);
             this.mainSecuritiesView1.Name = "mainSecuritiesView1";
-            this.mainSecuritiesView1.Size = new System.Drawing.Size(1061, 492);
+            this.mainSecuritiesView1.Size = new System.Drawing.Size(1146, 550);
             this.mainSecuritiesView1.TabIndex = 0;
             // 
             // xtraPageOrders
@@ -165,7 +165,7 @@
             this.xtraPageOrders.Controls.Add(this.btnCancelOrder);
             this.xtraPageOrders.Controls.Add(this.btnSendOrder);
             this.xtraPageOrders.Name = "xtraPageOrders";
-            this.xtraPageOrders.Size = new System.Drawing.Size(1061, 492);
+            this.xtraPageOrders.Size = new System.Drawing.Size(1146, 550);
             this.xtraPageOrders.Text = "Orders";
             // 
             // cbxSell
@@ -301,7 +301,7 @@
             // 
             this.xtraPageOptions.Controls.Add(this.optionsView1);
             this.xtraPageOptions.Name = "xtraPageOptions";
-            this.xtraPageOptions.Size = new System.Drawing.Size(1061, 492);
+            this.xtraPageOptions.Size = new System.Drawing.Size(1146, 550);
             this.xtraPageOptions.Text = "Options";
             // 
             // optionsView1
@@ -310,14 +310,14 @@
             this.optionsView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.optionsView1.Location = new System.Drawing.Point(0, 0);
             this.optionsView1.Name = "optionsView1";
-            this.optionsView1.Size = new System.Drawing.Size(1061, 492);
+            this.optionsView1.Size = new System.Drawing.Size(1146, 550);
             this.optionsView1.TabIndex = 0;
             // 
             // xtraPageUnlDataTrading
             // 
             this.xtraPageUnlDataTrading.Controls.Add(this.unlTradingView1);
             this.xtraPageUnlDataTrading.Name = "xtraPageUnlDataTrading";
-            this.xtraPageUnlDataTrading.Size = new System.Drawing.Size(1061, 492);
+            this.xtraPageUnlDataTrading.Size = new System.Drawing.Size(1146, 550);
             this.xtraPageUnlDataTrading.Text = "Unl. Trading Data";
             // 
             // unlTradingView1
@@ -326,7 +326,7 @@
             this.unlTradingView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.unlTradingView1.Location = new System.Drawing.Point(0, 0);
             this.unlTradingView1.Name = "unlTradingView1";
-            this.unlTradingView1.Size = new System.Drawing.Size(1061, 492);
+            this.unlTradingView1.Size = new System.Drawing.Size(1146, 550);
             this.unlTradingView1.TabIndex = 0;
             // 
             // btnBnsLocal

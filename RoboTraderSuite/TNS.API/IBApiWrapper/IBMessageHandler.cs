@@ -274,10 +274,10 @@ namespace TNS.API.IBApiWrapper
                         securityData.LowestPrice = price > int.MaxValue ? -1 : price;
                         break;
                     case TickType.CLOSE:
-                        securityData.OpenningPrice = price > int.MaxValue ? -1 : price;
+                        securityData.PriorClosePrice = price > int.MaxValue ? -1 : price;
                         //If last price still not update set it with the base price:
-                        if ((securityData.LastPrice <= 0) && (securityData.OpenningPrice > 0))
-                            securityData.LastPrice = securityData.OpenningPrice;
+                        if ((securityData.LastPrice <= 0) && (securityData.PriorClosePrice > 0))
+                            securityData.LastPrice = securityData.PriorClosePrice;
                         break;
                     case TickType.OPEN:
                         securityData.OpeningPrice = price > int.MaxValue ? -1 : price;
